@@ -1,0 +1,342 @@
+﻿@font-face { font-family: Raleway; src: url('/fonts/Raleway-Regular.ttf'); } 
+@font-face { font-family: RalewayThin; src: url('/fonts/Raleway-Thin.ttf'); } 
+@font-face { font-family: RalewayLight; src: url('/fonts/Raleway-Light.ttf'); } 
+@font-face { font-family: RalewayBold; src: url('/fonts/Raleway-Bold.ttf'); } 
+
+@font-face { font-family: NunitoSans-Black; src: url('/fonts/nunitosans/NunitoSans-Black.ttf'); } 
+@font-face { font-family: NunitoSans-BlackItalic; src: url('/fonts/nunitosans/NunitoSans-BlackItalic.ttf'); } 
+@font-face { font-family: NunitoSans-Bold; src: url('/fonts/nunitosans/NunitoSans-Bold.ttf'); } 
+@font-face { font-family: NunitoSans-BoldItalic; src: url('/fonts/nunitosans/NunitoSans-BoldItalic.ttf'); } 
+@font-face { font-family: NunitoSans-ExtraBold; src: url('/fonts/nunitosans/NunitoSans-ExtraBold.ttf'); } 
+@font-face { font-family: NunitoSans-ExtraBoldItalic; src: url('/fonts/nunitosans/NunitoSans-ExtraBoldItalic.ttf'); } 
+@font-face { font-family: NunitoSans-ExtraLight; src: url('/fonts/nunitosans/NunitoSans-ExtraLight.ttf'); } 
+@font-face { font-family: NunitoSans-ExtraLightItalic; src: url('/fonts/nunitosans/NunitoSans-ExtraLightItalic.ttf'); } 
+@font-face { font-family: NunitoSans-Italic; src: url('/fonts/nunitosans/NunitoSans-Italic.ttf'); } 
+@font-face { font-family: NunitoSans-Light; src: url('/fonts/nunitosans/NunitoSans-Light.ttf'); } 
+@font-face { font-family: NunitoSans-LightItalic; src: url('/fonts/nunitosans/NunitoSans-LightItalic.ttf'); } 
+@font-face { font-family: NunitoSans-Regular; src: url('/fonts/nunitosans/NunitoSans-Regular.ttf'); } 
+@font-face { font-family: NunitoSans-SemiBold; src: url('/fonts/nunitosans/NunitoSans-SemiBold.ttf'); } 
+@font-face { font-family: NunitoSans-SemiBoldItalic; src: url('/fonts/nunitosans/NunitoSans-SemiBoldItalic.ttf'); } 
+
+html, body, .templates{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: NunitoSans-Regular;
+    color: white;
+    height: 100%;
+}
+
+
+
+.transparent-round-btn{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    line-height: 40px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
+}
+.transparent-round-btn:hover{
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6)
+}
+
+.rectangle-btn{
+    border: 0;
+    border-radius: 2px;
+    width: 150px;
+    height: 50px;
+    background-color: #02CB9E;
+    color: white;
+    font-family: NunitoSans-Regular;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.rectangle-btn:hover
+.rectangle-btn:active, 
+.rectangle-btn:focus{
+    cursor:pointer;
+    padding: 0;
+}
+
+.inline-list{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+.inline-list li{
+    display: inline;
+}
+.av-navbar{
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    z-index: 6;
+}
+  .welcome-header {
+        position: relative;
+        display: table;
+        width: 100%;
+        height: 45px;
+        background-color: #02CB9E;
+        padding: 0 5vw;
+        z-index: 5;
+    }
+
+    .welcome-header-social {
+        width: 100%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding: 0;
+    }
+
+    .welcome-header-navigation {
+        display: none;
+    }
+
+        .welcome-header-social li {
+            display: inline-block;
+            width: auto;
+            padding: 0 18px;
+        }
+        }
+        .welcome-header-social li:first-child{
+            padding-left:5px;
+        }
+
+            .welcome-header-social li a{
+                text-decoration: none;
+                color: white;
+                font-size: 14px;
+                font-family: NunitoSans-Bold;
+                text-transform: uppercase;
+                transition: all 0.3s;
+            }
+
+.welcome-navbar{
+    position: relative;
+    display: table;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    padding: 0 5vw;
+    color: black;
+    z-index: 5;
+}
+.welcome-navbar-title{
+    width: 30%;
+    display:table-cell;
+    text-align:left;
+    font-family: Raleway;
+    font-size: 30px;
+    letter-spacing: 2px;
+    vertical-align: middle;
+}
+.welcome-navbar-navigation{
+    display: none;
+}
+@media only screen and (min-width: 1150px) {
+
+    .welcome-header {
+        position: relative;
+        display: table;
+        width: 100%;
+        height: 45px;
+        background-color: #02CB9E;
+        padding: 0 15vw;
+        z-index: 5;
+    }
+
+    .welcome-header-social {
+        width: 60%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: left;
+        padding: 0;
+    }
+
+    .welcome-header-navigation {
+        width: 40%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        padding: 0;
+    }
+
+        .welcome-header-navigation li, .welcome-header-social li {
+            display: inline-block;
+            width: auto;
+            padding: 0 18px;
+        }
+        .welcome-header-navigation li:last-child{
+            padding-right: 0;
+        }
+        .welcome-header-social li:first-child{
+            padding-left:5px;
+        }
+
+            .welcome-header-navigation li a , .welcome-header-social li a{
+                text-decoration: none;
+                color: white;
+                font-size: 14px;
+                font-family: NunitoSans-Bold;
+                text-transform: uppercase;
+                transition: all 0.3s;
+            }
+
+.welcome-navbar{
+    position: relative;
+    display: table;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    padding: 0 15vw;
+    color: black;
+    z-index: 5;
+}
+.welcome-navbar-title{
+    width: 30%;
+    display:table-cell;
+    text-align:left;
+    font-family: Raleway;
+    font-size: 30px;
+    letter-spacing: 2px;
+    vertical-align: middle;
+}
+.welcome-navbar-navigation{
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+.welcome-navbar-navigation li{
+    display: inline-block;
+    text-align: right;
+    width: auto;
+    padding: 0 18px 0 18px;
+}
+.welcome-navbar-navigation li:last-child{
+    padding-right: 0px;
+}
+.welcome-navbar-navigation li a{
+    text-decoration: none;
+    color: rgba(0,0,0,1);
+    font-size: 14px;
+    font-family: NunitoSans-Bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+.welcome-navbar-navigation li a:hover{
+    color: rgba(0,0,0,0.6);
+}
+}
+
+.welcome-screen{
+    position: relative;
+    width: 100%;
+    height: calc(100% - 125px);
+}
+.slide{
+    width: 100vw;
+    height: calc(100vh - 125px);
+    max-width: 100%;
+}
+.slide-image{
+    width: 100vw;
+    height: calc(100vh - 125px);
+    max-width: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: -1;
+}
+.slide-overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: calc(100vh - 125px);
+    max-width: 100%;
+    background-color: rgba(0,0,0,0.2);
+}
+.slide-content{
+    display: table-cell;
+    position: absolute;
+    top: 0;
+    bottom:0;
+    margin: auto 0;
+    left: 25vw;
+    width: 50vw;
+    height: 50vh;
+    max-width: 60%;
+    text-align: center;
+    word-break: break-word;
+    vertical-align: middle;
+}
+.slide-title{
+    position: relative;
+    display: block;
+    width: 100%;
+    font-family: NunitoSans-Black;
+    font-size: calc(14px + 3vw);
+    margin: 50px 0 15px 0;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.4);
+}
+.slide-description{
+    position: relative;
+    display: block;
+    width: 100%;
+    font-size: calc(8px + 2vh);
+    font-family: NunitoSans-Light;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.4);
+    margin-bottom: 50px;
+}
+#register-btn{
+    position: relative;
+    width: 200px;
+    max-width: 50vw;
+    margin: 0 auto;
+}
+#slide-left{
+    position: absolute;
+    left: 3vw;
+    top: 0; bottom:0;
+    margin: auto 0;
+}
+#slide-right{
+    position: absolute;
+    right: 3vw;
+    top: 0; bottom:0;
+    margin: auto 0;
+}
+.slide-dots{
+    position: absolute;
+    bottom: 2vh;
+    left: 0; right: 0;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+.slide-dot{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 0 5px;
+}
+.slide-dot:hover{
+    cursor: pointer;
+}
+.green{
+    background-color: #02CB9E;
+}
