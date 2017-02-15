@@ -18,7 +18,7 @@
 @font-face { font-family: NunitoSans-SemiBold; src: url('/fonts/nunitosans/NunitoSans-SemiBold.ttf'); } 
 @font-face { font-family: NunitoSans-SemiBoldItalic; src: url('/fonts/nunitosans/NunitoSans-SemiBoldItalic.ttf'); } 
 
-html, body, .templates{
+html, body{
     height: 100%;
 }
 
@@ -27,10 +27,11 @@ body{
     padding: 0;
     font-family: NunitoSans-Regular;
     color: white;
-    height: 100%;
 }
 
-
+.template{
+    height: 100%;
+}
 
 .transparent-round-btn{
     border-radius: 50%;
@@ -99,22 +100,15 @@ body{
         text-align: center;
         padding: 0;
     }
-
-    .welcome-header-navigation {
-        display: none;
-    }
-
         .welcome-header-social li {
             display: inline-block;
             width: auto;
             padding: 0 18px;
         }
-        }
         .welcome-header-social li:first-child{
             padding-left:5px;
         }
-
-            .welcome-header-social li a{
+         .welcome-header-social li a{
                 text-decoration: none;
                 color: white;
                 font-size: 14px;
@@ -122,6 +116,9 @@ body{
                 text-transform: uppercase;
                 transition: all 0.3s;
             }
+    .welcome-header-navigation {
+        display: none;
+    }
 
 .welcome-navbar{
     position: relative;
@@ -270,11 +267,9 @@ body{
 .slide-content{
     display: table-cell;
     position: absolute;
-    top: 0;
-    bottom:0;
-    margin: auto 0;
-    left: 25vw;
-    width: 50vw;
+    top: 0; right: 0; bottom:0; left: 0;
+    margin: auto;
+    width: 100vw;
     height: 50vh;
     max-width: 60%;
     text-align: center;
@@ -298,13 +293,21 @@ body{
     font-size: calc(8px + 2vh);
     font-family: NunitoSans-Light;
     text-shadow: 3px 3px 3px rgba(0,0,0,0.4);
-    margin-bottom: 50px;
+    margin-bottom: 4vh;
 }
 #register-btn{
     position: relative;
     width: 200px;
-    max-width: 50vw;
+    max-width: 45vw;
     margin: 0 auto;
+    transition: all 0.2s;
+}
+
+#register-btn:hover{
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+    -webkit-transform: scale(1.05,1.05);
+    -ms-transform :scale(1.05,1.05);
+    transform: scale(1.05,1.05);
 }
 #slide-left{
     position: absolute;
@@ -333,10 +336,14 @@ body{
     border-radius: 50%;
     background-color: white;
     margin: 0 5px;
+    transition: all 0.4s, transform 0.2s;
 }
 .slide-dot:hover{
     cursor: pointer;
-}
-.green{
     background-color: #02CB9E;
+    transform: scale(1.2, 1.2);
+}
+.slide_dot_selected{
+    background-color: #02CB9E;
+    transform: scale(1.2, 1.2);
 }

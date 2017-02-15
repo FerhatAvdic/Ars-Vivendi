@@ -66,6 +66,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\pages\blog\blog.html" />
+    <Content Include="app\pages\blog\blogController.js" />
+    <Content Include="app\pages\dogadaji\dogadaji.html" />
+    <Content Include="app\pages\dogadaji\dogadajiController.js" />
+    <Content Include="app\pages\login\login.html" />
+    <Content Include="app\pages\login\loginController.js" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\div_slide.jpg" />

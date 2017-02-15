@@ -19,9 +19,35 @@
     <script src="app/app.js"></script>
     <!--Controllers-->
     <script src="app/pages/home/homeController.js"></script>
+    <script src="app/pages/blog/blogController.js"></script>
+    <script src="app/pages/login/loginController.js"></script>
+    <script src="app/pages/dogadaji/dogadajiController.js"></script>
     <!--Services-->
 </head>
 <body>
+    <div class="welcome-header">
+        <ul class="welcome-header-social">
+            <li><a href="https://www.facebook.com/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href="https://twitter.com/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.youtube.com/"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+            <li>|</li>
+            <li>Kontaktiraj nas na +387/61-999-999</li>
+        </ul>
+        <ul class="welcome-header-navigation">
+            <li><a href="#!/login">Prijava</a></li>
+            <li><a href="#!/login">Postani Član</a></li>
+        </ul>
+    </div>
+    <div class="welcome-navbar">
+        <div class="welcome-navbar-title">Ars Vivendi</div>
+        <ul class="welcome-navbar-navigation">
+            <li><a href="#!/home">Početna</a></li>
+            <li><a href="#!/home">Aktuelno</a></li>
+            <li><a href="#!/blog">Blog</a></li>
+            <li><a href="#!/dogadaji">Događaji</a></li>
+            <li><a href="#!/home">Kontakt</a></li>
+        </ul>
+    </div>
     <div class="templates" ng-view>
     </div>
 </body>
