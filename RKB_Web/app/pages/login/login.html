@@ -1,2 +1,78 @@
-﻿<div>Login
+﻿<div class="login-screen">
+
+    <div class="login-form">
+        <ul class="nav nav-tabs login-tabs">
+            <li class="active"><a data-toggle="tab" href="#postani-clan" target="_self">Postani Član</a></li>
+            <li><a data-toggle="tab" href="#prijava" target="_self">Prijava</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="prijava" class="tab-pane fade">
+                <div class="login-line"><p>Unesi podatke za prijavu</p></div>
+                <input type="text" placeholder="Email" />
+                <input type="password" placeholder="Lozinka" />
+                <button class="rectangle-btn login-btn-full" type="submit">Prijava</button>
+                <div class="login-line"><p>ili</p></div>
+                <a href="#" class="connect facebook">
+                    <div class="connect-icon">
+                        <i class="fa fa-facebook"></i>
+                    </div>
+                    <div class="connect-context">
+                        <span>Prijava putem<strong> Facebook-a</strong></span>
+                    </div>
+                </a>
+                <a href="#" class="connect gplus">
+                    <div class="connect-icon">
+                        <i class="fa fa-google-plus"></i>
+                    </div>
+                    <div class="connect-context">
+                        <span>Prijava putem<strong> Google Plus-a</strong></span>
+                    </div>
+                </a>               
+             </div>
+            <div id="postani-clan" class="tab-pane in active">
+                <div class="login-line"><p>Odaberi način registracije</p></div>
+                <button class="rectangle-btn login-btn-full"  data-toggle="tab" href="#postani-clan-1" target="_self">Registriraj se</button>
+                <div class="login-line"><p>ili</p></div>
+                <a href="#" class="connect facebook">
+                    <div class="connect-icon">
+                        <i class="fa fa-facebook"></i>
+                    </div>
+                    <div class="connect-context">
+                        <span>Postani član putem<strong> Facebook-a</strong></span>
+                    </div>
+                </a>
+                <a href="#" class="connect gplus">
+                    <div class="connect-icon">
+                        <i class="fa fa-google-plus"></i>
+                    </div>
+                    <div class="connect-context">
+                        <span>Postani član putem<strong> Google Plus-a</strong></span>
+                    </div>
+                </a>               
+            </div>
+            <div id="postani-clan-1" class="tab-pane fade">
+                <div class="login-line"><p>Lični podaci</p></div>
+                <input type="text" class="inline-input" placeholder="Ime" />
+                <input type="text" class="inline-input" placeholder="Prezime" />
+                <input type="text" placeholder="Adresa" />
+                <input type="text" placeholder="Telefon" />
+                <input type="text" placeholder="Email" />
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
+            </div>
+            <div id="postani-clan-2" class="tab-pane fade">
+                <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
+                <ul class="login-list">
+                    <li><label>Ronjenje</label><input type="checkbox" /></li>
+                    <li><label>Rafting</label><input type="checkbox" /></li>
+                    <li><label>Biciklizam</label><input type="checkbox" /></li>
+                    <li><label>Planinarenje</label><input type="checkbox" /></li>
+                    <li><label>Skijanje</label><input type="checkbox" /></li>
+                </ul>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
+            </div>
+            <div id="postani-clan-3" class="tab-pane fade">
+                <div class="login-line"><p>Uplata za članstvo</p></div>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self">Registriraj se</button>
+            </div>
+    </div>
 </div>

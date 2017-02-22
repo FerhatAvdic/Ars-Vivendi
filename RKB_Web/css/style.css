@@ -24,13 +24,34 @@ html, body{
 
 body{
     margin: 0;
-    padding: 0;
+    padding-top: 125px;
     font-family: NunitoSans-Regular;
-    color: white;
 }
 
-.template{
+.templates{
     height: 100%;
+}
+
+.ang-fade {
+    opacity: 1;
+}
+.ang-fade.ng-enter,
+.fade.ng-leave {
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+}
+.ang-fade.ng-enter {
+    opacity: 0;
+}
+.ang-fade.ng-enter-active {
+    opacity: 1;
+}
+.ang-fade.ng-leave {
+    opacity: 1;
+}
+.ang-fade.ng-leave-active {
+    opacity: 0;
+    display: none;
 }
 
 .transparent-round-btn{
@@ -84,7 +105,8 @@ body{
     z-index: 6;
 }
   .welcome-header {
-        position: relative;
+        position: absolute;
+        top: 0;
         display: table;
         width: 100%;
         height: 45px;
@@ -99,7 +121,17 @@ body{
         vertical-align: middle;
         text-align: center;
         padding: 0;
+        color: white;
     }
+        .welcome-header-social a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            font-family: NunitoSans-Bold;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
         .welcome-header-social li {
             display: inline-block;
             width: auto;
@@ -108,20 +140,14 @@ body{
         .welcome-header-social li:first-child{
             padding-left:5px;
         }
-         .welcome-header-social li a{
-                text-decoration: none;
-                color: white;
-                font-size: 14px;
-                font-family: NunitoSans-Bold;
-                text-transform: uppercase;
-                transition: all 0.3s;
-            }
+
     .welcome-header-navigation {
         display: none;
     }
 
 .welcome-navbar{
-    position: relative;
+    position: absolute;
+    top: 45px;
     display: table;
     width: 100%;
     height: 80px;
@@ -129,6 +155,7 @@ body{
     padding: 0 5vw;
     color: black;
     z-index: 5;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.24);
 }
 .welcome-navbar-title{
     width: 30%;
@@ -145,7 +172,8 @@ body{
 @media only screen and (min-width: 1150px) {
 
     .welcome-header {
-        position: relative;
+        position: absolute;
+        top: 0;
         display: table;
         width: 100%;
         height: 45px;
@@ -192,7 +220,8 @@ body{
             }
 
 .welcome-navbar{
-    position: relative;
+    position: absolute;
+    top: 45px;
     display: table;
     width: 100%;
     height: 80px;
@@ -241,16 +270,19 @@ body{
 .welcome-screen{
     position: relative;
     width: 100%;
-    height: calc(100% - 125px);
+    height: 100%;
 }
 .slide{
+    height:100%;
+}
+.slide-background{
     width: 100vw;
-    height: calc(100vh - 125px);
+    height: 100%;
     max-width: 100%;
 }
 .slide-image{
     width: 100vw;
-    height: calc(100vh - 125px);
+    height: 100%;
     max-width: 100%;
     object-fit: cover;
     position: relative;
@@ -260,7 +292,7 @@ body{
     position: absolute;
     top: 0; left: 0;
     width: 100vw;
-    height: calc(100vh - 125px);
+    height: 100%;
     max-width: 100%;
     background-color: rgba(0,0,0,0.2);
 }
@@ -275,6 +307,7 @@ body{
     text-align: center;
     word-break: break-word;
     vertical-align: middle;
+    color: white;
 }
 .slide-title{
     position: relative;
@@ -347,6 +380,139 @@ body{
     background-color: #02CB9E;
     transform: scale(1.2, 1.2);
 }
-.klasa-za-komit{
+
+
+/*LOGIN*/
+
+.login-screen{
+    display: block;
+    background: rgba(0,0,0,0.1);
+    padding: 10vh 0;
+    min-height: 100%;
+}
+.login-form{
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    background: white;
+    width: 95vw;
+    max-width: 500px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.login-line{
+    position: relative;
+    display: block;
+    height: 70px;
+    border-bottom: 1px solid #E5E5E5;
+    line-height: 70px;
+}
+.login-line p{
+    text-align: center;
+    color: gray;
+    font-family: NunitoSans-Light;
+    font-size: 16px;
+}
+.login-list{
+    list-style-type: none;
+    padding: 0;
+}
+.login-list li{
+    position: relative;
+    display: block;
+    height: 70px;
+    border-bottom: 1px solid #E5E5E5;
+    line-height: 70px;
+}
+.login-list li label{
+    width: 90%;
+    font-family: NunitoSans-Regular;
+    font-weight: 300;
+    padding-left: 30px;
+    color: gray;
+}
+.login-form input[type="text"],  .login-form input[type="password"]{
+    display: block;
     width: 100%;
+    border: 0;
+    height: 70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-bottom: 1px solid #E5E5E5;
+}
+.login-tabs li{
+    width: 50%;
+    text-align: center;
+    height: 70px;
+}
+.login-tabs li a{
+    height: 100%;
+    line-height: 54px;
+    font-family: NunitoSans-Bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 16px;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    color:#809191;
+    background-color: #D2D8D8;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{
+    border: 0;
+    color: black;
+    background-color: white;
+}
+.login-btn-full{
+    display: block;
+    width: 100%;
+    height: 70px;
+    border-radius: 0;
+    background: #00A37F;
+}
+.login-btn-halfway{
+    display: inline-block;
+    width: 50%;
+    height: 70px;
+    border-radius: 0;
+    background: #00A37F;
+}
+
+.connect{
+    display: block;
+    height: 70px;
+    width: 100%;
+    color: white;
+    line-height: 70px;
+}
+.connect:hover{
+    color: white;
+}
+.connect-icon{
+    float: left;
+    width: 70px;
+    text-align: center;
+    font-size: 22px;
+}
+.connect-context{
+    width: calc(100% - 70px);
+    float: right;
+    text-align: center;
+    font-family: NunitoSans-Regular;
+}
+.facebook{
+    background-color: #3b5998;
+}
+.facebook .connect-icon{
+    background-color: #283d68;
+}
+.gplus{
+    background-color: #dd4b39;
+}
+.gplus .connect-icon{
+    background-color: #b52f1f;
+}
+.no-bg-btn{
+    background: none;
+    color: gray;
 }

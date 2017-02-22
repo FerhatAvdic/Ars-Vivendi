@@ -1,6 +1,6 @@
 ﻿<div class="welcome-screen">
-    <div class="fadable" ng-repeat="slide in slides" ng-show="$index==currentSlide">
-        <div class="slide">
+    <div class="slide" ng-repeat="slide in slides" ng-show="$index==currentSlide">
+        <div class="slide-background">
             <div class="slide-overlay"></div>
             <img class="slide-image" ng-src="{{slide.image}}" />
         </div>
@@ -13,8 +13,8 @@
     <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <div class="slide-dots">
-        <div ng-class="{slide_dot_selected: dotSelected($index)}" class="slide-dot" ng-repeat="dot in slides" ng-click="goToSlide($index)">
-        <span ng-hide="true">{{dot.title}}</span></div>
+        <div class="slide-dot" ng-class="{slide_dot_selected: dotSelected($index)}" ng-repeat="dot in slides" ng-click="goToSlide($index)">
+        </div>
     </div>
 </div>
         

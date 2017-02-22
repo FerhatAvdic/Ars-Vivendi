@@ -72,12 +72,15 @@
     <Content Include="app\pages\dogadaji\dogadajiController.js" />
     <Content Include="app\pages\login\login.html" />
     <Content Include="app\pages\login\loginController.js" />
+    <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\div_slide.jpg" />
     <Content Include="img\hik_slide.jpg" />
     <Content Include="img\ski_slide.jpg" />
     <Content Include="libs\angular-animate.min.js" />
+    <Content Include="libs\angular-aria.min.js" />
+    <Content Include="libs\angular-material.min.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\Raleway-Black.ttf" />
     <Content Include="fonts\Raleway-BlackItalic.ttf" />
