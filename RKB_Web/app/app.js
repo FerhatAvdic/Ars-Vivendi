@@ -1,6 +1,6 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate']);
+    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule']);
 
     avApp.config(function ($routeProvider) {
         $routeProvider
@@ -13,4 +13,12 @@
 
 
     });
+
+    avApp.config(function ($httpProvider) {
+        $httpProvider.interceptors.push('authenticationInterceptorService');
+    });
+
+    avApp.run(['authenticationService', function (authenticationService) {
+        authenticationService.fillAuthData();
+    }]);
 }());

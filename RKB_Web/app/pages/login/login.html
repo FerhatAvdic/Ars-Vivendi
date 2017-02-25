@@ -8,9 +8,10 @@
         <div class="tab-content">
             <div id="prijava" class="tab-pane fade">
                 <div class="login-line"><p>Unesi podatke za prijavu</p></div>
-                <input type="text" placeholder="Email" />
-                <input type="password" placeholder="Lozinka" />
-                <button class="rectangle-btn login-btn-full" type="submit">Prijava</button>
+                <!--<input type="text" placeholder="Email" />-->
+                <input type="text" placeholder="Korisnicko Ime" data-ng-model="loginData.userName" required/>
+                <input type="password" placeholder="Lozinka" data-ng-model="loginData.password" required/>
+                <button class="rectangle-btn login-btn-full" type="submit" data-ng-click="login()">Prijava</button>
                 <div class="login-line"><p>ili</p></div>
                 <a href="#" class="connect facebook">
                     <div class="connect-icon">
@@ -52,11 +53,12 @@
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
                 <div class="login-line"><p>Korisnički podaci</p></div>
-                <input type="text" placeholder="Korisničko Ime" />
+                <input type="text" placeholder="Korisničko Ime" data-ng-model="registrationData.userName" required/>
                 <input type="text" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <input type="password" placeholder="Potvrdi Password" />
+                <input type="password" placeholder="Šifra" data-ng-model="registrationData.password" required  />
+                <input type="password" placeholder="Potvrdi Šifru" data-ng-model="registrationData.confirmPassword"/>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
+
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
                 <div class="login-line"><p>Lični podaci</p></div>
