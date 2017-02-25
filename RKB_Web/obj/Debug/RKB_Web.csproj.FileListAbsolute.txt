@@ -38,3 +38,23 @@ C:\Users\ferha\Documents\Visual Studio 2015\Projects\AV_Web\RKB_Web\bin\Microsof
 C:\Users\ferha\Documents\Visual Studio 2015\Projects\AV_Web\RKB_Web\obj\Debug\RKB_Web.csprojResolveAssemblyReference.cache
 C:\Users\ferha\Documents\Visual Studio 2015\Projects\AV_Web\RKB_Web\obj\Debug\RKB_Web.dll
 C:\Users\ferha\Documents\Visual Studio 2015\Projects\AV_Web\RKB_Web\obj\Debug\RKB_Web.pdb
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\csc.exe
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\System.Collections.Immutable.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\System.Reflection.Metadata.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\vbc.exe
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\VBCSCompiler.exe
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\roslyn\VBCSCompiler.exe.config
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\RKB_Web.dll.config
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\RKB_Web.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\RKB_Web.pdb
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\obj\Debug\RKB_Web.dll
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\obj\Debug\RKB_Web.pdb
+D:\ArsVivendiProjekat\ArsVivendiFrontend\Ars-Vivendi\RKB_Web\obj\Debug\RKB_Web.csprojResolveAssemblyReference.cache

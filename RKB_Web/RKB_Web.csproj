@@ -72,6 +72,9 @@
     <Content Include="app\pages\dogadaji\dogadajiController.js" />
     <Content Include="app\pages\login\login.html" />
     <Content Include="app\pages\login\loginController.js" />
+    <Content Include="app\services\authenticationInterceptorService.js" />
+    <Content Include="app\services\authenticationService.js" />
+    <Content Include="app\services\ordersService.js" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="img\bik_slide.jpg" />
@@ -80,6 +83,7 @@
     <Content Include="img\ski_slide.jpg" />
     <Content Include="libs\angular-animate.min.js" />
     <Content Include="libs\angular-aria.min.js" />
+    <Content Include="libs\angular-local-storage.min.js" />
     <Content Include="libs\angular-material.min.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\Raleway-Black.ttf" />
