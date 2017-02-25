@@ -66,12 +66,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\pages\admin\dashboard\dashboard.html" />
+    <Content Include="app\pages\admin\dashboard\dashboardController.js" />
+    <Content Include="app\pages\newEvent\newEvent.html" />
+    <Content Include="app\pages\newEvent\newEventController.js" />
     <Content Include="app\pages\blog\blog.html" />
     <Content Include="app\pages\blog\blogController.js" />
-    <Content Include="app\pages\dogadaji\dogadaji.html" />
-    <Content Include="app\pages\dogadaji\dogadajiController.js" />
+    <Content Include="app\pages\events\events.html" />
+    <Content Include="app\pages\events\eventsController.js" />
     <Content Include="app\pages\login\login.html" />
     <Content Include="app\pages\login\loginController.js" />
+    <Content Include="app\pages\mainController.js" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="img\bik_slide.jpg" />

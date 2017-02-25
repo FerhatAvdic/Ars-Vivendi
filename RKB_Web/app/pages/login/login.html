@@ -20,7 +20,7 @@
                         <span>Prijava putem<strong> Facebook-a</strong></span>
                     </div>
                 </a>
-                <a href="#" class="connect gplus">
+                <a href="#!/admin" class="connect gplus">
                     <div class="connect-icon">
                         <i class="fa fa-google-plus"></i>
                     </div>
@@ -51,15 +51,36 @@
                 </a>               
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
-                <div class="login-line"><p>Lični podaci</p></div>
-                <input type="text" class="inline-input" placeholder="Ime" />
-                <input type="text" class="inline-input" placeholder="Prezime" />
-                <input type="text" placeholder="Adresa" />
-                <input type="text" placeholder="Telefon" />
+                <div class="login-line"><p>Korisnički podaci</p></div>
+                <input type="text" placeholder="Korisničko Ime" />
                 <input type="text" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Potvrdi Password" />
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
+                <div class="login-line"><p>Lični podaci</p></div>
+                <input type="text" placeholder="Ime" />
+                <input type="text" placeholder="Prezime" />
+                <input type="text" placeholder="Adresa" />
+                <input type="text" placeholder="Telefon" />
+                <fieldset id="genderRadio" >
+                    <ul class="login-line">
+                        <li><label>Spol: </label></li>
+                        <li><label>Muški </label><input type="radio" value="" name="genderRadio"> </li>
+                        <li><label>Ženski </label><input type="radio" value="" name="genderRadio"></li>
+                    </ul>
+                </fieldset>
+                <fieldset id="employmentRadio">
+                    <ul class="login-line">
+                        <li><label>Zaposlen/a: </label></li>
+                        <li><label>Da </label><input type="radio" value="" name="employmentRadio"></li>
+                        <li><label>Ne </label><input type="radio" value="" name="employmentRadio"></li>
+                    </ul>
+                </fieldset>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
+            </div>
+            <div id="postani-clan-3" class="tab-pane fade">
                 <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
                 <ul class="login-list">
                     <li><label>Ronjenje</label><input type="checkbox" /></li>
@@ -68,11 +89,12 @@
                     <li><label>Planinarenje</label><input type="checkbox" /></li>
                     <li><label>Skijanje</label><input type="checkbox" /></li>
                 </ul>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self">Dalje</button>
             </div>
-            <div id="postani-clan-3" class="tab-pane fade">
+            <div id="postani-clan-4" class="tab-pane fade">
                 <div class="login-line"><p>Uplata za članstvo</p></div>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self">Registriraj se</button>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-3" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" target="_self">Postani Član</button>
             </div>
     </div>
+</div>
 </div>

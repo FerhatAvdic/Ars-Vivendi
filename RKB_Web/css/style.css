@@ -27,6 +27,9 @@ body{
     padding-top: 125px;
     font-family: NunitoSans-Regular;
 }
+.no_nav{
+    padding-top: 0;
+}
 
 .templates{
     height: 100%;
@@ -52,6 +55,18 @@ body{
 .ang-fade.ng-leave-active {
     opacity: 0;
     display: none;
+}
+.material-round-btn{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: #02CB9E;
+    color: white;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .transparent-round-btn{
@@ -395,7 +410,7 @@ body{
     margin: 0 auto;
     display: block;
     background: white;
-    width: 95vw;
+    width: 90vw;
     max-width: 500px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -405,6 +420,8 @@ body{
     height: 70px;
     border-bottom: 1px solid #E5E5E5;
     line-height: 70px;
+    padding: 0 30px;
+    list-style-type: none;
 }
 .login-line p{
     text-align: center;
@@ -412,9 +429,24 @@ body{
     font-family: NunitoSans-Light;
     font-size: 16px;
 }
+.login-line input[type="radio"]{
+    margin: 0 3px;
+}
+.login-line li{
+    display: inline-block;
+}
+.login-line li:first-child{
+    color:gray;
+    margin-right: 15px;
+}
+.login-line li label{
+    font-family: NunitoSans-Regular;
+    font-weight: 100;
+}
 .login-list{
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 .login-list li{
     position: relative;
@@ -426,7 +458,7 @@ body{
 .login-list li label{
     width: 90%;
     font-family: NunitoSans-Regular;
-    font-weight: 300;
+    font-weight: 100;
     padding-left: 30px;
     color: gray;
 }
@@ -450,7 +482,7 @@ body{
     font-family: NunitoSans-Bold;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     border: 0;
     border-radius: 0;
     margin: 0;
@@ -515,4 +547,52 @@ body{
 .no-bg-btn{
     background: none;
     color: gray;
+}
+
+/*ADMIN PANEL*/
+.admin-navbar{
+    background-color: #02CB9E;
+    color: white;
+}
+    .admin-navbar .navbar-brand{
+    color: white;
+    }
+    .admin-navbar a{
+    color: white;
+}
+#side-menu li a{
+    color: gray;
+}
+
+
+/*EVENTS*/
+
+.events-screen{
+    position: relative;
+    display: block;
+    background: rgba(0,0,0,0.1);
+    min-height: 100%;
+}
+#add-event-btn{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+#new-event-form{
+    max-width: 800px;
+    max-height: 90vh;
+}
+.input-list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.input-list li{
+    display: block;
+}
+.center-element{
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto;
 }

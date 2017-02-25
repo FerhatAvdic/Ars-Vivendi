@@ -1,0 +1,31 @@
+﻿<div class="events-screen">
+
+    <form class="center-element" id="new-event-form">
+        <ul class="input-list">
+            <li><label>name</label><input type="text" ng-model="newEvent.name" value=""/></li>
+            <li><label>type</label><input type="text" ng-model="newEvent.type"/></li>
+            <li><label>description</label><input type="text" ng-model="newEvent.description" /></li>
+            <li><label>image</label><input type="file" ng-model="newEvent.image" /></li>
+            <li><label>video</label><input type="text" ng-model="newEvent.video" /></li>
+            <li><label>startDate</label><input type="date" ng-model="newEvent.startDate" /></li>
+            <li><label>endDate</label><input type="date" ng-model="newEvent.endDate"/></li>
+            <li><label>organizator</label><input type="text" ng-model="newEvent.organizator"/></li>
+            <li><label>location</label><input type="text" ng-model="newEvent.location"/></li>
+            <li><label>departureTime</label><input type="time" ng-model="newEvent.departureTime"/></li>
+            <li><label>departurePlace</label><input type="text" ng-model="newEvent.departurePlace" /></li>
+            <li><label>maxPeople</label><input type="text" ng-model="newEvent.maxPeople" /></li>
+            <li><label>forAge</label><input type="range" ng-model="newEvent.forAge" /></li>
+            <li><label>necessaryEquipment</label><input type="text" ng-model="newEvent.necessaryEquipment" /></li>
+            <li><label>contactInfo</label><input type="text" ng-model="newEvent.contactInfo" /></li>
+            <li><label>website</label><input type="url" ng-model="newEvent.website" /></li>
+        </ul>
+    </form>
+    <div stlye="display: block; position: absolute; bottom: 15px; left: 0;">
+        {{newEvent.name}} , {{newEvent.type}} , {{newEvent.description}} ,
+        {{newEvent.image}} , {{newEvent.video}} , {{newEvent.startDate}} ,
+        {{newEvent.endDate}} , {{newEvent.organizator}} , {{newEvent.location}} ,
+        {{newEvent.departureTime}} , {{newEvent.departurePlace}} , {{newEvent.maxPeople}} ,
+        {{newEvent.forAge}} , {{newEvent.necessaryEquipment}} , {{newEvent.contactInfo}} ,
+        {{newEvent.website}}
+    </div>
+</div>
