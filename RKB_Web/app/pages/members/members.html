@@ -1,0 +1,96 @@
+﻿<div class="gray-wrapper">
+    <a href="#!/newmember" class="material-round-btn" id="add-event-btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    <div class="box-members">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-2">
+                <div class="panel panel-default">
+                    <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
+                    <div class="members-filter" uib-collapse="isCollapsed.panel1">
+                        <ul>
+                            <li><label>Skijanje</label><input type="checkbox" ng-model="checkedInterests.skiing"/></li>
+                            <li><label>Planinarenje</label><input type="checkbox" ng-model="checkedInterests.hiking"/></li>
+                            <li><label>Biciklizam</label><input type="checkbox" ng-model="checkedInterests.cycling"/></li>
+                            <li><label>Ronjenje</label><input type="checkbox" ng-model="checkedInterests.diving"/></li>
+                            <li><label>Rafting</label><input type="checkbox" ng-model="checkedInterests.rafting"/></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Toggle collapse Vertically</div>
+                    <div class="members-filter" uib-collapse="isCollapsed.panel2">
+                        <ul>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="members-filter-toggle" ng-click="isCollapsed.panel3 = !isCollapsed.panel3">Toggle collapse Vertically</div>
+                    <div class="members-filter" uib-collapse="isCollapsed.panel3">
+                        <ul>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="members-filter-toggle" ng-click="isCollapsed.panel4 = !isCollapsed.panel4">Toggle collapse Vertically</div>
+                    <div class="members-filter" uib-collapse="isCollapsed.panel4">
+                        <ul>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                            <li><label>Filter</label><input type="checkbox" /></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Members</div>
+                    <div class="panel-body">
+                        <div>
+                            <label>Prikaži</label><select ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select>
+                        </div>
+                        <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true"></ul>
+                        <div class="table-hover">
+                            <table class="table members-table">
+                                <thead>
+                                    <tr>
+                                        <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading, $index)">
+                                            {{heading}}
+                                        </th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="member in members | orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize "><!--| filter : {interests: checkedInterests}-->
+                                        <td>{{member.username}}</td>
+                                        <td>{{member.password}}</td>
+                                        <td>{{member.email}}</td>
+                                        <td>{{member.name}}</td>
+                                        <td>{{member.surname}}</td>
+                                        <td>{{member.address}}</td>
+                                        <td>{{member.phone}}</td>
+                                        <td>{{member.gender}}</td>
+                                        <td>{{member.employed}}</td>
+                                        <td>{{member.membershipDueDate}}</td>
+                                        <td>
+                                            <a><i class="fa fa-user" aria-hidden="true"></i></a>
+                                            <a><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

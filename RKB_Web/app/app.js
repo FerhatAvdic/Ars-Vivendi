@@ -1,6 +1,6 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule']);
+    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'ui.bootstrap']);
 
     avApp.config(function ($routeProvider) {
         $routeProvider
@@ -8,6 +8,7 @@
         .when('/login', { templateUrl: 'app/pages/login/login.html', controller: 'loginController' })
         .when('/blog', { templateUrl: 'app/pages/blog/blog.html', controller: 'blogController' })
         .when('/events', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
+        .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })
         .when('/newevent', { templateUrl: 'app/pages/newEvent/newEvent.html', controller: 'newEventController' })
         .otherwise({ redirectTo: "/" });
 

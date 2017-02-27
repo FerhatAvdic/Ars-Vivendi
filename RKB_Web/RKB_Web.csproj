@@ -68,6 +68,8 @@
   <ItemGroup>
     <Content Include="app\pages\admin\dashboard\dashboard.html" />
     <Content Include="app\pages\admin\dashboard\dashboardController.js" />
+    <Content Include="app\pages\members\members.html" />
+    <Content Include="app\pages\members\members.js" />
     <Content Include="app\pages\newEvent\newEvent.html" />
     <Content Include="app\pages\newEvent\newEventController.js" />
     <Content Include="app\pages\blog\blog.html" />
@@ -87,9 +89,9 @@
     <Content Include="img\hik_slide.jpg" />
     <Content Include="img\ski_slide.jpg" />
     <Content Include="libs\angular-animate.min.js" />
-    <Content Include="libs\angular-aria.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />
-    <Content Include="libs\angular-material.min.js" />
+    <Content Include="libs\moment.min.js" />
+    <Content Include="libs\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\Raleway-Black.ttf" />
     <Content Include="fonts\Raleway-BlackItalic.ttf" />
