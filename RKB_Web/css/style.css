@@ -568,10 +568,11 @@ body{
 /*EVENTS*/
 
 .gray-wrapper{
-    position: relative;
     display: block;
     background: rgba(0,0,0,0.1);
     min-height: 100%;
+    width: 100%;
+    overflow:auto;
 }
 #add-event-btn{
     position: absolute;

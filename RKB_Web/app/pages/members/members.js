@@ -409,19 +409,19 @@
              }
 
         ];
-        $scope.headings = {
-            "username": "username",
-            "password": "password",
-            "email": "email",
-            "name": "name",
-            "surname": "surname",
-            "address": "address",
-            "phone": "phone",
-            "gender": "gender",
-            "employed": "employed",
-            "membershipDueDate": "membership due date",
-        }
-        $scope.propertyName = 'name';
+        $scope.headings = [
+            {"value": "username",},
+            {"value": "password" },
+            {"value": "email" },
+            { "value": "name" },
+            { "value": "surname" },
+            { "value": "address" },
+            { "value": "phone" },
+            { "value": "gender" },
+            { "value": "employed" },
+            { "value": "membershipDueDate" },
+        ]
+        $scope.propertyName = {"value": "name"};
         $scope.reverse = false;
         $scope.sortMembersBy = function (propertyName) {
             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;

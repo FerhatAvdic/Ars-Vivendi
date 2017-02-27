@@ -1,7 +1,6 @@
 ﻿<div class="gray-wrapper">
     <a href="#!/newmember" class="material-round-btn" id="add-event-btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
     <div class="box-members">
-        <div class="row">
             <div class="col-md-offset-1 col-md-2">
                 <div class="panel panel-default">
                     <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
@@ -59,8 +58,8 @@
                             <table class="table members-table">
                                 <thead>
                                     <tr>
-                                        <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading, $index)">
-                                            {{heading}}
+                                        <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
+                                            {{heading.value}}
                                         </th>
                                         <th>Options</th>
                                     </tr>
@@ -91,6 +90,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
