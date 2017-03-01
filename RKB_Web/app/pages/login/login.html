@@ -9,8 +9,8 @@
             <div id="prijava" class="tab-pane fade">
                 <div class="login-line"><p>Unesi podatke za prijavu</p></div>
                 <!--<input type="text" placeholder="Email" />-->
-                <input type="text" placeholder="Korisnicko Ime" data-ng-model="loginData.userName" required/>
-                <input type="password" placeholder="Lozinka" data-ng-model="loginData.password" required/>
+                <input type="text" placeholder="Korisnicko Ime" data-ng-model="loginData.userName" required />
+                <input type="password" placeholder="Lozinka" data-ng-model="loginData.password" required />
                 <button class="rectangle-btn login-btn-full" type="submit" data-ng-click="login()">Prijava</button>
                 <div class="login-line"><p>ili</p></div>
                 <a href="#" class="connect facebook">
@@ -28,11 +28,11 @@
                     <div class="connect-context">
                         <span>Prijava putem<strong> Google Plus-a</strong></span>
                     </div>
-                </a>               
-             </div>
+                </a>
+            </div>
             <div id="postani-clan" class="tab-pane in active">
                 <div class="login-line"><p>Odaberi način registracije</p></div>
-                <button class="rectangle-btn login-btn-full"  data-toggle="tab" href="#postani-clan-1" target="_self">Registriraj se</button>
+                <button class="rectangle-btn login-btn-full" data-toggle="tab" href="#postani-clan-1" target="_self">Registriraj se</button>
                 <div class="login-line"><p>ili</p></div>
                 <a href="#" class="connect facebook">
                     <div class="connect-icon">
@@ -49,24 +49,28 @@
                     <div class="connect-context">
                         <span>Postani član putem<strong> Google Plus-a</strong></span>
                     </div>
-                </a>               
+                </a>
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
                 <div class="login-line"><p>Korisnički podaci</p></div>
-                <input type="text" placeholder="Korisničko Ime" data-ng-model="registrationData.userName" required/>
+                <input type="text" placeholder="Korisničko Ime" data-ng-model="registrationData.userName" required />
+                <input type="password" placeholder="Šifra" data-ng-model="registrationData.password" required />
+                <input type="password" placeholder="Potvrdi Šifru" data-ng-model="registrationData.confirmPassword" />
+                <input type="text" placeholder="Ime" />
+                <input type="text" placeholder="Prezime" />
                 <input type="text" placeholder="Email" />
-                <input type="password" placeholder="Šifra" data-ng-model="registrationData.password" required  />
-                <input type="password" placeholder="Potvrdi Šifru" data-ng-model="registrationData.confirmPassword"/>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
 
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
                 <div class="login-line"><p>Lični podaci</p></div>
-                <input type="text" placeholder="Ime" />
-                <input type="text" placeholder="Prezime" />
+                <div class="login-line" >
+                    <label>Datum Rođenja: </label>
+                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                </div>
                 <input type="text" placeholder="Adresa" />
                 <input type="text" placeholder="Telefon" />
-                <fieldset id="genderRadio" >
+                <fieldset id="genderRadio">
                     <ul class="login-line">
                         <li><label>Spol: </label></li>
                         <li><label>Muški </label><input type="radio" value="" name="genderRadio"> </li>
@@ -97,6 +101,6 @@
                 <div class="login-line"><p>Uplata za članstvo</p></div>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-3" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" target="_self">Postani Član</button>
             </div>
+        </div>
     </div>
-</div>
 </div>

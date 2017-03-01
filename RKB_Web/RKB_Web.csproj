@@ -130,6 +130,7 @@
     <Content Include="fonts\nunitosans\NunitoSans-Regular.ttf" />
     <Content Include="fonts\nunitosans\NunitoSans-SemiBold.ttf" />
     <Content Include="fonts\nunitosans\NunitoSans-SemiBoldItalic.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

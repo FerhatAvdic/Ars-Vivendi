@@ -429,6 +429,22 @@ body{
     font-family: NunitoSans-Light;
     font-size: 16px;
 }
+.login-line label{
+    display: inline;
+    font-family: NunitoSans-Regular;
+    font-weight: 100;
+    color: gray;
+}
+
+#birthdate{
+    display: inline;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: auto;
+}
+.login-line .uib-datepicker-popup{
+    line-height: 1.42857143;
+}
 .login-line input[type="radio"]{
     margin: 0 3px;
 }
@@ -602,6 +618,9 @@ body{
 .box-members{
     padding: 5vh 0;
 }
+.members-panel{
+    overflow-x: auto;
+}
 
 .members-table tr th{
     vertical-align: middle;
@@ -622,10 +641,15 @@ body{
 }
 
 .members-filter-toggle{
+    padding: 10px 15px;
     display: block;
     width: 100%;
-    background-color: rgba(0,0,0,0.1);
+    background-color: #3A7AD2;
+    color: white;
     cursor: pointer;
+}
+.members-filter{
+    padding: 15px;
 }
 .members-filter ul {
     padding:0;
@@ -636,4 +660,12 @@ body{
     display: block;
     width: 100%;
     background-color: white;
+}
+#add-member-btn {
+    position: absolute;
+    top: 18px;
+    right: 50px;
+}
+#add-member-btn:hover{
+    color: white;
 }
