@@ -27,9 +27,27 @@ body{
     padding-top: 125px;
     font-family: NunitoSans-Regular;
 }
-.no_nav{
-    padding-top: 0;
+@media (max-width: 991px) {
+    body{
+    padding-top: 95px;
+    }
 }
+
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover, a:active, a:focus{
+    color: black;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
 
 .templates{
     height: 100%;
@@ -112,13 +130,102 @@ body{
 .inline-list li{
     display: inline;
 }
-.av-navbar{
-    position: fixed;
-    width: 100%;
-    height: 80px;
-    background-color: white;
-    z-index: 6;
+
+@media (min-width: 991px){
+    .hide-item, .nav > .hide-item {
+    display: none;
+    }
 }
+    
+@media (max-width: 991px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  
+  .navbar-nav-custom li a{
+      padding: 10px 20px;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+
+/*NEW NAVBAR*/
+.navbar-custom {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 5;
+    margin-bottom: 0;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.24);
+    border: 0;
+    border-radius: 0;
+}
+
+.navbar-custom .navbar-brand, .navbar-custom .navbar-brand:hover, .navbar-custom .navbar-nav li a {
+    color: black;
+}
+.navbar-custom .navbar-nav li a:hover{
+    color: gray;
+}
+.navbar-brand-custom{
+    font-family: Raleway;
+    letter-spacing: 2px;
+}
+/*.container-custom{
+    box-shadow: 0 1px 2px rgba(0,0,0,0.24);
+}*/
+.navbar-nav-custom li a {
+    font-size: 14px;
+    font-family: NunitoSans-Bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+@media  (min-width: 991px){
+    .navbar-nav-custom li a {
+        padding: 30px 20px;
+    }
+    .navbar-brand-custom{
+    font-size: 30px;
+    padding-top: 30px;
+}
+}
+
+.navbar-nav-custom li a:hover{
+    background-color: white;
+    color: gray;
+}
+
   .welcome-header {
         position: absolute;
         top: 0;
@@ -422,6 +529,7 @@ body{
     line-height: 70px;
     padding: 0 30px;
     list-style-type: none;
+    margin: 0;
 }
 .login-line p{
     text-align: center;
@@ -441,6 +549,7 @@ body{
     padding-left: 30px;
     padding-right: 30px;
     width: auto;
+    height: 69px;
 }
 .login-line .uib-datepicker-popup{
     line-height: 1.42857143;
@@ -622,13 +731,24 @@ body{
     overflow-x: auto;
 }
 
-.members-table tr th{
+.members-table thead tr th{
     vertical-align: middle;
     text-transform: capitalize;
     cursor: pointer;
+    background-color: #3A7AD2;
+    color: white;
 }
     .members-table tr th:hover {
-        background-color: rgba(0,0,0,0.1);
+        background-color: #094BA7;
+    }
+    .members-table thead tr th:first-child, .members-table thead tr th:last-child{
+        background-color: #3A7AD2;
+        cursor: auto;
+    }
+
+    .members-table tbody tr td, .members-table thead tr th{
+        height: 50px;
+        vertical-align: middle;
     }
 
 .members-table tr td a{
@@ -636,8 +756,14 @@ body{
     color: gray;
     cursor: pointer;
 }
+
 .members-table tr:hover{
     background-color: rgba(0,0,0,0.1);
+}
+.member-profile-picture{
+    max-width: 45px;
+    max-height: 45px;
+    border-radius: 50%;
 }
 
 .members-filter-toggle{
@@ -668,4 +794,101 @@ body{
 }
 #add-member-btn:hover{
     color: white;
+}
+
+
+/*PROFILE*/
+.profile-sidebar{
+    background-color: #02CB9E;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.profile-header-name{
+    font-size: 30px;
+    color: white;
+    padding-top: 50px;
+}
+.profile-top{
+    padding: 50px;
+}
+.profile-picture-frame{
+    max-height: 250px;
+    max-width: 250px;
+    margin: auto;
+    background-color: #02CB9E;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0px 12px rgba(0,0,0,0.19), 0 0px 12px rgba(0,0,0,0.19);
+}
+.profile-picture{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.profile-details{
+    margin: 50px 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 0px 3px rgba(0,0,0,0.19), 0 0px 3px rgba(0,0,0,0.19);
+    overflow-x: hidden;
+}
+.wrap-activity-counter{
+    text-align: center;
+    color: white;
+}
+.activity-counter{
+    background-color: rgba(0,0,0,0.2);
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    line-height: 80px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+.activity-counter p{
+    color: white;
+}
+
+.profile-tabs li{
+    width: 100%;
+}
+.profile-tabs li a{
+    background-color: #02CB9E;
+    color: white;
+}
+.profile-tabs li a:hover{
+    background-color: white;
+    color: black;
+}
+.profile-tab-content{
+    margin: 50px;
+}
+
+.profile-fields li{
+    border: 0;
+    display: block;
+    padding: 15px 50px;
+}
+.profile-fields li:first-child {
+    padding-top: 50px;
+}
+.profile-fields li:last-child{
+    padding-bottom: 50px;
+}
+
+
+
+.profile-fields input, .profile-fields input:hover{
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-bottom: 2px solid rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s, border 0s;
+}
+.profile-fields input:active, .profile-fields input:focus{
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.19), 0 5px 12px rgba(0,0,0,0.19);
+    border-bottom: 2px solid white;
 }

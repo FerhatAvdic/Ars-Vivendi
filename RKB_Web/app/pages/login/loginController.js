@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("loginController", ['$scope', '$location', '$timeout', 'authenticationService', function ($scope, $location, $timeout, authenticationService) {
+    avApp.controller("loginController", ['$scope','$rootScope', '$location', '$timeout', 'authenticationService', function ($scope,$rootScope, $location, $timeout, authenticationService) {
 
         $scope.message = "";
 
@@ -17,7 +17,12 @@
             userName: "",
             password: ""
         };
-
+        /*DELETE this ASAP*/
+        $scope.loginMOCKUP = function () {
+            $rootScope.changeMenuAdmin();
+            $location.path('/home');
+            currentUser.id = 1;
+        }
 
         $scope.signUp = function () {
 

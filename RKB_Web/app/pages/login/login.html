@@ -9,9 +9,9 @@
             <div id="prijava" class="tab-pane fade">
                 <div class="login-line"><p>Unesi podatke za prijavu</p></div>
                 <!--<input type="text" placeholder="Email" />-->
-                <input type="text" placeholder="Korisnicko Ime" data-ng-model="loginData.userName" required />
-                <input type="password" placeholder="Lozinka" data-ng-model="loginData.password" required />
-                <button class="rectangle-btn login-btn-full" type="submit" data-ng-click="login()">Prijava</button>
+                <input type="text" placeholder="Korisnicko Ime" ng-model="loginData.userName" required />
+                <input type="password" placeholder="Lozinka" ng-model="loginData.password" required />
+                <button class="rectangle-btn login-btn-full" type="submit" ng-click="loginMOCKUP()">Prijava</button>
                 <div class="login-line"><p>ili</p></div>
                 <a href="#" class="connect facebook">
                     <div class="connect-icon">
@@ -21,7 +21,7 @@
                         <span>Prijava putem<strong> Facebook-a</strong></span>
                     </div>
                 </a>
-                <a href="#!/admin" class="connect gplus">
+                <a href="#" class="connect gplus">
                     <div class="connect-icon">
                         <i class="fa fa-google-plus"></i>
                     </div>
@@ -53,9 +53,9 @@
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
                 <div class="login-line"><p>Korisnički podaci</p></div>
-                <input type="text" placeholder="Korisničko Ime" data-ng-model="registrationData.userName" required />
-                <input type="password" placeholder="Šifra" data-ng-model="registrationData.password" required />
-                <input type="password" placeholder="Potvrdi Šifru" data-ng-model="registrationData.confirmPassword" />
+                <input type="text" placeholder="Korisničko Ime" ng-model="registrationData.userName" required />
+                <input type="password" placeholder="Šifra" ng-model="registrationData.password" required />
+                <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
                 <input type="text" placeholder="Ime" />
                 <input type="text" placeholder="Prezime" />
                 <input type="text" placeholder="Email" />
@@ -66,7 +66,9 @@
                 <div class="login-line"><p>Lični podaci</p></div>
                 <div class="login-line" >
                     <label>Datum Rođenja: </label>
-                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()" 
+                           is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                 </div>
                 <input type="text" placeholder="Adresa" />
                 <input type="text" placeholder="Telefon" />
