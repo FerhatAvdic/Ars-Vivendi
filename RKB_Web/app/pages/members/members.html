@@ -73,48 +73,124 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><strong>Članovi</strong></div>
                         <div class="panel-body members-panel">
-                            <a href="#!/newmember" class="material-round-btn" id="add-member-btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a class="material-round-btn" id="add-member-btn" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-plus" aria-hidden="true"></i></a>
                             <p>Prikaži <select ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select></p>
 
-                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true"></ul>
+                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="Prethodna" next-text="Sljedeća"></ul>
                             <div class="table-hover">
                                 <table class="table members-table">
                                     <thead>
                                         <tr>
+                                            <th>Profil</th>
                                             <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
-                                                {{heading.value}}
+                                                {{heading.name}}
                                             </th>
-                                            <th>Options</th>
+                                            <th>Opcije</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <tr ng-repeat="member in members | orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize ">
                                             <!--| filter : {interests: checkedInterests}-->
-                                            <td>{{member.username}}</td>
-                                            <td>{{member.password}}</td>
-                                            <td>{{member.email}}</td>
+                                            <td ng-show="member.gender == 'male'"><img class="member-profile-picture" src="https://images.vexels.com/media/users/3/140752/isolated/lists/17e31e592ab23bb0e8b2c0e76c0a4361-male-profile-avatar-5.png" /></td>
+                                            <td ng-show="member.gender == 'female'"><img class="member-profile-picture" src="https://cdn1.iconfinder.com/data/icons/men-and-women-avatar-profile/512/4-256.png" /></td>
+                                            <!--<td>{{member.username}}</td>-->
+                                            <!--<td>{{member.password}}</td>-->
                                             <td>{{member.name}}</td>
                                             <td>{{member.surname}}</td>
-                                            <td>{{member.address}}</td>
                                             <td>{{member.phone}}</td>
-                                            <td>{{member.gender}}</td>
-                                            <td>{{member.employed}}</td>
-                                            <td>{{member.membershipDueDate}}</td>
+                                            <td>{{member.email}}</td>
+                                            <td>{{member.address}}</td>
+                                            <!--<td>{{member.gender}}</td>-->
+                                            <!--<td>{{member.employed}}</td>-->
+                                            <!--<td>{{member.membershipDueDate}}</td>-->
                                             <td>
-                                                <!-- <a><i class="fa fa-user" aria-hidden="true"></i></a>-->
-                                                <a><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                                <a ><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <a><i class="fa fa-ban" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true"></ul>
+                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="Prethodna" next-text="Sljedeća"></ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="newMemberModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                
+
+                <div class="tab-content">
+                    <div id="postani-clan-1" class="tab-pane fade in active">
+                        <div class="login-line"><p>Korisnički podaci</p></div>
+                        <input type="text" placeholder="Korisničko Ime" ng-model="registrationData.userName" required />
+                        <input type="password" placeholder="Šifra" ng-model="registrationData.password" required />
+                        <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
+                        <input type="text" placeholder="Ime" />
+                        <input type="text" placeholder="Prezime" />
+                        <input type="text" placeholder="Email" />
+                        <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
+
+                    </div>
+                    <div id="postani-clan-2" class="tab-pane fade">
+                        <div class="login-line"><p>Lični podaci</p></div>
+                        <div class="login-line">
+                            <label>Datum Rođenja: </label>
+                            <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()"
+                                   is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                   current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                        </div>
+                        <input type="text" placeholder="Adresa" />
+                        <input type="text" placeholder="Telefon" />
+                        <fieldset id="genderRadio">
+                            <ul class="login-line">
+                                <li><label>Spol: </label></li>
+                                <li><label>Muški </label><input type="radio" value="" name="genderRadio"> </li>
+                                <li><label>Ženski </label><input type="radio" value="" name="genderRadio"></li>
+                            </ul>
+                        </fieldset>
+                        <fieldset id="employmentRadio">
+                            <ul class="login-line">
+                                <li><label>Zaposlen/a: </label></li>
+                                <li><label>Da </label><input type="radio" value="" name="employmentRadio"></li>
+                                <li><label>Ne </label><input type="radio" value="" name="employmentRadio"></li>
+                            </ul>
+                        </fieldset>
+                        <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
+                    </div>
+                    <div id="postani-clan-3" class="tab-pane fade">
+                        <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
+                        <ul class="login-list">
+                            <li><label>Ronjenje</label><input type="checkbox" /></li>
+                            <li><label>Rafting</label><input type="checkbox" /></li>
+                            <li><label>Biciklizam</label><input type="checkbox" /></li>
+                            <li><label>Planinarenje</label><input type="checkbox" /></li>
+                            <li><label>Skijanje</label><input type="checkbox" /></li>
+                        </ul>
+                        <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self">Dalje</button>
+                    </div>
+                 </div>
+
+
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
