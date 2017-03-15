@@ -80,11 +80,21 @@
                         <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
                         <div class="members-filter" uib-collapse="isCollapsed.panel1">
                             <ul>
-                                <li><input type="checkbox" ng-model="checkedInterests.skiing" /><label> Skijanje</label></li>
-                                <li><input type="checkbox" ng-model="checkedInterests.hiking" /><label> Planinarenje</label></li>
-                                <li><input type="checkbox" ng-model="checkedInterests.cycling" /><label> Biciklizam</label></li>
-                                <li><input type="checkbox" ng-model="checkedInterests.diving" /><label> Ronjenje</label></li>
-                                <li><input type="checkbox" ng-model="checkedInterests.rafting" /><label> Rafting</label></li>
+                                <li class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="checkedInterests.skiing">Skijanje</label>
+                                </li>
+                                <li class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="checkedInterests.hiking">Planinarenje</label>
+                                </li>
+                                <li class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="checkedInterests.cycling" >Biciklizam</label>
+                                </li>
+                                <li class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="checkedInterests.diving" >Ronjenje</label>
+                                </li>
+                                <li class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="checkedInterests.rafting">Rafting</label>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -92,11 +102,11 @@
                         <div class="members-filter-toggle" ng-click="isCollapsed.panel3 = !isCollapsed.panel3">Skijaška Oprema</div>
                         <div class="members-filter" uib-collapse="isCollapsed.panel3">
                             <ul>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
                             </ul>
                         </div>
                     </div>
@@ -105,11 +115,11 @@
                         <div class="members-filter-toggle" ng-click="isCollapsed.panel4 = !isCollapsed.panel4">Zdravstveno Stanje</div>
                         <div class="members-filter" uib-collapse="isCollapsed.panel4">
                             <ul>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
-                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
+                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
                             </ul>
                         </div>
                     </div>
