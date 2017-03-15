@@ -1,7 +1,7 @@
 ﻿<div class="gray-wrapper">
     <div class="container">
         <div class="box-members">
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">Filteri</div>
@@ -67,53 +67,92 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>Članovi</strong></div>
-                        <div class="panel-body members-panel">
-                            <a class="material-round-btn" id="add-member-btn" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            <p>Prikaži <select ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select></p>
+                        <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Prikaz Članova</div>
+                        <div class="members-filter" uib-collapse="isCollapsed.panel2">
+                            <select class="form-control" ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
+                        <div class="members-filter" uib-collapse="isCollapsed.panel1">
+                            <ul>
+                                <li><input type="checkbox" ng-model="checkedInterests.skiing" /><label> Skijanje</label></li>
+                                <li><input type="checkbox" ng-model="checkedInterests.hiking" /><label> Planinarenje</label></li>
+                                <li><input type="checkbox" ng-model="checkedInterests.cycling" /><label> Biciklizam</label></li>
+                                <li><input type="checkbox" ng-model="checkedInterests.diving" /><label> Ronjenje</label></li>
+                                <li><input type="checkbox" ng-model="checkedInterests.rafting" /><label> Rafting</label></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="members-filter-toggle" ng-click="isCollapsed.panel3 = !isCollapsed.panel3">Skijaška Oprema</div>
+                        <div class="members-filter" uib-collapse="isCollapsed.panel3">
+                            <ul>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                            </ul>
+                        </div>
+                    </div>
 
-                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="Prethodna" next-text="Sljedeća"></ul>
-                            <div class="table-hover">
-                                <table class="table members-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Profil</th>
-                                            <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
-                                                {{heading.name}}
-                                            </th>
-                                            <th>Opcije</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr ng-repeat="member in members | orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize ">
-                                            <!--| filter : {interests: checkedInterests}-->
-                                            <td ng-show="member.gender == 'male'"><img class="member-profile-picture" src="https://images.vexels.com/media/users/3/140752/isolated/lists/17e31e592ab23bb0e8b2c0e76c0a4361-male-profile-avatar-5.png" /></td>
-                                            <td ng-show="member.gender == 'female'"><img class="member-profile-picture" src="https://cdn1.iconfinder.com/data/icons/men-and-women-avatar-profile/512/4-256.png" /></td>
-                                            <!--<td>{{member.username}}</td>-->
-                                            <!--<td>{{member.password}}</td>-->
-                                            <td>{{member.name}}</td>
-                                            <td>{{member.surname}}</td>
-                                            <td>{{member.phone}}</td>
-                                            <td>{{member.email}}</td>
-                                            <td>{{member.address}}</td>
-                                            <!--<td>{{member.gender}}</td>-->
-                                            <!--<td>{{member.employed}}</td>-->
-                                            <!--<td>{{member.membershipDueDate}}</td>-->
-                                            <td>
-                                                <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                                <a ><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a><i class="fa fa-ban" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <ul uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="Prethodna" next-text="Sljedeća"></ul>
+                    <div class="panel panel-default">
+                        <div class="members-filter-toggle" ng-click="isCollapsed.panel4 = !isCollapsed.panel4">Zdravstveno Stanje</div>
+                        <div class="members-filter" uib-collapse="isCollapsed.panel4">
+                            <ul>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                                <li><input type="checkbox" /><label> Filter</label></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="box-members-list">
+                        <p class="members-table-title">Članovi</p>
+                        <a class="material-round-btn" id="add-member-btn" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                        <div class="box-members-list-wrap">
+                            <ul id="top-members-pagination" uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
+                        </div>
+                        <div class="table-hover">
+                            <table class="table members-table">
+                                <thead>
+                                    <tr>
+                                        <th>Profil</th>
+                                        <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
+                                            {{heading.name}}
+                                        </th>
+                                        <th>Opcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="member in members | orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize ">
+                                        <!--| filter : {interests: checkedInterests}-->
+                                        <td ng-if="member.gender == 'male'"><img class="member-profile-picture" src="https://images.vexels.com/media/users/3/140752/isolated/lists/17e31e592ab23bb0e8b2c0e76c0a4361-male-profile-avatar-5.png" /></td>
+                                        <td ng-if="member.gender == 'female'"><img class="member-profile-picture" src="https://cdn1.iconfinder.com/data/icons/men-and-women-avatar-profile/512/4-256.png" /></td>
+                                        <td>{{member.name}}</td>
+                                        <td>{{member.surname}}</td>
+                                        <td>{{member.phone}}</td>
+                                        <td>{{member.email}}</td>
+                                        <td>{{member.address}}</td>
+                                        <td>
+                                            <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                            <a><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-members-list-wrap">
+                            <ul id="bottom-members-pagination" uib-pagination total-items="members.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
                         </div>
                     </div>
                 </div>
