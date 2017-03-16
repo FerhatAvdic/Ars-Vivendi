@@ -783,6 +783,7 @@ ul {
     vertical-align: middle;
     text-transform: capitalize;
     cursor: pointer;
+    background-color: white;
 }
 .members-table tbody tr td{
     background-color: white;
