@@ -2,7 +2,7 @@
     'use strict';
 
     var avApp = angular.module("avApp");
-    avApp.controller("membersController", ['$scope', function ($scope) {
+    avApp.controller("membersController", ['$scope','$filter', function ($scope, $filter) {
 
 
 
@@ -11,7 +11,7 @@
                 "username": "AB",
                 "password": "123",
                 "email": "abc@gmail.com",
-                "name": "ab",
+                "name": "abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 "surname": "abb",
                 "address": "abcs 123",
                 "phone": "000/999-999",
@@ -409,6 +409,8 @@
              }
 
         ];
+
+        //TABLE PROPERTIES
         $scope.headings = [
             //{ "name": "korisničko ime","value": "username",},
             //{ "name": "šifra","value": "password" },
@@ -429,12 +431,33 @@
             propertyName.toggled = !propertyName.toggled;
         }
 
+        $scope.editingMemberId = null;
+        $scope.setForEdit = function (memberID) {
+            $scope.editingMemberId = memberID;
+        }
+        $scope.cancelEdit = function () {
+            $scope.editingMemberId = null;
+            $scope.editingMember = null;
+        }
+        $scope.editingMember = null;
+        $scope.editMember = function(member){
+            $scope.editingMember = member;
+        }
+        $scope.deletingMember = null;
+        $scope.deleteMember = function (member) {
+            $scope.deletingMember = member;
+        }
+        $scope.cancelDelete = function () {
+            $scope.deletingMember = null;
+        }
 
-        
+        //PAGINATION
         $scope.currentPage = 1;
         $scope.paginationSize = 3;
+       // $scope.totalItems = $scope.members.length - 1;
 
         $scope.pageSizeOptions = [
+            { "value": $scope.members.length, "name": "Svi Članovi"},
             { "value": 5, "name": "5 Članova" },
             { "value": 15, "name": "15 Članova" },
             { "value": 20, "name": "20 Članova" },
@@ -444,6 +467,7 @@
         ];
         $scope.pageSize = $scope.pageSizeOptions[0].value;
 
+        //FILTERS
         $scope.isCollapsed = [
         { "panel1": true },
         { "panel2": true },
@@ -452,14 +476,28 @@
         { "panel5": true },
         { "panel6": true }
         ];
-
-        $scope.checkedInterests = {
-            "skiing": null,
-            "hiking": null,
-            "cycling": null,
-            "diving": null,
-            "rafting": null
+        $scope.checkedInterests ={
+            "skiing": false,
+            "hiking": false,
+            "cycling": false,
+            "diving": false,
+            "rafting": false
         }
+
+        $scope.columnFilters = {
+        };
+        $scope.updateInterests = function (propertyName) {
+            if ("undefined" === typeof $scope.columnFilters.interests)
+                $scope.columnFilters.interests = {};
+            if ("undefined" === typeof $scope.columnFilters.interests[propertyName])
+                $scope.columnFilters.interests[propertyName] = true;
+            else
+                delete $scope.columnFilters.interests[propertyName];
+                if (angular.equals($scope.columnFilters.interests, {}))
+                    delete $scope.columnFilters.interests;
+        }
+
+        //DATEPICKER
         $scope.today = function () {
             $scope.dt = new Date();
         };

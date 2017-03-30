@@ -48,7 +48,6 @@ ul {
     margin: 0;
 }
 
-
 .templates{
     height: 100%;
 }
@@ -771,6 +770,7 @@ ul {
 }
 .members-table{
     margin: 0;
+    table-layout: fixed;
 }
 .table > thead > tr > th{
     padding: 0;
@@ -787,12 +787,21 @@ ul {
 }
 .members-table tbody tr td{
     background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.members-table thead tr th, .members-table tbody tr td{
-    text-align: right;
+ .members-table tbody tr td{
+     text-align: left;
+ }
+.members-table thead tr th{
+    text-align: center;
 }
 .members-table thead tr th:first-child, .members-table tbody tr td:first-child{
     text-align: left;
+    width: 100px;
+}
+.members-table thead tr th:last-child, .members-table tbody tr td:last-child{
+    text-align: right;
     width: 100px;
 }
 .members-table thead tr th{
@@ -816,10 +825,12 @@ ul {
          padding-right: 35px;
      }
       .members-table tbody tr{
+          border-top: 1px solid white;
       }
       .members-table tbody tr:hover{
           border-top: 1px solid #3A7AD2;
           border-bottom: 1px solid #3A7AD2;
+          z-index: 2;
       }
 
 .members-table tr td a{
@@ -862,6 +873,42 @@ ul {
 }
 #add-member-btn:hover{
     color: white;
+}
+.modal-title-padding{
+    padding-left: 15px;
+}
+.add-member-form input[type="text"], .add-member-form input[type="password"], .add-member-form input[type="email"]{
+    display: block;
+    width: 100%;
+    border: 0;
+    height: 70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-bottom: 1px solid #E5E5E5;
+}
+.delete-member-form .login-line p{
+    display: block;
+    width: 100%;
+    border: 0;
+    height: 70px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid #E5E5E5;
+    text-align:left;
+}
+#del-question{
+    text-align:center;
+}
+
+.borderless-input{
+    border: 0;
+}
+
+.modal-border{
+     border-bottom-right-radius: 4px;
+}
+.modal-width-adjust{
+    max-width: 500px;
 }
 
 
