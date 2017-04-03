@@ -89,6 +89,7 @@
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\div_slide.jpg" />
     <Content Include="img\hik_slide.jpg" />
+    <Content Include="img\profilemock.png" />
     <Content Include="img\ski_slide.jpg" />
     <Content Include="libs\angular-animate.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />

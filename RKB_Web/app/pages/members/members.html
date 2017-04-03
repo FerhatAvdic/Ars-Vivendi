@@ -75,7 +75,8 @@
                         <div class="members-filter" uib-collapse="isCollapsed.panel2">
                             <div class="form-group">
                                 <select class="form-control" ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select>
-                            </div>                            <div class="form-group">
+                            </div>                            
+                            <div class="form-group">
                                 <label>Ime:</label>
                                 <input type="text" class="form-control" ng-model="columnFilters.name">
                             </div>
@@ -152,7 +153,7 @@
                         <div class="box-members-list-wrap">
                             <ul id="top-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
                         </div>
-                        <div class="table-hover">
+                        <div class="table-responsive">
                             <table class="table members-table">
                                 <thead>
                                     <tr>
@@ -175,7 +176,7 @@
                                         <td>{{member.surname}}</td>
                                         <td>{{member.phone}}</td>
                                         <td>{{member.email}}</td>
-                                        <td>{{member.address}}</td>
+                                        <td>{{member.city}}</td>
                                         <td>
                                             <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
                                             <a ng-click="editMember(member)" data-toggle="modal" data-target="#editMemberModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -196,7 +197,7 @@
         <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.surname}}" ng-model="member.surname"/></td>
         <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.phone}}" ng-model="member.phone"/></td>
         <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.email}}" ng-model="member.email"/></td>
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.address}}" ng-model="member.address"/></td>
+        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.city}}" ng-model="member.address"/></td>
 
         <td ng-show="editingMemberId === member.username">
             <a ng-click="updateMember(member)"><i class="fa fa-check" aria-hidden="true"></i></a>
@@ -233,9 +234,9 @@
                     <div class="tab-content">
                         <div id="postani-clan-1" class="tab-pane fade in active">
                             <div class="login-line"><p>Korisnički podaci</p></div>
-                            <input type="text" placeholder="Korisničko Ime" ng-model="registrationData.userName" required />
-                            <input type="password" placeholder="Šifra" ng-model="registrationData.password" required />
-                            <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
+                            <input type="text" placeholder="Korisničko Ime"  required />
+                            <input type="password" placeholder="Šifra" required />
+                            <input type="password" placeholder="Potvrdi Šifru" />
                             <input type="text" placeholder="Ime" />
                             <input type="text" placeholder="Prezime" />
                             <input type="text" placeholder="Email" />
@@ -249,7 +250,7 @@
                                        is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </div>
-                            <input type="text" placeholder="Adresa" />
+                            <input type="text" placeholder="Grad" />
                             <input type="text" placeholder="Telefon" />
                             <fieldset id="genderRadio">
                                 <ul class="login-line">
@@ -305,7 +306,7 @@
                 <input type="text" placeholder="Prezime" ng-model="editingMember.surname" />
                 <input type="text" placeholder="Email" ng-model="editingMember.email" />
                 <input type="text" placeholder="Telefon" ng-model="editingMember.phone" />
-                <input type="text" placeholder="Adresa" ng-model="editingMember.address" />
+                <input type="text" placeholder="Grad" ng-model="editingMember.city" />
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelEdit()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #3A7AD2;" data-dismiss="modal">Potvrdi izmjene</button>
             </div>
         </div>
@@ -328,7 +329,7 @@
                 <div class="login-line"><p>Prezime: <strong>{{deletingMember.surname}}</strong></p></div>
                 <div class="login-line"><p>Email: <strong>{{deletingMember.email}}</strong></p></div>
                 <div class="login-line"><p>Telefon: <strong>{{deletingMember.phone}}</strong></p></div>
-                <div class="login-line"><p>Adresa: <strong>{{deletingMember.address}}</strong></p></div>
+                <div class="login-line"><p>Grad: <strong>{{deletingMember.city}}</strong></p></div>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelDelete()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #FF8235;" data-dismiss="modal">Izbriši Člana</button>
             </div>
         </div>
