@@ -1035,6 +1035,9 @@ ul {
     padding: 10px 0;
     border-top: 1px solid rgba(0,0,0,0.19);
 }
+.profile-personal-wrap{
+    padding: 50px;
+}
 .profile-comment-wrap{
     border: 1px solid rgba(0,0,0,0.19);
     border-radius: 2px;

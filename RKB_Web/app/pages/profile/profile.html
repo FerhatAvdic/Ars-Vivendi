@@ -85,18 +85,60 @@
 
                                         <div class="row">
                                             <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
-                                                <ul class="profile-fields">
-                                                    <li><label>Korisničko Ime:</label><input type="text" placeholder="Korisničko Ime" required /></li>
-                                                    <li><label>Šifra:</label><input type="password" placeholder="Šifra" required /></li>
-                                                    <li><label>Ime:</label><input type="text" placeholder="Ime" /></li>
-                                                    <li><label>Prezime:</label><input type="text" placeholder="Prezime" /></li>
-                                                    <li><label>Email:</label><input type="text" placeholder="Email" /></li>
-                                                    <li><label>Grad:</label><input type="text" placeholder="Grad" /></li>
-                                                    <li><label>Telefon:</label><input type="text" placeholder="Telefon" /></li>
-                                                </ul>
-                                                <label>Zdravstveno stanje: </label>
-                                                <label>Uredno </label><input type="radio" value="" name="employmentRadio">
-                                                <label>Drugo </label><input type="radio" value="" name="employmentRadio">
+                                                <div class="profile-personal-wrap">
+                                                    <!--<ul class="profile-fields">
+            <li><label>Korisničko Ime:</label><input type="text" placeholder="Korisničko Ime" required /></li>
+            <li><label>Šifra:</label><input type="password" placeholder="Šifra" required /></li>
+            <li><label>Ime:</label><input type="text" placeholder="Ime" /></li>
+            <li><label>Prezime:</label><input type="text" placeholder="Prezime" /></li>
+            <li><label>Email:</label><input type="text" placeholder="Email" /></li>
+            <li><label>Grad:</label><input type="text" placeholder="Grad" /></li>
+            <li><label>Telefon:</label><input type="text" placeholder="Telefon" /></li>
+        </ul>-->
+                                                    <div class="form-group">
+                                                        <label>Korisničko Ime:</label>
+                                                        <input type="text" class="form-control" placeholder="Korisničko Ime" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email:</label>
+                                                        <input type="text" class="form-control" placeholder="Email">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Ime:</label>
+                                                        <input type="text" class="form-control" placeholder="Ime">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Prezime:</label>
+                                                        <input type="text" class="form-control" placeholder="Prezime">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Grad:</label>
+                                                        <input type="text" class="form-control" placeholder="Grad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Telefon:</label>
+                                                        <input type="text" class="form-control" placeholder="Telefon">
+                                                    </div>
+                                                    <label>Spol: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio">Muški</label>
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio">Ženski</label>
+                                                    </div>
+                                                    <label>Zaposlenost: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio">Zaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio">Nezaposlen/a</label>
+                                                    </div>
+                                                    <label>Zdravstveno stanje: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="OK">Uredno</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="other">Drugo</label>
+                                                    </div>
+                                                    <div class="form-group" ng-show="health === 'other'">
+                                                        <label>Objašnjenje:</label>
+                                                        <textarea class="form-control" rows="2"></textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

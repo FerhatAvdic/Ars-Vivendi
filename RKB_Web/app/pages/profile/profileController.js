@@ -5,6 +5,7 @@
 
     avApp.controller("profileController", ['$scope', function ($scope) {
 
+        $scope.health = false;
         $scope.interests = [{
             "categoryName": "Sport",
             "interestList": [{
