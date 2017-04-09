@@ -18,6 +18,13 @@
 @font-face { font-family: NunitoSans-SemiBold; src: url('/fonts/nunitosans/NunitoSans-SemiBold.ttf'); } 
 @font-face { font-family: NunitoSans-SemiBoldItalic; src: url('/fonts/nunitosans/NunitoSans-SemiBoldItalic.ttf'); } 
 
+@font-face {
+    font-family: 'Glyphicons Halflings';
+
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
 html, body{
     height: 100%;
 }
@@ -26,6 +33,7 @@ body{
     margin: 0;
     padding-top: 125px;
     font-family: NunitoSans-Regular;
+    overflow-x: hidden;
 }
 @media (max-width: 991px) {
     body{
@@ -128,6 +136,17 @@ ul {
 }
 .inline-list li{
     display: inline;
+}
+
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* inline-block space fix */
+    margin-right:-4px;
 }
 
 @media (min-width: 991px){
@@ -404,10 +423,14 @@ ul {
 }*/
 }
 
+/*HOME*/
+
+/*1 SECTION WELCOME SLIDER*/
 .welcome-screen{
     position: relative;
     width: 100%;
     height: 100%;
+    margin-bottom: 100px;
 }
 .slide{
     height:100%;
@@ -516,6 +539,218 @@ ul {
 .slide_dot_selected{
     background-color: #02CB9E;
     transform: scale(1.2, 1.2);
+}
+
+/*2 SECTION Activity showcase*/
+
+.av-section-wrap{
+    display: block;
+    margin-bottom: 100px;
+    text-align: center;
+    position: relative;
+}
+.av-heading{
+    display: inline-block;
+    font-size: 30px;
+    font-family: NunitoSans-Black;
+    color: gray;
+    text-transform:uppercase;
+    padding-bottom: 15px;
+    border-bottom: 5px solid gray;
+    margin-bottom: 75px;
+}
+.activity-box{
+    padding: 25px 20px;
+}
+.activity-icon{
+    width: 100px;
+    height: 100px;
+    background: gray;
+    border-radius: 50%;
+    margin: 0 auto;
+    font-size: 40px;
+    color: white;
+    line-height: 105px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.19), 0 1px 2px rgba(0,0,0,0.24);
+}
+.activity-title{
+    padding: 15px 0;
+    font-size: 20px;
+    font-family: NunitoSans-Bold;
+}
+.activity-description{
+    color: gray;
+    font-size:14px;
+}
+
+/*3 SECTION UPCOMING ACTIVITY*/
+#upcoming{
+    margin-bottom: 0;
+}
+.upcoming-background{
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.upcoming-slide-dark-overlay{
+    position: absolute;
+    top:0; left: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(0, 4, 2, 0.2);
+}
+.upcoming-slide-light-overlay{
+    position: absolute;
+    top:0; right: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(36, 162, 99, 0.3);/*rgba(96, 235, 177, 0.5);*/
+}
+@media (max-width: 991px){
+    .upcoming-slide-light-overlay {
+        display: none;
+    }
+    .upcoming-slide-dark-overlay{
+        width: 100%;
+    }
+}
+.upcoming-slide-content{
+    padding: 10vh 6vw 10vh 12vw;
+    text-align:left;
+    color:white;
+}
+.upcoming-slide-title{
+    font-family: NunitoSans-Black;
+    font-size: 58px;
+    text-transform: uppercase;
+}
+.upcoming-slide-description{
+    margin: 40px 0 60px 0;
+}
+#view-upcoming-btn{
+    border: 2px solid white;
+    background: transparent;
+    margin-left: 40px;
+}
+.upcoming-countdown-wrap{
+    text-align:center;
+    color: white;
+    padding-top: 40px;
+}
+.upcoming-countdown-instance{
+    position: relative;
+    display: block;
+    width: 110px;
+    height: 70px;
+    border: 2px solid #42D542;
+    margin: 50px auto;
+}
+.upcoming-countdown-instance-number{
+    font-family: NunitoSans-Black;
+    font-size: 58px;
+    position: absolute;
+    top: -40px;
+    left: 0; right: 0;
+    margin: 0 auto;
+}
+.upcoming-countdown-instance-label{
+    line-height: 100px;
+    font-size: 18px;
+}
+
+/*4 SECTION PARTNERS*/
+.partners-wrap{
+    text-align: center;
+    padding-top: 50px;
+    background: #E5E5E5;
+    margin-bottom: 100px;
+    overflow: hidden;
+}
+.partner-logo{
+    height: 100px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: 50px;
+}
+
+/*5 SECTION GALLERY*/
+.gallery-item{
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.gallery-item-overlay{
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    transition: .5s ease;
+    font-family: NunitoSans-Bold;
+    color: white;
+}
+.gallery-item:hover .gallery-item-overlay{
+    height: 100%;
+    background: rgba(63, 191, 127, 0.7);
+}
+.gallery-item-text {
+  word-break: break-word;
+  color: white;
+  font-size: 24px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+/*6 SECTION CONTACT*/
+.contact-wrap{
+    position:relative;
+    background-image: url(http://wallpapercave.com/wp/vjaSDB8.jpg);
+    filter: blur(50%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    margin-bottom: 0;
+}
+.contact-wrap-overlay{
+    position: absolute;
+    top:0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+#contact{
+    position: relative;
+    color:white;
+    border-color:white;
+    z-index: 2;
+}
+.contact-form-style{
+    color:white;
+    text-align:left;
+    margin-bottom: 50px;
+}
+#contact-msg{
+    height: 182px;
+}
+
+/*7 SECTION FOOTER*/
+.footer-wrap{
+    padding: 50px 0;
+    background: rgba(0,0,0,0.8);
+    color: white;
 }
 
 

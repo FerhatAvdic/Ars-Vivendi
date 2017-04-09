@@ -17,4 +17,139 @@
         </div>
     </div>
 </div>
-        
+<div class="container">
+    <div class="av-section-wrap">
+        <div class="av-heading">Čime se bavimo</div>
+        <div class="row row-centered">
+            <div ng-repeat="activity in activityShowcase" class="col-md-4 col-centered activity-box">
+                <div class="activity-icon" ng-style="{'background-color': '#' + activity.backgroundColor}">
+                    <i class="fa" ng-class="activity.icon" aria-hidden="true"></i>
+                </div>
+                <div class="activity-title">{{activity.title}}</div>
+                <div class="activity-description">
+                    {{activity.description}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="av-section-wrap" id="upcoming">
+    <div class="av-heading">Aktuelno</div>
+    <div class="upcoming-background" style="background-image: url('/img/hik_slide.jpg')">
+        <div class="upcoming-slide-dark-overlay"></div>
+        <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="upcoming-slide-content">
+                        <div class="upcoming-slide-title">Slide Title</div>
+                        <div class="upcoming-slide-description">
+                        Contrary to popular belief, 
+                        Lorem Ipsum is not simply random text. It has roots in a piece of classical 
+                        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, 
+                        a Latin professor at Hampden-Sydney College in Virginia, 
+                        looked up one of the more obscure Latin words, consectetur, 
+                        from a Lorem Ipsum passage, and going through the cites of the word 
+                        in classical literature, discovered the undoubtable source.
+                        </div>
+                        <button class="rectangle-btn">Prijava</button><button class="rectangle-btn" id="view-upcoming-btn">Pregled</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="upcoming-countdown-wrap">
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{timeRemaining.days}}</div>
+                            <div class="upcoming-countdown-instance-label">Dana</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{timeRemaining.hours}}</div>
+                            <div class="upcoming-countdown-instance-label">Sati</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{timeRemaining.minutes}}</div>
+                            <div class="upcoming-countdown-instance-label">Minuta</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{timeRemaining.seconds}}</div>
+                            <div class="upcoming-countdown-instance-label">Sekundi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <button class="transparent-round-btn" id="slide-left" ng-click="nextSlide()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-right" ng-click="previousSlide()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+    </div>
+</div>
+<div class="partners-wrap">
+    <div class="row row-centered">
+        <div class="col-md-2 col-centered" ng-repeat="partner in partners">
+            <div class="partner-logo">
+                <img ng-src="{{partner}}" style="max-height: 100%; filter: saturate(0);" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="av-section-wrap">
+    <div class="av-heading">
+        Galerija
+    </div>
+    <div class="container">
+       <div class="row">
+           <div class="col-md-4" ng-repeat="item in gallery">
+               <div class="gallery-item" ng-style="{'background-image': 'url(' + item.eventImg + ')'}">
+                   <div class="gallery-item-overlay"><div class="gallery-item-text">{{item.eventName}}</div></div>
+               </div>
+           </div>
+       </div> 
+    </div>
+</div>
+    <div class="av-section-wrap contact-wrap">
+        <div class="av-heading" id="contact">
+            Kontakt
+        </div>
+        <div class="contact-wrap-overlay"></div>
+        <div class="container">
+            <div class="row equal contact-form-style">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ime:</label>
+                        <input type="text" class="form-control" placeholder="Ime">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon:</label>
+                        <input type="text" class="form-control" placeholder="Telefon">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Poruka</label>
+                        <textarea class="form-control" id="contact-msg"></textarea>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-centered">
+                    <div class="col-md-12">
+                        <button class="rectangle-btn" id="contact-submit-btn">Pošalji</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+<footer class="footer-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                FIRST COL
+            </div>
+            <div class="col-md-4">
+                SECOND COL
+            </div>
+            <div class="col-md-4">
+                THIRD COL
+            </div>
+        </div>
+    </div>
+</footer>
+
