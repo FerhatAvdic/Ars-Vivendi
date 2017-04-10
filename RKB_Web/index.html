@@ -36,25 +36,31 @@
     <script src="app/pages/admin/dashboard/dashboardController.js"></script>
     <script src="app/pages/newEvent/newEventController.js"></script>
     <script src="app/pages/mainController.js"></script>
+    <script src="app/pages/profile/profileController.js"></script>
     <!--Services-->
 </head>
 <body>
 
+
     <div class="welcome-header">
-        <ul class="welcome-header-social">
-            <li><a href="https://www.facebook.com/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-            <li><a href="https://twitter.com/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-            <li><a href="https://www.youtube.com/"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
-            <li>|</li>
-            <li>Kontaktiraj nas na +387/61-999-999</li>
-        </ul>
-        <ul class="welcome-header-navigation">
-            <li><a href="#!/login">Prijava</a></li>
-            <li><a href="#!/login">Postani Član</a></li>
-        </ul>
+        <div class="container">
+            <div class="welcome-header-wrap">
+                <ul class="welcome-header-social">
+                    <li><a href="https://www.facebook.com/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.youtube.com/"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                    <li>Kontakt tel. +387/61-999-999</li>
+                </ul>
+                <ul class="welcome-header-navigation">
+                    <li><a href="#!/login">Prijava</a></li>
+                    <li><a href="#!/login">Postani Član</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <nav class="navbar navbar-default navbar-custom">
-        <div class="container-fluid container-custom">
+
+    <nav class="navbar navbar-default navbar-custom" id="main-navbar">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <div class="nav-toggle-btn">
@@ -67,9 +73,9 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
-                    <li ng-repeat="item in menuItems"><a href="#!{{ item.link }}">{{ item.text }}</a></li>
-                    <li class="hide-item"><a href="#!/login">Prijava</a></li>
-                    <li class="hide-item"><a href="#!/login">Postani Član</a></li>
+                    <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!{{ item.link }}">{{ item.text }}</a></li>
+                    <li class="hide-item"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Prijava</a></li>
+                    <li class="hide-item" data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Postani Član</a></li>
                 </ul>
             </div>
         </div>
@@ -82,7 +88,10 @@
     </div>-->
 
     <div class="templates ang-fade" ng-view>
+        de
+        
+
     </div>
-    
+
 </body>
 </html>

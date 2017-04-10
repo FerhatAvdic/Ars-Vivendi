@@ -86,9 +86,11 @@
     <Content Include="app\services\ordersService.js" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\div_slide.jpg" />
     <Content Include="img\hik_slide.jpg" />
+    <Content Include="img\profilemock.png" />
     <Content Include="img\ski_slide.jpg" />
     <Content Include="libs\angular-animate.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />
@@ -134,6 +136,9 @@
     <Content Include="fonts\nunitosans\NunitoSans-SemiBold.ttf" />
     <Content Include="fonts\nunitosans\NunitoSans-SemiBoldItalic.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

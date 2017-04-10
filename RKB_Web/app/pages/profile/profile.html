@@ -2,12 +2,12 @@
     <div class="container">
         <div class="col-md-12">
             <div class="profile-details">
-                        <div class="row">
+                        <div class="row equal">
                             <div class="col-md-4">
                                 <div class="profile-sidebar">
                                     <div class="profile-top">
                                         <div class="profile-picture-frame">
-                                            <img class="profile-picture" src="https://apps.quanticfoundry.com/static/img/avatars/3.png" />
+                                            <img class="profile-picture" src="img/profilemock.png" />
                                         </div>
                                         <div class="profile-header-name">Ime Prezime</div>
 
@@ -17,90 +17,174 @@
                                             <li class="active"><a data-toggle="tab" href="#personal" target="_self">Lični Podaci</a></li>
                                             <li><a data-toggle="tab" href="#interests" target="_self">Interesi</a></li>
                                             <li><a data-toggle="tab" href="#equipment" target="_self">Oprema</a></li>
-                                            <li><a data-toggle="tab" href="#health" target="_self">Zdravstveno Stanje</a></li>
                                         </ul>
 
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                    <div class="tab-content">
-                                        <div id="stats" class="tab-pane fade">
-                                            <div class="row">
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                                <div class="wrap-activity-counter">
-                                                    <div class="col-md-4">
-                                                        <div class="activity-counter"><p>#</p></div>
-                                                        <p>Total</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="personal" class="tab-pane fade in active">
-
+                                <div class="tab-content">
+                                    <div id="stats" class="tab-pane fade">
+                                        <div class="stats-wrap">
                                             <div class="row">
                                                 <div class="col-md-offset-1 col-md-10">
-                                                    <ul class="profile-fields">
-                                                        <li><label>Korisničko Ime:</label><input type="text" placeholder="Korisničko Ime" required /></li>
-                                                        <li><label>Šifra:</label><input type="password" placeholder="Šifra" required /></li>
-                                                        <li><label>Ime:</label><input type="text" placeholder="Ime" /></li>
-                                                        <li><label>Prezime:</label><input type="text" placeholder="Prezime" /></li>
-                                                        <li><label>Email:</label><input type="text" placeholder="Email" /></li>
-                                                        <li><label>Adresa:</label><input type="text" placeholder="Adresa" /></li>
-                                                        <li><label>Telefon:</label><input type="text" placeholder="Telefon" /></li>
-                                                    </ul>
+                                                    <div class="row">
+                                                        <div class="wrap-activity-counter">
+                                                            <div class="col-md-4" ng-repeat="stat in statsSummary">
+                                                                <div>
+                                                                    <div class="activity-counter" ng-style="{'background-color': applyTypeColor(stat.type)}">
+                                                                        <p>{{stat.value}}</p>
+                                                                    </div>
+                                                                    <p>{{stat.type}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div id="interests" class="tab-pane fade">
-                                            <ul>
-                                                <li><label>Ronjenje</label><input type="checkbox" /></li>
-                                                <li><label>Rafting</label><input type="checkbox" /></li>
-                                                <li><label>Biciklizam</label><input type="checkbox" /></li>
-                                                <li><label>Planinarenje</label><input type="checkbox" /></li>
-                                                <li><label>Skijanje</label><input type="checkbox" /></li>
-                                            </ul>
-                                        </div>
-                                        <div id="equipment" class="tab-pane fade">
-                                            <h3>Menu 2</h3>
-                                            <p>Some content in menu 2.</p>
-                                        </div>
-                                        <div id="health" class="tab-pane fade">
-                                            <label>Zdravstveno stanje: </label>
-                                            <label>Uredno </label><input type="radio" value="" name="employmentRadio">
-                                            <label>Drugo </label><input type="radio" value="" name="employmentRadio">
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
+                                                    <h3>Historija Događaja</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table profile-stats-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Naziv</th>
+                                                                    <th class="text-right">Cijena</th>
+                                                                    <th class="text-right">Stanje</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="profile-events-wrap" ng-repeat="event in stats.attendedEvents">
+                                                                    <td><a href="">{{event.name}}</a></td>
+                                                                    <td class="text-right">{{event.price}}</td>
+                                                                    <td class="text-right">{{event.paymentStatus}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
+                                                    <h3>Komentari</h3>
+                                                    <div class="profile-comment-wrap" ng-repeat="comment in stats.comments">
+                                                        <div class="profile-comment-options">
+                                                            <a href=""><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                            <a href=""><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                        </div>
+                                                        <a class="profile-comment-event" href="">{{comment.eventName}}</a>
+                                                        <div class="profile-comment-datetime">{{comment.dateTime}}</div>
+                                                        <div class="profile-comment-content">{{comment.content}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
+                                    <div id="personal" class="tab-pane fade in active">
+
+                                        <div class="row">
+                                            <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
+                                                <div class="profile-personal-wrap">
+                                                    <!--<ul class="profile-fields">
+            <li><label>Korisničko Ime:</label><input type="text" placeholder="Korisničko Ime" required /></li>
+            <li><label>Šifra:</label><input type="password" placeholder="Šifra" required /></li>
+            <li><label>Ime:</label><input type="text" placeholder="Ime" /></li>
+            <li><label>Prezime:</label><input type="text" placeholder="Prezime" /></li>
+            <li><label>Email:</label><input type="text" placeholder="Email" /></li>
+            <li><label>Grad:</label><input type="text" placeholder="Grad" /></li>
+            <li><label>Telefon:</label><input type="text" placeholder="Telefon" /></li>
+        </ul>-->
+                                                    <div class="form-group">
+                                                        <label>Korisničko Ime:</label>
+                                                        <input type="text" class="form-control" placeholder="Korisničko Ime" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email:</label>
+                                                        <input type="text" class="form-control" placeholder="Email">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Ime:</label>
+                                                        <input type="text" class="form-control" placeholder="Ime">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Prezime:</label>
+                                                        <input type="text" class="form-control" placeholder="Prezime">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Grad:</label>
+                                                        <input type="text" class="form-control" placeholder="Grad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Telefon:</label>
+                                                        <input type="text" class="form-control" placeholder="Telefon">
+                                                    </div>
+                                                    <label>Spol: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio">Muški</label>
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio">Ženski</label>
+                                                    </div>
+                                                    <label>Zaposlenost: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio">Zaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio">Nezaposlen/a</label>
+                                                    </div>
+                                                    <label>Zdravstveno stanje: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="OK">Uredno</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="other">Drugo</label>
+                                                    </div>
+                                                    <div class="form-group" ng-show="health === 'other'">
+                                                        <label>Objašnjenje:</label>
+                                                        <textarea class="form-control" rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="interests" class="tab-pane fade">
+                                        <div class="row">
+                                            <div class="profile-interests-wrap">
+                                                <ul class="row profile-interests-category" ng-repeat="category in interests">
+                                                    <li class="col-md-12 category-name">{{category.categoryName}}</li>
+                                                    <li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in category.interestList">
+                                                        <div class="category-item">
+                                                            <div class="category-item-img" ng-click="interest.value=!interest.value"
+                                                                 ng-style="{'background-image': 'url(' + interest.img + ')'}">
+                                                            </div>
+                                                            <div class="checkbox category-item-label">
+                                                                <label><input type="checkbox" ng-model="interest.value" value="">{{interest.label}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="equipment" class="tab-pane fade">
+                                        <div class="row">
+                                            <div class="profile-interests-wrap">
+                                                <ul class="row profile-interests-category" ng-repeat="category in equipment">
+                                                    <li class="col-md-12 category-name">{{category.categoryName}}</li>
+                                                    <li class="col-md-6 col-sm-6" ng-repeat="equipmentPart in category.equipmentList">
+                                                        <div class="category-item">
+                                                            <div class="category-item-img" ng-click="equipmentPart.value=!equipmentPart.value"
+                                                                 ng-style="{'background-image': 'url(' + equipmentPart.img + ')'}">
+                                                            </div>
+                                                            <div class="checkbox category-item-label">
+                                                                <label><input type="checkbox" ng-model="equipmentPart.value" value="">{{equipmentPart.label}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
+
+                                            </div>
+                                        </div>
                             </div>
                         </div>
                     </div>

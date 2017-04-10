@@ -15,10 +15,10 @@
                     if (currentUser.id == 0)
                     {
                         $rootScope.menuItems.push({ link: "/home", text: "Početna" });
-                        $rootScope.menuItems.push({ link: "/home", text: "Aktuelno" });
-                        $rootScope.menuItems.push({ link: "/blog", text: "Blog" });
+                        $rootScope.menuItems.push({ link: "/home#upcoming", text: "Aktuelno" });
+                        //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
                         $rootScope.menuItems.push({ link: "/events", text: "Događaji" });
-                        $rootScope.menuItems.push({ link: "/home", text: "Kontakt" });
+                        $rootScope.menuItems.push({ link: "/home#contact", text: "Kontakt" });
                     }
                 };
 
@@ -26,7 +26,7 @@
                     $rootScope.menuItems = [];
                     $rootScope.menuItems.push({ link: "/home", text: "Početna" });
                     $rootScope.menuItems.push({ link: "/home", text: "Aktuelno" });
-                    $rootScope.menuItems.push({ link: "/blog", text: "Blog" });
+                    //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
                     $rootScope.menuItems.push({ link: "/events", text: "Događaji" });
                     $rootScope.menuItems.push({ link: "/members", text: "Članovi" });
                     $rootScope.menuItems.push({ link: "/profile", text: "Profil" });
