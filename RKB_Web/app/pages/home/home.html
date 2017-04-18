@@ -49,21 +49,16 @@
     </div>
 </div>
 <div class="av-section-wrap" id="upcoming">
-    <div class="upcoming-background" style="background-image: url('/img/hik_slide.jpg')">
+    <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
+        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.image +')'}"></div>
         <div class="upcoming-slide-dark-overlay"></div>
         <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="upcoming-slide-content">
-                    <div class="upcoming-slide-title">Slide Title</div>
+                    <div class="upcoming-slide-title">{{event.title}}</div>
                     <div class="upcoming-slide-description">
-                        Contrary to popular belief,
-                        Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                        a Latin professor at Hampden-Sydney College in Virginia,
-                        looked up one of the more obscure Latin words, consectetur,
-                        from a Lorem Ipsum passage, and going through the cites of the word
-                        in classical literature, discovered the undoubtable source.
+                       {{event.description}}
                     </div>
                     <button class="rectangle-btn">Prijava</button><button class="rectangle-btn" id="view-upcoming-btn">Pregled</button>
                 </div>
@@ -89,8 +84,8 @@
                 </div>
             </div>
         </div>
-        <button class="transparent-round-btn" id="slide-left" ng-click="nextSlide()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-        <button class="transparent-round-btn" id="slide-right" ng-click="previousSlide()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcoming()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
     </div>
 </div>
 

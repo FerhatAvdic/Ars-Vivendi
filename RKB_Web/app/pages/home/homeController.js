@@ -65,6 +65,25 @@
         //}
         ];
 
+        $scope.upcoming = [
+            { image: "/img/bik_slide.jpg", title: "Slide Title 1", description: "Driving over the hills up to the mountains", link: "" },
+            { image: "/img/hik_slide.jpg", title: "Slide Title 2", description: "Exploring the forests and fields of mountains", link:"" },
+            { image: "/img/ski_slide.jpg", title: "Slide Title 3", description: "Speeding down the lanes", link: "" },
+            { image: "/img/div_slide.jpg", title: "Slide Title 4", description: "Go down into the depths of the seas", link: "" }
+        ];
+        $scope.currentSlideUpcoming = 0;
+        $scope.nextSlideUpcoming = function () {
+            if ($scope.currentSlideUpcoming != $scope.upcoming.length - 1) $scope.currentSlideUpcoming++;
+            else $scope.currentSlideUpcoming = 0;
+        }
+        $scope.previousSlideUpcoming = function () {
+            if ($scope.currentSlideUpcoming != 0) $scope.currentSlideUpcoming--;
+            else $scope.currentSlideUpcoming = $scope.upcoming.length - 1;
+        }
+        $scope.goToSlideUpcoming = function (index) {
+            $scope.currentSlideUpcoming = index;
+        }
+
         var deadline = '2017-04-23';
         function getTimeRemaining(endtime) {
             var t = Date.parse(endtime) - Date.parse(new Date());
