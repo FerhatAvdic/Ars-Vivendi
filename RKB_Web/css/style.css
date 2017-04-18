@@ -831,9 +831,28 @@ ul {
 
 /*7 SECTION FOOTER*/
 .footer-wrap{
+    position: relative;
     padding: 50px 0;
     background: rgba(0,0,0,0.8);
     color: white;
+}
+.footer-wrap a{
+    color: white;
+}
+.footer-wrap a .fa{
+    font-size: 32px;
+}
+.footer-follow{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+.footer-follow li{
+    display: inline-block;
+    margin-right: 25px;
+}
+.footer-follow li:last-child{
+    margin-right: 0;
 }
 
 
