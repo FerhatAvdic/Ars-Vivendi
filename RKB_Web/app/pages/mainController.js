@@ -14,22 +14,22 @@
                     //USER MENU
                     if (currentUser.id == 0)
                     {
-                        $rootScope.menuItems.push({ link: "/home", text: "Početna" });
-                        $rootScope.menuItems.push({ link: "/home#upcoming", text: "Aktuelno" });
+                        $rootScope.menuItems.push({ link: "#!/home", text: "Početna", id: null});
+                        $rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
                         //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
-                        $rootScope.menuItems.push({ link: "/events", text: "Događaji" });
-                        $rootScope.menuItems.push({ link: "/home#contact", text: "Kontakt" });
+                        $rootScope.menuItems.push({ link: "#!/events", text: "Događaji", id: null});
+                        $rootScope.menuItems.push({ link: "", text: "Kontakt", id: "contact-link" });
                     }
                 };
 
                 $rootScope.changeMenuAdmin = function() {
                     $rootScope.menuItems = [];
-                    $rootScope.menuItems.push({ link: "/home", text: "Početna" });
-                    $rootScope.menuItems.push({ link: "/home", text: "Aktuelno" });
+                    $rootScope.menuItems.push({ link: "#!/home", text: "Početna" });
+                    $rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
                     //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
-                    $rootScope.menuItems.push({ link: "/events", text: "Događaji" });
-                    $rootScope.menuItems.push({ link: "/members", text: "Članovi" });
-                    $rootScope.menuItems.push({ link: "/profile", text: "Profil" });
+                    $rootScope.menuItems.push({ link: "#!/events", text: "Događaji" });
+                    $rootScope.menuItems.push({ link: "#!/members", text: "Članovi" });
+                    $rootScope.menuItems.push({ link: "#!/profile", text: "Profil" });
 
                 }
 

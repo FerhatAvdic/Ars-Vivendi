@@ -29,42 +29,43 @@
 
         $scope.activityShowcase = [{
             icon: "fa-tint",
-            backgroundColor: "073A80",
+            backgroundColor: "EEEEEE",
             title: "Ronjenje",
             description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
         },
         {
             icon: "fa-bicycle",
-            backgroundColor: "02CB9E",
+            backgroundColor: "EEEEEE",
             title: "Biciklizam",
             description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
         },
         {
             icon: "fa-life-ring",
-            backgroundColor: "1462CD",
+            backgroundColor: "EEEEEE",
             title: "Rafting",
             description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
-        },
-        {
-            icon: "fa-snowflake-o",
-            backgroundColor: "3A7AD2",
-            title: "Skijanje",
-            description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
-        },
-        {
-            icon: "fa-tree",
-            backgroundColor: "007E62",
-            title: "Planinarenje",
-            description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
-        },
-        {
-            icon: "fa-star",
-            backgroundColor: "00A37F",
-            title: "Rekreacija",
-            description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
-        }];
+        }//,
+        //{
+        //    icon: "fa-snowflake-o",
+        //    backgroundColor: "3A7AD2",
+        //    title: "Skijanje",
+        //    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
+        //},
+        //{
+        //    icon: "fa-tree",
+        //    backgroundColor: "007E62",
+        //    title: "Planinarenje",
+        //    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
+        //},
+        //{
+        //    icon: "fa-star",
+        //    backgroundColor: "00A37F",
+        //    title: "Rekreacija",
+        //    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "
+        //}
+        ];
 
-        var deadline = '2017-04-11';
+        var deadline = '2017-04-23';
         function getTimeRemaining(endtime) {
             var t = Date.parse(endtime) - Date.parse(new Date());
             var seconds = Math.floor((t / 1000) % 60);
@@ -90,40 +91,67 @@
 
         $scope.gallery = [{
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://s-media-cache-ak0.pinimg.com/originals/45/5f/d0/455fd055178fdf66ca077d017cf7a923.jpg"
+            eventImg: "./img/hik_slide.jpg",
+            date: "05-Mart-2017"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://ksqphotography.files.wordpress.com/2011/05/sample-with-dx-crop-factor.jpg"
+            eventImg: "./img/bik_slide.jpg",
+            date: "05-Mart-2017"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://www.pentaxforums.com/forums/attachments/12-post-your-photos/47585d1258486914-nature-sample-shots-smc-135-600mm-chipmunkhickorymouth.jpeg"
+            eventImg: "./img/div_slide.jpg",
+            date: "05-Mart-2017"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "http://pre02.deviantart.net/f34e/th/pre/f/2015/182/4/f/croatia_nature_pack___sample__2___proref_org_by_proref-d8zgrc2.jpg"
+            eventImg: "./img/ski_slide.jpg",
+            date: "05-Mart-2017",
+            location: "location"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://c1.staticflickr.com/4/3171/2763595208_2427d97192_b.jpg"
+            eventImg: "./img/bik_slide.jpg",
+            date: "05-Mart-2017",
+            location: "location"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://www.slrlounge.com/wp-content/uploads/2013/11/Nikon-D5300-Sample-HDR-Image.jpg"
+            eventImg: "./img/hik_slide.jpg",
+            date: "05-Mart-2017",
+            location: "location"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://www.slrlounge.com/wp-content/uploads/2013/11/Nikon-D5300-Sample-HDR-Image.jpg"
+            eventImg: "./img/div_slide.jpg",
+            date: "05-Mart-2017",
+            location: "location"
         },
         {
             eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://www.slrlounge.com/wp-content/uploads/2013/11/Nikon-D5300-Sample-HDR-Image.jpg"
-        },
-        {
-            eventName: "Lorem Ipsum is simply dummy text",
-            eventImg: "https://www.slrlounge.com/wp-content/uploads/2013/11/Nikon-D5300-Sample-HDR-Image.jpg"
-        }];
+            eventImg: "./img/ski_slide.jpg",
+            date: "05-Mart-2017",
+            location: "location"
+        }//,
+        //{
+        //    eventName: "Lorem Ipsum is simply dummy text",
+        //    eventImg: "./img/bik_slide.jpg",
+        //    date: "05-Mart-2017",
+        //    location: "location"
+        //}
+        ];
+
+        $("#upcoming-link").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#upcoming").offset().top
+            }, 2000);
+        });
+        $("#contact-link").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#contact").offset().top
+            }, 2000);
+        });
 
     }]);
 }());

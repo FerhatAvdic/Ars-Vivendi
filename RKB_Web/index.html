@@ -73,7 +73,7 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
-                    <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!{{ item.link }}">{{ item.text }}</a></li>
+                    <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
                     <li class="hide-item"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Prijava</a></li>
                     <li class="hide-item" data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Postani Član</a></li>
                 </ul>
@@ -87,11 +87,7 @@
             </ul>
     </div>-->
 
-    <div class="templates ang-fade" ng-view>
-        de
-        
-
-    </div>
+    <div class="templates" ng-view></div>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 ﻿<div class="welcome-screen">
-    <div class="slide" ng-repeat="slide in slides" ng-show="$index==currentSlide">
+    <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide">
         <div class="slide-background">
             <div class="slide-overlay"></div>
             <img class="slide-image" ng-src="{{slide.image}}" />
@@ -17,12 +17,27 @@
         </div>
     </div>
 </div>
+<div class="av-section-wrap"id="mission">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 inside-mission">
+                <i class="fa fa-comment-o" aria-hidden="true" id="mission-icon"></i>
+                <div class="mission-title">Naša Misija</div>
+                <div class="mission-description">
+                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="av-section-wrap">
-        <div class="av-heading">Čime se bavimo</div>
+        <div class="av-heading">Pođi s nama</div>
         <div class="row row-centered">
-            <div ng-repeat="activity in activityShowcase" class="col-md-4 col-centered activity-box">
-                <div class="activity-icon" ng-style="{'background-color': '#' + activity.backgroundColor}">
+            <div class="col-md-4 col-sm-4 col-centered activity-box" ng-repeat="activity in activityShowcase">
+                <div class="activity-icon">
+                    <!-- ng-style="{'background-color': '#' + activity.backgroundColor}" -->
                     <i class="fa" ng-class="activity.icon" aria-hidden="true"></i>
                 </div>
                 <div class="activity-title">{{activity.title}}</div>
@@ -34,74 +49,122 @@
     </div>
 </div>
 <div class="av-section-wrap" id="upcoming">
-    <div class="av-heading">Aktuelno</div>
     <div class="upcoming-background" style="background-image: url('/img/hik_slide.jpg')">
         <div class="upcoming-slide-dark-overlay"></div>
         <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="upcoming-slide-content">
-                        <div class="upcoming-slide-title">Slide Title</div>
-                        <div class="upcoming-slide-description">
-                        Contrary to popular belief, 
-                        Lorem Ipsum is not simply random text. It has roots in a piece of classical 
-                        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, 
-                        a Latin professor at Hampden-Sydney College in Virginia, 
-                        looked up one of the more obscure Latin words, consectetur, 
-                        from a Lorem Ipsum passage, and going through the cites of the word 
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="upcoming-slide-content">
+                    <div class="upcoming-slide-title">Slide Title</div>
+                    <div class="upcoming-slide-description">
+                        Contrary to popular belief,
+                        Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
+                        a Latin professor at Hampden-Sydney College in Virginia,
+                        looked up one of the more obscure Latin words, consectetur,
+                        from a Lorem Ipsum passage, and going through the cites of the word
                         in classical literature, discovered the undoubtable source.
-                        </div>
-                        <button class="rectangle-btn">Prijava</button><button class="rectangle-btn" id="view-upcoming-btn">Pregled</button>
                     </div>
+                    <button class="rectangle-btn">Prijava</button><button class="rectangle-btn" id="view-upcoming-btn">Pregled</button>
                 </div>
-                <div class="col-md-6">
-                    <div class="upcoming-countdown-wrap">
-                        <div class="upcoming-countdown-instance">
-                            <div class="upcoming-countdown-instance-number">{{timeRemaining.days}}</div>
-                            <div class="upcoming-countdown-instance-label">Dana</div>
-                        </div>
-                        <div class="upcoming-countdown-instance">
-                            <div class="upcoming-countdown-instance-number">{{timeRemaining.hours}}</div>
-                            <div class="upcoming-countdown-instance-label">Sati</div>
-                        </div>
-                        <div class="upcoming-countdown-instance">
-                            <div class="upcoming-countdown-instance-number">{{timeRemaining.minutes}}</div>
-                            <div class="upcoming-countdown-instance-label">Minuta</div>
-                        </div>
-                        <div class="upcoming-countdown-instance">
-                            <div class="upcoming-countdown-instance-number">{{timeRemaining.seconds}}</div>
-                            <div class="upcoming-countdown-instance-label">Sekundi</div>
-                        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="upcoming-countdown-wrap">
+                    <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance-number">{{timeRemaining.days}}</div>
+                        <div class="upcoming-countdown-instance-label">Dana</div>
+                    </div>
+                    <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance-number">{{timeRemaining.hours}}</div>
+                        <div class="upcoming-countdown-instance-label">Sati</div>
+                    </div>
+                    <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance-number">{{timeRemaining.minutes}}</div>
+                        <div class="upcoming-countdown-instance-label">Minuta</div>
+                    </div>
+                    <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance-number">{{timeRemaining.seconds}}</div>
+                        <div class="upcoming-countdown-instance-label">Sekundi</div>
                     </div>
                 </div>
             </div>
+        </div>
         <button class="transparent-round-btn" id="slide-left" ng-click="nextSlide()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
         <button class="transparent-round-btn" id="slide-right" ng-click="previousSlide()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
     </div>
 </div>
-<div class="partners-wrap">
+
+<div class="partners-wrap" id="partners">
     <div class="row row-centered">
         <div class="col-md-2 col-centered" ng-repeat="partner in partners">
             <div class="partner-logo">
-                <img ng-src="{{partner}}" style="max-height: 100%; filter: saturate(0);" />
+                <img ng-src="{{partner}}" style="max-height: 100%;" />
             </div>
         </div>
     </div>
 </div>
-<div class="av-section-wrap">
-    <div class="av-heading">
-        Galerija
-    </div>
-    <div class="container">
-       <div class="row">
-           <div class="col-md-4" ng-repeat="item in gallery">
-               <div class="gallery-item" ng-style="{'background-image': 'url(' + item.eventImg + ')'}">
-                   <div class="gallery-item-overlay"><div class="gallery-item-text">{{item.eventName}}</div></div>
-               </div>
-           </div>
-       </div> 
+<div class="av-section-wrap" id="discount-section">
+    <div class="row">
+        <div class="col-md-4 col-xs-12" style="padding: 0;">
+            <div class="discount" ng-style="{'background-image': 'url(https://image.freepik.com/free-vector/purple-yellow-and-red-discount-banner_1017-7235.jpg)'}">
+            </div>
+            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+        <div class="col-md-4 col-xs-12" style="padding: 0;">
+            <div class="discount" ng-style="{'background-image': 'url(https://image.shutterstock.com/z/stock-vector-super-sale-shining-banner-on-colorful-background-vector-illustration-346063709.jpg)'}">
+            </div>
+            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+        <div class="col-md-4 col-xs-12" style="padding: 0;">
+            <div class="discount" ng-style="{'background-image': 'url(https://image.freepik.com/free-vector/glossy-discount-banner_1017-7231.jpg)'}">
+            </div>
+            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
     </div>
 </div>
+<div class="become-member">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-xs-8">
+                <div class="become-member-statement" id="become-member-1">
+                    Ostvari mogućnost boniteta i uštedi svoj novac
+                </div>
+                <div class="become-member-statement" id="become-member-2">
+                    Postani član i budi dio velikog društva
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-2 col-xs-offset-1 col-xs-2">
+                <button class="rectangle-btn" id="become-member-btn">Pridruži se!</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="av-section-wrap">-->
+    <!--<div class="av-heading">
+        Kuda smo išli
+    </div>-->
+    <div class="row">
+        <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding:0;">
+            <div class="gallery-item">
+                <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.eventImg + ')'}"></div>
+                <div class="gallery-item-overlay">
+                    <h4><strong>{{item.eventName}}</strong></h4>
+                    <p>{{item.date}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--</div>-->
+
+   
+
+
+
+
+
     <div class="av-section-wrap contact-wrap">
         <div class="av-heading" id="contact">
             Kontakt
@@ -131,7 +194,7 @@
                 </div>
             </div>
                 <div class="row row-centered">
-                    <div class="col-md-12">
+                    <div class="col-md-12 text-right">
                         <button class="rectangle-btn" id="contact-submit-btn">Pošalji</button>
                     </div>
                 </div>
