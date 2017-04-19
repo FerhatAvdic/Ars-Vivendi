@@ -7,15 +7,20 @@
         <div class="slide-content">
             <div class="slide-title">{{slide.title}}</div>
             <div class="slide-description">{{slide.description}}</div>
-            <button class="rectangle-btn" id="register-btn">Postani Član</button>
+            <button class="rectangle-btn" id="register-btn">Pregled</button>
         </div>
     </div>
-    <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-    <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-    <div class="slide-dots">
+    <!--<button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>-->
+    <div class="slide-labels">
+        <div class="slide-label" ng-repeat="label in slides" ng-class="{'slide-label-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.labelColor}">
+            <span>{{label.title}}</span>
+        </div>
+    </div>
+    <!--<div class="slide-dots">
         <div class="slide-dot" ng-class="{slide_dot_selected: dotSelected($index)}" ng-repeat="dot in slides" ng-click="goToSlide($index)">
         </div>
-    </div>
+    </div>-->
 </div>
 <div class="av-section-wrap"id="mission">
     <div class="container">
@@ -60,7 +65,7 @@
                     <div class="upcoming-slide-description">
                        {{event.description}}
                     </div>
-                    <button class="rectangle-btn">Prijava</button><button class="rectangle-btn" id="view-upcoming-btn">Pregled</button>
+                    <button class="rectangle-btn">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn">Pregled</button>
                 </div>
             </div>
             <div class="col-md-6">
@@ -99,24 +104,10 @@
     </div>
 </div>
 <div class="av-section-wrap" id="discount-section">
-    <div class="row">
-        <div class="col-md-4 col-xs-12" style="padding: 0;">
-            <div class="discount" ng-style="{'background-image': 'url(https://image.freepik.com/free-vector/purple-yellow-and-red-discount-banner_1017-7235.jpg)'}">
+    <div class="row" >
+        <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
+            <div class="discount" ng-repeat="discount in columns" ng-show="checkCurrentSlides($parent.$index, $index)" ng-click="nextSlideDiscounts($parent.$index)" ng-style="{'background-image': 'url('+ discount.image +')'}">
             </div>
-            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-        </div>
-        <div class="col-md-4 col-xs-12" style="padding: 0;">
-            <div class="discount" ng-style="{'background-image': 'url(https://image.shutterstock.com/z/stock-vector-super-sale-shining-banner-on-colorful-background-vector-illustration-346063709.jpg)'}">
-            </div>
-            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-        </div>
-        <div class="col-md-4 col-xs-12" style="padding: 0;">
-            <div class="discount" ng-style="{'background-image': 'url(https://image.freepik.com/free-vector/glossy-discount-banner_1017-7231.jpg)'}">
-            </div>
-            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
         </div>
     </div>
 </div>
@@ -132,7 +123,7 @@
                 </div>
             </div>
             <div class="col-md-offset-1 col-md-2 col-xs-offset-1 col-xs-2">
-                <button class="rectangle-btn" id="become-member-btn">Pridruži se!</button>
+                <button class="rectangle-btn rectangle-btn-outline-dark" id="become-member-btn">Pridruži se!</button>
             </div>
         </div>
     </div>
@@ -142,11 +133,11 @@
         Kuda smo išli
     </div>-->
     <div class="row">
-        <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding:0;">
+        <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
             <div class="gallery-item">
                 <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.eventImg + ')'}"></div>
                 <div class="gallery-item-overlay">
-                    <h4><strong>{{item.eventName}}</strong></h4>
+                    <h5>{{item.eventName}}</h5>
                     <p>{{item.date}}</p>
                 </div>
             </div>
@@ -155,11 +146,6 @@
 <!--</div>-->
 
    
-
-
-
-
-
     <div class="av-section-wrap contact-wrap">
         <div class="av-heading" id="contact">
             Kontakt

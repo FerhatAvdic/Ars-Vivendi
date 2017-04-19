@@ -16,7 +16,7 @@
                                             <li><a data-toggle="tab" href="#stats" target="_self">Statistike</a></li>
                                             <li class="active"><a data-toggle="tab" href="#personal" target="_self">Lični Podaci</a></li>
                                             <li><a data-toggle="tab" href="#interests" target="_self">Interesi</a></li>
-                                            <li><a data-toggle="tab" href="#equipment" target="_self">Oprema</a></li>
+                                            <li><a data-toggle="tab" href="#finance" target="_self">Finansije</a></li>
                                         </ul>
 
                                 </div>
@@ -86,15 +86,6 @@
                                         <div class="row">
                                             <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
                                                 <div class="profile-personal-wrap">
-                                                    <!--<ul class="profile-fields">
-            <li><label>Korisničko Ime:</label><input type="text" placeholder="Korisničko Ime" required /></li>
-            <li><label>Šifra:</label><input type="password" placeholder="Šifra" required /></li>
-            <li><label>Ime:</label><input type="text" placeholder="Ime" /></li>
-            <li><label>Prezime:</label><input type="text" placeholder="Prezime" /></li>
-            <li><label>Email:</label><input type="text" placeholder="Email" /></li>
-            <li><label>Grad:</label><input type="text" placeholder="Grad" /></li>
-            <li><label>Telefon:</label><input type="text" placeholder="Telefon" /></li>
-        </ul>-->
                                                     <div class="form-group">
                                                         <label>Korisničko Ime:</label>
                                                         <input type="text" class="form-control" placeholder="Korisničko Ime" required>
@@ -161,7 +152,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="equipment" class="tab-pane fade">
+                                    <!--<div id="equipment" class="tab-pane fade">
                                         <div class="row">
                                             <div class="profile-interests-wrap">
                                                 <ul class="row profile-interests-category" ng-repeat="category in equipment">
@@ -179,8 +170,26 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                    </div>-->
+                                    <div id="finance" class="tab-pane fade">
+                                        <div class="row">
+                                            <div class="profile-interests-wrap">
+                                                <ul class="row profile-interests-category" ng-repeat="category in interests">
+                                                    <li class="col-md-12 category-name">{{category.categoryName}}</li>
+                                                    <li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in category.interestList">
+                                                        <div class="category-item">
+                                                            <div class="category-item-img" ng-click="interest.value=!interest.value"
+                                                                 ng-style="{'background-image': 'url(' + interest.img + ')'}">
+                                                            </div>
+                                                            <div class="checkbox category-item-label">
+                                                                <label><input type="checkbox" ng-model="interest.value" value="">{{interest.label}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-
                                 </div>
 
                                             </div>
