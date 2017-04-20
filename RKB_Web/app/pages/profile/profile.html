@@ -49,15 +49,15 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Naziv</th>
-                                                                    <th class="text-right">Cijena</th>
-                                                                    <th class="text-right">Stanje</th>
+                                                                    <th class="text-right">Datum</th>
+                                                                    <th class="text-right">Lokacija</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr class="profile-events-wrap" ng-repeat="event in stats.attendedEvents">
                                                                     <td><a href="">{{event.name}}</a></td>
-                                                                    <td class="text-right">{{event.price}}</td>
-                                                                    <td class="text-right">{{event.paymentStatus}}</td>
+                                                                    <td class="text-right">13-Mart-2017</td>
+                                                                    <td class="text-right">Sarajevo</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -172,21 +172,45 @@
                                         </div>
                                     </div>-->
                                     <div id="finance" class="tab-pane fade">
-                                        <div class="row">
-                                            <div class="profile-interests-wrap">
-                                                <ul class="row profile-interests-category" ng-repeat="category in interests">
-                                                    <li class="col-md-12 category-name">{{category.categoryName}}</li>
-                                                    <li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in category.interestList">
-                                                        <div class="category-item">
-                                                            <div class="category-item-img" ng-click="interest.value=!interest.value"
-                                                                 ng-style="{'background-image': 'url(' + interest.img + ')'}">
-                                                            </div>
-                                                            <div class="checkbox category-item-label">
-                                                                <label><input type="checkbox" ng-model="interest.value" value="">{{interest.label}}</label>
+                                        <div class="stats-wrap">
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
+                                                    <div class="panel panel-default" id="finance-panel">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-7 col-xs-12">
+                                                                    <h2>Ars Vivendi Članarina</h2>
+                                                                    <p>Uplata na datum: 08-Septembar-2016</p>
+                                                                    <p>Važi do: 08-Septembar-2017</p>
+                                                                </div>
+                                                                <div class="col-md-5 col-xs-12">
+                                                                    <button class="rectangle-btn" id="extend-membership-btn">Produži Članstvo</button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </li>
-                                                </ul>
+                                                    </div>
+                                                    <h3>Uplate za događaje</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table profile-stats-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Naziv</th>
+                                                                    <th class="text-right">Cijena</th>
+                                                                    <th class="text-right">Plaćeni Iznos</th>
+                                                                    <th class="text-right">Dug</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="profile-events-wrap" ng-repeat="event in stats.attendedEvents">
+                                                                    <td><a href="">{{event.name}}</a></td>
+                                                                    <td class="text-right">{{event.price}} KM</td>
+                                                                    <td class="text-right">{{event.paymentStatus}} KM</td>
+                                                                    <td class="text-right">{{(event.price - event.paymentStatus > 0) ? (event.price - event.paymentStatus) + "KM" : "Nema"}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -212,7 +212,6 @@
             for (var i = 0; i < $scope.currentSlideDiscounts.length; i++) {
                 if (i === columnIndex)
                     if ($scope.currentSlideDiscounts[i] === discountIndex) {
-                        console.log("column:", columnIndex, "discount:", discountIndex);
                         return true;
                     } 
             }
@@ -232,24 +231,57 @@
                 $scope.nextSlideUpcoming();
             }, interval);
         };
+        $scope.intervalOfUpcomingDeadline = function (interval) {
+            $interval(function () {
+                var d = $scope.timeRemaining.days;
+                var h = $scope.timeRemaining.hours;
+                var m = $scope.timeRemaining.minutes;
+                var s = $scope.timeRemaining.seconds;
+                if (s > 1) s--;
+                else if (s === 1){
+                    s = 59;
+                    if (m > 1) m--;
+                    else if (m === 1) {
+                        m = 59;
+                        if (h > 1) h--;
+                        else if (h === 1) {
+                            h = 59;
+                            if (d > 0) d--;
+                            else if (d === 0) {
+                                d = 0;
+                            }
+                                
+                        }
+                    }
+                }
+                $scope.timeRemaining.days = d;
+                $scope.timeRemaining.hours = h;
+                $scope.timeRemaining.minutes = m;
+                $scope.timeRemaining.seconds = s;
+            }, interval);
+        };
 
         $(document).ready(function () {
             $("#upcoming-link").click(function () {
-                $('html, body').animate({
+                $('html, body').stop(true, false).animate({
                     scrollTop: $("#upcoming").offset().top
                 }, 2000);
             });
             $("#contact-link").click(function () {
-                $('html, body').animate({
+                $('html, body').stop(true, false).animate({
                     scrollTop: $("#contact").offset().top
                 }, 2000);
             });
+        });
+        $(window).bind("mousewheel", function () {
+            $("html, body").stop();
         });
         $scope.intervalOfDiscountSlide(0, 8000);
         $scope.intervalOfDiscountSlide(1, 7500);
         $scope.intervalOfDiscountSlide(2, 8500);
         $scope.intervalOfSlideUpcoming(6000);
         $scope.intervalOfSlide(5000);
+        $scope.intervalOfUpcomingDeadline(1000);
 
     }]);
 }());

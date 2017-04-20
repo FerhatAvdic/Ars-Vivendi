@@ -100,22 +100,22 @@
                 "id": "eventID",
                 "name": "eventName 1",
                 "type": 1,
-                "price": "eventPrice 1",
-                "paymentStatus": "paid"
+                "price": 200,
+                "paymentStatus": 150
             },
             {
                 "id": "eventID",
                 "name": "eventName 2",
                 "type": 2,
-                "price": "eventPrice 2",
-                "paymentStatus": "paid"
+                "price": 80,
+                "paymentStatus": 80
             },
             {
                 "id": "eventID",
                 "name": "eventName 3",
                 "type": 1,
-                "price": "eventPrice 3",
-                "paymentStatus": "paid"
+                "price": 120,
+                "paymentStatus": 100
             }],
             "comments": [{
                 "id": "",

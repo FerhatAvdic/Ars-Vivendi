@@ -14,7 +14,7 @@
                     //USER MENU
                     if (currentUser.id == 0)
                     {
-                        $rootScope.menuItems.push({ link: "#!/home", text: "Početna", id: null});
+                        $rootScope.menuItems.push({ link: "#!/about", text: "O Nama", id: null});
                         $rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
                         //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
                         $rootScope.menuItems.push({ link: "#!/events", text: "Događaji", id: null});
@@ -24,8 +24,8 @@
 
                 $rootScope.changeMenuAdmin = function() {
                     $rootScope.menuItems = [];
-                    $rootScope.menuItems.push({ link: "#!/home", text: "Početna" });
-                    $rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
+                    $rootScope.menuItems.push({ link: "#!/about", text: "O Nama" });
+                    //$rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
                     //$rootScope.menuItems.push({ link: "/blog", text: "Blog" });
                     $rootScope.menuItems.push({ link: "#!/events", text: "Događaji" });
                     $rootScope.menuItems.push({ link: "#!/members", text: "Članovi" });
