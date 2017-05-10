@@ -21,6 +21,7 @@
         .when('/newevent', { templateUrl: 'app/pages/newEvent/newEvent.html', controller: 'newEventController' })
         .when('/profile', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/about', { templateUrl: 'app/pages/about/about.html', controller: 'aboutController' })
+        .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
         .otherwise({ redirectTo: "/" });
 
 

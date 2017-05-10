@@ -37,7 +37,7 @@
 </div>
 
 <div class="container">
-    <div class="av-section-wrap">
+    <div class="av-section-wrap" id="activity-showcase">
         <div class="av-heading">Pođi s nama</div>
         <div class="row row-centered">
             <div class="col-md-4 col-sm-4 col-centered activity-box" ng-repeat="activity in activityShowcase">
@@ -53,6 +53,7 @@
         </div>
     </div>
 </div>
+<div id="pre-upcoming"></div>
 <div class="av-section-wrap" id="upcoming">
     <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
         <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.image +')'}"></div>
@@ -89,20 +90,22 @@
                 </div>
             </div>
         </div>
-        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcoming()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
     </div>
+    
+                <ul class="upcoming-labels">
+                    <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)">
+                        <div class="upcoming-label-big">{{event.title}}</div>
+                        <div class="upcoming-label-small">{{event.date}}</div>
+                        <div class="upcoming-label-small">{{event.location}}</div>
+                    </li>
+                </ul>
 </div>
 
-<div class="partners-wrap" id="partners">
-    <div class="row row-centered">
-        <div class="col-md-2 col-centered" ng-repeat="partner in partners">
-            <div class="partner-logo">
-                <img ng-src="{{partner}}" style="max-height: 100%;" />
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
 <div class="av-section-wrap" id="discount-section">
     <div class="row" >
         <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
@@ -116,7 +119,7 @@
         <div class="row">
             <div class="col-md-8 col-xs-8">
                 <div class="become-member-statement" id="become-member-1">
-                    Ostvari mogućnost boniteta i uštedi svoj novac
+                    Ostvari mogućnost <strong>boniteta</strong> i uštedi svoj novac
                 </div>
                 <div class="become-member-statement" id="become-member-2">
                     Postani član i budi dio velikog društva
@@ -128,6 +131,17 @@
         </div>
     </div>
 </div>
+<div class="partners-wrap" id="partners">
+    <div class="av-heading">Partneri</div>
+    <div class="row row-centered">
+        <div class="col-md-2 col-centered" ng-repeat="partner in partners">
+            <div class="partner-logo">
+                <img ng-src="{{partner}}" style="max-height: 100%;" />
+            </div>
+            <div class="name-logo">Naziv</div>
+        </div>
+    </div>
+</div>
 <!--<div class="av-section-wrap">-->
     <!--<div class="av-heading">
         Kuda smo išli
@@ -136,16 +150,40 @@
         <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
             <div class="gallery-item">
                 <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.eventImg + ')'}"></div>
-                <div class="gallery-item-overlay">
-                    <h5>{{item.eventName}}</h5>
-                    <p><small>{{item.date}} {{item.location}}</small></p>
+                <div class="gallery-item-label" ng-style="{'background-color': item.labelColor}">
+                    <div class="gallery-item-label-content">
+                        <div class="gallery-item-title">{{item.eventName}}</div>
+                        <div class="gallery-item-description">{{item.date}} {{item.location}}</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 <!--</div>-->
-
-   
+<div class="partners-wrap" id="partners">
+    <div class="av-heading">Sponzori</div>
+        <div class="row row-centered">
+            <div class="col-md-2 col-centered" ng-repeat="partner in partners">
+                <div class="partner-logo">
+                    <img ng-src="{{partner}}" style="max-height: 100%;" />
+                </div>
+                <div class="name-logo">Naziv</div>
+            </div>
+        </div>
+</div>
+<div class="comments-wrap">
+    <div class="container">
+        <ul class="upcoming-labels" id="comments">
+            <li ng-repeat="comment in recentComments" ng-class="{'recent-post-selected': recentCommentSelected($index)}">
+                <div class="comment-event">{{comment.eventName}}</div>
+                <div class="comment-profile-picture" ng-style="{'background-image': 'url(' + comment.profilePicture + ')'}"></div>
+                <div class="comment-author">{{comment.author}}</div>
+                <span class="comment-date-time">{{comment.dateTime}}</span>
+                <span class="comment-total"><i class="fa fa-comment-o" aria-hidden="true"></i> {{comment.eventCommentsNumber}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
     <div class="av-section-wrap contact-wrap">
         <div class="av-heading" id="contact">
             Kontakt

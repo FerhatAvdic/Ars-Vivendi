@@ -170,8 +170,8 @@
                                     <tr ng-repeat="member in (filteredMembers = (members | filter : columnFilters)) |
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">
 
-                                        <td ng-if="member.gender == 'male'"><img class="member-profile-picture" src="https://images.vexels.com/media/users/3/140752/isolated/lists/17e31e592ab23bb0e8b2c0e76c0a4361-male-profile-avatar-5.png" /></td>
-                                        <td ng-if="member.gender == 'female'"><img class="member-profile-picture" src="https://cdn1.iconfinder.com/data/icons/men-and-women-avatar-profile/512/4-256.png" /></td>
+                                        <td ng-if="member.gender == 'male'"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
+                                        <td ng-if="member.gender == 'female'"><img class="member-profile-picture" src="/img/womansilhouette.jpg" /></td>
                                         <td>{{member.name}}</td>
                                         <td>{{member.surname}}</td>
                                         <td>{{member.phone}}</td>

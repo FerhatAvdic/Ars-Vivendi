@@ -70,6 +70,8 @@
     <Content Include="app\pages\about\aboutController.js" />
     <Content Include="app\pages\admin\dashboard\dashboard.html" />
     <Content Include="app\pages\admin\dashboard\dashboardController.js" />
+    <Content Include="app\pages\gallery\gallery.html" />
+    <Content Include="app\pages\gallery\galleryController.js" />
     <Content Include="app\pages\members\members.html" />
     <Content Include="app\pages\members\members.js" />
     <Content Include="app\pages\newEvent\newEvent.html" />
@@ -91,9 +93,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\div_slide.jpg" />
+    <Content Include="img\exit.png" />
     <Content Include="img\hik_slide.jpg" />
+    <Content Include="img\mansilhouette.jpg" />
     <Content Include="img\profilemock.png" />
     <Content Include="img\ski_slide.jpg" />
+    <Content Include="img\whitestonebg.png" />
+    <Content Include="img\womansilhouette.jpg" />
     <Content Include="libs\angular-animate.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
