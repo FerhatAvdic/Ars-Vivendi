@@ -169,18 +169,18 @@
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">-->
                                     <tr ng-repeat="member in (filteredMembers = (members | filter : columnFilters)) |
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">
-
-                                        <td ng-if="member.gender == 'male'"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
-                                        <td ng-if="member.gender == 'female'"><img class="member-profile-picture" src="/img/womansilhouette.jpg" /></td>
-                                        <td>{{member.name}}</td>
-                                        <td>{{member.surname}}</td>
-                                        <td>{{member.phone}}</td>
+                                        <td ng-if="member.gender === undefined"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
+                                        <td ng-if="member.gender === 'Musko'"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
+                                        <td ng-if="member.gender === 'Zensko'"><img class="member-profile-picture" src="/img/womansilhouette.jpg" /></td>
+                                        <td>{{member.firstName}}</td>
+                                        <td>{{member.lastName}}</td>
+                                        <td>{{member.phoneNumber}}</td>
                                         <td>{{member.email}}</td>
-                                        <td>{{member.city}}</td>
+                                        <td>{{member.address}}</td>
                                         <td>
                                             <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                            <a ng-click="editMember(member)" data-toggle="modal" data-target="#editMemberModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                            <a ng-click="deleteMember(member)" data-toggle="modal" data-target="#deleteMemberModal"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                            <a ng-click="editMember(member.userName)" data-toggle="modal" data-target="#editMemberModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a ng-click="setDeleteMember(member.userName)" data-toggle="modal" data-target="#deleteMemberModal"><i class="fa fa-ban" aria-hidden="true"></i></a>
                                         </td>
                                         <!--<td ng-hide="editingMemberId === member.username">{{member.name}}</td>
         <td ng-hide="editingMemberId === member.username">{{member.surname}}</td>
@@ -234,36 +234,36 @@
                     <div class="tab-content">
                         <div id="postani-clan-1" class="tab-pane fade in active">
                             <div class="login-line"><p>Korisnički podaci</p></div>
-                            <input type="text" placeholder="Korisničko Ime"  required />
-                            <input type="password" placeholder="Šifra" required />
-                            <input type="password" placeholder="Potvrdi Šifru" />
-                            <input type="text" placeholder="Ime" />
-                            <input type="text" placeholder="Prezime" />
-                            <input type="text" placeholder="Email" />
+                            <input type="text" placeholder="Korisničko Ime"  required ng-model="newMember.userName"/>
+                            <input type="password" placeholder="Šifra" required ng-model="newMember.password"/>
+                            <input type="password" placeholder="Potvrdi Šifru" ng-model="newMember.confirmPassword"/>
+                            <input type="text" placeholder="Ime" ng-model="newMember.firstName"/>
+                            <input type="text" placeholder="Prezime" ng-model="newMember.lastName"/>
+                            <input type="text" placeholder="Email" ng-model="newMember.email"/>
                             <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
                         </div>
                         <div id="postani-clan-2" class="tab-pane fade">
                             <div class="login-line"><p>Lični podaci</p></div>
                             <div class="login-line">
                                 <label>Datum Rođenja: </label>
-                                <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()"
+                                <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="newMember.dateOfBirth" ng-click="open1()"
                                        is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </div>
-                            <input type="text" placeholder="Grad" />
-                            <input type="text" placeholder="Telefon" />
+                            <input type="text" placeholder="Grad" ng-model="newMember.address"/>
+                            <input type="text" placeholder="Telefon" ng-model="newMember.phoneNumber"/>
                             <fieldset id="genderRadio">
                                 <ul class="login-line">
                                     <li><label>Spol: </label></li>
-                                    <li><label>Muški </label><input type="radio" value="" name="genderRadio"> </li>
-                                    <li><label>Ženski </label><input type="radio" value="" name="genderRadio"></li>
+                                    <li><label>Muški </label><input type="radio" value="musko" name="genderRadio" ng-model="newMember.gender"> </li>
+                                    <li><label>Ženski </label><input type="radio" value="zensko" name="genderRadio" ng-model="newMember.gender"></li>
                                 </ul>
                             </fieldset>
                             <fieldset id="employmentRadio">
                                 <ul class="login-line">
                                     <li><label>Zaposlen/a: </label></li>
-                                    <li><label>Da </label><input type="radio" value="" name="employmentRadio"></li>
-                                    <li><label>Ne </label><input type="radio" value="" name="employmentRadio"></li>
+                                    <li><label>Da </label><input type="radio" value="Zaposlen" name="employmentRadio" ng-model="newMember.employment"></li>
+                                    <li><label>Ne </label><input type="radio" value="Nezaposlen" name="employmentRadio" ng-model="newMember.employment"></li>
                                 </ul>
                             </fieldset>
                             <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
@@ -277,7 +277,7 @@
                                 <li><label>Planinarenje</label><input type="checkbox" /></li>
                                 <li><label>Skijanje</label><input type="checkbox" /></li>
                             </ul>
-                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-1" target="_self" data-dismiss="modal">Dodaj Člana</button>
+                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-1" target="_self" data-dismiss="modal" ng-click="addNewMember()">Dodaj Člana</button>
                         </div>
                     </div>
                 </div>
@@ -298,16 +298,16 @@
         <div class="modal-content modal-width-adjust">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title modal-title-padding">Izmijeni podatke člana: {{editingMember._id}}</h4>
+                <h4 class="modal-title modal-title-padding">Izmijeni podatke člana: {{editingMember.userName}}</h4>
             </div>
             <div class="add-member-form">
                 <div class="login-line"><p>Lični Podaci</p></div>
-                <input type="text" placeholder="Ime" ng-model="editingMember.name" />
-                <input type="text" placeholder="Prezime" ng-model="editingMember.surname" />
+                <input type="text" placeholder="Ime" ng-model="editingMember.firstName" />
+                <input type="text" placeholder="Prezime" ng-model="editingMember.lastName" />
                 <input type="text" placeholder="Email" ng-model="editingMember.email" />
-                <input type="text" placeholder="Telefon" ng-model="editingMember.phone" />
-                <input type="text" placeholder="Grad" ng-model="editingMember.city" />
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelEdit()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #3A7AD2;" data-dismiss="modal">Potvrdi izmjene</button>
+                <input type="text" placeholder="Telefon" ng-model="editingMember.phoneNumber" />
+                <input type="text" placeholder="Grad" ng-model="editingMember.address" />
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelEdit()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #3A7AD2;" data-dismiss="modal" ng-click="updateMember()">Potvrdi izmjene</button>
             </div>
         </div>
     </div>
@@ -321,16 +321,16 @@
         <div class="modal-content modal-width-adjust">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title modal-title-padding">Brisanje člana: {{deletingMember._id}}</h4>
+                <h4 class="modal-title modal-title-padding">Brisanje člana: {{deletingMember.userName}}</h4>
             </div>
             <div class="delete-member-form">
                 <div class="login-line"><p id="del-question">Da li ste sigurni da želite obrisati člana?</p></div>
-                <div class="login-line"><p>Ime: <strong>{{deletingMember.name}}</strong></p></div>
-                <div class="login-line"><p>Prezime: <strong>{{deletingMember.surname}}</strong></p></div>
+                <div class="login-line"><p>Ime: <strong>{{deletingMember.firstName}}</strong></p></div>
+                <div class="login-line"><p>Prezime: <strong>{{deletingMember.lastName}}</strong></p></div>
                 <div class="login-line"><p>Email: <strong>{{deletingMember.email}}</strong></p></div>
-                <div class="login-line"><p>Telefon: <strong>{{deletingMember.phone}}</strong></p></div>
-                <div class="login-line"><p>Grad: <strong>{{deletingMember.city}}</strong></p></div>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelDelete()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #FF8235;" data-dismiss="modal">Izbriši Člana</button>
+                <div class="login-line"><p>Telefon: <strong>{{deletingMember.phoneNumber}}</strong></p></div>
+                <div class="login-line"><p>Grad: <strong>{{deletingMember.address}}</strong></p></div>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelDelete()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #FF8235;" data-dismiss="modal" ng-click="deleteMember()">Izbriši Člana</button>
             </div>
         </div>
     </div>

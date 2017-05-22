@@ -68,25 +68,23 @@
   <ItemGroup>
     <Content Include="app\pages\about\about.html" />
     <Content Include="app\pages\about\aboutController.js" />
-    <Content Include="app\pages\admin\dashboard\dashboard.html" />
-    <Content Include="app\pages\admin\dashboard\dashboardController.js" />
     <Content Include="app\pages\gallery\gallery.html" />
     <Content Include="app\pages\gallery\galleryController.js" />
     <Content Include="app\pages\members\members.html" />
-    <Content Include="app\pages\members\members.js" />
-    <Content Include="app\pages\newEvent\newEvent.html" />
-    <Content Include="app\pages\newEvent\newEventController.js" />
-    <Content Include="app\pages\blog\blog.html" />
-    <Content Include="app\pages\blog\blogController.js" />
+    <Content Include="app\pages\members\membersController.js" />
     <Content Include="app\pages\events\events.html" />
     <Content Include="app\pages\events\eventsController.js" />
     <Content Include="app\pages\login\login.html" />
     <Content Include="app\pages\login\loginController.js" />
     <Content Include="app\pages\mainController.js" />
+    <Content Include="app\pages\members\membersService.js" />
     <Content Include="app\pages\profile\profile.html" />
     <Content Include="app\pages\profile\profileController.js" />
+    <Content Include="app\pages\singleEvent\singleEvent.html" />
+    <Content Include="app\pages\singleEvent\singleEventController.js" />
     <Content Include="app\services\authenticationInterceptorService.js" />
     <Content Include="app\services\authenticationService.js" />
+    <Content Include="app\services\dataService.js" />
     <Content Include="app\services\ordersService.js" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
@@ -101,6 +99,8 @@
     <Content Include="img\whitestonebg.png" />
     <Content Include="img\womansilhouette.jpg" />
     <Content Include="libs\angular-animate.min.js" />
+    <Content Include="libs\angular-base64-upload.js" />
+    <Content Include="libs\angular-base64-upload.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\moment.min.js" />
@@ -147,6 +147,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="libs\angular-resource.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

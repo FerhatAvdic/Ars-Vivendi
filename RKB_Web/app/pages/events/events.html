@@ -6,8 +6,19 @@
                     <div class="col-md-2">
                         <h3>DOGAĐAJI</h3>
                     </div>
-                    <div class="col-md-10"><!--style="display: inline-block; text-align: center; line-height: 50px;-->
-                        <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn rectangle-btn-outline-dark pull-right">Novi Događaj</button>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=true">Aktuelni</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=false">Završeni</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="rectangle-btn rectangle-btn-outline-dark" ng-click="resetFilters()">Prikaži sve</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn">Novi Događaj</button>
                     </div>
                     <!--<div class="col-md-2">
                         <button data-toggle="modal" data-target="#newCategoryModal" class="rectangle-btn pull-right">Nova Kategorija</button>
@@ -17,23 +28,22 @@
             <div class="events-settings">
                
                 <div class="row equal">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Ime Aktivnosti:</label>
                             <input type="text" class="form-control" placeholder="" ng-model="titleFilterInput">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Mjesto Aktivnosti:</label>
                             <input type="text" class="form-control" placeholder="" ng-model="locationFilterInput">
                         </div>
                     </div>
+                    <!--<div class="col-md-2">
+                    </div>-->
                     <div class="col-md-2">
                         <button class="rectangle-btn rectangle-btn-outline-dark event-filter-btn" ng-click="setFilters()">Pretraga</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="rectangle-btn rectangle-btn-outline-dark event-filter-btn" ng-click="resetFilters()">Prikaži sve</button>
                     </div>
                 </div>
                 
@@ -44,23 +54,16 @@
                         </div>
                     </div>
                 </div>
-                    <!--<div class="form-group">
-                        <label>Od datuma:</label>
-                        <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open1()"
-                               is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                               current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                    </div>
-                    <div class="form-group">
-                        <label>Do datuma:</label>
-                        <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="dt" ng-click="open2()"
-                               is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                               current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                    </div>-->
             </div>
             <div class="row">
-                <div class="col-md-3" ng-repeat="event in avevents | orderBy:'-date' |filter:{type:typeFilter, title:titleFilter, location:locationFilter}">
+                <div class="col-md-3" ng-repeat="event in avevents | orderBy:'-date' |filter:{type:typeFilter, title:titleFilter, location:locationFilter, active:activeFilter}">
                     <div class="event-card material-shadow">
-                        <div style="height: 150px; overflow: hidden;">
+                        <div class="event-card-img-wrapper">
+                            <ul class="event-card-img-overlay">
+                                <li><button class="rectangle-btn rectangle-btn-outline-dark" ng-click="goToEvent()">Pregled</button></li>
+                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal">Izmjena</button></li>
+                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal">Brisanje</button></li>
+                            </ul>
                             <img ng-src="{{event.image}}" style="height: 100%; width: 100%; object-fit: cover;" />
                         </div>
                         <div class="event-basic-info" ng-style="{'background-color': event.typeColor}">
@@ -174,6 +177,170 @@
                 <button type="button" class="btn btn-primary pull-left" ng-click="addLink()">Dodaj link</button>
                 <button type="button" class="btn btn-default pull-left" ng-click="deleteLink()">Izbriši zadnji link</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal">Napravi događaj</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--EDIT EVENT MODAL-->
+<div id="editEventModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Izmjena događaja</h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin: 15px;">
+                    <form id="new-event-form">
+                        <ul>
+                            <li class="form-group">
+                                <label>Kategorija:</label>
+                                <select class="form-control" ng-model="newEvent.type">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </li>
+                            <li class="form-group">
+                                <label>Ime:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.name">
+                            </li>
+                            <li class="form-group">
+                                <label>Lokacija:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.location">
+                            </li>
+                            <li class="form-group">
+                                <label>Opis:</label>
+                                <textarea class="form-control" ng-model="newEvent.description"></textarea>
+                            </li>
+                            <li class="form-group">
+                                <label>Slika: </label>
+                                <input type="file" ng-model="newEvent.image" />
+                            </li>
+                            <li class="form-group">
+                                <label>Video:</label>
+                                <textarea class="form-control" ng-model="newEvent.video"></textarea>
+                            </li>
+                            <li class="form-group">
+                                <label>Početak: </label>
+                                <input type='text' class="form-control" ng-model="newEvent.startDate" />
+                            </li>
+                            <li class="form-group">
+                                <label>Kraj: </label>
+                                <input type='text' class="form-control" ng-model="newEvent.endDate" />
+                            </li>
+                            <li class="form-group">
+                                <label>Kriterij za prijavu:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.type">
+                            </li>
+                        </ul>
+                        <h4>Popratni Linkovi:</h4>
+                        <div class="row">
+                            <div class="new-event-links" ng-repeat="link in links track by $index">
+                                <div class="form-group col-md-6">
+                                    <label>Stranica: </label>
+                                    <input type="url" class="form-control" ng-model="link.page" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Link: </label>
+                                    <input type="url" class="form-control" ng-model="link.url" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" ng-click="addLink()">Dodaj link</button>
+                <button type="button" class="btn btn-default pull-left" ng-click="deleteLink()">Izbriši zadnji link</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Izmijeni događaj</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--DELETE EVENT MODAL-->
+<div id="deleteEventModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje događaja</h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin: 15px;">
+                    <form id="new-event-form">
+                        <ul>
+                            <li class="form-group">
+                                <label>Kategorija:</label>
+                                <select class="form-control" ng-model="newEvent.type">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </li>
+                            <li class="form-group">
+                                <label>Ime:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.name">
+                            </li>
+                            <li class="form-group">
+                                <label>Lokacija:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.location">
+                            </li>
+                            <li class="form-group">
+                                <label>Opis:</label>
+                                <textarea class="form-control" ng-model="newEvent.description"></textarea>
+                            </li>
+                            <li class="form-group">
+                                <label>Slika: </label>
+                                <input type="file" ng-model="newEvent.image" />
+                            </li>
+                            <li class="form-group">
+                                <label>Video:</label>
+                                <textarea class="form-control" ng-model="newEvent.video"></textarea>
+                            </li>
+                            <li class="form-group">
+                                <label>Početak: </label>
+                                <input type='text' class="form-control" ng-model="newEvent.startDate" />
+                            </li>
+                            <li class="form-group">
+                                <label>Kraj: </label>
+                                <input type='text' class="form-control" ng-model="newEvent.endDate" />
+                            </li>
+                            <li class="form-group">
+                                <label>Kriterij za prijavu:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.type">
+                            </li>
+                        </ul>
+                        <h4>Popratni Linkovi:</h4>
+                        <div class="row">
+                            <div class="new-event-links" ng-repeat="link in links track by $index">
+                                <div class="form-group col-md-6">
+                                    <label>Stranica: </label>
+                                    <input type="url" class="form-control" ng-model="link.page" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Link: </label>
+                                    <input type="url" class="form-control" ng-model="link.url" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Izbriši događaj</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
             </div>
         </div>

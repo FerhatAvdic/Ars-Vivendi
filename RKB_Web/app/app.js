@@ -1,6 +1,6 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'ui.bootstrap']);
+    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64']);
 
     currentUser = {
         id: 0,
@@ -18,7 +18,7 @@
         .when('/blog', { templateUrl: 'app/pages/blog/blog.html', controller: 'blogController' })
         .when('/events', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
         .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })
-        .when('/newevent', { templateUrl: 'app/pages/newEvent/newEvent.html', controller: 'newEventController' })
+        .when('/singleEvent', { templateUrl: 'app/pages/singleEvent/singleEvent.html', controller: 'singleEventController' })
         .when('/profile', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/about', { templateUrl: 'app/pages/about/about.html', controller: 'aboutController' })
         .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
@@ -34,4 +34,5 @@
     avApp.run(['authenticationService', function (authenticationService) {
         authenticationService.fillAuthData();
     }]);
+
 }());
