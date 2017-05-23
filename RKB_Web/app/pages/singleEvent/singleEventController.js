@@ -3,7 +3,20 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("singleEventController", ['$scope', function ($scope) {
+    avApp.controller("singleEventController", ['$scope','$routeParams','dataService', function ($scope, $routeParams, dataService) {
+
+        var eventID = $routeParams.id;
+        $scope.getEvent = function (eventID) {
+            dataService.read("events", eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.event = response.data;
+                    console.log($scope.event);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
         $scope.uploadedPictures;
         $scope.listUploaded = function () {
             console.log($scope.uploadedPictures);
@@ -37,5 +50,6 @@
         };
         $scope.newCommentActive = false;
 
+        $scope.getEvent(eventID);
     }]);
 }());

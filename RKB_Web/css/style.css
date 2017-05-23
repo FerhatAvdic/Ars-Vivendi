@@ -115,6 +115,8 @@ ul {
     padding: 0;
     background-color: #00AD40;
 }
+
+
 .rectangle-btn-outline-light{
     border: 2px solid white;
     color: white;
@@ -132,6 +134,7 @@ ul {
     color: white;
     background: black;
 }
+
 
 .inline-list{
     padding: 0;
@@ -1623,6 +1626,10 @@ ul {
 }
 
 /*EVENTS*/
+.go-to-event-btn{
+    display:block;
+    line-height:50px;
+}
 .events-settings{
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 35px;

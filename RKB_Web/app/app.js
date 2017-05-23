@@ -19,8 +19,8 @@
         .when('/blog', { templateUrl: 'app/pages/blog/blog.html', controller: 'blogController' })
         .when('/events', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
         .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })
-        .when('/singleEvent', { templateUrl: 'app/pages/singleEvent/singleEvent.html', controller: 'singleEventController' })
-        .when('/profile', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
+        .when('/events/:id', { templateUrl: 'app/pages/singleEvent/singleEvent.html', controller: 'singleEventController' })
+        .when('/profile/:id', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/about', { templateUrl: 'app/pages/about/about.html', controller: 'aboutController' })
         .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
         .otherwise({ redirectTo: "/" });

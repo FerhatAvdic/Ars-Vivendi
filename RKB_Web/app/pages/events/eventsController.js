@@ -118,7 +118,7 @@
             });
         };
         $scope.deleteEvent = function () {
-            dataService.remove("events", $scope.deletingEvent[0].id, function (response) {
+            dataService.remove("events", $scope.deletingEvent.id, function (response) {
                 if (response.status === 200) {
                     console.log("EVENT DELETED");
                 }

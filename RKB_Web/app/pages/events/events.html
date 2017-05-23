@@ -60,7 +60,7 @@
                     <div class="event-card material-shadow">
                         <div class="event-card-img-wrapper">
                             <ul class="event-card-img-overlay">
-                                <li><button class="rectangle-btn rectangle-btn-outline-dark" ng-click="goToEvent()">Pregled</button></li>
+                                <li><a class="rectangle-btn rectangle-btn-outline-dark go-to-event-btn" ng-href="#!/events/{{event.id}}">Pregled</a></li>
                                 <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal" ng-click="setEditEvent(event.id)">Izmjena</button></li>
                                 <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDeleteEvent(event.id)">Brisanje</button></li>
                             </ul>
