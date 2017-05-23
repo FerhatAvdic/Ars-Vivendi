@@ -3,7 +3,9 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("profileController", ['$scope', function ($scope) {
+    avApp.controller("profileController", ['$scope', '$routeParams', 'dataService', function ($scope, $routeParams, dataService) {
+
+        var profileID = $routeParams.id;
 
         $scope.health = false;
         $scope.interests = [{

@@ -40,6 +40,9 @@ body{
     padding-top: 95px;
     }
 }
+div {
+  box-sizing: border-box;
+  }
 
 a {
     text-decoration: none;
@@ -107,13 +110,13 @@ ul {
     text-transform: uppercase;
     transition: all 0.2s;
 }
-.rectangle-btn:hover,
-.rectangle-btn:active, 
-.rectangle-btn:focus{
+.rectangle-btn:hover{
     cursor:pointer;
     padding: 0;
     background-color: #00AD40;
 }
+
+
 .rectangle-btn-outline-light{
     border: 2px solid white;
     color: white;
@@ -131,6 +134,7 @@ ul {
     color: white;
     background: black;
 }
+
 
 .inline-list{
     padding: 0;
@@ -517,7 +521,9 @@ ul {
 }
 
 /*Activity showcase*/
-
+#activity-showcase{
+    margin-bottom: 0;
+}
 .av-section-wrap{
     display: block;
     margin-bottom: 100px;
@@ -579,6 +585,10 @@ ul {
 }
 
 /*UPCOMING ACTIVITY*/
+#pre-upcoming{
+    width: 100%;
+    height: 102px;
+}
 #upcoming{
     margin-bottom: 0;
 }
@@ -675,6 +685,34 @@ ul {
     line-height: 100px;
     font-size: 18px;
 }
+.upcoming-labels{
+    padding:0;
+    margin: 0;
+    width: 100%;
+    list-style-type: none;
+}
+.upcoming-labels li{
+    display: inline-block;
+    width: 20%;
+    min-width: 200px;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+}
+.upcoming-labels li:hover{
+    background: #EEEEEE;
+}
+.upcoming-label-selected{
+    background: #EEEEEE;
+}
+.upcoming-label-big{
+    font-family: NunitoSans-Bold;
+    font-size: 16px;
+}
+.upcoming-label-small{
+    font-family: NunitoSans-Light;
+    font-size: 12px;
+}
 
 /*4 SECTION PARTNERS*/
 .partners-wrap{
@@ -688,8 +726,11 @@ ul {
     height: 100px;
     width: auto;
     display: inline-block;
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
     filter: grayscale(100%);
+}
+.name-logo{
+    margin-bottom: 50px;
 }
 
 /*Discounts*/
@@ -730,30 +771,35 @@ ul {
     transition: all 0.3s;
 }
 .gallery-item-bg:hover{
-    transform: rotate(10deg) scale(1.3, 1.3);
+    transform: rotate(10deg) scale(1.4, 1.4);
 }
-.gallery-item-overlay{
+.gallery-item-label{
     width: 100%;
     height: 80px;
     position: absolute;
     bottom: 0; left: 0; right: 0;
     color: white;
     text-align: left;
-    padding: 5px 25px;
+    padding: 15px 25px;
     background: rgba(0,0,0,0.5);
     transition: all 0.3s;
 }
-.gallery-item-overlay h5{
-    text-transform: uppercase;
+.gallery-item-title{
+    font-family: NunitoSans-Bold;
+    font-size: 16px;
 }
-.gallery-item:hover .gallery-item-overlay{
+.gallery-item-description{
+    font-family: NunitoSans-Light;
+    font-size: 12px;
+}
+.gallery-item:hover .gallery-item-label{
     background: #02CB9E;
     color: white;
 }
 
 /*BECOME MEMBER*/
 .become-member{
-    background: white;
+    background: url(/img/whitestonebg.png);
     padding: 75px 0;
     color: rgba(0,0,0,0.7);
     transition: all 0.5s;
@@ -782,8 +828,10 @@ ul {
 /*6 SECTION CONTACT*/
 .contact-wrap{
     position:relative;
-    background-image: url(http://pl.bgcpo.bg/wp-content/uploads/2013/07/bacground-pleven.png);/* url(http://wallpapercave.com/wp/vjaSDB8.jpg);*/
-    background-repeat: repeat;
+    background-image: url(https://s-media-cache-ak0.pinimg.com/originals/a5/10/96/a510967605d273c1517b640d6a380c8c.jpg);/* url(http://wallpapercave.com/wp/vjaSDB8.jpg);*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     padding: 100px 0;
     margin-bottom: 0;
 }
@@ -792,15 +840,18 @@ ul {
     top:0; left: 0;
     width: 100%;
     height: 100%;
+    background: rgba(0,0,0,0.2);
 }
 #contact{
     position: relative;
-    color: rgba(0,0,0,0.7);
-    border-color: rgba(0,0,0,0.7);
+    /*color: rgba(0,0,0,0.7);
+    border-color: rgba(0,0,0,0.7);*/
+    color:white;
+    border-color:white;
     z-index: 2;
 }
 .contact-form-style{
-    /*color:white;*/
+    color:white;
     text-align:left;
     margin-bottom: 50px;
 }
@@ -841,7 +892,7 @@ ul {
     display: block;
     /*background: rgba(0,0,0,0.1);*/
     background-repeat: repeat;
-    background-image: url(http://pl.bgcpo.bg/wp-content/uploads/2013/07/bacground-pleven.png);
+    background-image: url(/img/whitestonebg.png);
     padding: 10vh 0;
     min-height: 100%;
 }
@@ -1031,7 +1082,7 @@ ul {
 .gray-wrapper{
     display: block;
     /*background: rgba(0,0,0,0.1);*/
-    background-image: url(http://pl.bgcpo.bg/wp-content/uploads/2013/07/bacground-pleven.png);
+    background-image: url(/img/whitestonebg.png);
     background-repeat: repeat;
     min-height: 100%;
     width: 100%;
@@ -1045,7 +1096,6 @@ ul {
 
 #new-event-form{
     max-width: 800px;
-    max-height: 90vh;
 }
 .input-list{
     list-style-type: none;
@@ -1435,4 +1485,294 @@ ul {
 
 .about-wrap{
     padding: 50px;
+}
+
+/*COMMENTS*/
+.comments-wrap{
+    margin: 100px 0 100px 0;
+}
+#comments li{
+    width: 33%;
+}
+/*#comments li:after{
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+#comments li:last-child:after{
+    display: none;
+}*/
+#comments li:hover{
+    background-color: white;
+}
+#comments li:hover .comment-event{
+    text-decoration: underline;
+}
+.comment-event{
+    font-family: NunitoSans-Bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.comment-profile-picture{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 15px;
+    float:left;
+    background-color: gray;
+}
+.comment-author{
+    text-align: left;
+}
+.comment-date-time{
+    font-size: 12px;
+    font-family: NunitoSans-Light;
+    color: gray;
+}
+.comment-total{
+    float: right;
+}
+
+
+/*GALLERY SEPARATE*/
+.gallery-wrap{
+    margin: 50px 0;
+}
+.item-in-gallery{
+    position: relative;
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.item-in-gallery-bg{
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+    width: 100%;
+    height: 100%;
+}
+.material-shadow {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.material-shadow:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+#eventGalleryModal{
+  background-color: rgba(0,0,0,0.8);
+}
+
+#event-gallery-modal-body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    color: white;
+}
+.exit-event-gallery{
+    /*color: white;
+    font-size: 5rem;*/
+    position: absolute;
+    top: 45px; right: 3vw;
+    cursor: pointer;
+    float:right;
+    filter: invert(100%);
+    width: 45px;
+    height: 45px;
+}
+
+.event-gallery-item{
+    margin-top: 100px;
+    text-align:center;
+    background-color:black;
+}
+.event-gallery-item-bg{
+    max-width: 100%;
+    max-height: 864px;
+}
+.event-gallery-item-footer{
+    border-top: 5px solid white;
+}
+
+.event-gallery-item-details{
+    text-align:left;
+    padding: 15px 25px;
+}
+.gallery-item-number{
+    position: absolute;
+    bottom: 50px;
+    left: 49%;
+}
+#event-gallery-btn{
+    width: auto;
+    background: transparent;
+    padding: 0 25px;
+}
+#event-gallery-btn:hover{
+    color: black;
+    background: white;
+}
+
+/*EVENTS*/
+.go-to-event-btn{
+    display:block;
+    line-height:50px;
+}
+.events-settings{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 35px;
+    margin-bottom: 50px;
+    background: white;
+}
+.events-top-options{
+    text-align:right;
+}
+.events-top-options li{
+    margin: 0 5px;
+}
+.event-type-filter{
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+}
+.event-type-color{
+    float: right;
+    width: 16px;
+    height: 16px;
+}
+.event-filter-btn{
+    margin: 15px 0;
+    width: 100%;
+}
+.event-card{
+    position: relative;
+    margin-bottom: 25px;
+}
+.event-card-img-wrapper{
+    height: 150px; 
+    overflow: hidden
+}
+.event-card-img-overlay{
+    width:100%;
+    height: 0;
+    background: white;
+    transition: all 0.3s;
+    text-align: center;
+}
+.event-card-img-wrapper:hover .event-card-img-overlay{
+    height:100%;
+}
+.event-card-img-overlay .rectangle-btn-outline-dark{
+    width: 100%;
+    border: 0;
+}
+.event-card-img-overlay .rectangle-btn-outline-dark:hover{
+    width: 100%;
+    border: 0;
+}
+.event-more-info{
+    position: absolute;
+    top: 50%;
+    left: 20px;
+}
+.event-basic-info{
+    position: relative;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    height: 135px;
+}
+.event-title{
+    font-size: 16px;
+}
+.event-date{
+    text-transform: capitalize;
+    font-size: 14px;
+}
+.event-location{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: NunitoSans-Bold;
+}
+
+.new-event-link-icons{
+    width: 20px;
+    height: 55px;
+}
+.new-event-link{
+    height: 55px;
+    color: gray;
+    line-height: 85px;
+    cursor: pointer;
+}
+
+/*SINGLE EVENT*/
+.event-background{
+    width: 100%;
+    overflow: visible;
+    background-image: url(/img/bik_slide.jpg), url(/img/whitestonebg.png);
+    background-repeat: no-repeat, repeat;
+    background-position: top, top;
+    background-size: contain, auto;
+}
+.event-relative{
+    position: relative;
+}
+.event-info-wrapper{
+    margin: 40vh 0 50px 0;
+}
+@media screen and (max-height:520px){
+    .event-info-wrapper{
+    margin: 100px 0 50px 0;
+}}
+
+.single-event-title{
+    font-family: NunitoSans-Black;
+    font-size: calc(14px + 2vw);
+    color: white;
+    text-shadow:2px 2px 2px rgba(0,0,0,0.5);
+    margin-bottom: 2vw;
+    text-align:center;
+}
+.event-info{
+    width: 100%;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 3vw 10vw;
+}
+.event-video{
+    margin: 25px 0;
+}
+.single-event-options{
+    text-align:right;
+}
+.single-event-options li{
+    display: inline;
+}
+iframe, object, embed {
+    max-width: 100%;
+}
+.new-comment{
+    margin: 15px 0;
+}
+.comment-options{
+    text-align:right;
+}
+.comment-options li{
+    display: inline;
 }
