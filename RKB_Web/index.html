@@ -26,8 +26,8 @@
     <!--Services-->
     <script src="app/services/authenticationInterceptorService.js"></script>
     <script src="app/services/authenticationService.js"></script>
-    <script src="app/services/ordersService.js"></script>
     <!--Controllers-->
+    <script src="app/pages/index/indexController.js"></script>
     <script src="app/pages/home/homeController.js"></script>
     <script src="app/pages/blog/blogController.js"></script>
     <script src="app/pages/login/loginController.js"></script>
@@ -39,11 +39,12 @@
     <script src="app/pages/profile/profileController.js"></script>
     <script src="app/pages/about/aboutController.js"></script>
     <!--Services-->
+    <script src="app/services/dataService.js"></script>
 </head>
 <body>
 
 
-    <div class="welcome-header">
+    <div class="welcome-header" data-ng-controller="indexController">
         <div class="container">
             <div class="welcome-header-wrap">
                 <ul class="welcome-header-social">
@@ -53,8 +54,10 @@
                     <li>Kontakt tel. +387/61-999-999</li>
                 </ul>
                 <ul class="welcome-header-navigation">
-                    <li><a href="#!/login">Prijava</a></li>
-                    <li><a href="#!/login">Postani Član</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#!/profile">Dobro Dosli {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Odjava</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a href="#!/login">Prijava</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a href="#!/login">Postani Član</a></li>
                 </ul>
             </div>
         </div>

@@ -3,14 +3,22 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.factory('authenticationService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+    avApp.factory('authenticationService', ['$http', '$q', 'localStorageService', 'arsVivAuthSettings', function ($http, $q, localStorageService, arsVivAuthSettings) {
 
-        var apiSource = 'http://localhost:57792/';
+        var apiSource = arsVivAuthSettings.apiServiceBase;
         var authenticationServiceFactory = {};
 
         var authentication = {
             isAuth: false,
-            userName: ''
+            userName: '',
+            useRefreshToken: true
+        };
+
+        var externalAuthData = {
+            provider: "",
+            userName: "",
+            externalAccessToken: "",
+            email: ""
         };
 
         var saveRegistration = function (registrationData) {
@@ -26,15 +34,16 @@
         var login = function (loginData) {
 
             localStorage.clear();
-            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password + "&client_id=" + arsVivAuthSettings.clientId;
 
             var deferred = $q.defer();
 
             $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
-                localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
+                localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshToken: true });
 
                 authentication.isAuth = true;
                 authentication.userName = loginData.userName;
+                authentication.useRefreshToken = true;
 
                 deferred.resolve(response);
             });
@@ -51,6 +60,7 @@
 
             authentication.isAuth = false;
             authentication.userName = "";
+            authentication.useRefreshToken = false;
         };
 
         var fillAuthData = function () {
@@ -58,7 +68,79 @@
             if (authData) {
                 authentication.isAuth = true;
                 authentication.userName = authData.userName;
+                authentication.useRefreshToken = authData.useRefreshToken;
             }
+        };
+
+        var refreshToken = function () {
+            var deferred = $q.defer();
+
+            var authData = localStorageService.get('authorizationData');
+
+            if (authData) {
+                var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + arsVivAuthSettings.clientId;
+
+                localStorageService.remove('authorizationData');
+
+                $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
+
+                    localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
+
+                    deferred.resolve(response);
+
+                });
+                //    .error(function (err, status) {
+                //    _logOut();
+                //    deferred.reject(err);
+                //});
+            }
+            return deferred.promise;
+        };
+
+        var obtainAccessToken = function (externalData) {
+            var deferred = $q.defer();
+
+            $http.get(serviceBase + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
+
+                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+
+                authentication.isAuth = true;
+                authentication.userName = response.userName;
+                authentication.useRefreshTokens = false;
+
+                deferred.resolve(response);
+                console.log('Pada ovdje');
+            });
+            //    .error(function (err, status) {
+            //    _logOut();
+            //    deferred.reject(err);
+            //});
+
+            return deferred.promise;
+        };
+
+        var registerExternal = function (registerExternalData) {
+            var deferred = $q.defer();
+
+            $http.post(apiSource + 'api/account/registerexternal', registerExternalData).then(function (response) {
+
+                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+
+                authentication.isAuth = true;
+                authentication.userName = response.userName;
+                authentication.useRefreshTokens = false;
+
+                console.log("response...", response);
+
+                deferred.resolve(response);
+
+            });
+            //    .error(function (err, status) {
+            //    _logOut();
+            //    deferred.reject(err);
+            //});
+
+            return deferred.promise;
         };
 
         authenticationServiceFactory.saveRegistration = saveRegistration;
@@ -66,6 +148,11 @@
         authenticationServiceFactory.logout = logout;
         authenticationServiceFactory.fillAuthData = fillAuthData;
         authenticationServiceFactory.authentication = authentication;
+        authenticationServiceFactory.refreshToken = refreshToken;
+
+        authenticationServiceFactory.obtainAccessToken = obtainAccessToken;
+        authenticationServiceFactory.externalAuthData = externalAuthData;
+        authenticationServiceFactory.registerExternal = registerExternal;
 
         return authenticationServiceFactory;
 

@@ -26,6 +26,12 @@
 
     });
 
+    var serviceBase = 'http://localhost:57792/';
+    avApp.constant('arsVivAuthSettings', {
+        apiServiceBase: serviceBase,
+        clientId: 'arsvAuthApp'
+    });
+
     avApp.config(function ($httpProvider) {
         $httpProvider.interceptors.push('authenticationInterceptorService');
     });
