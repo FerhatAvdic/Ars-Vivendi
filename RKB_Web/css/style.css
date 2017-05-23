@@ -1703,10 +1703,15 @@ ul {
     font-family: NunitoSans-Bold;
 }
 
-.delete-new-event-link{
+.new-event-link-icons{
+    width: 20px;
+    height: 55px;
+}
+.new-event-link{
     height: 55px;
     color: gray;
     line-height: 85px;
+    cursor: pointer;
 }
 
 /*SINGLE EVENT*/

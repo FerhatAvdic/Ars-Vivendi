@@ -179,30 +179,9 @@
                                         <td>{{member.address}}</td>
                                         <td>
                                             <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                            <a ng-click="editMember(member.userName)" data-toggle="modal" data-target="#editMemberModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a ng-click="setEditMember(member.userName)" data-toggle="modal" data-target="#editMemberModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                             <a ng-click="setDeleteMember(member.userName)" data-toggle="modal" data-target="#deleteMemberModal"><i class="fa fa-ban" aria-hidden="true"></i></a>
                                         </td>
-                                        <!--<td ng-hide="editingMemberId === member.username">{{member.name}}</td>
-        <td ng-hide="editingMemberId === member.username">{{member.surname}}</td>
-        <td ng-hide="editingMemberId === member.username">{{member.phone}}</td>
-        <td ng-hide="editingMemberId === member.username">{{member.email}}</td>
-        <td ng-hide="editingMemberId === member.username">{{member.address}}</td>
-        <td ng-hide="editingMemberId === member.username">
-            <a href="#!/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
-            <a ng-click="setForEdit(member.username)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            <a><i class="fa fa-ban" aria-hidden="true"></i></a>
-        </td>
-
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.name}}" ng-model="member.name"/></td>
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.surname}}" ng-model="member.surname"/></td>
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.phone}}" ng-model="member.phone"/></td>
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.email}}" ng-model="member.email"/></td>
-        <td ng-show="editingMemberId === member.username"><input class="borderless-input"type="text" value="{{member.city}}" ng-model="member.address"/></td>
-
-        <td ng-show="editingMemberId === member.username">
-            <a ng-click="updateMember(member)"><i class="fa fa-check" aria-hidden="true"></i></a>
-            <a ng-click="cancelEdit()"><i class="fa fa-times" aria-hidden="true"></i></a>
-        </td>-->
                                     </tr>
                                 </tbody>
                             </table>
@@ -277,7 +256,7 @@
                                 <li><label>Planinarenje</label><input type="checkbox" /></li>
                                 <li><label>Skijanje</label><input type="checkbox" /></li>
                             </ul>
-                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-1" target="_self" data-dismiss="modal" ng-click="addNewMember()">Dodaj Člana</button>
+                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-1" target="_self" data-dismiss="modal" ng-click="createMember()">Dodaj Člana</button>
                         </div>
                     </div>
                 </div>

@@ -70,6 +70,7 @@
     <Content Include="app\pages\about\aboutController.js" />
     <Content Include="app\pages\gallery\gallery.html" />
     <Content Include="app\pages\gallery\galleryController.js" />
+    <Content Include="app\pages\login\externalLogin.html" />
     <Content Include="app\pages\members\members.html" />
     <Content Include="app\pages\members\membersController.js" />
     <Content Include="app\pages\events\events.html" />

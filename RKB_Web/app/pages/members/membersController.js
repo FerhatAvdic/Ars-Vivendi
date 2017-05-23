@@ -5,409 +5,6 @@
     avApp.controller("membersController", ['$scope', '$filter', 'membersService','dataService', function ($scope, $filter, membersService, dataService) {
 
         
-        //$scope.members = [
-        //    {
-        //        "username": "AB",
-        //        "password": "123",
-        //        "email": "abc@gmail.com",
-        //        "name": "aba",
-        //        "surname": "abb",
-        //        "city": "abcs 123",
-        //        "phone": "000/999-999",
-        //        "gender": "male",
-        //        "employed": true,
-        //        "membershipDueDate": "15/06/2018",
-        //        "interests": {
-        //            "skiing": true,
-        //            "hiking": true,
-        //            "cycling": true,
-        //            "diving": false,
-        //            "rafting": false
-        //        },
-        //        "equipment": {
-        //            "skiing": [{
-        //                "skis": true,
-        //                "poles": true,
-        //                "boots": true,
-        //                "helmet": true,
-        //                "gogles": true,
-        //                "jacket": true,
-        //                "pants": true,
-        //                "gloves": true
-        //            }],
-        //            "hiking": [{
-
-        //            }],
-        //            "cycling": [{
-        //                "bycicle": true,
-        //                "bagpack": true,
-        //                "lights": true,
-        //                "navigationDevice": true,
-        //                "bycicleComputer": true,
-        //                "shorts": true,
-        //                "tights": true,
-        //                "trousers": true,
-        //                "shortSleeveJersey": true,
-        //                "longSleeveJersey": true,
-        //                "windJacket": true,
-        //                "glasses": true,
-        //                "longFingerGloves": true,
-        //                "shortFingerGloves": true,
-        //                "overshoes": true,
-        //            }],
-        //            "diving": false,
-        //            "rafting": false
-        //        },
-        //        "goodHealthCondition": true,
-        //        "healthCondDesc": ""
-        //    },
-        //    {
-        //        "username": "CD",
-        //        "password": "123",
-        //        "email": "cdc@gmail.com",
-        //        "name": "cd",
-        //        "surname": "cdb",
-        //        "city": "cdcs 123",
-        //        "phone": "000/999-999",
-        //        "gender": "male",
-        //        "employed": true,
-        //        "membershipDueDate": "15/06/2018",
-        //        "interests": {
-        //            "skiing": false,
-        //            "hiking": true,
-        //            "cycling": false,
-        //            "diving": false,
-        //            "rafting": false
-        //        }
-        //    },
-        //    {
-        //        "username": "ef",
-        //        "password": "123",
-        //        "email": "efc@gmail.com",
-        //        "name": "ef",
-        //        "surname": "efb",
-        //        "city": "efcs 123",
-        //        "phone": "000/999-999",
-        //        "gender": "male",
-        //        "employed": true,
-        //        "membershipDueDate": "15/06/2018",
-        //        "interests": {
-        //            "skiing": true,
-        //            "hiking": true,
-        //            "cycling": true,
-        //            "diving": true,
-        //            "rafting": false
-        //        }
-        //    },
-        //     {
-        //         "username": "gh",
-        //         "password": "123",
-        //         "email": "ghc@gmail.com",
-        //         "name": "gh",
-        //         "surname": "ghb",
-        //         "city": "ghcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //         "interests": {
-        //             "skiing": false,
-        //             "hiking": true,
-        //             "cycling": true,
-        //             "diving": true,
-        //             "rafting": true
-        //         }
-        //     },
-        //     {
-        //         "username": "ij",
-        //         "password": "123",
-        //         "email": "ijc@gmail.com",
-        //         "name": "ij",
-        //         "surname": "ijb",
-        //         "city": "ijcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "kl",
-        //         "password": "123",
-        //         "email": "klc@gmail.com",
-        //         "name": "kl",
-        //         "surname": "klb",
-        //         "city": "klcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "mn",
-        //         "password": "123",
-        //         "email": "mnc@gmail.com",
-        //         "name": "mn",
-        //         "surname": "mnb",
-        //         "city": "mncs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "op",
-        //         "password": "123",
-        //         "email": "opc@gmail.com",
-        //         "name": "op",
-        //         "surname": "opb",
-        //         "city": "opcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "rs",
-        //         "password": "123",
-        //         "email": "rsc@gmail.com",
-        //         "name": "rs",
-        //         "surname": "rsb",
-        //         "city": "rscs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "tu",
-        //         "password": "123",
-        //         "email": "tuc@gmail.com",
-        //         "name": "tu",
-        //         "surname": "tub",
-        //         "city": "tucs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "vz",
-        //         "password": "123",
-        //         "email": "vzc@gmail.com",
-        //         "name": "vz",
-        //         "surname": "vzb",
-        //         "city": "vzcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "az",
-        //         "password": "123",
-        //         "email": "azc@gmail.com",
-        //         "name": "az",
-        //         "surname": "azb",
-        //         "city": "azcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "av",
-        //         "password": "123",
-        //         "email": "avc@gmail.com",
-        //         "name": "av",
-        //         "surname": "avb",
-        //         "city": "avcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "ah",
-        //         "password": "123",
-        //         "email": "ahc@gmail.com",
-        //         "name": "ah",
-        //         "surname": "ahb",
-        //         "city": "ahcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "au",
-        //         "password": "123",
-        //         "email": "auc@gmail.com",
-        //         "name": "au",
-        //         "surname": "aub",
-        //         "city": "aucs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //    {
-        //        "username": "ef",
-        //        "password": "123",
-        //        "email": "efc@gmail.com",
-        //        "name": "ef",
-        //        "surname": "efb",
-        //        "city": "efcs 123",
-        //        "phone": "000/999-999",
-        //        "gender": "male",
-        //        "employed": true,
-        //        "membershipDueDate": "15/06/2018",
-        //    },
-        //     {
-        //         "username": "gh",
-        //         "password": "123",
-        //         "email": "ghc@gmail.com",
-        //         "name": "gh",
-        //         "surname": "ghb",
-        //         "city": "ghcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "ij",
-        //         "password": "123",
-        //         "email": "ijc@gmail.com",
-        //         "name": "ij",
-        //         "surname": "ijb",
-        //         "city": "ijcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "kl",
-        //         "password": "123",
-        //         "email": "klc@gmail.com",
-        //         "name": "kl",
-        //         "surname": "klb",
-        //         "city": "klcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "mn",
-        //         "password": "123",
-        //         "email": "mnc@gmail.com",
-        //         "name": "mn",
-        //         "surname": "mnb",
-        //         "city": "mncs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "op",
-        //         "password": "123",
-        //         "email": "opc@gmail.com",
-        //         "name": "op",
-        //         "surname": "opb",
-        //         "city": "opcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "rs",
-        //         "password": "123",
-        //         "email": "rsc@gmail.com",
-        //         "name": "rs",
-        //         "surname": "rsb",
-        //         "city": "rscs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "tu",
-        //         "password": "123",
-        //         "email": "tuc@gmail.com",
-        //         "name": "tu",
-        //         "surname": "tub",
-        //         "city": "tucs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "vz",
-        //         "password": "123",
-        //         "email": "vzc@gmail.com",
-        //         "name": "vz",
-        //         "surname": "vzb",
-        //         "city": "vzcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "az",
-        //         "password": "123",
-        //         "email": "azc@gmail.com",
-        //         "name": "az",
-        //         "surname": "azb",
-        //         "city": "azcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "av",
-        //         "password": "123",
-        //         "email": "avc@gmail.com",
-        //         "name": "av",
-        //         "surname": "avb",
-        //         "city": "avcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "ah",
-        //         "password": "123",
-        //         "email": "ahc@gmail.com",
-        //         "name": "ah",
-        //         "surname": "ahb",
-        //         "city": "ahcs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "male",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     },
-        //     {
-        //         "username": "au",
-        //         "password": "123",
-        //         "email": "auc@gmail.com",
-        //         "name": "au",
-        //         "surname": "aub",
-        //         "city": "aucs 123",
-        //         "phone": "000/999-999",
-        //         "gender": "female",
-        //         "employed": true,
-        //         "membershipDueDate": "15/06/2018",
-        //     }
-
-        //];
         $scope.newMember = {
             "firstName": "MMMM",
             "lastName": "aaaic",
@@ -418,70 +15,87 @@
             "email": "asdas@gmail.com",
             "phoneNumber": "062/422-313",
             "userName": "user",
-            "roleName": "CustomUser"
+            "role": "CustomUser"
         };
 
-        $scope.addNewMember = function () {
+        /*SET FOR HTTP*/
+        $scope.editingMember = null;
+        $scope.setEditMember = function (userName) {
+            console.log(userName);
+            dataService.read("users", userName, function (response) {
+                if (response.status === 200) {
+                    $scope.editingMember = response.data;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.cancelEdit = function () {
+            $scope.editingMember = null;
+        };
+        $scope.deletingMember = null;
+        $scope.setDeleteMember = function (userName) {
+            dataService.read("users", userName, function (response) {
+                if (response.status === 200) {
+                    $scope.deletingMember = response.data;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        }
+        $scope.cancelDelete = function () {
+            $scope.deletingMember = null;
+        }
+
+        /*HTTP*/
+        $scope.listMembers = function () {
+            dataService.list("users", function (response) {
+                if (response.status===200) {
+                    $scope.members = response.data;
+                    $scope.membersTotal = response.data.length;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.createMember = function () {
             console.log($scope.newMember);
-            dataService.create("users", $scope.newMember, function (data) {
-                if (data) {
+            dataService.create("users", $scope.newMember, function (response) {
+                if (response.status === 200) {
                     console.log("MEMBER ADDED");
                 }
                 else {
-                    console.log("ERROR");
+                    console.log("ERROR: ", response);
                 }
                 $scope.listMembers();
             });
         };
-        $scope.editingMember = {};
-        $scope.editMember = function (userName) {
-            dataService.read("users", userName, function (data) {
-                if (data) {
-                    $scope.editingMember = data;
-                    console.log($scope.editingMember, data);
-                }
-                else {
-                    console.log("ERROR");
-                }
-            });
-        };
         $scope.updateMember = function () {
-            //$scope.editingMember.userName = "you";
-            $scope.editingMember.isActive = true;
-            dataService.update("users", $scope.editingMember.userName, $scope.editingMember, function (data) {
-                if (data) {
+            dataService.update("users", $scope.editingMember.userName, $scope.editingMember, function (response) {
+                if (response.status === 200) {
                     console.log("UPDATED");
                 }
                 else {
-                    console.log("ERROR");
+                    console.log("ERROR: ", response);
                 }
                 $scope.listMembers();
             });
         };
         $scope.deleteMember = function () {
-            $scope.deletingMember.isActive = false;
-            //$scope.deletingMember.userName = "you";
-            dataService.update("users", $scope.deletingMember.userName, $scope.deletingMember, function (data) {
-                if (data) {
+            dataService.remove("users", $scope.deletingMember.userName, function (response) {
+                if (response.status === 200) {
                     console.log("Deleted");
                 }
                 else {
-                    console.log("ERROR");
+                    console.log("ERROR: ", response);
                 }
                 $scope.listMembers();
             });
         }
-        $scope.listMembers = function () {
-            dataService.list("users", function (data) {
-                if (data) {
-                    $scope.members = data;
-                    console.log(data);
-                }
-                else {
-                    console.log("ERROR");
-                }
-            });
-        };
+
 
         //TABLE PROPERTIES
         $scope.headings = [
@@ -504,33 +118,7 @@
             propertyName.toggled = !propertyName.toggled;
         };
 
-        $scope.editingMemberId = null;
-        $scope.setForEdit = function (memberID) {
-            $scope.editingMemberId = memberID;
-        };
-        $scope.cancelEdit = function () {
-            $scope.editingMemberId = null;
-            $scope.editingMember = null;
-        };
-        $scope.editingMember = null;
-        //$scope.editMember = function(member){
-        //    $scope.editingMember = member;
-        //}
-        $scope.deletingMember = null;
-        $scope.setDeleteMember = function (userName) {
-            dataService.read("users", userName, function (data) {
-                if (data) {
-                    $scope.deletingMember = data;
-                    console.log($scope.deletingMember, data);
-                }
-                else {
-                    console.log("ERROR");
-                }
-            });
-        }
-        $scope.cancelDelete = function () {
-            $scope.deletingMember = null;
-        }
+
 
         //PAGINATION
         $scope.currentPage = 1;
@@ -538,7 +126,7 @@
        // $scope.totalItems = $scope.members.length - 1;
 
         $scope.pageSizeOptions = [
-            { "value": $scope.members.length, "name": "Svi Članovi"},
+            { "value": $scope.membersTotal, "name": "Svi Članovi"},
             { "value": 5, "name": "5 Članova" },
             { "value": 15, "name": "15 Članova" },
             { "value": 20, "name": "20 Članova" },

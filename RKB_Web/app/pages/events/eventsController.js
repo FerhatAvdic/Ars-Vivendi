@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("eventsController", ['$scope','$location', function ($scope, $location) {
+    avApp.controller("eventsController", ['$scope','$location', 'dataService', function ($scope, $location, dataService) {
 
         $scope.eventTypes = [
             { "value": undefined, "label": "Sve Kategorije", "color": "black" },
@@ -13,26 +13,19 @@
             { "value": "hiking", "label": "Planinarenje", "color": "#b7830b" },
             { "value": "skiing", "label": "Skijanje", "color": "#a81a79" }
         ];
-        $scope.newEvent = [
-            {
-                "name": "Event",
-                "type": "Sport",
-                "description": "text",
-                "image": "path",
-                "video": "embedded",
-                "start_date": "date",
-                "end_date": "date",
-                "organizator": "org_name",
-                "location": "place",
-                "departure_time": "time",
-                "departure_place": "place",
-                "max_people": "number",
-                "for_age": "range",
-                "necessary_equipment": "list",
-                "contact_info": "info",
-                "links": []
-            }
-        ];
+        $scope.newEvent = {
+                "id": 0,
+                "name": "Cavtat - ronjenje",
+                "description": "Ronjenje sa rajom",
+                "startDate": new Date(),
+                "endDate": new Date(),
+                "registrationDeadline": new Date(),
+                "membersPrice": 200,
+                "nonMembersPrice": 318,
+                "eventCategoryId": 1,
+                "imageBaseString": null,
+                "eventLinks": [{}]
+        };
         $scope.links = [{}];
         $scope.avevents = [
             { "active": true, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('01/01/2017') },
@@ -51,6 +44,96 @@
             { "active": false, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('07/17/2017') },
             { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('03/11/2017') }
         ];
+        $scope.getModalResources = function () {
+            $scope.listEventCategories();
+        };
+        /*HTTP*/
+        
+        $scope.listEventCategories = function () {
+            dataService.list("eventcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.eventCategories = response.data
+                }
+                else {
+                    console.log("ERROR: ", response);
+                } 
+            });
+        };
+        $scope.listEvents = function () {
+            dataService.list("events", function (response) {
+                if (response.status === 200) {
+                    $scope.avevents = response.data
+                    console.log($scope.avevents);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.editingEvent;
+        $scope.setEditEvent = function (eventID) {
+            $scope.listEventCategories();
+            dataService.read("events", eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.editingEvent = response.data;
+                    console.log($scope.editingEvent);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        }
+        $scope.setDeleteEvent = function (eventID) {
+            dataService.read("events", eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.deletingEvent = response.data;
+                    console.log($scope.deletingEvent);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.createEvent = function () {
+            $scope.newEvent.imageBaseString = $scope.newEvent.image.base64;
+            dataService.create("events", $scope.newEvent, function (response) {
+                if (response.status === 200) {
+                    console.log("EVENT CREATED", response);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+                $scope.listEvents();
+            });
+        };
+        $scope.updateEvent = function () {
+            dataService.update("events", $scope.editingEvent.id, $scope.editingEvent, function (response) {
+                if (response.status === 200) {
+                    console.log("UPDATED");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+                $scope.listEvents();
+            });
+        };
+        $scope.deleteEvent = function () {
+            dataService.remove("events", $scope.deletingEvent[0].id, function (response) {
+                if (response.status === 200) {
+                    console.log("EVENT DELETED");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.cancelUpdate = function () {
+            $scope.editingEvent = null;
+        };
+        $scope.cancelDelete = function () {
+            $scope.deletingEvent = null;
+        };
+
         $scope.activeFilter;
         $scope.typeFilter;
         $scope.titleFilterInput;
@@ -83,11 +166,11 @@
         };
 
         $scope.addLink = function () {
-            $scope.links.push({"page":null,"url":null});
+            $scope.newEvent.eventLinks.push({"page":null,"url":null});
         };
-        $scope.deleteLink = function () {
-            var index = $scope.links.length-1;
-            $scope.links.splice(index, 1);
+        /*CHANGE*/
+        $scope.deleteLink = function (index) {
+            $scope.newEvent.eventLinks.splice(index, 1);
         };
 
         $scope.goToEvent = function () {
@@ -190,5 +273,6 @@
             return '';
         }
         
+        $scope.listEvents();
     }]);
 }());

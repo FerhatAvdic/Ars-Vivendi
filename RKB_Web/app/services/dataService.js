@@ -6,8 +6,8 @@
     avApp.factory("dataService", ['$http', '$rootScope', '$q', 'localStorageService', function ($http, $rootScope, $q, localStorageService) {
 
         //var source = config.source;
-        //var source = "http://localhost:57792/api/";
-        var source = "http://arsvivendi.azurewebsites.net/api/";
+        var source = "http://localhost:57792/api/";
+        //var source = "http://arsvivendi.azurewebsites.net/api/";
         //$http.defaults.headers.common['Token'] = currentUser.token;
         //$http.defaults.headers.common['ApiKey'] = config.apiKey;
 
@@ -38,48 +38,46 @@
             list: function (dataSet, callback) {
                 $http.get(source + dataSet)
                 .then(function (result) {
-                    return callback(result.data);
+                    return callback(result);
                 }, function (result) {
-                    callback(false);
+                    callback(result);
                 });
             },
 
             read: function (dataSet, id, callback) {
                 $http.get(source + dataSet + "/" + id)
                      .then(function (result) {
-                         return callback(result.data);
+                         return callback(result);
                      }, function (result) {
-                         callback(false);
+                         callback(result);
                      });
             },
 
             create: function (dataSet, data, callback) {
                 $http({ method: "post", url: source + dataSet, data: data })
                    .then(function (result) {
-                       return callback(result.data);
+                       return callback(result);
                    }, function (result) {
-                       callback(false);
+                       callback(result);
                    });
             },
 
             update: function (dataSet, id, data, callback) {
                 $http({ method: "put", url: source + dataSet + "/" + id, data: data })
                    .then(function (result) {
-                       return callback(result.data);
+                       return callback(result);
                    }, function (result) {
-                       callback(false);
+                       callback(result);
                    });
             },
 
             remove: function (dataSet, id, callback) {
                 $http({ method: "delete", url: source + dataSet + "/" + id })
-                    .success(function () {
-                        callback(true);
-                    })
-                    .error(function (error) {
-                        $rootScope.message = error.message;
-                        callback(false);
-                    })
+                     .then(function (result) {
+                         return callback(result);
+                     }, function (result) {
+                         callback(result);
+                     });
             },
 
             createRetrospective: function (dataSet, id, callback) {

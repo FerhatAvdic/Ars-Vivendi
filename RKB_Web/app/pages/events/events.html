@@ -18,7 +18,7 @@
                         <button class="rectangle-btn rectangle-btn-outline-dark" ng-click="resetFilters()">Prikaži sve</button>
                     </div>
                     <div class="col-md-2">
-                        <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn">Novi Događaj</button>
+                        <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn" ng-click="getModalResources()">Novi Događaj</button>
                     </div>
                     <!--<div class="col-md-2">
                         <button data-toggle="modal" data-target="#newCategoryModal" class="rectangle-btn pull-right">Nova Kategorija</button>
@@ -61,14 +61,14 @@
                         <div class="event-card-img-wrapper">
                             <ul class="event-card-img-overlay">
                                 <li><button class="rectangle-btn rectangle-btn-outline-dark" ng-click="goToEvent()">Pregled</button></li>
-                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal">Izmjena</button></li>
-                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal">Brisanje</button></li>
+                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal" ng-click="setEditEvent(event.id)">Izmjena</button></li>
+                                <li><button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDeleteEvent(event.id)">Brisanje</button></li>
                             </ul>
-                            <img ng-src="{{event.image}}" style="height: 100%; width: 100%; object-fit: cover;" />
+                            <img ng-src="{{event.imagePath}}" style="height: 100%; width: 100%; object-fit: cover;" />
                         </div>
                         <div class="event-basic-info" ng-style="{'background-color': event.typeColor}">
-                            <div class="event-title">{{event.title}}</div>
-                            <div class="event-date"><small>{{event.date | date: 'dd-MMM-yyyy'}}<span> {{event.type}}</span></small></div>
+                            <div class="event-title">{{event.eventName}}</div>
+                            <div class="event-date"><small>{{event.startDate | date: 'dd-MMM-yyyy'}}<span> {{event.type}}</span></small></div>
                             <div class="event-location">{{event.location}}</div>
                         </div>
                     </div>
@@ -94,11 +94,9 @@
                         <ul>
                             <li class="form-group">
                                 <label>Kategorija:</label>
-                                <select class="form-control" ng-model="newEvent.type">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                <select class="form-control" 
+                                        ng-options="category.id as category.name for category in eventCategories track by category.id" 
+                                        ng-model="newEvent.eventCategoryId">
                                 </select>
                             </li>
                             <li class="form-group">
@@ -115,7 +113,7 @@
                             </li>
                             <li class="form-group">
                                 <label>Slika: </label>
-                                <input type="file" ng-model="newEvent.image" />
+                                <input type="file" accept="image/*" ng-model="newEvent.image" base-sixty-four-input>
                             </li>
                             <li class="form-group">
                                 <label>Video:</label>
@@ -130,19 +128,22 @@
                                 <input type='text' class="form-control" ng-model="newEvent.endDate" />
                             </li>
                             <li class="form-group">
+                                <label>Prijave do: </label>
+                                <input type='text' class="form-control" ng-model="newEvent.registrationDeadline" />
+                            </li>
+                            <li class="form-group">
                                 <label>Kriterij za prijavu:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.type">
+                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.criteria">
                             </li>
                         </ul>
                         <h4>Popratni Linkovi:</h4>                     
                         <div class="row">
-                            <div class="new-event-links" ng-repeat="link in links track by $index" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
-                                <!--<div class="col-md-1">
-                                    <div class="delete-new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-                                    <div class="delete-new-event-link" ng-if="linkHovered===$index && $last"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="deleteLink(link)"></i></div>
-
-                                </div>-->
-                                <div class="form-group col-md-6">
+                            <div class="new-event-links" ng-repeat="link in links">
+                                <div class="col-md-1 new-event-link-icons"  ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
+                                    <span class="new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                    <span class="new-event-link" ng-if="linkHovered===$index"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="deleteLink($index)"></i></span>
+                                </div>
+                                <div class="form-group col-md-5">
                                     <label>Stranica: </label>
                                     <input type="url" class="form-control" ng-model="link.page" />
                                 </div>
@@ -175,8 +176,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary pull-left" ng-click="addLink()">Dodaj link</button>
-                <button type="button" class="btn btn-default pull-left" ng-click="deleteLink()">Izbriši zadnji link</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Napravi događaj</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="createEvent()">Napravi događaj</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
             </div>
         </div>
@@ -201,50 +201,55 @@
                         <ul>
                             <li class="form-group">
                                 <label>Kategorija:</label>
-                                <select class="form-control" ng-model="newEvent.type">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
+                                <select class="form-control"
+                                        ng-options="category.id as category.name for category in eventCategories track by category.id"
+                                        ng-model="editingEvent.eventCategoryId"></select>
                             </li>
                             <li class="form-group">
                                 <label>Ime:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.name">
+                                <input type="text" class="form-control" placeholder="" ng-model="editingEvent.eventName">
                             </li>
                             <li class="form-group">
                                 <label>Lokacija:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.location">
+                                <input type="text" class="form-control" placeholder="" ng-model="editingEvent.location">
                             </li>
                             <li class="form-group">
                                 <label>Opis:</label>
-                                <textarea class="form-control" ng-model="newEvent.description"></textarea>
+                                <textarea class="form-control" ng-model="editingEvent.description"></textarea>
                             </li>
                             <li class="form-group">
                                 <label>Slika: </label>
-                                <input type="file" ng-model="newEvent.image" />
+                                <input type="file" ng-model="editingEvent.image" />
                             </li>
                             <li class="form-group">
                                 <label>Video:</label>
-                                <textarea class="form-control" ng-model="newEvent.video"></textarea>
+                                <textarea class="form-control" ng-model="editingEvent.video"></textarea>
                             </li>
                             <li class="form-group">
                                 <label>Početak: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.startDate" />
+                                <input type='text' class="form-control" ng-model="editingEvent.startDate" />
                             </li>
                             <li class="form-group">
                                 <label>Kraj: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.endDate" />
+                                <input type='text' class="form-control" ng-model="editingEvent.endDate" />
+                            </li>
+                            <li class="form-group">
+                                <label>Prijave do: </label>
+                                <input type='text' class="form-control" ng-model="editingEvent.registrationDeadline" />
                             </li>
                             <li class="form-group">
                                 <label>Kriterij za prijavu:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.type">
+                                <input type="text" class="form-control" placeholder="" ng-model="editingEvent.criteria">
                             </li>
                         </ul>
                         <h4>Popratni Linkovi:</h4>
                         <div class="row">
-                            <div class="new-event-links" ng-repeat="link in links track by $index">
-                                <div class="form-group col-md-6">
+                            <div class="new-event-links" ng-repeat="link in editingEvent.eventLinks">
+                                <div class="col-md-1 new-event-link-icons" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
+                                    <span class="new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                    <span class="new-event-link" ng-if="linkHovered===$index"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="deleteLink($index)"></i></span>
+                                </div>
+                                <div class="form-group col-md-5">
                                     <label>Stranica: </label>
                                     <input type="url" class="form-control" ng-model="link.page" />
                                 </div>
@@ -259,9 +264,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary pull-left" ng-click="addLink()">Dodaj link</button>
-                <button type="button" class="btn btn-default pull-left" ng-click="deleteLink()">Izbriši zadnji link</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Izmijeni događaj</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateEvent()">Izmijeni događaj</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelUpdate()">Zatvori</button>
             </div>
         </div>
 
@@ -278,70 +282,11 @@
                 <h4 class="modal-title">Brisanje događaja</h4>
             </div>
             <div class="modal-body">
-                <div style="margin: 15px;">
-                    <form id="new-event-form">
-                        <ul>
-                            <li class="form-group">
-                                <label>Kategorija:</label>
-                                <select class="form-control" ng-model="newEvent.type">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </li>
-                            <li class="form-group">
-                                <label>Ime:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.name">
-                            </li>
-                            <li class="form-group">
-                                <label>Lokacija:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.location">
-                            </li>
-                            <li class="form-group">
-                                <label>Opis:</label>
-                                <textarea class="form-control" ng-model="newEvent.description"></textarea>
-                            </li>
-                            <li class="form-group">
-                                <label>Slika: </label>
-                                <input type="file" ng-model="newEvent.image" />
-                            </li>
-                            <li class="form-group">
-                                <label>Video:</label>
-                                <textarea class="form-control" ng-model="newEvent.video"></textarea>
-                            </li>
-                            <li class="form-group">
-                                <label>Početak: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.startDate" />
-                            </li>
-                            <li class="form-group">
-                                <label>Kraj: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.endDate" />
-                            </li>
-                            <li class="form-group">
-                                <label>Kriterij za prijavu:</label>
-                                <input type="text" class="form-control" placeholder="" ng-model="newEvent.type">
-                            </li>
-                        </ul>
-                        <h4>Popratni Linkovi:</h4>
-                        <div class="row">
-                            <div class="new-event-links" ng-repeat="link in links track by $index">
-                                <div class="form-group col-md-6">
-                                    <label>Stranica: </label>
-                                    <input type="url" class="form-control" ng-model="link.page" />
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Link: </label>
-                                    <input type="url" class="form-control" ng-model="link.url" />
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <p>Jeste li sigurni da želite obrisati događaj: {{deletingEvent.eventName}}?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Izbriši događaj</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteEvent()">Izbriši događaj</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDelete()">Zatvori</button>
             </div>
         </div>
 
