@@ -7,7 +7,7 @@
 
         $scope.loadSubCategories = function () {
             $http({
-                method: 'get', url: "http://localhost:57792/api/subcategories"
+                method: 'get', url: "http://localhost:57792/api/subcategories/2"
             }).then(function successCallback(response) {
                 $scope.subCategories = response.data;
             }, function errorCallback(response) {
@@ -41,8 +41,8 @@
             dateOfBirth: "",
             address: "",
             phoneNumber: "",
-            gender: 1,
-            employment: "Employed",
+            gender: "Zensko",
+            employment: "Zaposlen",
             subCategoriesList: $scope.selected
         };
 
@@ -57,8 +57,17 @@
         //    currentUser.id = 1;
         //}
 
-        $scope.registerData = {
-            userName: authenticationService.externalAuthData.userName,
+        $scope.registerExternalData = {
+            userName: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            dateOfBirth: "",
+            address: "",
+            phoneNumber: "",
+            gender: "Musko",
+            employment: "Zaposlen",
+            subCategoriesList: $scope.selected,
             provider: authenticationService.externalAuthData.provider,
             externalAccessToken: authenticationService.externalAuthData.externalAccessToken
         };
@@ -119,7 +128,7 @@
                         email: fragment.external_email
                     };
                     console.log(authenticationService.externalAuthData);
-                    $location.path('/associate');
+                    $location.path('/externalLogin');
 
                 }
                 else {
@@ -141,7 +150,7 @@
 
         $scope.registerExternal = function () {
 
-            authenticationService.registerExternal($scope.registerData).then(function (response) {
+            authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 $scope.message = "User has been registered successfully";
             },
             function (response) {

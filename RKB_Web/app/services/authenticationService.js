@@ -47,10 +47,6 @@
 
                 deferred.resolve(response);
             });
-                //.error(function (err, status) {
-                //logOut();
-                //deferred.rejected(err);
-            //});
 
             return deferred.promise;
         };
@@ -89,10 +85,6 @@
                     deferred.resolve(response);
 
                 });
-                //    .error(function (err, status) {
-                //    _logOut();
-                //    deferred.reject(err);
-                //});
             }
             return deferred.promise;
         };
@@ -100,21 +92,17 @@
         var obtainAccessToken = function (externalData) {
             var deferred = $q.defer();
 
-            $http.get(serviceBase + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
+            $http.get(apiSource + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
 
                 localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
 
                 authentication.isAuth = true;
-                authentication.userName = response.userName;
+                authentication.userName = response.data.userName;
                 authentication.useRefreshTokens = false;
 
                 deferred.resolve(response);
                 console.log('Pada ovdje');
             });
-            //    .error(function (err, status) {
-            //    _logOut();
-            //    deferred.reject(err);
-            //});
 
             return deferred.promise;
         };
@@ -135,10 +123,6 @@
                 deferred.resolve(response);
 
             });
-            //    .error(function (err, status) {
-            //    _logOut();
-            //    deferred.reject(err);
-            //});
 
             return deferred.promise;
         };

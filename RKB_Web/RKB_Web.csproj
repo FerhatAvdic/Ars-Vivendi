@@ -88,7 +88,6 @@
     <Content Include="app\services\authenticationService.js" />
     <Content Include="app\services\dataService.js" />
     <Content Include="authComplete.html" />
-    <Content Include="app\services\ordersService.js" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
