@@ -10,6 +10,10 @@
             $location.path('/home');
         };
 
+        window.onunload = function () {
+            authenticationService.logout();
+        }
+
         $scope.authentication = authenticationService.authentication;
     }]);
 }());

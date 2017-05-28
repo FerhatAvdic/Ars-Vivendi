@@ -2,7 +2,7 @@
     'use strict';
 
     var avApp = angular.module("avApp");
-    avApp.controller("membersController", ['$scope', '$filter', 'membersService','dataService', function ($scope, $filter, membersService, dataService) {
+    avApp.controller("membersController", ['$scope', '$filter', 'membersService', 'dataService', 'authenticationService', function ($scope, $filter, membersService, dataService, authenticationService) {
 
         
         $scope.newMember = {
@@ -17,7 +17,6 @@
             "userName": "user",
             "role": "CustomUser"
         };
-
         /*SET FOR HTTP*/
         $scope.editingMember = null;
         $scope.setEditMember = function (userName) {

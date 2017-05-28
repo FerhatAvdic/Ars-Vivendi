@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("loginController", ['$scope', '$rootScope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', function ($scope, $rootScope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http) {
+    avApp.controller("loginController", ['$scope', '$rootScope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', 'localStorageService', function ($scope, $rootScope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, localStorageService) {
 
         $scope.loadSubCategories = function () {
             $http({
@@ -50,6 +50,7 @@
             userName: "",
             password: ""
         };
+        var userRole = "";
         /*DELETE this ASAP*/
         //$scope.loginMOCKUP = function () {
         //    $rootScope.changeMenuAdmin();
@@ -90,11 +91,24 @@
             });
         };
 
+        var getUserRole = function () {
+            var authData = localStorageService.get('authorizationData');
+            $http({
+                method: 'get', url: "http://localhost:57792/api/userroles", headers: {'Authorization': 'Bearer ' + authData.token}
+            }).then(function successCallback(response) {
+                userRole = response.data;
+            }, function errorCallback(response) {
+                console.log("Something went wrong");
+            });
+        };
+        
+
         $scope.login = function () {
 
             authenticationService.login($scope.loginData).then(function (data) {
                 console.log(data);
                 $location.path('/members');
+                getUserRole();
             },
             function (err) {
                 $scope.message = err.error_description;
@@ -136,6 +150,7 @@
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                     authenticationService.obtainAccessToken(externalData).then(function (response) {
                         console.log('bude li ovdje');
+                        getUserRole();
                         $location.path('/home');
 
                     },
@@ -152,6 +167,8 @@
 
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 $scope.message = "User has been registered successfully";
+                getUserRole();
+                $location.path('/home');
             },
             function (response) {
                 var errors = [];
