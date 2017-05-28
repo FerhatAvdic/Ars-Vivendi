@@ -27,23 +27,24 @@
                 "eventLinks": [{}]
         };
         $scope.links = [{}];
-        $scope.avevents = [
-            { "active": true, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('01/01/2017') },
-            { "active": true, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('01/02/2017') },
-            { "active": true, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('01/03/2017') },
-            { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('01/03/2017') },
-            { "active": true, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('02/15/2017') },
-            { "active": true, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('02/16/2017') },
-            { "active": false, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('03/09/2017') },
-            { "active": false, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('10/22/2017') },
-            { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('11/23/2017') },
-            { "active": false, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('12/12/2017') },
-            { "active": true, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('01/01/2017') },
-            { "active": true, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('12/13/2017') },
-            { "active": true, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('03/10/2017') },
-            { "active": false, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('07/17/2017') },
-            { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('03/11/2017') }
-        ];
+        //$scope.avevents = [
+        //    { "active": true, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('01/01/2017') },
+        //    { "active": true, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('01/02/2017') },
+        //    { "active": true, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('01/03/2017') },
+        //    { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('01/03/2017') },
+        //    { "active": true, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('02/15/2017') },
+        //    { "active": true, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('02/16/2017') },
+        //    { "active": false, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('03/09/2017') },
+        //    { "active": false, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('10/22/2017') },
+        //    { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('11/23/2017') },
+        //    { "active": false, "title": "Eko Akcija", "type": "diving", "typeColor": "#32ba68", "image": "/img/div_slide.jpg", "location": "Ramsko Jezero", "date": new Date('12/12/2017') },
+        //    { "active": true, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('01/01/2017') },
+        //    { "active": true, "title": "Team Building", "type": "rafting", "typeColor": "#f46e42", "image": "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", "location": "Neretva", "date": new Date('12/13/2017') },
+        //    { "active": true, "title": "Rekreativna Tura", "type": "cycling", "typeColor": "#2794b2", "image": "./img/bik_slide.jpg", "location": "Trebević", "date": new Date('03/10/2017') },
+        //    { "active": false, "title": "Eko Akcija", "type": "hiking", "typeColor": "#b7830b", "image": "/img/hik_slide.jpg", "location": "Igman", "date": new Date('07/17/2017') },
+        //    { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('03/11/2017') }
+        //];
+        //
         $scope.getModalResources = function () {
             $scope.listEventCategories();
         };

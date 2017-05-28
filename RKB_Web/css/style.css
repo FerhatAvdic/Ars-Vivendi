@@ -922,10 +922,12 @@ ul {
     font-size: 16px;
 }
 .login-line label{
-    display: inline;
     font-family: NunitoSans-Regular;
     font-weight: 100;
     color: gray;
+}
+.login-line .radio-inline input[type="radio"]{
+    position: relative;
 }
 
 #birthdate{
@@ -957,12 +959,17 @@ ul {
     padding: 0;
     margin: 0;
 }
+
 .login-list li{
     position: relative;
     display: block;
     height: 70px;
     border-bottom: 1px solid #E5E5E5;
     line-height: 70px;
+}
+.login-list li:hover{
+    background: rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 .login-list li label{
     width: 90%;
@@ -971,6 +978,7 @@ ul {
     padding-left: 30px;
     color: gray;
 }
+
 .login-form input[type="text"],  .login-form input[type="password"]{
     display: block;
     width: 100%;

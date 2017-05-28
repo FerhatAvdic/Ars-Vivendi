@@ -2,8 +2,8 @@
 
     <div class="login-form">
         <ul class="nav nav-tabs login-tabs">
-            <li class="active"><a data-toggle="tab" href="#postani-clan" target="_self">Postani Član</a></li>
-            <li><a data-toggle="tab" href="#prijava" target="_self">Prijava</a></li>
+            <li class="active"><a data-toggle="tab" href="#postani-clan" target="_self" ng-click="goToReg()">Postani Član</a></li>
+            <li><a data-toggle="tab" href="#prijava" target="_self" ng-click="goToLogin()">Prijava</a></li>
         </ul>
         <div class="tab-content">
             <div id="prijava" class="tab-pane fade">
@@ -13,7 +13,7 @@
                 <input type="password" placeholder="Lozinka" ng-model="loginData.password" required />
                 <button class="rectangle-btn login-btn-full" type="submit" data-ng-click="login()">Prijava</button>
                 <div class="login-line"><p>ili</p></div>
-                <a href="#" class="connect facebook">
+                <a href="" class="connect facebook">
                     <div class="connect-icon">
                         <i class="fa fa-facebook"></i>
                     </div>
@@ -21,7 +21,7 @@
                         <span>Prijava putem<strong> Facebook-a</strong></span>
                     </div>
                 </a>
-                <a href="#" class="connect gplus">
+                <a href="" class="connect gplus">
                     <div class="connect-icon">
                         <i class="fa fa-google-plus"></i>
                     </div>
@@ -30,11 +30,11 @@
                     </div>
                 </a>
             </div>
-            <div id="postani-clan" class="tab-pane in active">
+            <div id="postani-clan" class="tab-pane active in">
                 <div class="login-line"><p>Odaberi način registracije</p></div>
                 <button class="rectangle-btn login-btn-full" data-toggle="tab" href="#postani-clan-1" target="_self">Registriraj se</button>
                 <div class="login-line"><p>ili</p></div>
-                <a href="#" class="connect facebook">
+                <a href="" class="connect facebook">
                     <div class="connect-icon">
                         <i class="fa fa-facebook"></i>
                     </div>
@@ -42,7 +42,7 @@
                         <span>Postani član putem<strong> Facebook-a</strong></span>
                     </div>
                 </a>
-                <a href="#" class="connect gplus">
+                <a href="" class="connect gplus">
                     <div class="connect-icon">
                         <i class="fa fa-google-plus"></i>
                     </div>
@@ -59,7 +59,7 @@
                 <input type="text" placeholder="Ime" ng-model="registrationData.firstName"/>
                 <input type="text" placeholder="Prezime" ng-model="registrationData.lastName" />
                 <input type="text" placeholder="Email" ng-model="registrationData.email"/>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
 
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
@@ -75,15 +75,16 @@
                 <fieldset id="genderRadio">
                     <ul class="login-line">
                         <li><label>Spol: </label></li>
-                        <li><label>Muški </label><input type="radio" value="" name="genderRadio"> </li>
-                        <li><label>Ženski </label><input type="radio" value="" name="genderRadio"></li>
+                        <li><label class="radio-inline"><input type="radio" value="musko" ng-model="registrationData.gender" name="genderRadio">Muško</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="zensko" ng-model="registrationData.gender" name="genderRadio">Žensko</label></li>
                     </ul>
                 </fieldset>
                 <fieldset id="employmentRadio">
                     <ul class="login-line">
-                        <li><label>Zaposlen/a: </label></li>
-                        <li><label>Da </label><input type="radio" value="" name="employmentRadio"></li>
-                        <li><label>Ne </label><input type="radio" value="" name="employmentRadio"></li>
+                        <li><label>Zaposlenost: </label></li>
+                        <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registrationData.employment" name="employmentRadio">Zaposlen/a</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registrationData.employment" name="employmentRadio">Nezaposlen/a</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="student" ng-model="registrationData.employment" name="employmentRadio">Student</label></li>
                     </ul>
                 </fieldset>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self" ng-click="loadSubCategories()">Dalje</button>
@@ -91,14 +92,14 @@
             <div id="postani-clan-3" class="tab-pane fade">
                 <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
                 <ul class="login-list" ng-repeat="subCategory in subCategories">
-                    <li><label>{{subCategory.name}}</label><input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" ng-click="toggleSelection(subCategory)" /></li>
+                    <li class="login-list-checkbox-label" ng-click="toggleSelection(subCategory)"><label>{{subCategory.name}}</label><input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" /></li>
                 </ul>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self" ng-click="addType()">Dalje</button>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" target="_self" ng-click="signUp()">Postani Član</button>
             </div>
-            <div id="postani-clan-4" class="tab-pane fade">
+            <!--<div id="postani-clan-4" class="tab-pane fade">
                 <div class="login-line"><p>Uplata za članstvo</p></div>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-3" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" target="_self" data-ng-click="signUp()">Postani Član</button>
-            </div>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-3" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" target="_self" ng-click="signUp()">Postani Član</button>
+            </div>-->
         </div>
     </div>
 </div>

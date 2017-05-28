@@ -40,20 +40,20 @@
 
         //PARTNERS
         $scope.partners = [
-            'http://logosolusa.com/wp-content/uploads/2016/08/Banri-Compras-Logo-1.png',
-            'https://s-media-cache-ak0.pinimg.com/originals/9e/0d/0d/9e0d0d29921036c2ff5e78d891573f45.png',
-            'http://zdnet3.cbsistatic.com/hub/i/2015/09/01/cb834e24-18e7-4f0a-a9bf-4c2917187d3f/83bb139aac01023dbf3e55a3d1789ad8/google-new-logo.png',
-            'https://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png',
-            'https://multiplicateporcero.wikispaces.com/file/view/Logo_2.png/236890406/726x387/Logo_2.png'
+            '/img/partners/cocacola.png',
+            '/img/partners/crown.png',
+            '/img/partners/ebay.png',
+            '/img/partners/google.png',
+            '/img/partners/mastercard.png'
         ];
 
         //SPONSORS
         $scope.sponsors = [
-            'http://logosolusa.com/wp-content/uploads/2016/08/Banri-Compras-Logo-1.png',
-            'https://s-media-cache-ak0.pinimg.com/originals/9e/0d/0d/9e0d0d29921036c2ff5e78d891573f45.png',
-            'http://zdnet3.cbsistatic.com/hub/i/2015/09/01/cb834e24-18e7-4f0a-a9bf-4c2917187d3f/83bb139aac01023dbf3e55a3d1789ad8/google-new-logo.png',
-            'https://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png',
-            'https://multiplicateporcero.wikispaces.com/file/view/Logo_2.png/236890406/726x387/Logo_2.png'
+             '/img/partners/cocacola.png',
+            '/img/partners/crown.png',
+            '/img/partners/ebay.png',
+            '/img/partners/google.png',
+            '/img/partners/mastercard.png'
         ];
 
         //PAST EVENTS GALLERY
@@ -70,14 +70,14 @@
 
         //DISCOUNT SLIDES
         $scope.discounts = [
-            { "image": "https://image.freepik.com/free-vector/purple-yellow-and-red-discount-banner_1017-7235.jpg" },
-            { "image": "https://image.shutterstock.com/z/stock-vector-super-sale-shining-banner-on-colorful-background-vector-illustration-346063709.jpg" },
-            { "image": "https://image.freepik.com/free-vector/glossy-discount-banner_1017-7231.jpg" },
-            { "image": "http://vinylbannersprinting.co.uk/wp-content/uploads/2016/04/sb41-RA-preview.png" },
-            { "image": "https://t3.ftcdn.net/jpg/01/06/19/42/500_F_106194224_72nlej2A0vX6wpS07XblfyBezdabIGwF.jpg" },
-            { "image": "https://thumb7.shutterstock.com/display_pic_with_logo/2909389/557107411/stock-vector-winter-sale-banner-vector-illustration-557107411.jpg" },
-            { "image": "https://s-media-cache-ak0.pinimg.com/originals/3c/1c/b6/3c1cb6774bc4f1bb09491d225b038aae.png" },
-            { "image": "http://www.freepsdfile.com/wp-content/uploads/2013/09/Free-Sale-Discount-Banner-PSD.jpg" }
+            { "image": "/img/discounts/discount1.jpg" },
+            { "image": "/img/discounts/discount2.jpg" },
+            { "image": "/img/discounts/discount3.jpg" },
+            { "image": "/img/discounts/discount4.png" },
+            { "image": "/img/discounts/discount5.jpg" },
+            { "image": "/img/discounts/discount6.jpg" },
+            { "image": "/img/discounts/discount7.png" },
+            { "image": "/img/discounts/discount8.jpg" },
         ];
 
         // COMMENT SECTION
@@ -245,6 +245,7 @@
                     scrollTop: $("#contact").offset().top
                 }, 2000);
             });
+
         });
         $(window).bind("mousewheel", function () {
             $("html, body").stop();

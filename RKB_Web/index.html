@@ -48,7 +48,7 @@
 <body>
 
 
-    <div class="welcome-header" data-ng-controller="indexController">
+    <div class="welcome-header" ng-controller="indexController">
         <div class="container">
             <div class="welcome-header-wrap">
                 <ul class="welcome-header-social">
@@ -58,10 +58,10 @@
                     <li>Kontakt tel. +387/61-999-999</li>
                 </ul>
                 <ul class="welcome-header-navigation">
-                    <li data-ng-hide="!authentication.isAuth"><a href="#!/profile">Dobro Dosli {{authentication.userName}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Odjava</a></li>
-                    <li data-ng-hide="authentication.isAuth"><a href="#!/login">Prijava</a></li>
-                    <li data-ng-hide="authentication.isAuth"><a href="#!/login">Postani Član</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#!/profile">Dobro Došli {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="" ng-click="logOut()">Odjava</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>
                 </ul>
             </div>
         </div>
@@ -82,8 +82,8 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
                     <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
-                    <li class="hide-item"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Prijava</a></li>
-                    <li class="hide-item" data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#!/login">Postani Član</a></li>
+                    <li class="hide-item"  data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
+                    <li class="hide-item" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>
                 </ul>
             </div>
         </div>
@@ -97,6 +97,5 @@
 
     <div class="templates" ng-view></div>
 
-    
 </body>
 </html>

@@ -3,7 +3,9 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("loginController", ['$scope', '$rootScope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', function ($scope, $rootScope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http) {
+    avApp.controller("loginController", [
+                '$scope', '$rootScope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route',
+        function ($scope, $rootScope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route) {
 
         $scope.loadSubCategories = function () {
             $http({
@@ -31,20 +33,23 @@
 
         $scope.message = "";
 
-        $scope.registrationData = {
-            userName: "",
-            password: "",
-            confirmPassword: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            dateOfBirth: "",
-            address: "",
-            phoneNumber: "",
-            gender: "Zensko",
-            employment: "Zaposlen",
-            subCategoriesList: $scope.selected
+        $scope.initRegistrationData = function () {
+            $scope.registrationData = {
+                userName: "",
+                password: "",
+                confirmPassword: "",
+                firstName: "",
+                lastName: "",
+                email: "",
+                dateOfBirth: "",
+                address: "",
+                phoneNumber: "",
+                gender: "Zensko",
+                employment: "Zaposlen",
+                subCategoriesList: $scope.selected
+            };
         };
+        $scope.initRegistrationData();
 
         $scope.loginData = {
             userName: "",
@@ -57,23 +62,47 @@
         //    currentUser.id = 1;
         //}
 
-        $scope.registerExternalData = {
-            userName: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            dateOfBirth: "",
-            address: "",
-            phoneNumber: "",
-            gender: "Musko",
-            employment: "Zaposlen",
-            subCategoriesList: $scope.selected,
-            provider: authenticationService.externalAuthData.provider,
-            externalAccessToken: authenticationService.externalAuthData.externalAccessToken
+        $scope.initRegistrationExternalData = function () {
+            $scope.registerExternalData = {
+                userName: "",
+                firstName: "",
+                lastName: "",
+                email: "",
+                dateOfBirth: "",
+                address: "",
+                phoneNumber: "",
+                gender: "Musko",
+                employment: "Zaposlen",
+                subCategoriesList: $scope.selected,
+                provider: authenticationService.externalAuthData.provider,
+                externalAccessToken: authenticationService.externalAuthData.externalAccessToken
+            };
+        };
+        $scope.initRegistrationExternalData();
+
+        $scope.resetRegistration=function(){
+            $scope.initRegistrationData();
+            if ($location.path() === '/login/postani-clan')
+                $route.reload();
+            else
+                $location.path('/login/postani-clan')
+        };
+        $scope.resetExternalRegistration = function () {
+            $scope.initRegistrationExternalData();
+            if ($location.path() === '/externalLogin/postani-clan')
+                $route.reload();
+            else
+                $location.path('/externalLogin/postani-clan')
         };
 
+        var startTimer = function () {
+            var timer = $timeout(function () {
+                $timeout.cancel(timer);
+                $location.path('/login/prijava');
+            }, 2000);
+        };
         $scope.signUp = function () {
-
+            $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
                 console.log("User registered successfully");
                 startTimer();
@@ -94,7 +123,8 @@
 
             authenticationService.login($scope.loginData).then(function (data) {
                 console.log(data);
-                $location.path('/members');
+                $rootScope.changeMenuUser();
+                $location.path('/home');
             },
             function (err) {
                 $scope.message = err.error_description;
@@ -128,7 +158,7 @@
                         email: fragment.external_email
                     };
                     console.log(authenticationService.externalAuthData);
-                    $location.path('/externalLogin');
+                    $location.path('/externalLogin/postani-clan-1');
 
                 }
                 else {
@@ -136,8 +166,8 @@
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                     authenticationService.obtainAccessToken(externalData).then(function (response) {
                         console.log('bude li ovdje');
+                        $rootScope.changeMenuUser();
                         $location.path('/home');
-
                     },
                  function (err) {
                      $scope.message = err.error_description;
@@ -149,9 +179,11 @@
         };
 
         $scope.registerExternal = function () {
-
+            $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 $scope.message = "User has been registered successfully";
+                $rootScope.changeMenuUser();
+                $location.path('/home');
             },
             function (response) {
                 var errors = [];
@@ -163,20 +195,19 @@
             console.log($scope.message);
         };
 
-        var startTimer = function () {
-            var timer = $timeout(function () {
-                $timeout.cancel(timer);
-                $location.path('/login');
-            }, 2000);
-        };
 
+            
+        
+            /*CALENDAR*/
         $scope.today = function () {
-            $scope.dt = new Date();
+            $scope.registrationData.dateOfBirth = new Date();
+            $scope.registerExternalData.dateOfBirth = new Date();
         };
         $scope.today();
 
         $scope.clear = function () {
-            $scope.dt = null;
+            $scope.registrationData.dateOfBirth = null;
+            $scope.registerExternalData.dateOfBirth = null;
         };
 
         $scope.inlineOptions = {
@@ -262,6 +293,31 @@
             }
 
             return '';
-        }
+        };
+
+        $scope.goToLogin = function () {
+            $location.path('/login/prijava')
+        };
+        $scope.goToReg = function () {
+            $location.path('/login/postani-clan')
+        };
+        $scope.goToExtReg = function () {
+            $location.path('/externalLogin/postani-clan')
+        };
+        /*JQUERY FOR TABS*/
+        var activeTab = $routeParams.tab;
+        $(document).ready(function () {
+            if (activeTab === 'prijava') {
+                $(".nav-tabs li:first").removeClass("active");
+                $(".nav-tabs li:last").addClass("active");
+            }
+
+            if (activeTab === 'prijava' || activeTab === 'postani-clan' || activeTab === 'postani-clan-1') {
+                $(".tab-pane").removeClass("active in");
+                $("#" + activeTab).addClass("active in");
+            }
+        });
+
+
     }]);
 }());

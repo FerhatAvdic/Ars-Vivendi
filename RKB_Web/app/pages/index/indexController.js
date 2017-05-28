@@ -5,6 +5,10 @@
 
     avApp.controller('indexController', ['$scope', '$location', 'authenticationService', function ($scope, $location, authenticationService) {
 
+        $scope.greenMenu = {};
+        $scope.greenMenu.login = 'prijava';
+        $scope.greenMenu.register = 'postani-clan';
+
         $scope.logOut = function () {
             authenticationService.logout();
             $location.path('/home');

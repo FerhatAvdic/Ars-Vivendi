@@ -14,8 +14,8 @@
     avApp.config(function ($routeProvider) {
         $routeProvider
         .when('/', { templateUrl: 'app/pages/home/home.html', controller: 'homeController' })
-        .when('/login', { templateUrl: 'app/pages/login/login.html', controller: 'loginController' })
-        .when('/externalLogin', { templateUrl: 'app/pages/login/externalLogin.html', controller: 'loginController' })
+        .when('/login/:tab', { templateUrl: 'app/pages/login/login.html', controller: 'loginController' })
+        .when('/externalLogin/:tab', { templateUrl: 'app/pages/login/externalLogin.html', controller: 'loginController' })
         .when('/blog', { templateUrl: 'app/pages/blog/blog.html', controller: 'blogController' })
         .when('/events', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
         .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })

@@ -34,6 +34,16 @@
 
                 }
 
+                $rootScope.changeMenuUser = function () {
+                    $rootScope.menuItems = [];
+                    $rootScope.menuItems.push({ link: "#!/about", text: "O Nama" });
+                    $rootScope.menuItems.push({ link: "", text: "Aktuelno", id: "upcoming-link" });
+                    $rootScope.menuItems.push({ link: "#!/events", text: "Događaji" });
+                    $rootScope.menuItems.push({ link: "#!/gallery", text: "Galerija", id: null });
+                    $rootScope.menuItems.push({ link: "", text: "Kontakt", id: "contact-link" });
+                    $rootScope.menuItems.push({ link: "#!/profile", text: "Profil" });
+                };
+
                 /*$rootScope.$on('userLoggedIn', function () {
                     buildMenu();
                     $rootScope.permissions = {
