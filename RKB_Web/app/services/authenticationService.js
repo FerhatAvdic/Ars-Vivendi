@@ -96,8 +96,9 @@
 
             $http.get(apiSource + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
 
+                console.log(response.data);
                 authentication.isAuth = true;
                 authentication.userName = response.data.userName;
                 authentication.useRefreshTokens = false;
