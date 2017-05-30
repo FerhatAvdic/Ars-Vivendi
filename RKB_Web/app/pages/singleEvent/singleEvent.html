@@ -49,7 +49,7 @@
                             </p>
                         </div>
                         <div class="event-video text-left">
-                            <iframe width="560" height="315" ng-src="{{event.video}}" frameborder="0" allowfullscreen></iframe>
+                            <iframe width="560" height="315" ng-src="{{event.videoLink}}" frameborder="0" allowfullscreen></iframe>
                         </div>
                         <div>
                             <h4><i class="fa fa-external-link" aria-hidden="true"></i> Popratni Linkovi:</h4>
@@ -57,14 +57,14 @@
                                 <div class="new-event-links" ng-repeat="link in event.eventLinks" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
                                     <div class="form-group col-md-6">
                                         <label>Stranica: </label>
-                                        <input type="url" class="form-control" ng-model="link.page" />
+                                        <p>{{link.name}}</p>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Link: </label>
-                                        <input type="url" class="form-control" ng-model="link.url" />
+                                        <p>{{link.link}}</p>
                                     </div>
                                 </div>
-                                <div class="new-event-links">
+                                <!--<div class="new-event-links">
                                     <div class="form-group col-md-6">
                                         <label>Stranica: </label>
                                         <p>{{link.page}}Lorem Ipsum</p>
@@ -81,7 +81,7 @@
                                         <label>Link: </label>
                                         <p>{{link.url}}http://www.LoremIpsum.com</p>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

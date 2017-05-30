@@ -12,6 +12,7 @@
 
 
     avApp.config(function ($routeProvider) {
+
         $routeProvider
         .when('/', { templateUrl: 'app/pages/home/home.html', controller: 'homeController' })
         .when('/login/:tab', { templateUrl: 'app/pages/login/login.html', controller: 'loginController' })
@@ -21,10 +22,10 @@
         .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })
         .when('/events/:id', { templateUrl: 'app/pages/singleEvent/singleEvent.html', controller: 'singleEventController' })
         .when('/profile/:id', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
+        .when('/profile', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/about', { templateUrl: 'app/pages/about/about.html', controller: 'aboutController' })
         .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
         .otherwise({ redirectTo: "/" });
-
 
     });
 

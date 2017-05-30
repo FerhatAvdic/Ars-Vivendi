@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.factory('authenticationService', ['$http', '$q', 'localStorageService', 'arsVivAuthSettings', function ($http, $q, localStorageService, arsVivAuthSettings) {
+    avApp.factory('authenticationService', ['$rootScope','$http', '$q', 'localStorageService', 'arsVivAuthSettings', function ($rootScope, $http, $q, localStorageService, arsVivAuthSettings) {
 
         var apiSource = arsVivAuthSettings.apiServiceBase;
         var authenticationServiceFactory = {};
@@ -58,6 +58,7 @@
             authentication.isAuth = false;
             authentication.userName = "";
             authentication.useRefreshToken = false;
+            $rootScope.userRole = "";
         };
 
         var fillAuthData = function () {

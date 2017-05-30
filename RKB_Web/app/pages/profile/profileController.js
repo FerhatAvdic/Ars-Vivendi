@@ -3,54 +3,62 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("profileController", ['$scope', '$routeParams', 'dataService', function ($scope, $routeParams, dataService) {
+    avApp.controller("profileController", ['$rootScope','$scope', '$routeParams', '$location','$timeout','dataService', 'authenticationService', function ($rootScope, $scope, $routeParams, $location,$timeout, dataService, authenticationService) {
+
+        var currentUser = authenticationService.authentication;
+
+        var authenticateUser = function () {
+            if ($rootScope.userRole === "Admin" || currentUser.userName === $routeParams.id) return;
+            else {
+                console.log("No permission");
+                $location.path('/home');
+            }
+        };
 
         var profileID = $routeParams.id;
 
         $scope.health = false;
-        $scope.interests = [{
-            "categoryName": "Sport",
-            "interestList": [{
-                "label": "Skijanje",
-                "img": "http://img6.onthesnow.com/image/la/74/early_season_skiing_grand_targhee_1_74093.jpg",
-                "value": false
-            },
-            {
-                "label": "Planinarenje",
-                "img": "http://www.parcoappennino.it/blogs/appenninogastronomico/wp-content/uploads/sites/3/2015/03/trekking-in-the-mountains.jpg",
-                "value": false
-            },
-            {
-                "label": "Biciklizam",
-                "img": "http://www.gocyclingmaui.com/img/tour-1.jpg",
-                "value": false
-            },
-            {
-                "label": "Rafting",
-                "img": "https://media-cdn.tripadvisor.com/media/photo-s/02/d4/6b/7f/88-www-neretva-rafting.jpg",
-                "value": false
-            },
-            {
-                "label": "Ronjenje",
-                "img": "http://divekingdom.com/upload/hizmet/20160409-161930-1460207970-1701942487.jpg",
-                "value": false
-            }]
-        },
-        {
-            "categoryName": "Muzika",
-            "interestList": [{
-                "label": "Narodna",
-                "img": "http://media.guitarcenter.com/is/image/MMGS7/72-Bass-Entry-Level-Piano-Accordion-Red/J02738000001000-00-500x500.jpg",
-                "value": false
-            },
-            {
-                "label": "Rock",
-                "img": "http://www.mveducation.com/assets/products/83102_l.jpg",
-                "value": false
-            }]
-        }];
-
-
+        //$scope.interests = [{
+        //    "categoryName": "Sport",
+        //    "interestList": [{
+        //        "label": "Skijanje",
+        //        "img": "http://img6.onthesnow.com/image/la/74/early_season_skiing_grand_targhee_1_74093.jpg",
+        //        "value": false
+        //    },
+        //    {
+        //        "label": "Planinarenje",
+        //        "img": "http://www.parcoappennino.it/blogs/appenninogastronomico/wp-content/uploads/sites/3/2015/03/trekking-in-the-mountains.jpg",
+        //        "value": false
+        //    },
+        //    {
+        //        "label": "Biciklizam",
+        //        "img": "http://www.gocyclingmaui.com/img/tour-1.jpg",
+        //        "value": false
+        //    },
+        //    {
+        //        "label": "Rafting",
+        //        "img": "https://media-cdn.tripadvisor.com/media/photo-s/02/d4/6b/7f/88-www-neretva-rafting.jpg",
+        //        "value": false
+        //    },
+        //    {
+        //        "label": "Ronjenje",
+        //        "img": "http://divekingdom.com/upload/hizmet/20160409-161930-1460207970-1701942487.jpg",
+        //        "value": false
+        //    }]
+        //},
+        //{
+        //    "categoryName": "Muzika",
+        //    "interestList": [{
+        //        "label": "Narodna",
+        //        "img": "http://media.guitarcenter.com/is/image/MMGS7/72-Bass-Entry-Level-Piano-Accordion-Red/J02738000001000-00-500x500.jpg",
+        //        "value": false
+        //    },
+        //    {
+        //        "label": "Rock",
+        //        "img": "http://www.mveducation.com/assets/products/83102_l.jpg",
+        //        "value": false
+        //    }]
+        //}];
         $scope.equipment = [{
             "categoryName": "Skijanje",
             "equipmentList": [{
@@ -134,7 +142,6 @@
                 "content": "@KKSH lajhdljk ashldjkas hjlkdhasljd gashj gdaslčdkaćs ldjhasj khd lasjhd asjk čjdč askjd čklashl jdka skjćdl jasčl dhsačl khdsa čjkl dj"
             }]
         };
-        
         $scope.statsSummary = [{
             "type": 1,
             "value": 0
@@ -146,7 +153,7 @@
         {
             "type": 3,
             "value": 0
-        }]
+        }];
         $scope.summarizeStats = function () {
             angular.forEach($scope.stats.attendedEvents, function (event) {
                 switch (event.type) {
@@ -178,6 +185,146 @@
             }
         };
         $scope.summarizeStats();
+
+        $scope.getPersonalInfo = function () {
+            dataService.read("users", profileID, function (response) {
+                if (response.status === 200) {
+                    $scope.userInfo = response.data;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.userInterests = null;
+        $scope.allInterests = null;
+        $scope.getInterestInfo = function () {
+            $scope.getCategories();
+            $scope.getAllInterests();
+        };
+
+
+        var prepareCheckboxes = function () {
+
+            dataService.read("usercharacteristics", profileID, function (response) {
+                if (response.status === 200) {
+                    $scope.userInterests = response.data;
+                    console.log("User interests");
+                    console.log($scope.userInterests);
+
+                    $scope.allInterests.forEach(function (interest) {
+                        interest.checked = false;
+                    });
+                    $scope.allInterests.forEach(function (interest) {
+                        $scope.userInterests.forEach(function (userInterest) {
+                            if (interest.id === userInterest.charSubCategoryId)
+                                interest.checked = true;
+                        });
+                    });
+
+                }
+                else {
+                    console.log("unable to fetch user interests");
+                    console.log("ERROR: ", response);
+                }
+            });
+           
+        };
+
+
+        $scope.getCategories = function () {
+            dataService.list("characteristiccategories",function (response) {
+                if (response.status===200) {
+                    $scope.interestCategories = response.data;
+
+                    console.log("get categories");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.getAllInterests = function () {
+            dataService.list("Characteristicsubcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.allInterests = response.data;
+                    prepareCheckboxes();
+                    console.log("ALL INTERESTS");
+                    console.log($scope.allInterests);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.getUserInterests = function () {
+            dataService.read("usercharacteristics", profileID, function (response) {
+                if (response.status === 200) {
+                    $scope.userInterests = response.data;
+                    console.log("User interests");
+                    console.log($scope.userInterests);
+                }
+                else {
+                    console.log("unable to fetch user interests");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        var removeInterest = function (interestID) {
+            dataService.remove("usercharacteristics", interestID, function (response) {
+                if (response.status === 200) {
+                    console.log("Deleted");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        var addInterest = function (interestID) {
+            var model = {
+                "Id": 0,
+                "CharSubCategoryId": interestID,
+                "UserId": $routeParams.id
+            };
+            dataService.create("usercharacteristics", model, function (response) {
+                if (response.status === 200) {
+                    console.log("Created");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.updateInterests = function () {
+            var exists = false;
+            for (var i = 0; i < $scope.allInterests.length; i++) {
+                exists = false;
+                for (var j = 0; j < $scope.userInterests.length; j++) {
+                    if ($scope.allInterests[i].id === $scope.userInterests[j].charSubCategoryId) {
+                        if ($scope.allInterests[i].checked === false) {
+                            removeInterest($scope.allInterests[i].id);
+                            break;
+                        } else {
+                            exists = true;
+                            break;
+                        }
+                    }
+                }
+                if ($scope.allInterests[i].checked === true && exists===false) {
+                    addInterest($scope.allInterests[i].id);
+                }
+            }
+            $scope.getInterestInfo();
+        };
+       
+        $scope.getPersonalInfo();
+
+        //authenticateUser();
 
     }]);
 }());

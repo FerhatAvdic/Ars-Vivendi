@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller('indexController', ['$scope', '$location', 'authenticationService', function ($scope, $location, authenticationService) {
+    avApp.controller('indexController', ['$rootScope','$scope', '$location', 'authenticationService', function ($rootScope, $scope, $location, authenticationService) {
 
         $scope.greenMenu = {};
         $scope.greenMenu.login = 'prijava';
@@ -11,6 +11,7 @@
 
         $scope.logOut = function () {
             authenticationService.logout();
+            $rootScope.changeMenu();
             $location.path('/home');
         };
 
@@ -19,5 +20,6 @@
         }
 
         $scope.authentication = authenticationService.authentication;
+        console.log($scope.authentication);
     }]);
 }());

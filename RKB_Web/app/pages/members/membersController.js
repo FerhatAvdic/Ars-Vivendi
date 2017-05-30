@@ -2,8 +2,15 @@
     'use strict';
 
     var avApp = angular.module("avApp");
-    avApp.controller("membersController", ['$scope', '$filter', 'membersService', 'dataService', 'authenticationService', function ($scope, $filter, membersService, dataService, authenticationService) {
+    avApp.controller("membersController", ['$rootScope','$scope', '$filter','$location', 'membersService', 'dataService', 'authenticationService', function ($rootScope, $scope, $filter,$location, membersService, dataService, authenticationService) {
 
+        var authenticateAdmin = function (){
+            if ($rootScope.userRole === "Admin") return;
+            else {
+                console.log("No permission");
+                $location.path('/home');
+            }
+        };
         
         $scope.newMember = {
             "firstName": "MMMM",
@@ -260,6 +267,7 @@
             return '';
         }
 
+        authenticateAdmin();
         $scope.listMembers();
     }])
     .filter('start', function () {

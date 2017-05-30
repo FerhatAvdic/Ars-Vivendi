@@ -15,7 +15,7 @@
                                         <ul class="nav nav-tabs login-tabs profile-tabs">
                                             <li><a data-toggle="tab" href="#stats" target="_self">Aktivnost</a></li>
                                             <li class="active"><a data-toggle="tab" href="#personal" target="_self">Lični Podaci</a></li>
-                                            <li><a data-toggle="tab" href="#interests" target="_self">Interesi</a></li>
+                                            <li><a data-toggle="tab" href="#interests" target="_self" ng-click="getInterestInfo()">Interesi</a></li>
                                             <li><a data-toggle="tab" href="#finance" target="_self">Finansije</a></li>
                                         </ul>
 
@@ -136,20 +136,40 @@
                                     <div id="interests" class="tab-pane fade">
                                         <div class="row">
                                             <div class="profile-interests-wrap">
-                                                <ul class="row profile-interests-category" ng-repeat="category in interests">
-                                                    <li class="col-md-12 category-name">{{category.categoryName}}</li>
-                                                    <li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in category.interestList">
-                                                        <div class="category-item">
-                                                            <div class="category-item-img" ng-click="interest.value=!interest.value"
-                                                                 ng-style="{'background-image': 'url(' + interest.img + ')'}">
-                                                            </div>
-                                                            <div class="checkbox category-item-label">
-                                                                <label><input type="checkbox" ng-model="interest.value" value="">{{interest.label}}</label>
+                                                <div class="panel-group" id="accordion">
+                                                    <div class="panel panel-default" ng-repeat="category in interestCategories">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}"  href="" target="_self">
+                                                                    {{category.categoryName}}
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="{{'collapse' + $index}}" class="panel-collapse collapse" > <!--ng-class='{in:$first}'-->
+                                                            <div class="panel-body">
+                                                                <ul class="row profile-interests-category">
+                                                                    <li class="col-md-offset-1" ng-repeat="interest in allInterests">
+                                                                        <div class="checkbox" ng-show="interest.categoryId===category.id">
+                                                                            <label><input type="checkbox" ng-model="interest.checked">{{interest.name}}</label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <!--<li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in interests">
+                                                                        <div class="category-item">
+                                                                            <div class="category-item-img" ng-click="interest.value=!interest.value"
+                                                                                 ng-style="{'background-image': 'url(' + interest.img + ')'}">
+                                                                            </div>
+                                                                            <div class="checkbox category-item-label">
+                                                                                <label><input type="checkbox" ng-model="interest.value" value="">{{interest.name}}</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>-->
+                                                                </ul>
                                                             </div>
                                                         </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                    </div>
+                                                  </div>
+                                                <button class="btn btn-primary" ng-click="updateInterests()">Spasi</button>
+                                              </div>
                                         </div>
                                     </div>
                                     <!--<div id="equipment" class="tab-pane fade">
