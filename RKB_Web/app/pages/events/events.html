@@ -53,12 +53,12 @@
                 <div class="row">
                     <div class="col-md-2" ng-repeat="eventCategory in eventCategories | orderBy:'name'">
                         <div class="radio event-type-filter" ng-style="{'background-color': eventCategory.categoryColor}" ng-click="$parent.typeFilter=eventCategory.name">
-                            <label style="padding: 0 15px;"><input type="radio" ng-model="$parent.typeFilter" ng-value="eventCategory.name" name="eventTypeRadio">{{eventCategory.name}}</label>
+                            <label style="padding: 0 15px;"><input type="radio" ng-model="$parent.typeFilter" ng-value="eventCategory.name" name="eventTypeRadio">{{(!eventCategory.name)?"Sve Kategorije":eventCategory.name}}</label>
                         </div>
-                        <a href="">
+                        <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
                             <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingCategoryModal" ng-click="setEditCategory(eventCategory)"></i>
                         </a>
-                        <a href="">
+                        <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
                             <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deleteCategoryModal" ng-click="setDeleteCategory(eventCategory)"></i>
                         </a>
                     </div>
@@ -141,15 +141,21 @@
                             </li>
                             <li class="form-group">
                                 <label>Početak: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.startDate" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.startDate" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Kraj: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.endDate" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.endDate" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Prijave do: </label>
-                                <input type='text' class="form-control" ng-model="newEvent.registrationDeadline" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.registrationDeadline" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Cijena za članove: </label>
@@ -173,32 +179,14 @@
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Stranica: </label>
-                                    <input type="url" class="form-control" ng-model="link.Name" />
+                                    <input type="text" class="form-control" ng-model="link.name" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Link: </label>
-                                    <input type="url" class="form-control" ng-model="link.Link" />
+                                    <input type="text" class="form-control" ng-model="link.link" />
                                 </div>
                             </div>
                         </div>
-                        <!--<li><label>organizator</label><input type="text" ng-model="newEvent.organizator" /></li>
-                        <li><label>departureTime</label><input type="text" ng-model="newEvent.departureTime" /></li>
-                        <li><label>departurePlace</label><input type="text" ng-model="newEvent.departurePlace" /></li>-->
-                        <!--<li><label>necessaryEquipment</label><input type="text" ng-model="newEvent.necessaryEquipment" /></li>
-                        <li><label>contactInfo</label><input type="text" ng-model="newEvent.contactInfo" /></li>-->
-                        <!--<li>
-                            slika,
-                            ime,
-                            lokacija,
-                            vrsta(kategorija),
-                            opis,
-                            datum početka,
-                            datum kraja,
-                            link za prikaz videa,
-                            popratni linkovi (smještaj, prijevoz itd.) sa mogućnošću dodavanja/ukidanja linkova,
-                            kriterij za prijavu.
-                        </li>-->
-
                     </form>
                 </div>
             </div>
@@ -247,7 +235,7 @@
                             </li>
                             <li class="form-group">
                                 <label>Slika: </label>
-                                <input type="file" ng-model="editingEvent.image" />
+                                <input type="file" accept="image/*" ng-model="editingEvent.image" base-sixty-four-input>
                             </li>
                             <li class="form-group">
                                 <label>Video:</label>
@@ -255,15 +243,21 @@
                             </li>
                             <li class="form-group">
                                 <label>Početak: </label>
-                                <input type='text' class="form-control" ng-model="editingEvent.startDate" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.startDate" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Kraj: </label>
-                                <input type='text' class="form-control" ng-model="editingEvent.endDate" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.endDate" ng-click="open2()"
+                                       is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Prijave do: </label>
-                                <input type='text' class="form-control" ng-model="editingEvent.registrationDeadline" />
+                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.registrationDeadline" ng-click="open3()"
+                                       is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Cijena za članove: </label>
@@ -287,11 +281,11 @@
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Stranica: </label>
-                                    <input type="url" class="form-control" ng-model="link.name" />
+                                    <input type="text" class="form-control" ng-model="link.name" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Link: </label>
-                                    <input type="url" class="form-control" ng-model="link.link" />
+                                    <input type="text" class="form-control" ng-model="link.link" />
                                 </div>
                             </div>
                         </div>

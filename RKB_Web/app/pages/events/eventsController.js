@@ -136,6 +136,10 @@
             dataService.read("events", eventID, function (response) {
                 if (response.status === 200) {
                     $scope.editingEvent = response.data;
+                    console.log($scope.editingEvent.startDate, $scope.editingEvent.endDate, $scope.editingEvent.registrationDeadline)
+                    $scope.editingEvent.startDate = new Date($scope.editingEvent.startDate);
+                    $scope.editingEvent.endDate = new Date($scope.editingEvent.endDate);
+                    $scope.editingEvent.registrationDeadline = new Date($scope.editingEvent.registrationDeadline);
                     console.log($scope.editingEvent);
                 }
                 else {
@@ -166,7 +170,31 @@
                 $scope.listEvents();
             });
         };
+
+        $scope.createEventLink = function (link) {
+            dataService.create("eventlinks", link, function (response) {
+                if (response.status === 200) {
+                    console.log("Link CREATED", response);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
         $scope.updateEvent = function () {
+            for (var i = 0; i < $scope.editingEvent.eventLinks.length; i++) {
+                if ($scope.editingEvent.eventLinks[i].hasOwnProperty('index')) {
+                    $scope.editingEvent.eventLinks[i].eventId = $scope.editingEvent.id;
+                    $scope.createEventLink($scope.editingEvent.eventLinks[i]);
+                }
+            }
+            for (var i = 0; i < $scope.editingEvent.eventLinks.length; i++) {
+                if ($scope.editingEvent.eventLinks[i].hasOwnProperty('index')) {
+                    $scope.editingEvent.eventLinks.splice(i, 1);
+                }
+            }
+            $scope.editingEvent.imageBaseString = $scope.editingEvent.image.base64;
             dataService.update("events", $scope.editingEvent.id, $scope.editingEvent, function (response) {
                 if (response.status === 200) {
                     console.log("UPDATED");
@@ -248,11 +276,11 @@
         $scope.addLinkNewEvent = function () {
             linkIndex++;
             console.log(linkModel);
-            $scope.newEvent.eventLinks.push({ "Id": 0, "Name": "", "Link": "", "index": linkIndex });
+            $scope.newEvent.eventLinks.push({ "Id": 0, "name": "", "link": "", "index": linkIndex });
         };
         $scope.addLinkEditingEvent = function () {
             linkIndex++;
-            $scope.editingEvent.eventLinks.push({ "Id": 0, "Name": "", "Link": "", "index": linkIndex });
+            $scope.editingEvent.eventLinks.push({ "Id": 0, "name": "", "link": "", "index": linkIndex });
         };
 
         /*CHANGE*/
@@ -324,6 +352,19 @@
         $scope.open2 = function () {
             $scope.popup2.opened = true;
         };
+        $scope.open3 = function () {
+            $scope.popup3.opened = true;
+        };
+        $scope.popup1 = {
+            opened: false
+        };
+
+        $scope.popup2 = {
+            opened: false
+        };
+        $scope.popup3 = {
+            opened: false
+        };
 
         $scope.setDate = function (year, month, day) {
             $scope.dt = new Date(year, month, day);
@@ -333,13 +374,6 @@
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
 
-        $scope.popup1 = {
-            opened: false
-        };
-
-        $scope.popup2 = {
-            opened: false
-        };
 
         var tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);

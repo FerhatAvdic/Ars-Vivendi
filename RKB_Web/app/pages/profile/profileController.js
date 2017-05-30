@@ -190,6 +190,18 @@
             dataService.read("users", profileID, function (response) {
                 if (response.status === 200) {
                     $scope.userInfo = response.data;
+                    console.log("PERSONAL INFO:",$scope.userInfo);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.updatePersonalInfo = function () {
+            dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
+                if (response.status === 200) {
+                    console.log("UPDATED");
                 }
                 else {
                     console.log("ERROR: ", response);
@@ -307,7 +319,7 @@
                 for (var j = 0; j < $scope.userInterests.length; j++) {
                     if ($scope.allInterests[i].id === $scope.userInterests[j].charSubCategoryId) {
                         if ($scope.allInterests[i].checked === false) {
-                            removeInterest($scope.allInterests[i].id);
+                            removeInterest($scope.userInterests[j].id);
                             break;
                         } else {
                             exists = true;
