@@ -6,10 +6,10 @@
     avApp.controller("loginController", [
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route','localStorageService',
         function ($rootScope,   $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
-
+            var apiSource = arsVivAuthSettings.apiServiceBase;
         $scope.loadSubCategories = function () {
             $http({
-                method: 'get', url: "http://localhost:57792/api/Characteristicsubcategories/2"
+                method: 'get', url: apiSource + 'api/characteristicsubcategories'
             }).then(function successCallback(response) {
                 $scope.subCategories = response.data;
             }, function errorCallback(response) {
@@ -123,7 +123,7 @@
         var getUserRole = function () {
             var authData = localStorageService.get('authorizationData');
             $http({
-                method: 'get', url: "http://localhost:57792/api/userroles", headers: {'Authorization': 'Bearer ' + authData.token}
+                method: 'get', url: apiSource + 'api/userroles', headers: {'Authorization': 'Bearer ' + authData.token}
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data;
                 $rootScope.changeMenu();
@@ -171,7 +171,7 @@
                         externalAccessToken: fragment.external_access_token,
                         email: fragment.external_email
                     };
-                    console.log(authenticationService.externalAuthData);
+                    console.log('fragment', fragment);
                     $location.path('/externalLogin/postani-clan-1');
 
                 }
@@ -197,8 +197,8 @@
             $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 $scope.message = "User has been registered successfully";
-                $rootScope.changeMenu();
                 getUserRole();
+                $rootScope.changeMenu();
                 $location.path('/home');
             },
             function (response) {

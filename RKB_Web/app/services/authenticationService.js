@@ -115,13 +115,11 @@
 
             $http.post(apiSource + 'api/account/registerexternal', registerExternalData).then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
 
                 authentication.isAuth = true;
                 authentication.userName = response.data.userName;
                 authentication.useRefreshTokens = false;
-
-                console.log("response...", response);
 
                 deferred.resolve(response);
 
