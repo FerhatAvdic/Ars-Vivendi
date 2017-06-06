@@ -10,7 +10,7 @@
         var authenticateUser = function () {
             if ($rootScope.userRole === "Admin" || currentUser.userName === $routeParams.id) return;
             else {
-                console.log("No permission");
+                toastr.error("Nemate pristup ovom profilu");
                 $location.path('/home');
             }
         };
@@ -187,8 +187,10 @@
         $scope.summarizeStats();
 
         $scope.getPersonalInfo = function () {
+            $scope.personalInfoLoading = true;
             dataService.read("users", profileID, function (response) {
                 if (response.status === 200) {
+                    $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
                     console.log("PERSONAL INFO:",$scope.userInfo);
                 }
@@ -201,9 +203,11 @@
         $scope.updatePersonalInfo = function () {
             dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
-                    console.log("UPDATED");
+                    toastr.success("Profil uspješno izmijenjen");
+                    //console.log("UPDATED");
                 }
                 else {
+                    toastr.error("Greška prilikom izmjene profila");
                     console.log("ERROR: ", response);
                 }
             });
@@ -234,10 +238,11 @@
                                 interest.checked = true;
                         });
                     });
-
+                    $scope.interestsLoading = false;
                 }
                 else {
-                    console.log("unable to fetch user interests");
+                    toastr.error("Greška prilikom pribavljanja korisnikovih karakteristika");
+                    //console.log("unable to fetch user interests");
                     console.log("ERROR: ", response);
                 }
             });
@@ -246,19 +251,22 @@
 
 
         $scope.getCategories = function () {
+            $scope.categoriesLoading = true;
             dataService.list("characteristiccategories",function (response) {
                 if (response.status===200) {
                     $scope.interestCategories = response.data;
-
+                    $scope.categoriesLoading = false;
                     console.log("get categories");
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
                     console.log("ERROR: ", response);
                 }
             });
         };
 
         $scope.getAllInterests = function () {
+            $scope.interestsLoading = true;
             dataService.list("Characteristicsubcategories", function (response) {
                 if (response.status === 200) {
                     $scope.allInterests = response.data;
@@ -267,6 +275,7 @@
                     console.log($scope.allInterests);
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
                     console.log("ERROR: ", response);
                 }
             });
@@ -280,7 +289,8 @@
                     console.log($scope.userInterests);
                 }
                 else {
-                    console.log("unable to fetch user interests");
+                    toastr.error("Greška prilikom pribavljanja korisnikovih karakteristika");
+                    //console.log("unable to fetch user interests");
                     console.log("ERROR: ", response);
                 }
             });
@@ -292,6 +302,8 @@
                     console.log("Deleted");
                 }
                 else {
+                    $scope.errorRemovingInterest = true;
+                    toastr.error("Greška prilikom brisanja karakteristike");
                     console.log("ERROR: ", response);
                 }
             });
@@ -307,6 +319,8 @@
                     console.log("Created");
                 }
                 else {
+                    $scope.errorAddingInterest = true;
+                    toastr.error("Greška prilikom dodavanja karakteristike");
                     console.log("ERROR: ", response);
                 }
             });
@@ -331,6 +345,12 @@
                     addInterest($scope.allInterests[i].id);
                 }
             }
+            if ($scope.errorAddingInterest)
+                toastr.error("Greška prilikom dodavanja karakteristike");
+            if ($scope.errorRemovingInterest)
+                toastr.error("Greška prilikom brisanja karakteristike");
+            if (!$scope.errorAddingInterest || !$scope.errorRemovingInterest)
+                toastr.success("Uspješno izmijenjene karakteristike!");
             $scope.getInterestInfo();
         };
        

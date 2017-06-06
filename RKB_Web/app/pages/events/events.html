@@ -2,95 +2,100 @@
 <div class="gray-wrapper">
     <div class="container">
         <div class="gallery-wrap">
-            <div class="events-settings">
-                <div class="row">
-                    <div class="col-md-2">
-                        <h3>DOGAĐAJI</h3>
-                    </div>
-                    <!--<div class="col-md-2" ng-show="userRole === 'Admin'">
-                    </div>-->
-                    <div class="col-md-4" ng-hide="userRole === 'Admin'">
-                    </div>
-                    <div class="col-md-2">
-                        <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=true">Aktuelni</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=false">Završeni</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="rectangle-btn rectangle-btn-outline-dark" ng-click="resetFilters()">Prikaži sve</button>
-                    </div>
-                    <div class="col-md-2" ng-show="userRole === 'Admin'">
-                        <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn" ng-click="getModalResources()">Novi Događaj</button>
-                    </div>
-                    <div class="col-md-2" ng-show="userRole === 'Admin'">
-                        <button data-toggle="modal" data-target="#newCategoryModal" class="rectangle-btn" ng-click="resetNewCategory()">Nova Kategorija</button>
-                    </div>
-                </div>
+            <div class="text-center" ng-show="isloading()">
+                <img src="img/spin.gif" />
             </div>
-            <div class="events-settings">
-
-                <div class="row equal">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label>Ime Aktivnosti:</label>
-                            <input type="text" class="form-control" placeholder="" ng-model="titleFilterInput">
+            <div ng-hide="isloading()">
+                <div class="events-settings">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h3>DOGAĐAJI</h3>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label>Mjesto Aktivnosti:</label>
-                            <input type="text" class="form-control" placeholder="" ng-model="locationFilterInput">
+                        <!--<div class="col-md-2" ng-show="userRole === 'Admin'">
+                </div>-->
+                        <div class="col-md-4" ng-hide="userRole === 'Admin'">
                         </div>
-                    </div>
-                    <!--<div class="col-md-2">
-                    </div>-->
-                    <div class="col-md-2">
-                        <button class="rectangle-btn rectangle-btn-outline-dark event-filter-btn" ng-click="setFilters()">Pretraga</button>
+                        <div class="col-md-2">
+                            <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=true">Aktuelni</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="rectangle-btn rectangle-btn-outline-dark pull-right" ng-click="activeFilter=false">Završeni</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="rectangle-btn rectangle-btn-outline-dark" ng-click="resetFilters()">Prikaži sve</button>
+                        </div>
+                        <div class="col-md-2" ng-show="userRole === 'Admin'">
+                            <button data-toggle="modal" data-target="#newEventModal" class="rectangle-btn" ng-click="getModalResources()">Novi Događaj</button>
+                        </div>
+                        <div class="col-md-2" ng-show="userRole === 'Admin'">
+                            <button data-toggle="modal" data-target="#newCategoryModal" class="rectangle-btn" ng-click="resetNewCategory()">Nova Kategorija</button>
+                        </div>
                     </div>
                 </div>
+                <div class="events-settings">
 
-                <div class="row">
-                    <div class="col-md-2" ng-repeat="eventCategory in eventCategories | orderBy:'name'">
-                        <div class="radio event-type-filter" ng-style="{'background-color': eventCategory.categoryColor}" ng-click="$parent.typeFilter=eventCategory.name">
-                            <label style="padding: 0 15px;"><input type="radio" ng-model="$parent.typeFilter" ng-value="eventCategory.name" name="eventTypeRadio">{{(!eventCategory.name)?"Sve Kategorije":eventCategory.name}}</label>
-                        </div>
-                        <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
-                            <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingCategoryModal" ng-click="setEditCategory(eventCategory)"></i>
-                        </a>
-                        <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
-                            <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deleteCategoryModal" ng-click="setDeleteCategory(eventCategory)"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3" ng-repeat="event in avevents | orderBy:'-date' |filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
-                    <div class="event-card material-shadow">
-                        <div class="event-card-img-wrapper" ng-show="userRole === 'Admin'">
-                            <ul class="event-card-img-overlay">
-                                <li>
-                                    <a class="rectangle-btn rectangle-btn-outline-dark go-to-event-btn" ng-href="#!/events/{{event.id}}">Pregled</a>
-                                </li>
-                                <li>
-                                    <button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal" ng-click="setEditEvent(event.id)">Izmjena</button>
-                                </li>
-                                <li>
-                                    <button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDeleteEvent(event.id)">Brisanje</button>
-                                </li>
-                            </ul>
-                            <img ng-src="{{event.imagePath}}" style="height: 100%; width: 100%; object-fit: cover;" />
-                        </div>
-                        <div class="event-card-img-wrapper" ng-hide="userRole === 'Admin'">
-
-                            <img ng-src="{{event.imagePath}}" style="height: 100%; width: 100%; object-fit: cover;" />
-                        </div>
-                        <div class="event-basic-info" ng-style="{'background-color': event.categoryColor}">
-                            <div class="event-title">{{event.eventName}}</div>
-                            <div class="event-date">
-                                <small>{{event.startDate | date: 'dd-MMM-yyyy'}}<span> {{event.type}}</span></small>
+                    <div class="row equal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Ime Aktivnosti:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="titleFilterInput">
                             </div>
-                            <div class="event-location">{{event.location}}</div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Mjesto Aktivnosti:</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="locationFilterInput">
+                            </div>
+                        </div>
+                        <!--<div class="col-md-2">
+                </div>-->
+                        <div class="col-md-2">
+                            <button class="rectangle-btn rectangle-btn-outline-dark event-filter-btn" ng-click="setFilters()">Pretraga</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2" ng-repeat="eventCategory in eventCategories | orderBy:'name'">
+                            <div class="radio event-type-filter" ng-style="{'background-color': eventCategory.categoryColor}" ng-click="$parent.typeFilter=eventCategory.name">
+                                <label style="padding: 0 15px;"><input type="radio" ng-model="$parent.typeFilter" ng-value="eventCategory.name" name="eventTypeRadio">{{(!eventCategory.name)?"Sve Kategorije":eventCategory.name}}</label>
+                            </div>
+                            <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
+                                <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingCategoryModal" ng-click="setEditCategory(eventCategory)"></i>
+                            </a>
+                            <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
+                                <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deleteCategoryModal" ng-click="setDeleteCategory(eventCategory)"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-repeat="event in avevents | orderBy:'-date' |filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
+                        <div class="event-card material-shadow">
+                            <div class="event-card-img-wrapper" ng-show="userRole === 'Admin'">
+                                <ul class="event-card-img-overlay">
+                                    <li>
+                                        <a class="rectangle-btn rectangle-btn-outline-dark go-to-event-btn" ng-href="#!/events/{{event.id}}">Pregled</a>
+                                    </li>
+                                    <li>
+                                        <button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#editEventModal" ng-click="setEditEvent(event.id)">Izmjena</button>
+                                    </li>
+                                    <li>
+                                        <button class="rectangle-btn rectangle-btn-outline-dark" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDeleteEvent(event.id)">Brisanje</button>
+                                    </li>
+                                </ul>
+                                <img ng-src="{{event.imagePath}}" style="height: 100%; width: 100%; object-fit: cover;" />
+                            </div>
+                            <div class="event-card-img-wrapper" ng-hide="userRole === 'Admin'" ng-click="goToEvent(event.id)">
+
+                                <img ng-src="{{event.imagePath}}" style="height: 100%; width: 100%; object-fit: cover;" />
+                            </div>
+                            <div class="event-basic-info" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">
+                                <div class="event-title">{{event.eventName}}</div>
+                                <div class="event-date">
+                                    <small>{{event.startDate | date: 'dd-MMM-yyyy'}}<span> {{event.type}}</span></small>
+                                </div>
+                                <div class="event-location">{{event.location}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,20 +146,20 @@
                             </li>
                             <li class="form-group">
                                 <label>Početak: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.startDate" ng-click="open1()"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.startDate" ng-click="open1()"
                                        is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Kraj: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.endDate" ng-click="open1()"
-                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.endDate" ng-click="open2()"
+                                       is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Prijave do: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.registrationDeadline" ng-click="open1()"
-                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.registrationDeadline" ng-click="open3()"
+                                       is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
@@ -243,19 +248,19 @@
                             </li>
                             <li class="form-group">
                                 <label>Početak: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.startDate" ng-click="open1()"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.startDate" ng-click="open1()"
                                        is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Kraj: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.endDate" ng-click="open2()"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.endDate" ng-click="open2()"
                                        is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
                                 <label>Prijave do: </label>
-                                <input type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.registrationDeadline" ng-click="open3()"
+                                <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.registrationDeadline" ng-click="open3()"
                                        is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
@@ -345,7 +350,7 @@
                     </li>
                     <li class="form-group">
                         <label>Reprezentativna boja:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="newCategory.CategoryColor">
+                        <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" />
                     </li>
                 </ul>
             </div>
@@ -380,7 +385,7 @@
                     </li>
                     <li class="form-group">
                         <label>Reprezentativna boja:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="editingCategory.categoryColor">
+                        <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" />
                     </li>
                 </ul>
             </div>

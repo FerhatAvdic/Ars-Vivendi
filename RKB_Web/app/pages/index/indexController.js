@@ -11,12 +11,14 @@
 
         $scope.logOut = function () {
             authenticationService.logout();
+            toastr.info("Odjavljeni ste");
             $rootScope.changeMenu();
             $location.path('/home');
         };
 
         window.onunload = function () {
             authenticationService.logout();
+            toastr.info("Odjavljeni ste");
         }
 
         $scope.authentication = authenticationService.authentication;
