@@ -1,6 +1,6 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64']);
+    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module']);
 
     currentUser = {
         id: 0,

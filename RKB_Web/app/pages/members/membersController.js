@@ -57,13 +57,16 @@
 
         /*HTTP*/
         $scope.listMembers = function () {
+            $scope.membersLoading = true;
             dataService.list("users", function (response) {
                 if (response.status===200) {
                     $scope.members = response.data;
                     $scope.membersTotal = response.data.length;
+                    $scope.membersLoading = false;
                 }
                 else {
                     console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja korisnika");
                 }
             });
         };
@@ -71,9 +74,11 @@
             console.log($scope.newMember);
             dataService.create("users", $scope.newMember, function (response) {
                 if (response.status === 200) {
-                    console.log("MEMBER ADDED");
+                    toastr.success("Uspješno napravljen novi korisnik!");
+                    //console.log("MEMBER ADDED");
                 }
                 else {
+                    toastr.error("Greška prilikom pravljenja korisnika");
                     console.log("ERROR: ", response);
                 }
                 $scope.listMembers();
@@ -82,9 +87,11 @@
         $scope.updateMember = function () {
             dataService.update("users", $scope.editingMember.userName, $scope.editingMember, function (response) {
                 if (response.status === 200) {
-                    console.log("UPDATED");
+                    toastr.success("Uspješno izmijenjen korisnik!");
+                    //console.log("UPDATED");
                 }
                 else {
+                    toastr.error("Greška prilikom izmjene korisnika");
                     console.log("ERROR: ", response);
                 }
                 $scope.listMembers();
@@ -93,9 +100,11 @@
         $scope.deleteMember = function () {
             dataService.remove("users", $scope.deletingMember.userName, function (response) {
                 if (response.status === 200) {
-                    console.log("Deleted");
+                    toastr.success("Uspješno obrisan korisnik!");
+                    //console.log("Deleted");
                 }
                 else {
+                    toastr.error("Greška prilikom brisanja korisnika");
                     console.log("ERROR: ", response);
                 }
                 $scope.listMembers();

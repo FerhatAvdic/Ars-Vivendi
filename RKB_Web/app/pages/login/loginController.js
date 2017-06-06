@@ -6,16 +6,43 @@
     avApp.controller("loginController", [
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route','localStorageService',
         function ($rootScope,   $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
-            var apiSource = arsVivAuthSettings.apiServiceBase;
-        $scope.loadSubCategories = function () {
-            $http({
-                method: 'get', url: apiSource + 'api/characteristicsubcategories'
-            }).then(function successCallback(response) {
-                $scope.subCategories = response.data;
-            }, function errorCallback(response) {
-                console.log("Something went wrong");
-            });                
-        };
+
+            $scope.isLoading = function () {
+                if ($scope.categoriesLoading === true ||
+                    $scope.subCategoriesLoading === true)
+                    return true;
+                else
+                    return false;
+            };
+
+            $scope.getCategories = function () {
+                $scope.categoriesLoading = true;
+                dataService.list("characteristiccategories", function (response) {
+                    if (response.status === 200) {
+                        $scope.interestCategories = response.data;
+                        $scope.categoriesLoading = false;
+                        console.log("get categories");
+                    }
+                    else {
+                        console.log("ERROR: ", response);
+                    }
+                });
+            };
+
+            $scope.getAllInterests = function () {
+                $scope.subCategoriesLoading = true;
+                dataService.list("Characteristicsubcategories", function (response) {
+                    if (response.status === 200) {
+                        $scope.subCategories = response.data;
+                        $scope.subCategoriesLoading = false;
+                        console.log("ALL INTERESTS");
+                        console.log($scope.allInterests);
+                    }
+                    else {
+                        console.log("ERROR: ", response);
+                    }
+                });
+            };
 
         $scope.selected = [];
 
@@ -105,7 +132,8 @@
         $scope.signUp = function () {
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
-                console.log("User registered successfully");
+                toastr.success("Prijava uspješna!");
+                //console.log("User registered successfully");
                 startTimer();
             },
             function (response) {
@@ -115,6 +143,7 @@
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
+                toastr.error("Prijava neuspješna");
                 $scope.message = "Failed to register user due to: " + errors.join(' ');
                 console.log($scope.message);
             });
@@ -126,6 +155,7 @@
                 method: 'get', url: apiSource + 'api/userroles', headers: {'Authorization': 'Bearer ' + authData.token}
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data;
+                toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
                 console.log("Something went wrong");
@@ -141,6 +171,7 @@
                 $location.path('/home');
             },
             function (err) {
+                toastr.error("Prijava neuspješna");
                 $scope.message = err.error_description;
             });
         };
@@ -196,7 +227,13 @@
         $scope.registerExternal = function () {
             $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
+<<<<<<< HEAD
                 $scope.message = "User has been registered successfully";
+=======
+                toastr.success("Registracija uspješna!");
+                //$scope.message = "User has been registered successfully";
+                $rootScope.changeMenu();
+>>>>>>> 27846897ae9e50f8135b0320b24a8c7ad41a3b1f
                 getUserRole();
                 $rootScope.changeMenu();
                 $location.path('/home');
@@ -206,6 +243,7 @@
                 for (var key in response.modelState) {
                     errors.push(response.modelState[key]);
                 }
+                toastr.error("Registracija neuspješna");
                 $scope.message = "Failed to register user due to:" + errors.join(' ');
             });
             console.log($scope.message);
@@ -320,6 +358,9 @@
         $scope.goToExtReg = function () {
             $location.path('/externalLogin/postani-clan')
         };
+
+        $scope.getCategories();
+        $scope.getAllInterests();
         /*JQUERY FOR TABS*/
         var activeTab = $routeParams.tab;
         $(document).ready(function () {

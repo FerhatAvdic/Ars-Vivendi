@@ -89,9 +89,30 @@
             </div>
             <div id="postani-clan-3" class="tab-pane fade">
                 <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
-                <ul class="login-list" ng-repeat="subCategory in subCategories">
-                    <li ng-click="toggleSelection(subCategory)"><label>{{subCategory.name}}</label><input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1"/></li>
-                </ul>
+                <div class="text-center" ng-show="isloading()">
+                    <img src="img/spin.gif" />
+                </div>
+                <div class="custom-accordion" id="accordion" ng-hide="isloading()">
+                    <div class="panel panel-default" ng-repeat="category in interestCategories">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
+                            <h4 class="panel-title">
+                                <span>
+                                    {{category.categoryName}}
+                                </span>
+                            </h4>
+                        </div>
+                        <div id="{{'collapse' + $index}}" class="panel-collapse collapse" ng-class='{in:$first}'>
+                            <div class="panel-body">
+                                <ul class="login-list">
+                                    <li class="login-list-checkbox-label" ng-repeat="subCategory in subCategories" ng-click="toggleSelection(subCategory)" ng-show="subCategory.categoryId===category.id">
+                                        <label>{{subCategory.name}}</label>
+                                        <input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self" ng-click="registerExternal()">Postani Član</button>
             </div>
             <!--<div id="postani-clan-4" class="tab-pane fade">

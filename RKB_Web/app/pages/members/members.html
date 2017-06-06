@@ -68,7 +68,10 @@
                     </div>
                 </div>
             </div>-->
-            <div class="row">
+            <div class="text-center" ng-show="membersLoading">
+                <img src="img/spin.gif" />
+            </div>
+            <div class="row" ng-hide="membersLoading">
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Filteriši po Kolonama</div>

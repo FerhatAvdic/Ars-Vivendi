@@ -3,7 +3,10 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("eventsController", ['$rootScope','$scope','$location', 'dataService', function ($rootScope, $scope, $location, dataService) {
+    avApp.controller("eventsController", ['$rootScope', '$scope', '$location', 'dataService', function ($rootScope, $scope, $location, dataService) {
+
+        
+
         var linkModel = { "Id": 0, "Name": "", "Link": "", "index": 0 };
         var linkIndex = 0;
         $scope.newCategory = {
@@ -32,7 +35,7 @@
                 "eventCategoryId": 1,
                 "imageBaseString": null,
                 "applyCriteria": null,
-                "eventLinks": [{ "Id": 0, "Name": "", "Link": "", "index": linkIndex }]
+                "eventLinks": [{ "Id": 0, "name": "", "link": "", "index": linkIndex }]
         };
         $scope.links = [{}];
         //$scope.avevents = [
@@ -53,6 +56,14 @@
         //    { "active": true, "title": "Takmičenje Srebrena Lisica", "type": "skiing", "typeColor": "#a81a79", "image": "/img/ski_slide.jpg", "location": "Bjelašnica", "date": new Date('03/11/2017') }
         //];
         //
+
+        $scope.isloading = function () {
+            if ($scope.eventsLoading === true ||
+                $scope.categoriesLoading === true)
+                return true;
+            else
+                return false;
+        };
         
         $scope.getModalResources = function () {
             $scope.listEventCategories();
@@ -60,13 +71,16 @@
         /*HTTP*/
         
         $scope.listEventCategories = function () {
+            $scope.categoriesLoading = true;
             dataService.list("eventcategories", function (response) {
                 if (response.status === 200) {
                     $scope.eventCategories = response.data
+                    $scope.categoriesLoading = false;
                     $scope.eventCategories.push({ "name": undefined, "categoryColor": "black" });
                     console.log("EVENT CATEGORIES: ", $scope.eventCategories);
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
                     console.log("ERROR: ", response);
                 } 
             });
@@ -81,10 +95,12 @@
         $scope.updateCategory = function () {
             dataService.update("eventcategories", $scope.editingCategory.id, $scope.editingCategory, function (response) {
                 if (response.status === 200) {
-                    console.log("CATEGORY UPDATED");
-                    $scope.listEvents();
+                    toastr.success("Uspješno izmijenjena kategorija!");
+                    //console.log("CATEGORY UPDATED");
+                    $scope.listEventCategories();
                 }
                 else {
+                    toastr.error("Greška prilikom izmejne kategorije");
                     console.log("ERROR: ", response);
                 }
             });
@@ -99,10 +115,12 @@
         $scope.deleteCategory = function () {
             dataService.remove("eventcategories", $scope.deletingCategory.id, function (response) {
                 if (response.status === 200) {
-                    console.log("CATEGORY DELETED");
-                    $scope.listEvents();
+                    toastr.success("Uspješno obrisana kategorija!");
+                    //console.log("CATEGORY DELETED");
+                    $scope.listEventCategories();
                 }
                 else {
+                    toastr.error("Greška prilikom brisanja kategorije");
                     console.log("ERROR: ", response);
                 }
             });
@@ -114,18 +132,22 @@
                     console.log($scope.deletingEvent);
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja događaja");
                     console.log("ERROR: ", response);
                 }
             });
         };
 
         $scope.listEvents = function () {
+            $scope.eventsLoading = true;
             dataService.list("events", function (response) {
                 if (response.status === 200) {
                     $scope.avevents = response.data
+                    $scope.eventsLoading = false;
                     console.log($scope.avevents);
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja događaja");
                     console.log("ERROR: ", response);
                 }
             });
@@ -143,6 +165,7 @@
                     console.log($scope.editingEvent);
                 }
                 else {
+
                     console.log("ERROR: ", response);
                 }
             });
@@ -158,13 +181,21 @@
                 }
             });
         };
+
+        function removeEmptyLinks(link, index, array) {
+            if (link.name === "" || link.link === "")
+                array.splice(index, 1);
+        };
         $scope.createEvent = function () {
+            $scope.newEvent.eventLinks.forEach(removeEmptyLinks);
             $scope.newEvent.imageBaseString = $scope.newEvent.image.base64;
             dataService.create("events", $scope.newEvent, function (response) {
                 if (response.status === 200) {
-                    console.log("EVENT CREATED", response);
+                    toastr.success("Uspješno napravljen događaj!");
+                    //console.log("EVENT CREATED", response);
                 }
                 else {
+                    toastr.error("Greška prilikom pravljenja događaja");
                     console.log("ERROR: ", response);
                 }
                 $scope.listEvents();
@@ -177,6 +208,7 @@
                     console.log("Link CREATED", response);
                 }
                 else {
+                    toastr.error("Greška prilikom dodavanja linka");
                     console.log("ERROR: ", response);
                 }
             });
@@ -202,9 +234,11 @@
             }      
             dataService.update("events", $scope.editingEvent.id, $scope.editingEvent, function (response) {
                 if (response.status === 200) {
-                    console.log("UPDATED");
+                    toastr.success("Uspješno izmijenjen događaj");
+                    //console.log("UPDATED");
                 }
                 else {
+                    toastr.error("Greška prilikom izmjene događaja");
                     console.log("ERROR: ", response);
                 }
                 $scope.listEvents();
@@ -213,9 +247,11 @@
         $scope.deleteEvent = function () {
             dataService.remove("events", $scope.deletingEvent.id, function (response) {
                 if (response.status === 200) {
-                    console.log("EVENT DELETED");
+                    toastr.success("Uspješno obrisan događaj");
+                    //console.log("EVENT DELETED");
                 }
                 else {
+                    toastr.error("Greška prilikom brisanja događaja");
                     console.log("ERROR: ", response);
                 }
             });
@@ -230,10 +266,13 @@
         $scope.createNewCategory = function () {
             dataService.create("eventcategories", $scope.newCategory, function (response) {
                 if (response.status === 200) {
-                    console.log("Category CREATED", response);
+                    toastr.success("Uspješno napravljena kategorija");
+                    //console.log("Category CREATED", response);
                     $scope.resetNewCategory();
+                    $scope.listEventCategories();
                 }
                 else {
+                    toastr.error("Greška prilikom pravljenja kategorije");
                     console.log("ERROR: ", response);
                 }
             });
@@ -288,7 +327,7 @@
             $scope.editingEvent.eventLinks.push({ "Id": 0, "name": "", "link": "", "index": linkIndex });
         };
 
-        /*CHANGE*/
+        
         $scope.removeLink = function (index) {
             $scope.newEvent.eventLinks.splice(index, 1);
         };
@@ -300,6 +339,7 @@
                         console.log("Link DELETED");
                     }
                     else {
+                        toastr.error("Greška prilikom brisanja linka");
                         console.log("ERROR: ", response);
                     }
                 });
@@ -307,9 +347,8 @@
                 $scope.editingEvent.eventLinks.splice(index, 1);
         };
 
-        $scope.goToEvent = function () {
-            $location.path('/singleEvent');
-            console.log("went to single evnet");
+        $scope.goToEvent = function (eventID) {
+            $location.path('/events/' + eventID);
         };
 
         /*CALENDAR*/
@@ -375,7 +414,7 @@
             $scope.dt = new Date(year, month, day);
         };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.formats = ['dd MMMM yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
 

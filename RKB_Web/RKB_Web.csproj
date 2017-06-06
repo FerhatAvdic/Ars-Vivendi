@@ -89,8 +89,11 @@
     <Content Include="app\services\dataService.js" />
     <Content Include="authComplete.html" />
     <Content Include="css\angular-material.min.css" />
+    <Content Include="css\colorpicker.min.css" />
+    <Content Include="css\toastr.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\alpha.png" />
     <Content Include="img\bik_slide.jpg" />
     <Content Include="img\discounts\discount1.jpg" />
     <Content Include="img\discounts\discount2.jpg" />
@@ -103,6 +106,7 @@
     <Content Include="img\div_slide.jpg" />
     <Content Include="img\exit.png" />
     <Content Include="img\hik_slide.jpg" />
+    <Content Include="img\hue.png" />
     <Content Include="img\mansilhouette.jpg" />
     <Content Include="img\partners\cocacola.png" />
     <Content Include="img\partners\crown.png" />
@@ -110,7 +114,9 @@
     <Content Include="img\partners\google.png" />
     <Content Include="img\partners\mastercard.png" />
     <Content Include="img\profilemock.png" />
+    <Content Include="img\saturation.png" />
     <Content Include="img\ski_slide.jpg" />
+    <Content Include="img\spin.gif" />
     <Content Include="img\whitestonebg.png" />
     <Content Include="img\womansilhouette.jpg" />
     <Content Include="libs\angular-animate.min.js" />
@@ -119,7 +125,10 @@
     <Content Include="libs\angular-local-storage.min.js" />
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />
+    <Content Include="libs\bootstrap-colorpicker-module.min.js" />
     <Content Include="libs\moment.min.js" />
+    <Content Include="libs\toastr-options.js" />
+    <Content Include="libs\toastr.min.js" />
     <Content Include="libs\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\Raleway-Black.ttf" />
