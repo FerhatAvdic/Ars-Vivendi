@@ -249,6 +249,7 @@
                     toastr.error("Greška prilikom brisanja događaja");
                     console.log("ERROR: ", response);
                 }
+                $scope.listEvents();
             });
         };
         $scope.cancelUpdate = function () {

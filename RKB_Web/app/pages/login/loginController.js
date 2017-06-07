@@ -132,7 +132,7 @@
         $scope.signUp = function () {
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
-                toastr.success("Prijava uspješna!");
+                toastr.success("Registracija uspješna!");
                 //console.log("User registered successfully");
                 startTimer();
             },
@@ -143,7 +143,7 @@
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
-                toastr.error("Prijava neuspješna");
+                toastr.error("Registracija neuspješna");
                 $scope.message = "Failed to register user due to: " + errors.join(' ');
                 console.log($scope.message);
             });
@@ -158,6 +158,7 @@
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
+                toastr.error("Prijava neuspješna");
                 console.log("Something went wrong");
             });
         };
