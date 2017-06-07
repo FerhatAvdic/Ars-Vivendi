@@ -186,23 +186,7 @@
         };
         $scope.summarizeStats();
 
-        $scope.uploadProfileImage = {
-            userName: 'bracika',
-            baseImage: ''
-        };
-        $scope.uploadProfilePicture = function () {
-            dataService.create("uploadprofileimage", $scope.uploadProfileImage, function (response) {
-                $scope.uploadProfileImage.baseImage = $scope.uploadProfileImage.baseImage.base64;
-                if (response.status === 200) {
-                    toastr.success("Uspješno upload-ovana slika.");
-                    //console.log("EVENT CREATED", response);
-                }
-                else {
-                    toastr.error("Greška prilikom upload-a slike");
-                    console.log("ERROR: ", response);
-                }
-            });
-        }
+
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
             dataService.read("users", profileID, function (response) {
