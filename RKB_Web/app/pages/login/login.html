@@ -58,7 +58,7 @@
                 <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
                 <input type="text" placeholder="Ime" ng-model="registrationData.firstName"/>
                 <input type="text" placeholder="Prezime" ng-model="registrationData.lastName" />
-                <input type="text" placeholder="Email" ng-model="registrationData.email"/>
+                <input type="email" placeholder="Email" ng-model="registrationData.email"/>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
 
             </div>
@@ -90,7 +90,7 @@
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self" ng-click="loadSubCategories()">Dalje</button>
             </div>
             <div id="postani-clan-3" class="tab-pane fade">
-                <div class="login-line"><p>Odaberi sportove koje voliš</p></div>
+                <div class="login-line"><p>Odaberi svoje karakteristike (najmanje po jednu)</p></div>
                 <div class="text-center" ng-show="isloading()">
                     <img src="img/spin.gif" />
                 </div>

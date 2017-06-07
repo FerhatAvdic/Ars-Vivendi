@@ -130,6 +130,26 @@
             }, 2000);
         };
         $scope.signUp = function () {
+            var exitFunction = false;
+            if ($scope.registrationData.userName.trim() === "" ||
+                $scope.registrationData.password.trim() === "" ||
+                $scope.registrationData.confirmPassword.trim() === "" ||
+                $scope.registrationData.firstName.trim() ==="" ||
+                $scope.registrationData.lastName.trim() ==="" ||
+                $scope.registrationData.email.trim() ==="" ||
+                $scope.registrationData.address.trim() ==="" ||
+                $scope.registrationData.phoneNumber.trim() === "" ||
+                $scope.registrationData.gender.trim() ==="" ||
+                $scope.registrationData.employment.trim() ==="")
+            {
+                toastr.warning("Jedno ili više polja je prazno");
+                exitFunction = true;
+            }
+            if ($scope.selected === [] || $scope.selected.length < $scope.interestCategories.length) {
+                toastr.warning("Unesite sve karakteristike");
+                exitFunction = true;
+            }
+            if (exitFunction) return;
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
                 toastr.success("Registracija uspješna!");
@@ -230,11 +250,27 @@
         };
 
         $scope.registerExternal = function () {
+            var exitFunction = false;
+            if ($scope.registrationData.firstName.trim() === "" ||
+                $scope.registrationData.lastName.trim() === "" ||
+                $scope.registrationData.email.trim() === "" ||
+                $scope.registrationData.address.trim() === "" ||
+                $scope.registrationData.phoneNumber.trim() === "" ||
+                $scope.registrationData.gender.trim() === "" ||
+                $scope.registrationData.employment.trim() === "") {
+                toastr.warning("Jedno ili više polja je prazno");
+                exitFunction = true;
+            }
+            if ($scope.selected.length < $scope.interestCategories.length) {
+                toastr.warning("Unesite sve karakteristike");
+                exitFunction = true;
+            }
+            if (exitFunction) return;
+
             $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 toastr.success("Registracija uspješna!");
                 //$scope.message = "User has been registered successfully";
-                $rootScope.changeMenu();
                 getUserRole();
                 $rootScope.changeMenu();
                 $location.path('/home');
