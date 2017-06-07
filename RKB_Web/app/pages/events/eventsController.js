@@ -226,7 +226,12 @@
                     $scope.editingEvent.eventLinks.splice(i, 1);
                 }
             }
-            $scope.editingEvent.imageBaseString = $scope.editingEvent.image.base64;
+            if (typeof $scope.editingEvent.image === 'undefined') {
+                $scope.editingEvent.imageBaseString = "";
+            }
+            else {
+                $scope.editingEvent.imageBaseString = $scope.editingEvent.image.base64;
+            }      
             dataService.update("events", $scope.editingEvent.id, $scope.editingEvent, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjen događaj");

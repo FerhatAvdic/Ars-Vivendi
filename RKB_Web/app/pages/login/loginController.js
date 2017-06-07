@@ -71,8 +71,8 @@
                 dateOfBirth: "",
                 address: "",
                 phoneNumber: "",
-                gender: "Zensko",
-                employment: "Zaposlen",
+                gender: "",
+                employment: "",
                 subCategoriesList: $scope.selected
             };
         };
@@ -92,15 +92,15 @@
 
         $scope.initRegistrationExternalData = function () {
             $scope.registerExternalData = {
-                userName: "",
-                firstName: "",
-                lastName: "",
-                email: "",
+                userName: authenticationService.externalAuthData.email,
+                firstName: authenticationService.externalAuthData.userName.substr(0, authenticationService.externalAuthData.userName.indexOf(' ')),
+                lastName: authenticationService.externalAuthData.userName.substr(authenticationService.externalAuthData.userName.indexOf(' ')+1),
+                email: authenticationService.externalAuthData.email,
                 dateOfBirth: "",
                 address: "",
                 phoneNumber: "",
-                gender: "Musko",
-                employment: "Zaposlen",
+                gender: "",
+                employment: "",
                 subCategoriesList: $scope.selected,
                 provider: authenticationService.externalAuthData.provider,
                 externalAccessToken: authenticationService.externalAuthData.externalAccessToken
@@ -152,9 +152,10 @@
         var getUserRole = function () {
             var authData = localStorageService.get('authorizationData');
             $http({
-                method: 'get', url: "http://localhost:57792/api/userroles", headers: {'Authorization': 'Bearer ' + authData.token}
+                method: 'get', url: 'http://localhost:57792/' + 'api/userroles', headers: { 'Authorization': 'Bearer ' + authData.token }
             }).then(function successCallback(response) {
-                $rootScope.userRole = response.data;
+                $rootScope.userRole = response.data.userRole;
+                authenticationService.authentication.userFirstName = response.data.userFirstName;
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
@@ -167,13 +168,14 @@
         $scope.login = function () {
 
             authenticationService.login($scope.loginData).then(function (data) {
-                console.log(data);
+                console.log("login ctrl data", data);
                 getUserRole();
                 $location.path('/home');
             },
-            function (err) {
+            function (data) {
                 toastr.error("Prijava neuspješna");
-                $scope.message = err.error_description;
+                $scope.message = data.error_description;
+                console.log($scope.message);
             });
         };
 
@@ -191,7 +193,7 @@
 
         $scope.authCompletedCB = function (fragment) {
 
-            console.log("fragment", fragment);
+            //console.log("fragment", fragment);
             $timeout(function () {
                 console.log("apply function");
                 if (fragment.haslocalaccount == 'False') {
@@ -203,8 +205,10 @@
                         externalAccessToken: fragment.external_access_token,
                         email: fragment.external_email
                     };
-                    console.log(authenticationService.externalAuthData);
+                    console.log('fragment', fragment.external_email);
                     $location.path('/externalLogin/postani-clan-1');
+                    //$scope.registerExternalData.userName = authenticationService.externalAuthData.email;
+                    $scope.initRegistrationExternalData();
 
                 }
                 else {
@@ -232,6 +236,7 @@
                 //$scope.message = "User has been registered successfully";
                 $rootScope.changeMenu();
                 getUserRole();
+                $rootScope.changeMenu();
                 $location.path('/home');
             },
             function (response) {

@@ -30,6 +30,8 @@
     });
 
     var serviceBase = 'http://localhost:57792/';
+    //var serviceBase = 'http://api-dive.ntg.ba/';
+    //var serviceBase = 'http://arsvivendi.azurewebsites.net/';
     avApp.constant('arsVivAuthSettings', {
         apiServiceBase: serviceBase,
         clientId: 'arsvAuthApp'

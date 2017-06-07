@@ -4,7 +4,7 @@
     var avApp = angular.module("avApp");
 
     avApp.controller("profileController", ['$rootScope','$scope', '$routeParams', '$location','$timeout','dataService', 'authenticationService', function ($rootScope, $scope, $routeParams, $location,$timeout, dataService, authenticationService) {
-
+        
         var currentUser = authenticationService.authentication;
 
         var authenticateUser = function () {
@@ -16,7 +16,10 @@
         };
 
         var profileID = $routeParams.id;
-
+        var profilePicture = {
+            "userName": null,
+            "baseImage": null
+        };
         $scope.health = false;
         //$scope.interests = [{
         //    "categoryName": "Sport",
@@ -186,6 +189,7 @@
         };
         $scope.summarizeStats();
 
+
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
             dataService.read("users", profileID, function (response) {
@@ -354,6 +358,22 @@
             $scope.getInterestInfo();
         };
        
+
+        $scope.saveProfilePicture = function () {
+            profilePicture.userName = $scope.userInfo.userName;
+            profilePicture.baseImage = $scope.userInfo.image.base64;
+            dataService.create("uploadprofileimage", profilePicture, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno postavljena slika profila!");
+                }
+                else {
+                    toastr.error("Greška prilikom postavljanja slike profila");
+                    console.log("ERROR: ", response);
+                }
+                $scope.getPersonalInfo();
+            });
+        };
+
         $scope.getPersonalInfo();
 
         //authenticateUser();

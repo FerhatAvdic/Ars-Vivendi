@@ -12,7 +12,8 @@
             isAuth: false,
             userName: '',
             useRefreshToken: true,
-            userRole: ''
+            userRole: '',
+            userFirstName: ''
         };
 
         var externalAuthData = {
@@ -42,6 +43,7 @@
             $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshToken: true });
 
+                console.log("login response", response.data);
                 authentication.isAuth = true;
                 authentication.userName = loginData.userName;
                 authentication.useRefreshToken = true;
@@ -115,13 +117,11 @@
 
             $http.post(apiSource + 'api/account/registerexternal', registerExternalData).then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
 
                 authentication.isAuth = true;
                 authentication.userName = response.data.userName;
                 authentication.useRefreshTokens = false;
-
-                console.log("response...", response);
 
                 deferred.resolve(response);
 

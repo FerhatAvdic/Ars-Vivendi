@@ -63,7 +63,7 @@
                     <li>Kontakt tel. +387/61-999-999</li>
                 </ul>
                 <ul class="welcome-header-navigation">
-                    <li ng-hide="!authentication.isAuth"><a ng-href="#!/profile/{{authentication.userName}}">Dobro Došli {{authentication.userName}}</a></li>
+                    <li ng-hide="!authentication.isAuth"><a ng-href="#!/profile/{{authentication.userName}}">Dobro Došli {{authentication.userFirstName}}</a></li>
                     <li ng-hide="!authentication.isAuth"><a href="" ng-click="logOut()">Odjava</a></li>
                     <li ng-hide="authentication.isAuth"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
                     <li ng-hide="authentication.isAuth"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>

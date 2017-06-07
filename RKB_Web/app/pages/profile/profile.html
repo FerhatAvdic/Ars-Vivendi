@@ -277,12 +277,12 @@
             <div class="modal-body">
                 <div class="form-group">
                     <form>
-                        <input type="file" accept="image/*" ng-model="profilePicture" base-sixty-four-input>
+                        <input type="file" accept="image/*" ng-model="userInfo.image" base-sixty-four-input>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="uploadProfilePicture()">Potvrdi</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveProfilePicture()">Potvrdi</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
             </div>
         </div>
