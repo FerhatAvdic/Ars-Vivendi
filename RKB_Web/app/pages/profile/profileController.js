@@ -196,6 +196,9 @@
                 if (response.status === 200) {
                     $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
+                    if (response.data.imagePath === null) {
+                        $scope.userInfo.imagePath = 'img/profilemock.png';
+                    }
                     console.log("PERSONAL INFO:",$scope.userInfo);
                 }
                 else {

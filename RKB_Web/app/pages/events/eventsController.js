@@ -25,13 +25,13 @@
         ];
         $scope.newEvent = {
                 "id": 0,
-                "name": "Cavtat - ronjenje",
-                "description": "Ronjenje sa rajom",
+                "name": "",
+                "description": "",
                 "startDate": new Date(),
                 "endDate": new Date(),
                 "registrationDeadline": new Date(),
-                "membersPrice": 200,
-                "nonMembersPrice": 318,
+                "membersPrice": 0,
+                "nonMembersPrice": 0,
                 "eventCategoryId": 1,
                 "imageBaseString": null,
                 "applyCriteria": null,
