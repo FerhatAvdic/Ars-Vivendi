@@ -50,7 +50,7 @@
                 authentication.useRefreshToken = true;
 
                 deferred.resolve(response);
-            });
+                });
             return deferred.promise;
         };
 

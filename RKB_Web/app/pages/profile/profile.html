@@ -141,6 +141,7 @@
                                                     <textarea class="form-control" rows="2"></textarea>
                                                 </div>
                                                 <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
+                                                <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
                                             </div>
                                         </div>
                                     </div>
@@ -287,5 +288,32 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<!--CHANGE PASSWORD MODAL-->
+<div id="changePasswordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-width-adjust">
+        <!-- Modal content-->
+        <div class="modal-content modal-width-adjust">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title modal-title-padding">Promijeni sifru</h4>
+            </div>
+            <!--<div class="modal-body">-->
+
+
+            <div class="add-member-form">
+                <div class="tab-content">
+                    <div id="postani-clan-1" class="tab-pane fade in active">
+                        <div class="login-line"><p>Popunite polja</p></div>
+                        <input type="password" placeholder="Trenutna sifra" required ng-model="changePassword.currentPassword" />
+                        <input type="password" placeholder="Nova sifra" required ng-model="changePassword.newPassword" />
+                        <input type="password" placeholder="Potvrdi novu sifru" ng-model="changePassword.confirmNewPassword" />
+                        <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" data-dismiss="modal" data-toggle="tab" target="_self" ng-click="updatePassword()">Potvrdi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

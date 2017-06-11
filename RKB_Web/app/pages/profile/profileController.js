@@ -157,6 +157,24 @@
             "type": 3,
             "value": 0
         }];
+
+        $scope.changePassword = {
+            "currentPassword": "",
+            "newPassword": "",
+            "confirmNewPassword": ""
+        };
+
+        $scope.updatePassword = function () {
+            dataService.create("updatepassword", $scope.changePassword, function (response) {
+                if (response.status === 200) {
+                    toastr.success(response.data);
+                }
+                else {
+                    toastr.error(response.data.message);
+                    console.log(response.data.modelState);
+                }                    
+            });
+        };
         $scope.summarizeStats = function () {
             angular.forEach($scope.stats.attendedEvents, function (event) {
                 switch (event.type) {
