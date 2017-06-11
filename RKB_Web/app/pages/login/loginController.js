@@ -189,13 +189,13 @@
 
             authenticationService.login($scope.loginData).then(function (data) {
                 console.log("login ctrl data", data);
-                getUserRole();
-                $location.path('/home');
-            },
-            function (data) {
-                toastr.error("Prijava neuspješna");
-                $scope.message = data.error_description;
-                console.log($scope.message);
+                if (data.status == 200) {
+                    getUserRole();
+                    $location.path('/home');
+                }
+                else {
+                    toastr.error("Korisnicko ime ili sifra nisu tacni.");
+                }
             });
         };
 

@@ -50,7 +50,10 @@
 
                 deferred.resolve(response);
                 //$scope.$apply();
-            });
+            },
+                function (response) {
+                    deferred.resolve(response);
+                });
             return deferred.promise;
         };
 

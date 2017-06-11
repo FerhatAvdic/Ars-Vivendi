@@ -13,16 +13,15 @@
         };
         
         $scope.newMember = {
-            "firstName": "MMMM",
-            "lastName": "aaaic",
-            "address": "ddddffa 76",
-            "dateOfBirth": "02.05.1992.",
-            "gender": "musko",
-            "employment": "Zaposlen",
-            "email": "asdas@gmail.com",
-            "phoneNumber": "062/422-313",
-            "userName": "user",
-            "role": "CustomUser"
+            "firstName": "",
+            "lastName": "",
+            "address": "",
+            "dateOfBirth": "",
+            "gender": "",
+            "employment": "",
+            "email": "",
+            "phoneNumber": "",
+            "userName": ""
         };
         /*SET FOR HTTP*/
         $scope.editingMember = null;
