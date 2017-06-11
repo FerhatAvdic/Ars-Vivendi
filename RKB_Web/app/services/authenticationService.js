@@ -43,6 +43,7 @@
             $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshToken: true });
 
+               
                 console.log("login response", response.data);
                 authentication.isAuth = true;
                 authentication.userName = loginData.userName;
