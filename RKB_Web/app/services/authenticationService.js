@@ -50,7 +50,6 @@
                 authentication.useRefreshToken = true;
 
                 deferred.resolve(response);
-                $scope.$apply();
             });
             return deferred.promise;
         };
