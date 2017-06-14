@@ -126,6 +126,7 @@
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />
     <Content Include="libs\bootstrap-colorpicker-module.min.js" />
+    <Content Include="app\services\dateService.js" />
     <Content Include="libs\moment.min.js" />
     <Content Include="libs\toastr-options.js" />
     <Content Include="libs\toastr.min.js" />

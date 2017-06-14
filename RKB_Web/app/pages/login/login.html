@@ -64,14 +64,35 @@
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
                 <div class="login-line"><p>Lični podaci</p></div>
-                <div class="login-line" >
+                <!--<div class="login-line">
                     <label>Datum Rođenja: </label>
-                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="registrationData.dateOfBirth" ng-click="open1()" 
+                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="registrationData.dateOfBirth" ng-click="open1()"
                            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori"/>
+                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                </div>-->
+                <div class="login-line" style="overflow:hidden;">
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="col-md-3"><label style="line-height:20px;">Datum Rođenja: </label></div>
+                        <div class="col-md-3">
+                            <select type="text" class="form-control" ng-model="dateOfBirth.day">
+                                <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select type="text" class="form-control" ng-model="dateOfBirth.month">
+                                <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select type="text" class="form-control" ng-model="dateOfBirth.year">
+                                <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" placeholder="Adresa" ng-model="registrationData.address"/>
-                <input type="text" placeholder="Telefon" ng-model="registrationData.phoneNumber"/>
+                <input type="text" placeholder="Grad" ng-model="registrationData.city" />
+                <input type="text" placeholder="Adresa" ng-model="registrationData.address" />
+                <input type="text" placeholder="Telefon" ng-model="registrationData.phoneNumber" />
                 <fieldset id="genderRadio">
                     <ul class="login-line">
                         <li><label>Spol: </label></li>
@@ -81,10 +102,18 @@
                 </fieldset>
                 <fieldset id="employmentRadio">
                     <ul class="login-line">
-                        <li><label>Zaposlenost: </label></li>
+                        <li><label>Radni status: </label></li>
                         <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registrationData.employment" name="employmentRadio">Zaposlen/a</label></li>
                         <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registrationData.employment" name="employmentRadio">Nezaposlen/a</label></li>
                         <li><label class="radio-inline"><input type="radio" value="student" ng-model="registrationData.employment" name="employmentRadio">Student</label></li>
+                    </ul>
+                </fieldset>
+                <fieldset id="employmentRadio">
+                    <ul class="login-line">
+                        <li><label>Nivo fizičke spreme: </label></li>
+                        <li><label class="radio-inline"><input type="radio" value="0" ng-model="registrationData.healthStatus" name="healthStatusRadio">Nizak</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="1" ng-model="registrationData.healthStatus" name="healthStatusRadio">Srednji</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="2" ng-model="registrationData.healthStatus" name="healthStatusRadio">Visok</label></li>
                     </ul>
                 </fieldset>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self" ng-click="loadSubCategories()">Dalje</button>

@@ -4,8 +4,30 @@
     var avApp = angular.module("avApp");
 
     avApp.controller("loginController", [
-                 '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route','localStorageService',
-        function ($rootScope,   $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
+                 '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService', 'dateService',
+        function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService, dateService) {
+
+            $scope.dateOfBirth = {
+                days: dateService.days,
+                months: dateService.months,
+                years: dateService.years,
+                day: dateService.day,
+                month: dateService.month,
+                year: dateService.year
+            };
+            var dayError = false;
+            var validateDate = function () {
+                var day = parseInt($scope.dateOfBirth.day);
+                var month = parseInt($scope.dateOfBirth.month);
+                var year = parseInt($scope.dateOfBirth.year);
+
+                if (month === 4 || month === 6 || month === 9 || month === 11)
+                    if (day > 30) dayError = true;
+                if (month === 2 && year % 4 === 0)
+                    if (day > 29) dayError = true;
+                if (month === 2 && year % 4 > 0)
+                    if (day > 28) dayError = true;
+            };
 
             $scope.isLoading = function () {
                 if ($scope.categoriesLoading === true ||
@@ -131,16 +153,28 @@
         };
         $scope.signUp = function () {
             var exitFunction = false;
+            dayError = false;
+            validateDate();
+            if (dayError) {
+                toastr.warning("Unesen je pogrešan datum");
+                exitFunction = true;
+            }
+            else {
+                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                $scope.registrationData.dateOfBirth = new Date(selectedDate);
+            }
             if ($scope.registrationData.userName.trim() === "" ||
                 $scope.registrationData.password.trim() === "" ||
                 $scope.registrationData.confirmPassword.trim() === "" ||
                 $scope.registrationData.firstName.trim() ==="" ||
                 $scope.registrationData.lastName.trim() ==="" ||
                 $scope.registrationData.email.trim() ==="" ||
-                $scope.registrationData.address.trim() ==="" ||
+                $scope.registrationData.address.trim() === "" ||
+                $scope.registrationData.city.trim() === "" ||
                 $scope.registrationData.phoneNumber.trim() === "" ||
                 $scope.registrationData.gender.trim() ==="" ||
-                $scope.registrationData.employment.trim() ==="")
+                $scope.registrationData.employment.trim() === "" ||
+                $scope.registrationData.healthStatus.trim() ==="")
             {
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
@@ -150,6 +184,7 @@
                 exitFunction = true;
             }
             if (exitFunction) return;
+
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
                 toastr.success("Registracija uspješna!");
@@ -251,13 +286,25 @@
 
         $scope.registerExternal = function () {
             var exitFunction = false;
-            if ($scope.registrationData.firstName.trim() === "" ||
-                $scope.registrationData.lastName.trim() === "" ||
-                $scope.registrationData.email.trim() === "" ||
-                $scope.registrationData.address.trim() === "" ||
-                $scope.registrationData.phoneNumber.trim() === "" ||
-                $scope.registrationData.gender.trim() === "" ||
-                $scope.registrationData.employment.trim() === "") {
+            dayError = false;
+            validateDate();
+            if (dayError) {
+                toastr.warning("Unesen je pogrešan datum");
+                exitFunction = true;
+            }
+            else {
+                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                $scope.registerExternalData.dateOfBirth = new Date(selectedDate);
+            }
+            if ($scope.registerExternalData.firstName.trim() === "" ||
+                $scope.registerExternalData.lastName.trim() === "" ||
+                $scope.registerExternalData.email.trim() === "" ||
+                $scope.registerExternalData.city.trim() === "" ||
+                $scope.registerExternalData.address.trim() === "" ||
+                $scope.registerExternalData.phoneNumber.trim() === "" ||
+                $scope.registerExternalData.gender.trim() === "" ||
+                $scope.registerExternalData.employment.trim() === "" ||
+                $scope.registerExternalData.healthStatus.trim() === "") {
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
             }

@@ -113,6 +113,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Grad:</label>
+                                                    <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.city">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Adresa:</label>
                                                     <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.address">
                                                 </div>
                                                 <div class="form-group">
@@ -124,22 +128,23 @@
                                                     <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Musko">Muški</label>
                                                     <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Zensko">Ženski</label>
                                                 </div>
-                                                <label>Zaposlenost: </label>
+                                                <label>Radni status: </label>
                                                 <div class="form-group">
                                                     <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Zaposlen">Zaposlen/a</label>
                                                     <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Nezaposlen">Nezaposlen/a</label>
                                                     <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Student">Student</label>
 
                                                 </div>
-                                                <label>Zdravstveno stanje: </label>
+                                                <label>Nivo fizičke spreme: </label>
                                                 <div class="form-group">
-                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="OK">Uredno</label>
-                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="health" value="other">Drugo</label>
+                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="0">Nizak</label>
+                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="1">Srednji</label>
+                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="2">Visok</label>
                                                 </div>
-                                                <div class="form-group" ng-show="health === 'other'">
+                                                <!--<div class="form-group" ng-show="health === 'other'">
                                                     <label>Objašnjenje:</label>
                                                     <textarea class="form-control" rows="2"></textarea>
-                                                </div>
+                                                </div>-->
                                                 <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
                                                 <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
                                             </div>

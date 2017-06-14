@@ -68,21 +68,30 @@
                            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
                            current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                 </div>
+                <input type="text" placeholder="Grad" ng-model="registerExternalData.city" />
                 <input type="text" placeholder="Adresa" ng-model="registerExternalData.address"/>
                 <input type="text" placeholder="Telefon" ng-model="registerExternalData.phoneNumber"/>
                 <fieldset id="genderRadio">
                     <ul class="login-line">
                         <li><label>Spol: </label></li>
-                        <li><label class="radio-inline"><input type="radio" value="musko" ng-model="registrationData.gender" name="genderRadio">Muško</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="zensko" ng-model="registrationData.gender" name="genderRadio">Žensko</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="musko" ng-model="registerExternalData.gender" name="genderRadio">Muško</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="zensko" ng-model="registerExternalData.gender" name="genderRadio">Žensko</label></li>
                     </ul>
                 </fieldset>
                 <fieldset id="employmentRadio">
                     <ul class="login-line">
                         <li><label>Zaposlenost: </label></li>
-                        <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registrationData.employment" name="employmentRadio">Zaposlen/a</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registrationData.employment" name="employmentRadio">Nezaposlen/a</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="student" ng-model="registrationData.employment" name="employmentRadio">Student</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registerExternalData.employment" name="employmentRadio">Zaposlen/a</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registerExternalData.employment" name="employmentRadio">Nezaposlen/a</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="student" ng-model="registerExternalData.employment" name="employmentRadio">Student</label></li>
+                    </ul>
+                </fieldset>
+                <fieldset id="employmentRadio">
+                    <ul class="login-line">
+                        <li><label>Nivo fizičke spreme: </label></li>
+                        <li><label class="radio-inline"><input type="radio" value="0" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Nizak</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="1" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Srednji</label></li>
+                        <li><label class="radio-inline"><input type="radio" value="2" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Visok</label></li>
                     </ul>
                 </fieldset>
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self" ng-click="loadSubCategories()">Dalje</button>

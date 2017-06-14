@@ -220,6 +220,7 @@
                     console.log("PERSONAL INFO:",$scope.userInfo);
                 }
                 else {
+                    toastr.error("Greška prilikom pribavljanja ličnih podataka.");
                     console.log("ERROR: ", response);
                 }
             });

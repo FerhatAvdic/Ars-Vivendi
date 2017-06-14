@@ -100,6 +100,7 @@
                     toastr.success("Uspješno izmijenjena kategorija!");
                     //console.log("CATEGORY UPDATED");
                     $scope.listEventCategories();
+                    $scope.listEvents();
                 }
                 else {
                     toastr.error("Greška prilikom izmejne kategorije");
@@ -121,6 +122,7 @@
                     toastr.success("Uspješno obrisana kategorija!");
                     //console.log("CATEGORY DELETED");
                     $scope.listEventCategories();
+                    $scope.listEvents();
                 }
                 else {
                     toastr.error("Greška prilikom brisanja kategorije");
