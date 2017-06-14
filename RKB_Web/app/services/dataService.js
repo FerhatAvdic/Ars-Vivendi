@@ -13,6 +13,45 @@
         //$http.defaults.headers.common['Token'] = currentUser.token;
         //$http.defaults.headers.common['ApiKey'] = config.apiKey;
 
+        //DATE
+        var days = [];
+        for (var i = 1; i <= 31; i++) {
+            if (i < 10)
+                days.push("0" + i);
+            else
+                days.push(i.toString());
+        };
+        var months = [];
+        for (var i = 1; i <= 12; i++) {
+            if (i < 10)
+                months.push("0" + i);
+            else
+                months.push(i.toString());
+        };
+        var currentYear = new Date().getFullYear();
+        var years = [];
+        for (var i = 1950; i <= currentYear; i++) {
+            years.push(i.toString());
+        };
+
+        var dates = {
+            years: years,
+            months: months,
+            days: days,
+
+            year: currentYear.toString(),
+            month: "01",
+            day: "01"
+        };
+
+        //PHONE
+        var countries = [
+            { name: "BiH", number: "+387" },
+            { name: "Hrv", number: "+385" },
+            { name: "Srb", number: "+381" },
+            { name: "Slo", number: "+386" }
+        ];
+
         function download(url, defaultFileName) {
             var deferred = $q.defer();
             $http.get(url, { responseType: "arraybuffer" }).success(
@@ -171,7 +210,11 @@
                             "&toDate=" + item.toDate +
                             "&status=" + item.status +
                             "&onlyActive=" + item.onlyActive);
-            }
+            },
+
+            countries: countries,
+            dates: dates
+
         };
     }]);
 }());

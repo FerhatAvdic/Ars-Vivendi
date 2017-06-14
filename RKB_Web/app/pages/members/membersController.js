@@ -2,7 +2,7 @@
     'use strict';
 
     var avApp = angular.module("avApp");
-    avApp.controller("membersController", ['$rootScope','$scope', '$filter','$location', 'membersService', 'dataService', 'authenticationService', function ($rootScope, $scope, $filter,$location, membersService, dataService, authenticationService) {
+    avApp.controller("membersController", ['$rootScope','$scope', '$filter','$location', 'dataService', 'authenticationService', function ($rootScope, $scope, $filter,$location, dataService, authenticationService) {
 
         var authenticateAdmin = function (){
             if ($rootScope.userRole === "Admin") return;

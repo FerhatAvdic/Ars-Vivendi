@@ -79,7 +79,6 @@
     <Content Include="app\pages\login\login.html" />
     <Content Include="app\pages\login\loginController.js" />
     <Content Include="app\pages\mainController.js" />
-    <Content Include="app\pages\members\membersService.js" />
     <Content Include="app\pages\profile\profile.html" />
     <Content Include="app\pages\profile\profileController.js" />
     <Content Include="app\pages\singleEvent\singleEvent.html" />
@@ -126,7 +125,6 @@
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />
     <Content Include="libs\bootstrap-colorpicker-module.min.js" />
-    <Content Include="app\services\dateService.js" />
     <Content Include="libs\moment.min.js" />
     <Content Include="libs\toastr-options.js" />
     <Content Include="libs\toastr.min.js" />

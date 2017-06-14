@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("homeController", ['$scope','$interval', function ($scope, $interval) {
+    avApp.controller("homeController", ['$scope','$interval','$location','dataService', function ($scope, $interval,$location, dataService) {
         
         //COVER 
         $scope.slides = [
@@ -88,6 +88,59 @@
             {"eventName": "Event Name With Location","eventLink": "link","eventCommentsNumber": 1,"author": "author","profilePicture": "/img/womansilhouette.jpg","dateTime": "date time"},
             {"eventName": "Event Name With Location", "eventLink": "link", "eventCommentsNumber": 1, "author": "author", "profilePicture": "/img/mansilhouette.jpg", "dateTime": "date time" }
         ];
+        function getTimeRemaining(event, index, array) {
+            //replace dots with dashes
+            event.startDate = event.startDate.replace(/\./g, '/');
+            //remove last dash
+            event.startDate = event.startDate.slice(0, -1);
+            event.startDate = event.startDate.substring(6, 10) + "/" + event.startDate.substring(3, 5) + "/" + event.startDate.substring(0, 2);
+                var t = Date.parse(event.startDate) - Date.parse(new Date());
+                var seconds = Math.floor((t / 1000) % 60);
+                var minutes = Math.floor((t / 1000 / 60) % 60);
+                var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+                var days = Math.floor(t / (1000 * 60 * 60 * 24));
+                event.timeRemaining = {
+                    'total': t,
+                    'days': days,
+                    'hours': hours,
+                    'minutes': minutes,
+                    'seconds': seconds
+                };
+        };
+        
+
+        $scope.getUpcoming = function () {
+            dataService.list("events/future", function (response) {
+                if (response.status === 200) {
+                    $scope.upcoming = response.data
+                    $scope.upcoming.forEach(getTimeRemaining);
+                    console.log("Upcoming:",$scope.upcoming);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja budućih događaja");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.getUpcoming();
+
+        $scope.getPast = function () {
+            dataService.list("events/past", function (response) {
+                if (response.status === 200) {
+                    $scope.gallery = response.data
+                    console.log($scope.gallery);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja prošlih događaja");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.getPast();
+
+        $scope.goToEvent = function (eventID) {
+            $location.path('/events/' + eventID);
+        };
 
         // COVER SLIDER
         $scope.currentSlide = 0;
@@ -137,21 +190,21 @@
 
         // TO BE UPDATED -> TIME FOR EACH EVENT
         var deadline = '2017-05-26';
-        function getTimeRemaining(endtime) {
-            var t = Date.parse(endtime) - Date.parse(new Date());
-            var seconds = Math.floor((t / 1000) % 60);
-            var minutes = Math.floor((t / 1000 / 60) % 60);
-            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-            var days = Math.floor(t / (1000 * 60 * 60 * 24));
-            return {
-                'total': t,
-                'days': days,
-                'hours': hours,
-                'minutes': minutes,
-                'seconds': seconds
-            };
-        };
-        $scope.timeRemaining = getTimeRemaining(deadline);
+        //function getTimeRemaining(endtime) {
+        //    var t = Date.parse(endtime) - Date.parse(new Date());
+        //    var seconds = Math.floor((t / 1000) % 60);
+        //    var minutes = Math.floor((t / 1000 / 60) % 60);
+        //    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        //    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        //    return {
+        //        'total': t,
+        //        'days': days,
+        //        'hours': hours,
+        //        'minutes': minutes,
+        //        'seconds': seconds
+        //    };
+        //};
+        //$scope.timeRemaining = getTimeRemaining(deadline);
         
 
         //DISCOUNT SLIDES
@@ -203,32 +256,35 @@
             }, interval);
         };
         $scope.intervalOfUpcomingDeadline = function (interval) {
+            
             $interval(function () {
-                var d = $scope.timeRemaining.days;
-                var h = $scope.timeRemaining.hours;
-                var m = $scope.timeRemaining.minutes;
-                var s = $scope.timeRemaining.seconds;
-                if (s > 1) s--;
-                else if (s === 1){
-                    s = 59;
-                    if (m > 1) m--;
-                    else if (m === 1) {
-                        m = 59;
-                        if (h > 1) h--;
-                        else if (h === 1) {
-                            h = 59;
-                            if (d > 0) d--;
-                            else if (d === 0) {
-                                d = 0;
+                for (var eventIndex = 0; eventIndex < $scope.upcoming.length; eventIndex++) {
+                    var d = $scope.upcoming[eventIndex].timeRemaining.days;
+                    var h = $scope.upcoming[eventIndex].timeRemaining.hours;
+                    var m = $scope.upcoming[eventIndex].timeRemaining.minutes;
+                    var s = $scope.upcoming[eventIndex].timeRemaining.seconds;
+                    if (s > 1) s--;
+                    else if (s === 1) {
+                        s = 59;
+                        if (m > 1) m--;
+                        else if (m === 1) {
+                            m = 59;
+                            if (h > 1) h--;
+                            else if (h === 1) {
+                                h = 59;
+                                if (d > 0) d--;
+                                else if (d === 0) {
+                                    d = 0;
+                                }
+
                             }
-                                
                         }
                     }
+                    $scope.upcoming[eventIndex].timeRemaining.days = d;
+                    $scope.upcoming[eventIndex].timeRemaining.hours = h;
+                    $scope.upcoming[eventIndex].timeRemaining.minutes = m;
+                    $scope.upcoming[eventIndex].timeRemaining.seconds = s;
                 }
-                $scope.timeRemaining.days = d;
-                $scope.timeRemaining.hours = h;
-                $scope.timeRemaining.minutes = m;
-                $scope.timeRemaining.seconds = s;
             }, interval);
         };
 
