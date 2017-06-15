@@ -112,6 +112,26 @@
                                                     <input type="text" class="form-control" placeholder="Prezime" ng-model="userInfo.lastName">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Datum Rođenja: </label>
+                                                    <div class="row" style="padding-top: 10px;">
+                                                        <div class="col-md-4">
+                                                            <select type="text" class="form-control" ng-model="userInfo.day">
+                                                                <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select type="text" class="form-control" ng-model="userInfo.month">
+                                                                <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <select type="text" class="form-control" ng-model="userInfo.year">
+                                                                <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
                                                     <label>Grad:</label>
                                                     <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.city">
                                                 </div>
@@ -119,35 +139,47 @@
                                                     <label>Adresa:</label>
                                                     <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.address">
                                                 </div>
+                                                
+                                                    <!--<div class="form-group">
+                                                        <label>Telefon:</label>
+                                                        <input type="text" class="form-control" placeholder="Telefon" ng-model="userInfo.phoneNumber">
+                                                    </div>-->
                                                 <div class="form-group">
                                                     <label>Telefon:</label>
-                                                    <input type="text" class="form-control" placeholder="Telefon" ng-model="userInfo.phoneNumber">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <select class="form-control" ng-model="selectedCountry">
+                                                                <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-7"><input class="form-control" type="text" placeholder="Broj" ng-model="userInfo.phoneNumber" /></div>
+                                                    </div>
                                                 </div>
-                                                <label>Spol: </label>
-                                                <div class="form-group">
-                                                    <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Musko">Muški</label>
-                                                    <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Zensko">Ženski</label>
-                                                </div>
-                                                <label>Radni status: </label>
-                                                <div class="form-group">
-                                                    <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Zaposlen">Zaposlen/a</label>
-                                                    <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Nezaposlen">Nezaposlen/a</label>
-                                                    <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Student">Student</label>
+                                                    <label>Spol: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Musko">Muški</label>
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Zensko">Ženski</label>
+                                                    </div>
+                                                    <label>Radni status: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Zaposlen">Zaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Nezaposlen">Nezaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Student">Student</label>
 
+                                                    </div>
+                                                    <label>Nivo fizičke spreme: </label>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="nizak">Nizak</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="srednji">Srednji</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="visok">Visok</label>
+                                                    </div>
+                                                    <!--<div class="form-group" ng-show="health === 'other'">
+            <label>Objašnjenje:</label>
+            <textarea class="form-control" rows="2"></textarea>
+        </div>-->
+                                                    <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
+                                                    <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
                                                 </div>
-                                                <label>Nivo fizičke spreme: </label>
-                                                <div class="form-group">
-                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="0">Nizak</label>
-                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="1">Srednji</label>
-                                                    <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="2">Visok</label>
-                                                </div>
-                                                <!--<div class="form-group" ng-show="health === 'other'">
-                                                    <label>Objašnjenje:</label>
-                                                    <textarea class="form-control" rows="2"></textarea>
-                                                </div>-->
-                                                <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
-                                                <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -163,6 +163,12 @@
                                        current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
                             </li>
                             <li class="form-group">
+                                <label>Valuta:</label>
+                                <select class="form-control" ng-model="newEvent.eventCurrencyId">
+                                    <option ng-repeat="currency in currencies" ng-value="currency.id">{{currency.currencyValue}}</option>
+                                </select>
+                            </li>
+                            <li class="form-group">
                                 <label>Cijena za članove: </label>
                                 <input type='number' class="form-control" ng-model="newEvent.membersPrice" />
                             </li>

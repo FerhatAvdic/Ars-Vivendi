@@ -56,35 +56,35 @@
 <div id="pre-upcoming"></div>
 <div class="av-section-wrap" id="upcoming">
     <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
-        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.image +')'}"></div>
+        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
         <div class="upcoming-slide-dark-overlay"></div>
         <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="upcoming-slide-content">
-                    <div class="upcoming-slide-title">{{event.title}}</div>
+                    <div class="upcoming-slide-title">{{event.eventName}}</div>
                     <div class="upcoming-slide-description">
-                       {{event.description}}
+                       {{event.location}}
                     </div>
-                    <button class="rectangle-btn">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn">Pregled</button>
+                    <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="upcoming-countdown-wrap">
                     <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{timeRemaining.days}}</div>
+                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
                         <div class="upcoming-countdown-instance-label">Dana</div>
                     </div>
                     <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{timeRemaining.hours}}</div>
+                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
                         <div class="upcoming-countdown-instance-label">Sati</div>
                     </div>
                     <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{timeRemaining.minutes}}</div>
+                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
                         <div class="upcoming-countdown-instance-label">Minuta</div>
                     </div>
                     <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{timeRemaining.seconds}}</div>
+                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
                         <div class="upcoming-countdown-instance-label">Sekundi</div>
                     </div>
                 </div>
@@ -95,9 +95,9 @@
     </div>
     
                 <ul class="upcoming-labels">
-                    <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)">
-                        <div class="upcoming-label-big">{{event.title}}</div>
-                        <div class="upcoming-label-small">{{event.date}}</div>
+                    <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+                        <div class="upcoming-label-big">{{event.eventName}}</div>
+                        <div class="upcoming-label-small">{{event.startDate}}</div>
                         <div class="upcoming-label-small">{{event.location}}</div>
                     </li>
                 </ul>
@@ -149,11 +149,11 @@
     <div class="row">
         <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
             <div class="gallery-item">
-                <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.eventImg + ')'}"></div>
-                <div class="gallery-item-label" ng-style="{'background-color': item.labelColor}">
+                <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
+                <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
                     <div class="gallery-item-label-content">
                         <div class="gallery-item-title">{{item.eventName}}</div>
-                        <div class="gallery-item-description">{{item.date}} {{item.location}}</div>
+                        <div class="gallery-item-description">{{item.startDate}} {{item.location}}</div>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,8 @@
 
     avApp.controller("profileController", ['$rootScope','$scope', '$routeParams', '$location','$timeout','dataService', 'authenticationService', function ($rootScope, $scope, $routeParams, $location,$timeout, dataService, authenticationService) {
         
+        $scope.dateOfBirth = dataService.dates;
+        $scope.countries = dataService.countries;
         var currentUser = authenticationService.authentication;
 
         var authenticateUser = function () {
@@ -207,6 +209,29 @@
         };
         $scope.summarizeStats();
 
+        var convertDateOfBirth = function () {
+            $scope.userInfo.dateOfBirth = new Date($scope.userInfo.dateOfBirth);
+            //get day
+            $scope.userInfo.day = $scope.userInfo.dateOfBirth.getDate();
+            if ($scope.userInfo.day < 10)
+                $scope.userInfo.day = "0" + $scope.userInfo.day;
+            else
+                $scope.userInfo.day = "" +$scope.userInfo.day;
+            // get month
+            $scope.userInfo.month = $scope.userInfo.dateOfBirth.getMonth();
+            if ($scope.userInfo.month < 10)
+                $scope.userInfo.month = "0" + $scope.userInfo.month;
+            else
+                $scope.userInfo.month=""+$scope.userInfo.month;
+            //get year
+            $scope.userInfo.year = "" + $scope.userInfo.dateOfBirth.getFullYear();
+        };
+
+
+        function findCountry(country) {
+            return country.number === $scope.userInfo.phoneNumber.substring(0, 4);
+        };
+
 
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
@@ -214,10 +239,13 @@
                 if (response.status === 200) {
                     $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
+                    console.log("PERSONAL INFO:", $scope.userInfo);
+                    convertDateOfBirth();
+                    $scope.selectedCountry = $scope.countries.find(findCountry);
+                    $scope.userInfo.phoneNumber = $scope.userInfo.phoneNumber.substring(4);
                     if (response.data.imagePath === null) {
                         $scope.userInfo.imagePath = 'img/profilemock.png';
                     }
-                    console.log("PERSONAL INFO:",$scope.userInfo);
                 }
                 else {
                     toastr.error("Greška prilikom pribavljanja ličnih podataka.");
@@ -227,6 +255,9 @@
         };
 
         $scope.updatePersonalInfo = function () {
+            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
+            var selectedDate = $scope.userInfo.day + "-" + $scope.userInfo.month + "-" + $scope.userInfo.year;
+            $scope.userInfo.dateOfBirth = new Date(selectedDate);
             dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
@@ -236,6 +267,7 @@
                     toastr.error("Greška prilikom izmjene profila");
                     console.log("ERROR: ", response);
                 }
+                $scope.getPersonalInfo();
             });
         };
 
@@ -383,6 +415,7 @@
 
         $scope.saveProfilePicture = function () {
             profilePicture.userName = $scope.userInfo.userName;
+            console.log($scope.userInfo.image);
             profilePicture.baseImage = $scope.userInfo.image.base64;
             dataService.create("uploadprofileimage", profilePicture, function (response) {
                 if (response.status === 200) {

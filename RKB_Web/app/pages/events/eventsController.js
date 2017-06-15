@@ -42,10 +42,24 @@
         
         $scope.getModalResources = function () {
             $scope.listEventCategories();
+            $scope.listCurrencies();
+        };
+
+        //LIST CURRENCIES
+        $scope.listCurrencies = function () {
+            dataService.list("currencies", function (response) {
+                if (response.status === 200) {
+                    $scope.currencies = response.data
+                    console.log($scope.currencies);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja valuta");
+                    console.log("ERROR: ", response);
+                }
+            });
         };
 
         /************************************ CATEGORIES *************************************/
-
         //LIST EVENT CATEGORIES
         $scope.listEventCategories = function () {
             $scope.categoriesLoading = true;

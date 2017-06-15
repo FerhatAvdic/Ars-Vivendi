@@ -4,17 +4,12 @@
     var avApp = angular.module("avApp");
 
     avApp.controller("loginController", [
-                 '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService', 'dateService',
-        function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService, dateService) {
+                 '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService',
+        function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
-            $scope.dateOfBirth = {
-                days: dateService.days,
-                months: dateService.months,
-                years: dateService.years,
-                day: dateService.day,
-                month: dateService.month,
-                year: dateService.year
-            };
+            $scope.dateOfBirth = dataService.dates;
+            $scope.countries = dataService.countries;
+            $scope.selectedCountry = $scope.countries[0];
             var dayError = false;
             var validateDate = function () {
                 var day = parseInt($scope.dateOfBirth.day);
@@ -152,7 +147,9 @@
             }, 2000);
         };
         $scope.signUp = function () {
+            //begin validation
             var exitFunction = false;
+            //date validation
             dayError = false;
             validateDate();
             if (dayError) {
@@ -163,6 +160,15 @@
                 var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
                 $scope.registrationData.dateOfBirth = new Date(selectedDate);
             }
+            //phone validation
+            if (/^[0-9]+$/.test($scope.registrationData.phoneNumber)) {
+               toastr.warning("Broj telefona smije imati samo cifre")
+               exitFunction = true;
+            }
+            else {
+                $scope.registrationData.phoneNumber = $scope.selectedCountry.number + $scope.registrationData.phoneNumber;
+            }
+            //empty space validation
             if ($scope.registrationData.userName.trim() === "" ||
                 $scope.registrationData.password.trim() === "" ||
                 $scope.registrationData.confirmPassword.trim() === "" ||
@@ -179,11 +185,13 @@
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
             }
+            //characteristics validation
             if ($scope.selected === [] || $scope.selected.length < $scope.interestCategories.length) {
                 toastr.warning("Unesite sve karakteristike");
                 exitFunction = true;
             }
             if (exitFunction) return;
+            //end of validation
 
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
@@ -307,6 +315,14 @@
                 $scope.registerExternalData.healthStatus.trim() === "") {
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
+            }
+            //phone validation
+            if (/^[0-9]+$/.test($scope.registerExternalData.phoneNumber)) {
+                toastr.warning("Broj telefona smije imati samo cifre")
+                exitFunction = true;
+            }
+            else {
+                $scope.registerExternalData.phoneNumber = $scope.selectedCountry.number + $scope.registerExternalData.phoneNumber;
             }
             if ($scope.selected.length < $scope.interestCategories.length) {
                 toastr.warning("Unesite sve karakteristike");
