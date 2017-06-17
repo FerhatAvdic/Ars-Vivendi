@@ -97,7 +97,7 @@
                 <ul class="upcoming-labels">
                     <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
                         <div class="upcoming-label-big">{{event.eventName}}</div>
-                        <div class="upcoming-label-small">{{event.startDate}}</div>
+                        <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}}</div>
                         <div class="upcoming-label-small">{{event.location}}</div>
                     </li>
                 </ul>
@@ -153,7 +153,7 @@
                 <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
                     <div class="gallery-item-label-content">
                         <div class="gallery-item-title">{{item.eventName}}</div>
-                        <div class="gallery-item-description">{{item.startDate}} {{item.location}}</div>
+                        <div class="gallery-item-description">{{item.startDate | date: 'dd/MM/yyyy'}} {{item.location}}</div>
                     </div>
                 </div>
             </div>

@@ -92,7 +92,7 @@
                             <div class="event-basic-info" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">
                                 <div class="event-title">{{event.eventName}}</div>
                                 <div class="event-date">
-                                    <small>{{event.startDate | date: 'dd-MMM-yyyy'}}<span> {{event.type}}</span></small>
+                                    <small>{{event.startDate | date: 'dd/MM/yyyy'}}<span> {{event.type}}</span></small>
                                 </div>
                                 <div class="event-location">{{event.location}}</div>
                             </div>

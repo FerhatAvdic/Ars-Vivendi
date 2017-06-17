@@ -456,6 +456,17 @@
             }
 
         }
+        var path = $location.absUrl();
+        console.log(path);
+
+        var splitString = function (string) {
+            var array = string.split('tx=');
+            return array[1];
+        };
+
+        var transactionId = splitString(path);
+
+        console.log(transactionId);
 
         $scope.listEventCategories();
         $scope.listEvents();
