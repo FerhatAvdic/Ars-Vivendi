@@ -40,7 +40,7 @@
     <div class="av-section-wrap" id="activity-showcase">
         <div class="av-heading">Pođi s nama</div>
         <div class="row row-centered">
-            <div class="col-md-4 col-sm-4 col-centered activity-box" ng-repeat="activity in activityShowcase">
+            <div class="col-md-4 col-sm-4 activity-box" ng-repeat="activity in activityShowcase">
                 <div class="activity-icon">
                     <!-- ng-style="{'background-color': '#' + activity.backgroundColor}" -->
                     <i class="fa" ng-class="activity.icon" aria-hidden="true"></i>
@@ -54,62 +54,66 @@
     </div>
 </div>
 <div id="pre-upcoming"></div>
-<div class="av-section-wrap" id="upcoming">
-    <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
-        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
-        <div class="upcoming-slide-dark-overlay"></div>
-        <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <div class="upcoming-slide-content">
-                    <div class="upcoming-slide-title">{{event.eventName}}</div>
-                    <div class="upcoming-slide-description">
-                       {{event.location}}
+    <div class="av-section-wrap" id="upcoming">
+        <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
+            <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
+            <div class="upcoming-slide-dark-overlay"></div>
+            <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="upcoming-slide-content">
+                            <div class="upcoming-slide-title">{{event.eventName}}</div>
+                            <div class="upcoming-slide-description">
+                                {{event.location}}
+                            </div>
+                            <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
+                        </div>
                     </div>
-                    <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
+                    <div class="col-md-6">
+                        <div class="upcoming-countdown-wrap">
+                            <div class="upcoming-countdown-instance">
+                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
+                                <div class="upcoming-countdown-instance-label">Dana</div>
+                            </div>
+                            <div class="upcoming-countdown-instance">
+                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
+                                <div class="upcoming-countdown-instance-label">Sati</div>
+                            </div>
+                            <div class="upcoming-countdown-instance">
+                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
+                                <div class="upcoming-countdown-instance-label">Minuta</div>
+                            </div>
+                            <div class="upcoming-countdown-instance">
+                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
+                                <div class="upcoming-countdown-instance-label">Sekundi</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="upcoming-countdown-wrap">
-                    <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
-                        <div class="upcoming-countdown-instance-label">Dana</div>
-                    </div>
-                    <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
-                        <div class="upcoming-countdown-instance-label">Sati</div>
-                    </div>
-                    <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
-                        <div class="upcoming-countdown-instance-label">Minuta</div>
-                    </div>
-                    <div class="upcoming-countdown-instance">
-                        <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
-                        <div class="upcoming-countdown-instance-label">Sekundi</div>
-                    </div>
-                </div>
-            </div>
+            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
         </div>
-        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
-        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+
+        <ul class="upcoming-labels">
+            <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+                <div class="upcoming-label-big">{{event.eventName}}</div>
+                <div class="upcoming-label-small">{{event.startDate}}</div>
+                <div class="upcoming-label-small">{{event.location}}</div>
+            </li>
+        </ul>
     </div>
-    
-                <ul class="upcoming-labels">
-                    <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
-                        <div class="upcoming-label-big">{{event.eventName}}</div>
-                        <div class="upcoming-label-small">{{event.startDate}}</div>
-                        <div class="upcoming-label-small">{{event.location}}</div>
-                    </li>
-                </ul>
-</div>
 
 
 
 
-<div class="av-section-wrap" id="discount-section">
-    <div class="row" >
-        <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
-            <div class="discount" ng-repeat="discount in columns" ng-show="checkCurrentSlides($parent.$index, $index)" ng-click="nextSlideDiscounts($parent.$index)" ng-style="{'background-image': 'url('+ discount.image +')'}">
+<div class="container-fluid">
+    <div class="av-section-wrap" id="discount-section">
+        <div class="row">
+            <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
+                <div class="discount" ng-repeat="discount in columns" ng-show="checkCurrentSlides($parent.$index, $index)" ng-click="nextSlideDiscounts($parent.$index)" ng-style="{'background-image': 'url('+ discount.image +')'}">
+                </div>
             </div>
         </div>
     </div>
@@ -131,14 +135,16 @@
         </div>
     </div>
 </div>
-<div class="partners-wrap" id="partners">
-    <div class="av-heading">Partneri</div>
-    <div class="row row-centered">
-        <div class="col-md-2 col-centered" ng-repeat="partner in partners">
-            <div class="partner-logo">
-                <img ng-src="{{partner}}" style="max-height: 100%;" />
+<div class="container-fluid">
+    <div class="partners-wrap" id="partners">
+        <div class="av-heading">Partneri</div>
+        <div class="row row-centered">
+            <div class="col-md-2" ng-repeat="partner in partners">
+                <div class="partner-logo">
+                    <img ng-src="{{partner}}" style="max-height: 100%;" />
+                </div>
+                <div class="name-logo">Naziv</div>
             </div>
-            <div class="name-logo">Naziv</div>
         </div>
     </div>
 </div>
@@ -146,6 +152,7 @@
     <!--<div class="av-heading">
         Kuda smo išli
     </div>-->
+    <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
             <div class="gallery-item">
@@ -159,17 +166,20 @@
             </div>
         </div>
     </div>
+</div>
 <!--</div>-->
-<div class="partners-wrap" id="partners">
-    <div class="av-heading">Sponzori</div>
+<div class="container-fluid">
+    <div class="partners-wrap" id="partners">
+        <div class="av-heading">Sponzori</div>
         <div class="row row-centered">
-            <div class="col-md-2 col-centered" ng-repeat="partner in partners">
+            <div class="col-md-2" ng-repeat="partner in partners">
                 <div class="partner-logo">
                     <img ng-src="{{partner}}" style="max-height: 100%;" />
                 </div>
                 <div class="name-logo">Naziv</div>
             </div>
         </div>
+    </div>
 </div>
 <div class="comments-wrap">
     <div class="container">
