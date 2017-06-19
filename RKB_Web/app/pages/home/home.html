@@ -22,7 +22,7 @@
         </div>
     </div>-->
 </div>
-<div class="av-section-wrap"id="mission">
+<div class="av-section-wrap" id="mission">
     <div class="container">
         <div class="row">
             <div class="col-md-12 inside-mission">
@@ -54,56 +54,55 @@
     </div>
 </div>
 <div id="pre-upcoming"></div>
-    <div class="av-section-wrap" id="upcoming">
-        <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
-            <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
-            <div class="upcoming-slide-dark-overlay"></div>
-            <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="upcoming-slide-content">
-                            <div class="upcoming-slide-title">{{event.eventName}}</div>
-                            <div class="upcoming-slide-description">
-                                {{event.location}}
-                            </div>
-                            <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
+<div class="av-section-wrap" id="upcoming">
+    <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
+        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
+        <div class="upcoming-slide-dark-overlay"></div>
+        <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="upcoming-slide-content">
+                        <div class="upcoming-slide-title">{{event.eventName}}</div>
+                        <div class="upcoming-slide-description">
+                            {{event.location}}
                         </div>
+                        <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
                     </div>
-                    <div class="col-md-6">
-                        <div class="upcoming-countdown-wrap">
-                            <div class="upcoming-countdown-instance">
-                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
-                                <div class="upcoming-countdown-instance-label">Dana</div>
-                            </div>
-                            <div class="upcoming-countdown-instance">
-                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
-                                <div class="upcoming-countdown-instance-label">Sati</div>
-                            </div>
-                            <div class="upcoming-countdown-instance">
-                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
-                                <div class="upcoming-countdown-instance-label">Minuta</div>
-                            </div>
-                            <div class="upcoming-countdown-instance">
-                                <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
-                                <div class="upcoming-countdown-instance-label">Sekundi</div>
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="upcoming-countdown-wrap">
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
+                            <div class="upcoming-countdown-instance-label">Dana</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
+                            <div class="upcoming-countdown-instance-label">Sati</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
+                            <div class="upcoming-countdown-instance-label">Minuta</div>
+                        </div>
+                        <div class="upcoming-countdown-instance">
+                            <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
+                            <div class="upcoming-countdown-instance-label">Sekundi</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
-            <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
         </div>
-
-        <ul class="upcoming-labels">
-            <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
-                <div class="upcoming-label-big">{{event.eventName}}</div>
-                <div class="upcoming-label-small">{{event.startDate}}</div>
-                <div class="upcoming-label-small">{{event.location}}</div>
-            </li>
-        </ul>
+        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
     </div>
+    <ul class="upcoming-labels">
+        <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+            <div class="upcoming-label-big">{{event.eventName}}</div>
+            <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}}</div>
+            <div class="upcoming-label-small">{{event.location}}</div>
+        </li>
+    </ul>
+</div>
 
 
 
@@ -149,10 +148,10 @@
     </div>
 </div>
 <!--<div class="av-section-wrap">-->
-    <!--<div class="av-heading">
-        Kuda smo išli
-    </div>-->
-    <div class="container-fluid">
+<!--<div class="av-heading">
+    Kuda smo išli
+</div>-->
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
             <div class="gallery-item">
@@ -160,7 +159,7 @@
                 <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
                     <div class="gallery-item-label-content">
                         <div class="gallery-item-title">{{item.eventName}}</div>
-                        <div class="gallery-item-description">{{item.startDate}} {{item.location}}</div>
+                        <div class="gallery-item-description">{{item.startDate | date: 'dd/MM/yyyy'}} {{item.location}}</div>
                     </div>
                 </div>
             </div>
@@ -194,41 +193,41 @@
         </ul>
     </div>
 </div>
-    <div class="av-section-wrap contact-wrap">
-        <div class="av-heading" id="contact">
-            Kontakt
-        </div>
-        <div class="contact-wrap-overlay"></div>
-        <div class="container">
-            <div class="row equal contact-form-style">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Ime:</label>
-                        <input type="text" class="form-control" placeholder="Ime">
-                    </div>
-                    <div class="form-group">
-                        <label>Email:</label>
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefon:</label>
-                        <input type="text" class="form-control" placeholder="Telefon">
-                    </div>
+<div class="av-section-wrap contact-wrap">
+    <div class="av-heading" id="contact">
+        Kontakt
+    </div>
+    <div class="contact-wrap-overlay"></div>
+    <div class="container">
+        <div class="row equal contact-form-style">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Ime:</label>
+                    <input type="text" class="form-control" placeholder="Ime">
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Poruka</label>
-                        <textarea class="form-control" id="contact-msg"></textarea>
-                    </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Telefon:</label>
+                    <input type="text" class="form-control" placeholder="Telefon">
                 </div>
             </div>
-                <div class="row row-centered">
-                    <div class="col-md-12 text-right">
-                        <button class="rectangle-btn" id="contact-submit-btn">Pošalji</button>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Poruka</label>
+                    <textarea class="form-control" id="contact-msg"></textarea>
                 </div>
+            </div>
+        </div>
+        <div class="row row-centered">
+            <div class="col-md-12 text-right">
+                <button class="rectangle-btn" id="contact-submit-btn">Pošalji</button>
+            </div>
         </div>
     </div>
+</div>
 
 
 <footer class="footer-wrap">

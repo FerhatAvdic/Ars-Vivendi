@@ -89,12 +89,11 @@
             {"eventName": "Event Name With Location", "eventLink": "link", "eventCommentsNumber": 1, "author": "author", "profilePicture": "/img/mansilhouette.jpg", "dateTime": "date time" }
         ];
         function getTimeRemaining(event, index, array) {
-            //replace dots with dashes
-            event.startDate = event.startDate.replace(/\./g, '/');
-            //remove last dash
-            event.startDate = event.startDate.slice(0, -1);
-            event.startDate = event.startDate.substring(6, 10) + "/" + event.startDate.substring(3, 5) + "/" + event.startDate.substring(0, 2);
-                var t = Date.parse(event.startDate) - Date.parse(new Date());
+
+            var date1 = event.startDate;
+            event.startDate = moment(event.startDate).format('DD/MM/YYYY');
+            
+            var t = Date.parse(date1) - Date.parse(new Date());
                 var seconds = Math.floor((t / 1000) % 60);
                 var minutes = Math.floor((t / 1000 / 60) % 60);
                 var hours = Math.floor((t / (1000 * 60 * 60)) % 24);

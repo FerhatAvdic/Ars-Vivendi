@@ -226,19 +226,18 @@
                 console.log("Something went wrong");
             });
         };
-        
 
         $scope.login = function () {
 
-            authenticationService.login($scope.loginData).then(function (data) {
-                console.log("login ctrl data", data);
-                if (data.status == 200) {
-                    getUserRole();
-                    $location.path('/home');
-                }
-                else {
-                    toastr.error("Korisnicko ime ili sifra nisu tacni.");
-                }
+            authenticationService.login($scope.loginData).then(function (response) {
+                console.log("login ctrl data", response);
+                if (response.status == 200) {
+                                getUserRole();
+                                $location.path('/home');
+                            }
+                            else {
+                                toastr.error("Korisnicko ime ili sifra nisu tacni.");
+                            }
             });
         };
 
