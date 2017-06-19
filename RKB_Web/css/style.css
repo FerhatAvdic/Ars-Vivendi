@@ -698,6 +698,7 @@ ul {
     padding: 25px;
     text-align: left;
     cursor: pointer;
+    color: white;
 }
 .upcoming-labels li:hover{
     background: #EEEEEE;
@@ -722,12 +723,16 @@ ul {
     /*margin-bottom: 100px;*/
     overflow: hidden;
 }
-.partner-logo{
+.partner-logo-wrap{
     height: 100px;
     width: auto;
     display: inline-block;
     /*margin-bottom: 50px;*/
     filter: grayscale(100%);
+}
+.partner-logo{
+    max-width:100%;
+    max-height:100%;
 }
 .name-logo{
     margin-bottom: 50px;
@@ -745,7 +750,7 @@ ul {
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
-    cursor:grab;
+    cursor: grab;
 }
 .discount-image{
     vertical-align: middle;
@@ -807,15 +812,17 @@ ul {
 .become-member-statement{
     font-size: 24px;
     font-family: NunitoSans-Bold;
-    position: absolute;
+    padding-top: 8px;
+    /*position: absolute;
     top: 8px;
-    left:0;
+    left:0;*/
     margin: auto;
+    margin-bottom: 15px;
     transition: all 0.5s;
 }
 #become-member-btn{
 }
-#become-member-2{
+/*#become-member-2{
     opacity: 0;
 }
 .become-member:hover #become-member-1{
@@ -823,7 +830,7 @@ ul {
 }
 .become-member:hover #become-member-2{
     opacity: 1;
-}
+}*/
 
 /*6 SECTION CONTACT*/
 .contact-wrap{
@@ -1403,6 +1410,9 @@ ul {
 .profile-interests-wrap{
     padding: 35px 50px;
 }
+.profile-interest-options{
+    margin-bottom: 25px;
+}
 .custom-accordion .panel-heading{
     padding-left: 30px;
     cursor: pointer;
@@ -1541,6 +1551,7 @@ ul {
 }
 #comments li{
     width: 33%;
+    color:black;
 }
 /*#comments li:after{
     content: "";

@@ -111,7 +111,10 @@
     <div class="av-section-wrap" id="discount-section">
         <div class="row">
             <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
-                <div class="discount" ng-repeat="discount in columns" ng-show="checkCurrentSlides($parent.$index, $index)" ng-click="nextSlideDiscounts($parent.$index)" ng-style="{'background-image': 'url('+ discount.image +')'}">
+                <div class="discount" ng-repeat="discount in columns" 
+                     ng-show="checkCurrentSlides($parent.$index, $index)" 
+                     ng-click="nextSlideDiscounts($parent.$index)" 
+                     ng-style="{'background-image': 'url('+ discount.image +')'}">
                 </div>
             </div>
         </div>
@@ -120,15 +123,15 @@
 <div class="become-member">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-xs-8">
+            <div class="col-md-8 col-xs-12 text-center">
                 <div class="become-member-statement" id="become-member-1">
                     Ostvari mogućnost <strong>boniteta</strong> i uštedi svoj novac
                 </div>
-                <div class="become-member-statement" id="become-member-2">
+                <!--<div class="become-member-statement" id="become-member-2">
                     Postani član i budi dio velikog društva
-                </div>
+                </div>-->
             </div>
-            <div class="col-md-offset-1 col-md-2 col-xs-offset-1 col-xs-2">
+            <div class="col-md-2 col-xs-12 text-center">
                 <button class="rectangle-btn rectangle-btn-outline-dark" id="become-member-btn">Pridruži se!</button>
             </div>
         </div>
@@ -138,9 +141,10 @@
     <div class="partners-wrap" id="partners">
         <div class="av-heading">Partneri</div>
         <div class="row row-centered">
+            <div class="col-md-1"></div>
             <div class="col-md-2" ng-repeat="partner in partners">
-                <div class="partner-logo">
-                    <img ng-src="{{partner}}" style="max-height: 100%;" />
+                <div class="partner-logo-wrap">
+                    <img class="partner-logo" ng-src="{{partner}}" />
                 </div>
                 <div class="name-logo">Naziv</div>
             </div>
@@ -171,9 +175,10 @@
     <div class="partners-wrap" id="partners">
         <div class="av-heading">Sponzori</div>
         <div class="row row-centered">
+            <div class="col-md-1"></div>
             <div class="col-md-2" ng-repeat="partner in partners">
-                <div class="partner-logo">
-                    <img ng-src="{{partner}}" style="max-height: 100%;" />
+                <div class="partner-logo-wrap">
+                    <img class="partner-logo" ng-src="{{partner}}" />
                 </div>
                 <div class="name-logo">Naziv</div>
             </div>

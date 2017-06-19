@@ -23,93 +23,7 @@
             "baseImage": null
         };
         $scope.health = false;
-        //$scope.interests = [{
-        //    "categoryName": "Sport",
-        //    "interestList": [{
-        //        "label": "Skijanje",
-        //        "img": "http://img6.onthesnow.com/image/la/74/early_season_skiing_grand_targhee_1_74093.jpg",
-        //        "value": false
-        //    },
-        //    {
-        //        "label": "Planinarenje",
-        //        "img": "http://www.parcoappennino.it/blogs/appenninogastronomico/wp-content/uploads/sites/3/2015/03/trekking-in-the-mountains.jpg",
-        //        "value": false
-        //    },
-        //    {
-        //        "label": "Biciklizam",
-        //        "img": "http://www.gocyclingmaui.com/img/tour-1.jpg",
-        //        "value": false
-        //    },
-        //    {
-        //        "label": "Rafting",
-        //        "img": "https://media-cdn.tripadvisor.com/media/photo-s/02/d4/6b/7f/88-www-neretva-rafting.jpg",
-        //        "value": false
-        //    },
-        //    {
-        //        "label": "Ronjenje",
-        //        "img": "http://divekingdom.com/upload/hizmet/20160409-161930-1460207970-1701942487.jpg",
-        //        "value": false
-        //    }]
-        //},
-        //{
-        //    "categoryName": "Muzika",
-        //    "interestList": [{
-        //        "label": "Narodna",
-        //        "img": "http://media.guitarcenter.com/is/image/MMGS7/72-Bass-Entry-Level-Piano-Accordion-Red/J02738000001000-00-500x500.jpg",
-        //        "value": false
-        //    },
-        //    {
-        //        "label": "Rock",
-        //        "img": "http://www.mveducation.com/assets/products/83102_l.jpg",
-        //        "value": false
-        //    }]
-        //}];
-        $scope.equipment = [{
-            "categoryName": "Skijanje",
-            "equipmentList": [{
-                "label": "Kaciga",
-                "img": "http://www.allsportprotection.com/v/vspfiles/assets/images/bern0009-2.jpg",
-                "value": false
-            },
-            {
-                "label": "Skije",
-                "img": "http://s7d5.scene7.com/is/image/SummitSports/439191_439191_1?$600$",
-                "value": false
-            },
-            {
-                "label": "Štapovi",
-                "img": "http://i.stpost.com/komperdell-bc-trail-power-lock-ski-poles-adjustable-in-blue~p~8761j_01~440~40.2.jpg",
-                "value": false
-            },
-            {
-                "label": "Skijaško odijelo",
-                "img": "https://ae01.alicdn.com/kf/HTB1K9i3MVXXXXX1apXXq6xXFXXX4/Wild-snow-2016-Snowboard-Men-Skiing-Suit-Sets-Waterproof-Windproof-30-Warm-Ski-Sets-Jackets-pants.jpg_640x640.jpg",
-                "value": false
-            }]
-        },
-        {
-            "categoryName": "Planinarenje",
-            "equipmentList": [{
-                "label": "Jakna",
-                "value": false
-            },
-            {
-                "label": "Pantalone",
-                "value": false
-            }]
-        },
-         {
-             "categoryName": "Biciklizam",
-             "equipmentList": [{
-                 "label": "Ručna pumpa",
-                 "value": false
-             },
-             {
-                 "label": "Svjetlo",
-                 "value": false
-             }]
-         }];
-
+        
         $scope.stats = {
             "attendedEvents": [{
                 "id": "eventID",
@@ -165,7 +79,130 @@
             "newPassword": "",
             "confirmNewPassword": ""
         };
+        $scope.newInterest = {
+            "id": 0,
+            "name": null,
+            "categoryId": null
+        };
+        $scope.newInterestCategory = {
+            "id": 0,
+            "CategoryName": null
+        };
+        $scope.initCategory = function (category) {
+            $scope.newInterest.categoryId = angular.copy(category.id);
+        };
+        $scope.createInterest = function () {
+            dataService.create("characteristicsubcategories", $scope.newInterest, function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno napravljena karakteristika");
+                }
+                else {
+                    toastr.error("Greška prilikom pravljenja karakteristike");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
+        $scope.createInterestCategory = function () {
+            dataService.create("characteristiccategories", $scope.newInterestCategory, function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno napravljena kategorija");
+                }
+                else {
+                    toastr.error("Greška prilikom pravljenja kategorije");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
+        $scope.cancelInterest= function(){
+            $scope.newInterest = {
+                "id": 0,
+                "name": null,
+                "categoryId": null
+            };
+        }
+        $scope.cancelInterestCategory = function () {
+            $scope.newInterestCategory = {
+                "id": 0,
+                "categoryName": null
+            };
+        };
+        $scope.setEditingCategory = function (category) {
+            $scope.editingInterestCategory = angular.copy(category);
+        };
+        $scope.cancelEditingCategory = function () {
+            $scope.editingInterestCategory = null;
+        };
+        $scope.setDeletingCategory = function (category) {
+            $scope.deletingInterestCategory = angular.copy(category);
+        };
+        $scope.cancelDeletingCategory = function () {
+            $scope.deletingInterestCategory = null;
+        };
+        $scope.updateInterestCategory = function () {
+            dataService.update("characteristiccategories", $scope.editingInterestCategory.id, $scope.editingInterestCategory,function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno izmijenjena kategorija");
+                }
+                else {
+                    toastr.error("Greška prilikom izmjene kategorije");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
+        $scope.deleteInterestCategory = function () {
+            dataService.remove("characteristiccategories", $scope.deletingInterestCategory.id, function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno obrisana kategorija");
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja kategorije");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
 
+        $scope.setEditingInterest = function (Interest) {
+            $scope.editingInterest = angular.copy(Interest);
+        };
+        $scope.cancelEditingInterest = function () {
+            $scope.editingInterest = null;
+        };
+        $scope.setDeletingInterest = function (Interest) {
+            $scope.deletingInterest = angular.copy(Interest);
+        };
+        $scope.cancelDeletingInterest = function () {
+            $scope.deletingInterest = null;
+        };
+
+        $scope.updateInterest = function () {
+            dataService.update("characteristicsubcategories", $scope.editingInterest.id, $scope.editingInterest, function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno izmijenjena kategorija");
+                }
+                else {
+                    toastr.error("Greška prilikom izmjene kategorije");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
+        $scope.deleteInterest = function () {
+            dataService.remove("characteristicsubcategories", $scope.deletingInterest.id, function (response) {
+                if (response.status === 200) {
+                    $scope.getInterestInfo();
+                    toastr.success("Uspješno obrisana kategorija");
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja kategorije");
+                    console.log(response.data.modelState);
+                }
+            });
+        };
+        
         $scope.updatePassword = function () {
             dataService.create("updatepassword", $scope.changePassword, function (response) {
                 if (response.status === 200) {
@@ -285,7 +322,7 @@
                 if (response.status === 200) {
                     $scope.userInterests = response.data;
                     console.log("User interests");
-                    console.log($scope.userInterests);
+                    console.log($scope.userInterests, response);
 
                     $scope.allInterests.forEach(function (interest) {
                         interest.checked = false;
@@ -314,7 +351,7 @@
                 if (response.status===200) {
                     $scope.interestCategories = response.data;
                     $scope.categoriesLoading = false;
-                    console.log("get categories");
+                    console.log($scope.interestCategories);
                 }
                 else {
                     toastr.error("Greška prilikom pribavljanja kategorija");
