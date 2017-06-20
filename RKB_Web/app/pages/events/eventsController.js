@@ -24,7 +24,7 @@
                 "registrationDeadline": new Date(),
                 "membersPrice": 0,
                 "nonMembersPrice": 0,
-                "eventCategoryId": 1,
+                "eventCategoryId": null,
                 "imageBaseString": null,
                 "applyCriteria": null,
                 "eventLinks": [{ "Id": 0, "name": "", "link": "", "index": linkIndex }]
@@ -41,7 +41,15 @@
         };
         
         $scope.getModalResources = function () {
-            $scope.listEventCategories();
+            dataService.list("eventcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.eventCategories = response.data
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
+                    console.log("ERROR: ", response);
+                }
+            });
             $scope.listCurrencies();
         };
 

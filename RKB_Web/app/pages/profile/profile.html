@@ -191,6 +191,10 @@
                                 <div ng-hide="interestsLoading || categoriesLoading">
                                     <div class="row">
                                         <div class="profile-interests-wrap">
+                                            <div class="profile-interest-options"> <!--ng-show="userRole === 'Admin'">-->
+                                                    <button data-toggle="modal" data-target="#newInterestCategoryModal" class="btn btn-primary" >Nova kategorija</button>
+                                                    <button data-toggle="modal" data-target="#newInterestModal" class="btn btn-primary">Nova karakteristika</button>
+                                            </div>
                                             <div class="panel-group" id="accordion">
                                                 <div class="panel panel-default" ng-repeat="category in interestCategories">
                                                     <div class="panel-heading">
@@ -198,6 +202,15 @@
                                                             <a data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
                                                                 {{category.categoryName}}
                                                             </a>
+                                                                <a href="">
+                                                                    <i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#newInterestModal" ng-click="initCategory(category)"></i>
+                                                                </a>
+                                                                <a href="">
+                                                                    <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestCategoryModal" ng-click="setEditingCategory(category)"></i>
+                                                                </a>
+                                                                <a href="">
+                                                                    <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestCategoryModal" ng-click="setDeletingCategory(category)"></i>
+                                                                </a>
                                                         </h4>
                                                     </div>
                                                     <div id="{{'collapse' + $index}}" class="panel-collapse collapse">
@@ -207,6 +220,12 @@
                                                                 <li class="col-md-offset-1" ng-repeat="interest in allInterests">
                                                                     <div class="checkbox" ng-show="interest.categoryId===category.id">
                                                                         <label><input type="checkbox" ng-model="interest.checked">{{interest.name}}</label>
+                                                                        <a href="">
+                                                                            <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestModal" ng-click="setEditingInterest(interest)"></i>
+                                                                        </a>
+                                                                        <a href="">
+                                                                            <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestModal" ng-click="setDeletingInterest(interest)"></i>
+                                                                        </a>
                                                                     </div>
                                                                 </li>
                                                                 <!--<li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in interests">
@@ -360,5 +379,165 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<!--New INTEREST CATEGORY MODAL-->
+<div id="newInterestCategoryModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nova Kategorija</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Ime kategorije:</label>
+                        <input type="text" class="form-control" placeholder="Ime" ng-model="newInterestCategory.CategoryName">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createInterestCategory()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelInterestCategory()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Editing INTEREST CATEGORY MODAL-->
+<div id="editingInterestCategoryModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Izmjena kategorije</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Ime kategorije:</label>
+                        <input type="text" class="form-control" placeholder="Ime" ng-model="editingInterestCategory.categoryName">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateInterestCategory()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditingCategory()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Deleting INTEREST CATEGORY MODAL-->
+<div id="deletingInterestCategoryModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje kategorije</h4>
+            </div>
+            <div class="modal-body">
+                <p>Da li ste sigurni da želite obrisati kategoriju?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteInterestCategory()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeletingCategory()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--New INTEREST MODAL-->
+<div id="newInterestModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nova karakteristika</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Kategorija:</label>
+                            <select class="form-control" ng-model="newInterest.categoryId">
+                                <option value="" disabled>---Odaberite---</option>
+                                <option ng-repeat="category in interestCategories track by category.id" ng-value="category.id">{{category.categoryName}}</option>
+                            </select>
+                        </div>
+                        <label>Ime karakteristike:</label>
+                        <input type="text" class="form-control" placeholder="Ime" ng-model="newInterest.name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createInterest()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelInterest()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--New INTEREST MODAL-->
+<div id="editingInterestModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Izmjena karakteristike</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Ime karakteristike:</label>
+                        <input type="text" class="form-control" placeholder="Ime" ng-model="editingInterest.name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateInterest()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditingInterest">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Deleting INTEREST CATEGORY MODAL-->
+<div id="deletingInterestModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje karakteristike</h4>
+            </div>
+            <div class="modal-body">
+                <p>Da li ste sigurni da želite obrisati karakteristiku?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteInterest()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeletingInterest()">Zatvori</button>
+            </div>
+        </div>
+
     </div>
 </div>

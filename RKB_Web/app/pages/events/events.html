@@ -121,6 +121,7 @@
                             <li class="form-group">
                                 <label>Kategorija:</label>
                                 <select class="form-control" ng-model="newEvent.eventCategoryId">
+                                    <option value="" disabled>---Odaberite---</option>
                                     <option ng-repeat="category in eventCategories track by category.id" ng-value="category.id">{{category.name}}</option>
                                 </select>
                             </li>
@@ -165,6 +166,7 @@
                             <li class="form-group">
                                 <label>Valuta:</label>
                                 <select class="form-control" ng-model="newEvent.eventCurrencyId">
+                                    <option value="" disabled>---Odaberite---</option>
                                     <option ng-repeat="currency in currencies" ng-value="currency.id">{{currency.currencyValue}}</option>
                                 </select>
                             </li>
