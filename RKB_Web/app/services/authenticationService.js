@@ -32,6 +32,8 @@
                     return response;
                 });
         };
+        var firstName = "";
+        var role = "";
 
         var login = function (loginData) {
 
@@ -42,7 +44,6 @@
 
             $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshToken: true });
-
 
                 console.log("login response", response.data);
                 authentication.isAuth = true;
@@ -67,10 +68,14 @@
 
         var fillAuthData = function () {
             var authData = localStorageService.get('authorizationData');
+            console.log(localStorageService.get('authorizationData'));
             if (authData) {
                 authentication.isAuth = true;
                 authentication.userName = authData.userName;
                 authentication.useRefreshToken = authData.useRefreshToken;
+                $rootScope.userRole = authData.localRole;
+                authentication.userRole = authData.localRole;
+                authentication.userFirstName = authData.localName;
             }
         };
 

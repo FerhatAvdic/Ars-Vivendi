@@ -219,6 +219,7 @@
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data.userRole;
                 authenticationService.authentication.userFirstName = response.data.userFirstName;
+                localStorageService.set('authorizationData', { token: authData.token, userName: authData.userName, refreshToken: authData.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
@@ -232,7 +233,8 @@
             authenticationService.login($scope.loginData).then(function (response) {
                 console.log("login ctrl data", response);
                 if (response.status == 200) {
-                                getUserRole();
+                    getUserRole();
+                    //localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.data.userName, refreshToken: response.data.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
                                 $location.path('/home');
                             }
                             else {
@@ -269,7 +271,6 @@
                     };
                     console.log('fragment', fragment.external_email);
                     $location.path('/externalLogin/postani-clan-1');
-                    //$scope.registerExternalData.userName = authenticationService.externalAuthData.email;
                     $scope.initRegistrationExternalData();
 
                 }

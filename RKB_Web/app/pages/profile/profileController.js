@@ -16,12 +16,45 @@
                 $location.path('/home');
             }
         };
-
         var profileID = $routeParams.id;
         var profilePicture = {
             "userName": null,
             "baseImage": null
         };
+
+        var paypalInfo = {
+            userName: '',
+            transactionId: ''
+        };
+
+        var urlPath = $location.absUrl();
+
+        var checkPath = function (path) {
+            if (path != 'http://localhost:49753/index.html#!/profile/' + profileID) {
+                console.log('drugaciji', path);
+                var array = path.split('tx=');
+                paypalInfo.transactionId = array[1];
+                paypalInfo.userName = authenticationService.authentication.userName;
+                window.location.href = "http://localhost:49753/index.html#!/profile/" + authenticationService.authentication.userName;
+                
+                dataService.create("paypal", paypalInfo, function (response) {
+                    if (response.status === 200) {
+                        toastr.success("Uspješno izvrsena uplata!");
+                    }
+                    else {
+                        toastr.error("Greška prilikom izvrsavanja uplate.");
+                        console.log("ERROR: ", response);
+                    }
+                    $scope.getPersonalInfo();
+                });
+            }
+            else {
+                console.log('nije drugaciji', path);
+            }
+        };
+        checkPath(urlPath);
+        
+        
         $scope.health = false;
         //$scope.interests = [{
         //    "categoryName": "Sport",
@@ -166,6 +199,18 @@
             "confirmNewPassword": ""
         };
 
+        $scope.getMembershipInfo = function() {
+            dataService.read("memberships", "?username=" + profileID, function (response){
+                if (response.status === 200) {
+                    $scope.membershipInfo = response.data;
+                    console.log($scope.membershipInfo);
+                }
+                else {
+                    toastr.error("Greska prilikom dobavljanja podataka o clanstvu.");
+                };
+            });
+        };
+
         $scope.updatePassword = function () {
             dataService.create("updatepassword", $scope.changePassword, function (response) {
                 if (response.status === 200) {
@@ -235,7 +280,7 @@
 
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
-            dataService.read("users", profileID, function (response) {
+            dataService.read("users", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
@@ -258,7 +303,7 @@
             $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
             var selectedDate = $scope.userInfo.day + "-" + $scope.userInfo.month + "-" + $scope.userInfo.year;
             $scope.userInfo.dateOfBirth = new Date(selectedDate);
-            dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
+            dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
                     //console.log("UPDATED");
@@ -281,7 +326,7 @@
 
         var prepareCheckboxes = function () {
 
-            dataService.read("usercharacteristics", profileID, function (response) {
+            dataService.read("usercharacteristics", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.userInterests = response.data;
                     console.log("User interests");
@@ -340,7 +385,7 @@
         };
 
         $scope.getUserInterests = function () {
-            dataService.read("usercharacteristics", profileID, function (response) {
+            dataService.read("usercharacteristics", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.userInterests = response.data;
                     console.log("User interests");
