@@ -16,7 +16,7 @@
                 $location.path('/home');
             }
         };
-        var profileID = $routeParams.id;
+        var profileID = authenticationService.authentication.userName;
         var profilePicture = {
             "userName": null,
             "baseImage": null
@@ -27,34 +27,35 @@
             transactionId: ''
         };
 
-        var urlPath = $location.absUrl();
 
-        var checkPath = function (path) {
-            if (path != 'http://localhost:49753/index.html#!/profile/' + profileID) {
-                console.log('drugaciji', path);
-                var array = path.split('tx=');
+
+        
+        var addNewPayment = function (paymentData) {
+            dataService.create("paypal", paymentData, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno izvrsena uplata!");
+                }
+                else {
+                    toastr.error("Greška prilikom izvrsavanja uplate.");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        var checkPath = function () {
+            var urlPath = $location.absUrl();
+            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + profileID) {
+                //$location.path('profile/' + authenticationService.authentication.userName);
+                console.log('drugaciji', urlPath);
+                var array = urlPath.split('tx=');
                 paypalInfo.transactionId = array[1];
-                paypalInfo.userName = authenticationService.authentication.userName;
-                window.location.href = "http://localhost:49753/index.html#!/profile/" + authenticationService.authentication.userName;
-                
-                dataService.create("paypal", paypalInfo, function (response) {
-                    if (response.status === 200) {
-                        toastr.success("Uspješno izvrsena uplata!");
-                    }
-                    else {
-                        toastr.error("Greška prilikom izvrsavanja uplate.");
-                        console.log("ERROR: ", response);
-                    }
-                    $scope.getPersonalInfo();
-                });
+                paypalInfo.userName = authenticationService.authentication.userName;                
+                addNewPayment(paypalInfo);               
             }
             else {
-                console.log('nije drugaciji', path);
+                console.log('nije drugaciji', urlPath);
             }
         };
-        checkPath(urlPath);
-        
-        
+        //checkPath(urlPath);
         $scope.health = false;
         
         $scope.stats = {
@@ -512,7 +513,7 @@
         };
 
         $scope.getPersonalInfo();
-
+        checkPath();
         //authenticateUser();
 
     }]);

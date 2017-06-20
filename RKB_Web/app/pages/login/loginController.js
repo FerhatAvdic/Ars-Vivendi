@@ -234,12 +234,11 @@
                 console.log("login ctrl data", response);
                 if (response.status == 200) {
                     getUserRole();
-                    //localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.data.userName, refreshToken: response.data.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
-                                $location.path('/home');
-                            }
-                            else {
-                                toastr.error("Korisnicko ime ili sifra nisu tacni.");
-                            }
+                    $location.path('/home');
+                }
+                else {
+                     toastr.error(response.data.error_description);
+               }
             });
         };
 
@@ -278,15 +277,16 @@
                     //Obtain access token and redirect to orders
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                     authenticationService.obtainAccessToken(externalData).then(function (response) {
-                        console.log('bude li ovdje');
-                        $rootScope.changeMenu();
-                        getUserRole();
-                        $location.path('/home');
-                    },
-                 function (err) {
-                     $scope.message = err.error_description;
-                     console.log($scope.message);
-                 });
+                        console.log("obtain access token", response);
+                        if (response.status === 200) {
+                            $rootScope.changeMenu();
+                            getUserRole();
+                            $location.path('/home');
+                        }
+                        else {
+                            toastr.error(response.data.message);
+                        }                        
+                    });
                 }
 
             });

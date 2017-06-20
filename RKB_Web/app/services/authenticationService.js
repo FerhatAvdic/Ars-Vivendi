@@ -11,7 +11,7 @@
         var authentication = {
             isAuth: false,
             userName: '',
-            useRefreshToken: true,
+            useRefreshToken: false,
             userRole: '',
             userFirstName: ''
         };
@@ -105,7 +105,7 @@
 
             $http.get(apiSource + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.data.userName, refreshToken: "", useRefreshTokens: false });
 
                 console.log(response.data);
                 authentication.isAuth = true;
@@ -114,6 +114,8 @@
 
                 deferred.resolve(response);
                 console.log('Pada ovdje');
+            }, function (result) {
+                deferred.resolve(result);
             });
 
             return deferred.promise;
