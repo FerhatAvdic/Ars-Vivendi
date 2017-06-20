@@ -279,7 +279,7 @@
                     console.log("PERSONAL INFO:", $scope.userInfo);
                     convertDateOfBirth();
                     $scope.selectedCountry = $scope.countries.find(findCountry);
-                    $scope.userInfo.phoneNumber = $scope.userInfo.phoneNumber.substring(4);
+                    $scope.userInfo.partPhoneNumber = $scope.userInfo.phoneNumber.substring(4);
                     if (response.data.imagePath === null) {
                         $scope.userInfo.imagePath = 'img/profilemock.png';
                     }
@@ -292,9 +292,8 @@
         };
 
         $scope.updatePersonalInfo = function () {
-            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
-            var selectedDate = $scope.userInfo.day + "-" + $scope.userInfo.month + "-" + $scope.userInfo.year;
-            $scope.userInfo.dateOfBirth = new Date(selectedDate);
+            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
+            $scope.userInfo.dateOfBirth = new Date($scope.userInfo.year, $scope.userInfo.month, $scope.userInfo.day);
             dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
