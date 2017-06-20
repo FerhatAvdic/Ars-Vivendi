@@ -340,7 +340,6 @@
         $scope.updatePersonalInfo = function () {
             $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
             $scope.userInfo.dateOfBirth = new Date($scope.userInfo.year, $scope.userInfo.month, $scope.userInfo.day);
-            $scope.userInfo.dateOfBirth = new Date(selectedDate);
             dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
