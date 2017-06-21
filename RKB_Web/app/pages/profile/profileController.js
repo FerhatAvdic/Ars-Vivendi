@@ -16,12 +16,46 @@
                 $location.path('/home');
             }
         };
-
-        var profileID = $routeParams.id;
+        var profileID = authenticationService.authentication.userName;
         var profilePicture = {
             "userName": null,
             "baseImage": null
         };
+
+        var paypalInfo = {
+            userName: '',
+            transactionId: ''
+        };
+
+
+
+        
+        var addNewPayment = function (paymentData) {
+            dataService.create("paypal", paymentData, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno izvrsena uplata!");
+                }
+                else {
+                    toastr.error("Greška prilikom izvrsavanja uplate.");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        var checkPath = function () {
+            var urlPath = $location.absUrl();
+            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + profileID) {
+                //$location.path('profile/' + authenticationService.authentication.userName);
+                console.log('drugaciji', urlPath);
+                var array = urlPath.split('tx=');
+                paypalInfo.transactionId = array[1];
+                paypalInfo.userName = authenticationService.authentication.userName;                
+                addNewPayment(paypalInfo);               
+            }
+            else {
+                console.log('nije drugaciji', urlPath);
+            }
+        };
+        //checkPath(urlPath);
         $scope.health = false;
         
         $scope.stats = {
@@ -165,6 +199,18 @@
             });
         };
 
+        $scope.getMembershipInfo = function() {
+            dataService.read("memberships", "?username=" + profileID, function (response){
+                if (response.status === 200) {
+                    $scope.membershipInfo = response.data;
+                    console.log($scope.membershipInfo);
+                }
+                else {
+                    toastr.error("Greska prilikom dobavljanja podataka o clanstvu.");
+                };
+            });
+        };
+
         $scope.setEditingInterest = function (Interest) {
             $scope.editingInterest = angular.copy(Interest);
         };
@@ -276,7 +322,7 @@
 
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
-            dataService.read("users", profileID, function (response) {
+            dataService.read("users", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
@@ -296,10 +342,10 @@
         };
 
         $scope.updatePersonalInfo = function () {
-            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
+            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
             var dateString = $scope.userInfo.year + "/" + $scope.userInfo.month + "/" + $scope.userInfo.day;
             $scope.userInfo.dateOfBirth = new Date(dateString);
-            dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
+            dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
                     //console.log("UPDATED");
@@ -322,7 +368,7 @@
 
         var prepareCheckboxes = function () {
 
-            dataService.read("usercharacteristics", profileID, function (response) {
+            dataService.read("usercharacteristics", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.userInterests = response.data;
                     console.log("User interests");
@@ -381,7 +427,7 @@
         };
 
         $scope.getUserInterests = function () {
-            dataService.read("usercharacteristics", profileID, function (response) {
+            dataService.read("usercharacteristics", "?username=" + profileID, function (response) {
                 if (response.status === 200) {
                     $scope.userInterests = response.data;
                     console.log("User interests");
@@ -471,7 +517,7 @@
         };
 
         $scope.getPersonalInfo();
-
+        checkPath();
         //authenticateUser();
 
     }]);

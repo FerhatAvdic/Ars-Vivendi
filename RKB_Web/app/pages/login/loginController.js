@@ -219,6 +219,7 @@
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data.userRole;
                 authenticationService.authentication.userFirstName = response.data.userFirstName;
+                localStorageService.set('authorizationData', { token: authData.token, userName: authData.userName, refreshToken: authData.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
@@ -232,12 +233,12 @@
             authenticationService.login($scope.loginData).then(function (response) {
                 console.log("login ctrl data", response);
                 if (response.status == 200) {
-                                getUserRole();
-                                $location.path('/home');
-                            }
-                            else {
-                                toastr.error("Korisnicko ime ili sifra nisu tacni.");
-                            }
+                    getUserRole();
+                    $location.path('/home');
+                }
+                else {
+                     toastr.error(response.data.error_description);
+               }
             });
         };
 
@@ -269,7 +270,6 @@
                     };
                     console.log('fragment', fragment.external_email);
                     $location.path('/externalLogin/postani-clan-1');
-                    //$scope.registerExternalData.userName = authenticationService.externalAuthData.email;
                     $scope.initRegistrationExternalData();
 
                 }
@@ -277,15 +277,16 @@
                     //Obtain access token and redirect to orders
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                     authenticationService.obtainAccessToken(externalData).then(function (response) {
-                        console.log('bude li ovdje');
-                        $rootScope.changeMenu();
-                        getUserRole();
-                        $location.path('/home');
-                    },
-                 function (err) {
-                     $scope.message = err.error_description;
-                     console.log($scope.message);
-                 });
+                        console.log("obtain access token", response);
+                        if (response.status === 200) {
+                            $rootScope.changeMenu();
+                            getUserRole();
+                            $location.path('/home');
+                        }
+                        else {
+                            toastr.error(response.data.message);
+                        }                        
+                    });
                 }
 
             });

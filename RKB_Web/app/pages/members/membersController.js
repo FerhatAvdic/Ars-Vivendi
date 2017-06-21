@@ -27,7 +27,7 @@
         $scope.editingMember = null;
         $scope.setEditMember = function (userName) {
             console.log(userName);
-            dataService.read("users", userName, function (response) {
+            dataService.read("users", "?username=" + userName, function (response) {
                 if (response.status === 200) {
                     $scope.editingMember = response.data;
                 }
@@ -41,7 +41,7 @@
         };
         $scope.deletingMember = null;
         $scope.setDeleteMember = function (userName) {
-            dataService.read("users", userName, function (response) {
+            dataService.read("users", "?username=" + userName, function (response) {
                 if (response.status === 200) {
                     $scope.deletingMember = response.data;
                 }
@@ -84,7 +84,7 @@
             });
         };
         $scope.updateMember = function () {
-            dataService.update("users", $scope.editingMember.userName, $scope.editingMember, function (response) {
+            dataService.update("users", "?username=" + $scope.editingMember.userName, $scope.editingMember, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjen korisnik!");
                     //console.log("UPDATED");
@@ -97,7 +97,7 @@
             });
         };
         $scope.deleteMember = function () {
-            dataService.remove("users", $scope.deletingMember.userName, function (response) {
+            dataService.remove("users", "?username=" + $scope.deletingMember.userName, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno obrisan korisnik!");
                     //console.log("Deleted");

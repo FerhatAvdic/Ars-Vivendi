@@ -11,7 +11,7 @@
         var authentication = {
             isAuth: false,
             userName: '',
-            useRefreshToken: true,
+            useRefreshToken: false,
             userRole: '',
             userFirstName: ''
         };
@@ -32,6 +32,8 @@
                     return response;
                 });
         };
+        var firstName = "";
+        var role = "";
 
         var login = function (loginData) {
 
@@ -42,7 +44,6 @@
 
             $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshToken: true });
-
 
                 console.log("login response", response.data);
                 authentication.isAuth = true;
@@ -67,10 +68,14 @@
 
         var fillAuthData = function () {
             var authData = localStorageService.get('authorizationData');
+            console.log(localStorageService.get('authorizationData'));
             if (authData) {
                 authentication.isAuth = true;
                 authentication.userName = authData.userName;
                 authentication.useRefreshToken = authData.useRefreshToken;
+                $rootScope.userRole = authData.localRole;
+                authentication.userRole = authData.localRole;
+                authentication.userFirstName = authData.localName;
             }
         };
 
@@ -100,7 +105,7 @@
 
             $http.get(apiSource + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: response.data.userName, refreshToken: "", useRefreshTokens: false });
 
                 console.log(response.data);
                 authentication.isAuth = true;
@@ -109,6 +114,8 @@
 
                 deferred.resolve(response);
                 console.log('Pada ovdje');
+            }, function (result) {
+                deferred.resolve(result);
             });
 
             return deferred.promise;
