@@ -255,7 +255,7 @@
             else
                 $scope.userInfo.day = "" +$scope.userInfo.day;
             // get month
-            $scope.userInfo.month = $scope.userInfo.dateOfBirth.getMonth();
+            $scope.userInfo.month = $scope.userInfo.dateOfBirth.getMonth()+1;
             if ($scope.userInfo.month < 10)
                 $scope.userInfo.month = "0" + $scope.userInfo.month;
             else
@@ -267,6 +267,10 @@
 
         function findCountry(country) {
             return country.number === $scope.userInfo.phoneNumber.substring(0, 4);
+        };
+
+        $scope.showDates = function () {
+
         };
 
 
@@ -293,7 +297,8 @@
 
         $scope.updatePersonalInfo = function () {
             $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
-            $scope.userInfo.dateOfBirth = new Date($scope.userInfo.year, $scope.userInfo.month, $scope.userInfo.day);
+            var dateString = $scope.userInfo.year + "/" + $scope.userInfo.month + "/" + $scope.userInfo.day;
+            $scope.userInfo.dateOfBirth = new Date(dateString);
             dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
