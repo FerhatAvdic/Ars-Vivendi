@@ -83,6 +83,7 @@
     <Content Include="app\pages\profile\profileController.js" />
     <Content Include="app\pages\singleEvent\singleEvent.html" />
     <Content Include="app\pages\singleEvent\singleEventController.js" />
+    <Content Include="app\pages\singleEvent\singleEventFinances.html" />
     <Content Include="app\services\authenticationInterceptorService.js" />
     <Content Include="app\services\authenticationService.js" />
     <Content Include="app\services\dataService.js" />

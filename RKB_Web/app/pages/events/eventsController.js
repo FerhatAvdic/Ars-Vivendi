@@ -194,7 +194,7 @@
         //EDIT EVENT
         $scope.editingEvent;
         $scope.setEditEvent = function (eventID) {
-            $scope.listEventCategories();
+            $scope.getModalResources();
             dataService.read("events", eventID, function (response) {
                 if (response.status === 200) {
                     $scope.editingEvent = response.data;

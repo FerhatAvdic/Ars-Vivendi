@@ -1772,8 +1772,9 @@ ul {
 }
 
 .new-event-link-icons{
-    width: 20px;
+    width:20px;
     height: 55px;
+    margin-right: 17px;
 }
 .new-event-link{
     height: 55px;

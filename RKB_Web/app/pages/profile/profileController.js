@@ -16,7 +16,7 @@
                 $location.path('/home');
             }
         };
-        var profileID = authenticationService.authentication.userName;
+        var profileID = $routeParams.id;
         var profilePicture = {
             "userName": null,
             "baseImage": null
