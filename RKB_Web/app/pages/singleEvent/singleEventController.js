@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("singleEventController", ['$scope','$sce','$routeParams','dataService', function ($scope,$sce, $routeParams, dataService) {
+    avApp.controller("singleEventController", ['$scope','$sce','$routeParams','dataService','authenticationService', function ($scope,$sce, $routeParams, dataService,authenticationService) {
 
         var eventID = $routeParams.id;
         $scope.getEvent = function (eventID) {
@@ -18,33 +18,18 @@
                 }
             });
         };
-        $scope.uploadedPictures;
-        $scope.listUploaded = function () {
-            console.log($scope.uploadedPictures);
-        };
-        $scope.gallery = [
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/mansilhouette.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-         { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" }
-        ];
+
+        $scope.gallery = { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/mansilhouette.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" };
+        
 
         $scope.currentSlide = 0;
         $scope.nextSlide = function () {
-            if ($scope.currentSlide != $scope.gallery.length - 1) $scope.currentSlide++;
+            if ($scope.currentSlide != $scope.eventPhotos.length - 1) $scope.currentSlide++;
             else $scope.currentSlide = 0;
         };
         $scope.previousSlide = function () {
             if ($scope.currentSlide != 0) $scope.currentSlide--;
-            else $scope.currentSlide = $scope.gallery.length - 1;
+            else $scope.currentSlide = $scope.eventPhotos.length - 1;
         };
         $scope.goToSlide = function (index) {
             $scope.currentSlide = index;
@@ -78,6 +63,84 @@
         };
         $scope.listMembers();
 
+        $scope.initNewComment = function () {
+            $scope.newComment = {
+                "id": 0,
+                "comment": null,
+                "eventId": eventID,
+                "userId": authenticationService.authentication.userName
+            };
+        };
+
+        $scope.initPhotos = function () {
+            $scope.photos = {
+                "id": 0,
+                "eventId": eventID,
+                "imageBaseStrings": new Array()
+            };
+        };
+        $scope.initPhotos();
+
+        $scope.initNewComment();
+        $scope.listComments = function () {
+            dataService.list("usercomments/commentsbyevent/"+eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.comments = response.data;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja komentara");
+                }
+            });
+        };
+        $scope.postComment = function () {
+            dataService.create("usercomments", $scope.newComment, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno postavljen komentar!");
+                    $scope.initNewComment();
+                    $scope.newCommentActive = false;
+                }
+                else {
+                    toastr.error("Greška prilikom postavljanja komentara");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listComments();
+            });
+        };
+
+        $scope.listPhotos = function () {
+            dataService.list("usereventphotos/photosbyevent/" + eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.eventPhotos = response.data;
+                    console.log($scope.eventPhotos);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja slika događaja");
+                }
+            });
+        };
+        $scope.uploadPhotos = function () {
+            console.log($scope.photos.images);
+            $scope.photos.images.forEach(function (item) {
+                $scope.photos.imageBaseStrings.push(item.base64);
+            });
+            console.log($scope.photos);
+            dataService.create("usereventphotos", $scope.photos, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Upoload uspješan!");
+                }
+                else {
+                    toastr.error("Greška prilikom uploada");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listPhotos();
+                $scope.initPhotos();
+            });
+        };
+
         $scope.getEvent(eventID);
+        $scope.listComments();
+        $scope.listPhotos();
     }]);
 }());

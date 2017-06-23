@@ -14,7 +14,7 @@
 
                             </div>
                             <ul class="nav nav-tabs login-tabs profile-tabs">
-                                <li><a data-toggle="tab" href="#stats" target="_self">Aktivnost</a></li>
+                                <li><a data-toggle="tab" href="#stats" target="_self" ng-click="getActivity()">Aktivnost</a></li>
                                 <li class="active"><a data-toggle="tab" href="#personal" target="_self" ng-click="getPersonalInfo()">Lični Podaci</a></li>
                                 <li><a data-toggle="tab" href="#interests" target="_self" ng-click="getInterestInfo()">Interesi</a></li>
                                 <li><a data-toggle="tab" href="#finance" target="_self" ng-click="getMembershipInfo()">Finansije</a></li>
@@ -72,14 +72,14 @@
                                         <div class="row">
                                             <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
                                                 <h3>Komentari</h3>
-                                                <div class="profile-comment-wrap" ng-repeat="comment in stats.comments">
+                                                <div class="profile-comment-wrap" ng-repeat="comment in userComments">
                                                     <div class="profile-comment-options">
                                                         <a href=""><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         <a href=""><i class="fa fa-times" aria-hidden="true"></i></a>
                                                     </div>
-                                                    <a class="profile-comment-event" href="">{{comment.eventName}}</a>
+                                                    <a class="profile-comment-event" ng-href="#!/events/{{comment.eventId}}">{{comment.eventName}}</a>
                                                     <div class="profile-comment-datetime">{{comment.dateTime}}</div>
-                                                    <div class="profile-comment-content">{{comment.content}}</div>
+                                                    <div class="profile-comment-content">{{comment.comment}}</div>
                                                 </div>
                                             </div>
                                         </div>

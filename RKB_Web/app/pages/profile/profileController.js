@@ -516,6 +516,23 @@
             });
         };
 
+        $scope.listUserComments = function () {
+            $scope.statsLoading = true;
+            dataService.list("usercomments/commentsbyuser/" + currentUser.userName+"/", function (response) {
+                if (response.status === 200) {
+                    $scope.userComments = response.data;
+                    $scope.statsLoading = false;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja komentara");
+                }
+            });
+        };
+        $scope.getActivity = function () {
+            $scope.listUserComments();
+        };
+
         $scope.getPersonalInfo();
         checkPath();
         //authenticateUser();

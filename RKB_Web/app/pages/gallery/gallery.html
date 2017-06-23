@@ -1,10 +1,13 @@
 ﻿<div class="gray-wrapper">
     <div class="gallery-wrap">
-        <div class="container">
+        <div class="text-center" ng-show="galleryLoading">
+            <img src="img/spin.gif" />
+        </div>
+        <div class="container" ng-hide="galleryLoading">
             <div class="row">
-                <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" data-toggle="modal" data-target="#eventGalleryModal">
+                <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" data-toggle="modal" data-target="#eventGalleryModal" ng-click="getEventGallery(item.eventId)">
                     <div class="item-in-gallery material-shadow">
-                        <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.eventImg + ')'}"></div>
+                        <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
                     </div>
                 </div>
             </div>
@@ -16,24 +19,27 @@
 <div id="eventGalleryModal" class="modal fade" role="dialog">
     <div class="modal-dialog" id="event-gallery-modal-body">
         <img class="exit-event-gallery"src="/img/exit.png" data-dismiss="modal">
-        <div class="container">
-            <div class="event-gallery-item" ng-repeat="item in gallery" ng-show="$index==currentSlide">
-                <img class="event-gallery-item-bg" ng-src="{{item.eventImg}}">
+        <div class="text-center" ng-show="eventGalleryLoading">
+            <img src="img/spin.gif" />
+        </div>
+        <div class="container" ng-hide="eventGalleryLoading">
+            <div class="event-gallery-item" ng-repeat="item in eventGallery" ng-show="$index==currentSlide">
+                <img class="event-gallery-item-bg" ng-src="{{item.path}}">
                 <div class="row" >
-                    <div class="col-md-1"><div style="padding: 15px 0 15px 15px"><strong>{{currentSlide + 1}}</strong> / {{gallery.length}}</div></div>
+                    <div class="col-md-1"><div style="padding: 15px 0 15px 15px"><strong>{{currentSlide + 1}}</strong> / {{eventGallery.length}}</div></div>
                     <div class="col-md-8">
                         <div class="event-gallery-item-details">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <strong>Datum:</strong> {{item.date}}
+                                    <strong>Datum:</strong> {{eventInfo.startDate | date: 'dd MMMM yyyy'}}
                                 </div>
                                 <div class="col-md-6">
-                                    <strong>Mjesto:</strong> {{item.location}}
+                                    <strong>Mjesto:</strong> {{eventInfo.location}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3"><button class="rectangle-btn pull-right" id="event-gallery-btn">Pređi na Događaj</button></div>
+                    <div class="col-md-3"><button class="rectangle-btn pull-right" id="event-gallery-btn" data-dismiss="modal" ng-click="goToEvent(eventInfo.id)">Pređi na događaj</button></div>
                 </div>
             </div>
         </div>

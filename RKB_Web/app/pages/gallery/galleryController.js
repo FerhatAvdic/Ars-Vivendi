@@ -3,56 +3,64 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("galleryController", ['$scope', function ($scope) {
-
-        $scope.gallery = [
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/mansilhouette.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#007E62" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
-           { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" }
-        ];
-
+    avApp.controller("galleryController", ['$scope', '$location', 'dataService', function ($scope, $location,dataService) {
 
         $scope.currentSlide = 0;
         $scope.nextSlide = function () {
-            if ($scope.currentSlide != $scope.gallery.length - 1) $scope.currentSlide++;
+            if ($scope.currentSlide != $scope.eventGallery.length - 1) $scope.currentSlide++;
             else $scope.currentSlide = 0;
-        }
+        };
         $scope.previousSlide = function () {
             if ($scope.currentSlide != 0) $scope.currentSlide--;
-            else $scope.currentSlide = $scope.gallery.length - 1;
-        }
+            else $scope.currentSlide = $scope.eventGallery.length - 1;
+        };
         $scope.goToSlide = function (index) {
             $scope.currentSlide = index;
-        }
+        };
+
+        $scope.getGallery = function () {
+            $scope.galleryLoading = true;
+            dataService.list("events/gallery", function (response) {
+                if (response.status === 200) {
+                    $scope.gallery = response.data;
+                    $scope.galleryLoading = false;
+                    console.log($scope.gallery);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja slika");
+                }
+            });
+        };
+        $scope.getGallery();
+
+        $scope.getEventGallery = function (eventID) {
+            $scope.eventGalleryLoading = true;
+            dataService.list("usereventphotos/photosbyevent/" + eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.eventGallery = response.data;
+                    console.log($scope.eventGallery);
+                    $scope.eventGalleryLoading = false;
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja slika događaja");
+                }
+            });
+            dataService.read("events", eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.eventInfo = response.data;
+                    console.log($scope.eventInfo);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja događaja");
+                    console.log("ERROR: ", response);
+                }
+            });
+
+            $scope.goToEvent = function (eventID) {
+                $location.path('/events/' + eventID);
+            };
+        };
     }]);
 }());
