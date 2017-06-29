@@ -5,9 +5,16 @@
         </div>
         <div class="container" ng-hide="galleryLoading">
             <div class="row">
-                <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" data-toggle="modal" data-target="#eventGalleryModal" ng-click="getEventGallery(item.eventId)">
-                    <div class="item-in-gallery material-shadow">
-                        <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
+                <div class="col-md-12" ng-repeat="category in eventCategories">
+                    <div class="gallery-heading" ng-style="{'background-color':category.categoryColor}"><h4>{{category.name}}</h4></div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" ng-if="item.eventCategoryId===category.id"
+                             data-toggle="modal" data-target="#eventGalleryModal" ng-click="getEventGallery(item.eventId)">
+
+                            <div class="item-in-gallery material-shadow">
+                                <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

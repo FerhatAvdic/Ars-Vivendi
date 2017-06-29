@@ -110,7 +110,7 @@
         //EDIT CATEGORY
         $scope.editingCategory;
         $scope.setEditCategory = function (category) {
-            $scope.editingCategory = category;
+            $scope.editingCategory = angular.copy(category);
         };
         $scope.cancelEditCategory = function () {
             $scope.editingCategory = null;
@@ -359,6 +359,47 @@
 
         $scope.goToEvent = function (eventID) {
             $location.path('/events/' + eventID);
+        };
+
+        /************************************ SIGNUPS *************************************/
+        var signupUpdateModel = {
+            id: 0,
+            applicationStatus: null,
+            eventPrice: null
+        };
+        $scope.listSignups = function () {
+            $scope.signupsLoading = true;
+            dataService.list("userevents", function (response) {
+                if (response.status === 200) {
+                    $scope.signups = response.data
+                    $scope.signupsEdit = angular.copy($scope.signups);
+                    $scope.signupsLoading = false;
+                    console.log($scope.signups);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja prijava");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.updateSignups = function () {
+            $scope.signupsEdit.forEach(function (item, index) {
+                if (!angular.equals(item, $scope.signups[index]))
+                    dataService.update("userevents", item.id,item, function (response) {
+                        if (response.status === 200) {
+                            toastr.success("Uspješno ažuriranje prijave za " +item.userFullName);
+                        }
+                        else {
+                            var updateSuccessful = false;
+                            toastr.error("Greška prilikom izmjene događaja");
+                            console.log("ERROR: ", response);
+                        }
+                    });
+            });
+        };
+        $scope.cancelSignupChanges = function () {
+            $scope.signupsEdit = null;
+            $scope.signups = null;
         };
 
         /*CALENDAR*/

@@ -74,12 +74,17 @@
                                                 <h3>Komentari</h3>
                                                 <div class="profile-comment-wrap" ng-repeat="comment in userComments">
                                                     <div class="profile-comment-options">
-                                                        <a href=""><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href=""><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                        <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                        <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                     </div>
                                                     <a class="profile-comment-event" ng-href="#!/events/{{comment.eventId}}">{{comment.eventName}}</a>
-                                                    <div class="profile-comment-datetime">{{comment.dateTime}}</div>
-                                                    <div class="profile-comment-content">{{comment.comment}}</div>
+                                                    <div class="profile-comment-datetime">{{comment.commentDate | date:'dd MMMM yyyy, H:mm'}}</div>
+                                                    <div ng-hide="editCommentActive && comment.id ===editingComment.id" class="profile-comment-content">{{comment.comment}}</div>
+                                                    <div ng-show="editCommentActive && comment.id ===editingComment.id">
+                                                        <textarea class="form-control profile-comment-edit" ng-model="editingComment.comment"></textarea>
+                                                        <button class="btn btn-default" ng-click="cancelEditComment()">Zatvori</button>
+                                                        <button class="btn btn-primary" ng-click="updateUserComment()">Izmijeni</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -177,8 +182,10 @@
             <label>Objašnjenje:</label>
             <textarea class="form-control" rows="2"></textarea>
         </div>-->
-                                                    <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
+                                                <div class="text-right">
                                                     <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
+                                                    <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
+                                                </div>
                                                 </div>
                                         </div>
                                     </div>
@@ -190,61 +197,68 @@
                                 </div>
                                 <div ng-hide="interestsLoading || categoriesLoading">
                                     <div class="row">
-                                        <div class="profile-interests-wrap">
-                                            <div class="profile-interest-options"> <!--ng-show="userRole === 'Admin'">-->
-                                                    <button data-toggle="modal" data-target="#newInterestCategoryModal" class="btn btn-primary" >Nova kategorija</button>
-                                                    <button data-toggle="modal" data-target="#newInterestModal" class="btn btn-primary">Nova karakteristika</button>
-                                            </div>
-                                            <div class="panel-group" id="accordion">
-                                                <div class="panel panel-default" ng-repeat="category in interestCategories">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
-                                                                {{category.categoryName}}
-                                                            </a>
-                                                                <a href="">
-                                                                    <i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#newInterestModal" ng-click="initCategory(category)"></i>
-                                                                </a>
-                                                                <a href="">
-                                                                    <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestCategoryModal" ng-click="setEditingCategory(category)"></i>
-                                                                </a>
-                                                                <a href="">
-                                                                    <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestCategoryModal" ng-click="setDeletingCategory(category)"></i>
-                                                                </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="{{'collapse' + $index}}" class="panel-collapse collapse">
-                                                        <!--ng-class='{in:$first}'-->
-                                                        <div class="panel-body">
-                                                            <ul class="row profile-interests-category">
-                                                                <li class="col-md-offset-1" ng-repeat="interest in allInterests">
-                                                                    <div class="checkbox" ng-show="interest.categoryId===category.id">
-                                                                        <label><input type="checkbox" ng-model="interest.checked">{{interest.name}}</label>
-                                                                        <a href="">
-                                                                            <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestModal" ng-click="setEditingInterest(interest)"></i>
-                                                                        </a>
-                                                                        <a href="">
-                                                                            <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestModal" ng-click="setDeletingInterest(interest)"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-                                                                <!--<li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in interests">
-                                                <div class="category-item">
-                                                    <div class="category-item-img" ng-click="interest.value=!interest.value"
-                                                         ng-style="{'background-image': 'url(' + interest.img + ')'}">
-                                                    </div>
-                                                    <div class="checkbox category-item-label">
-                                                        <label><input type="checkbox" ng-model="interest.value" value="">{{interest.name}}</label>
-                                                    </div>
+                                        <!--<div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">-->
+                                            <div class="profile-interests-wrap">
+                                                <div class="profile-interest-options text-right">
+                                                    <!--ng-show="userRole === 'Admin'">-->
+                                                    <button ng-if="userRole === 'Admin'" data-toggle="modal" data-target="#newInterestCategoryModal" class="btn btn-primary">Nova kategorija</button>
+                                                    <button ng-if="userRole === 'Admin'" data-toggle="modal" data-target="#newInterestModal" class="btn btn-primary">Nova karakteristika</button>
                                                 </div>
-                                            </li>-->
-                                                            </ul>
+                                                <div class="panel-group" id="accordion">
+                                                    <div class="panel panel-default" ng-repeat="category in interestCategories">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
+                                                                    {{category.categoryName}}
+                                                                </a>
+                                                                <div class="pull-right" ng-if="userRole === 'Admin'">
+                                                                    <a href="">
+                                                                        <i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#newInterestModal" ng-click="initCategory(category)"></i>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestCategoryModal" ng-click="setEditingCategory(category)"></i>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestCategoryModal" ng-click="setDeletingCategory(category)"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        <div id="{{'collapse' + $index}}" class="panel-collapse collapse">
+                                                            <!--ng-class='{in:$first}'-->
+                                                            <div class="panel-body">
+                                                                <ul class="row profile-interests-category">
+                                                                    <li ng-repeat="interest in allInterests">
+                                                                        <div class="checkbox" ng-class="{'check-hover': userRole === 'Admin'}" ng-if="interest.categoryId===category.id" ng-mouseenter="enterInterest=true;" ng-mouseleave="enterInterest=false;">
+                                                                            <label><input type="checkbox" ng-model="interest.checked">{{interest.name}}</label>
+                                                                            <a href="" class="pull-right" ng-show="enterInterest" ng-if="userRole === 'Admin'">
+                                                                                <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestModal" ng-click="setDeletingInterest(interest)"> </i>
+                                                                            </a>
+                                                                            <a href="" class="pull-right" style="margin-right: 5px;" ng-show="enterInterest" ng-if="userRole === 'Admin'">
+                                                                                <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestModal" ng-click="setEditingInterest(interest)"> </i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </li>
+                                                                    <!--<li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in interests">
+                                    <div class="category-item">
+                                        <div class="category-item-img" ng-click="interest.value=!interest.value"
+                                             ng-style="{'background-image': 'url(' + interest.img + ')'}">
+                                        </div>
+                                        <div class="checkbox category-item-label">
+                                            <label><input type="checkbox" ng-model="interest.value" value="">{{interest.name}}</label>
+                                        </div>
+                                    </div>
+                                </li>-->
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        
+
                                                     </div>
                                                 </div>
+                                                <button class="btn btn-primary pull-right" ng-click="updateInterests()">Spasi</button>
                                             </div>
-                                            <button class="btn btn-primary" ng-click="updateInterests()">Spasi</button>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -536,6 +550,28 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteInterest()">Potvrdi</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeletingInterest()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Deleting COMMENT MODAL-->
+<div id="deletingCommentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje komentara</h4>
+            </div>
+            <div class="modal-body">
+                <p>Da li ste sigurni da želite obrisati komentar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteUserComment()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeleteComment()">Zatvori</button>
             </div>
         </div>
 

@@ -107,6 +107,48 @@
                 $scope.listComments();
             });
         };
+        $scope.setEditComment = function (comment) {
+            $scope.editingComment = null;
+            $scope.editingComment = angular.copy(comment);
+            $scope.editCommentActive = true;
+        };
+        $scope.cancelEditComment = function () {
+            $scope.editingComment = null;
+            $scope.editCommentActive = false;
+        }
+        $scope.updateUserComment = function () {
+            dataService.update("usercomments", $scope.editingComment.id, $scope.editingComment, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno izmijenjen komentar!");
+                }
+                else {
+                    toastr.error("Greška prilikom izmjene komentara");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listComments();
+                $scope.editingComment = null;
+                $scope.editCommentActive = false;
+            });
+        };
+        $scope.setDeleteComment = function (comment) {
+            $scope.deletingComment = angular.copy(comment);
+        };
+        $scope.cancelDeleteComment = function () {
+            $scope.deletingComment = null;
+        };
+        $scope.deleteUserComment = function () {
+            dataService.remove("usercomments", $scope.deletingComment.id, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno obrisan komentar!");
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja komentara");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listComments();
+                $scope.deletingComment = null;
+            });
+        }
 
         $scope.listPhotos = function () {
             dataService.list("usereventphotos/photosbyevent/" + eventID, function (response) {
@@ -136,6 +178,22 @@
                 }
                 $scope.listPhotos();
                 $scope.initPhotos();
+            });
+        };
+
+        $scope.eventSignUpCard = {
+            "id": 0,
+            "eventID": eventID
+        };
+        $scope.eventSignUp = function () {
+            dataService.create("userevents", $scope.eventSignUpCard, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Prijava na događaj uspješna!");
+                }
+                else {
+                    toastr.error("Greška prilikom prijave na događaj");
+                    console.log("ERROR: ", response);
+                }
             });
         };
 

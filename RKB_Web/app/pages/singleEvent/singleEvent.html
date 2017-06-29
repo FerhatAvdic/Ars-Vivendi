@@ -29,13 +29,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-if="event.applyCriteria">
                             <h4><i class="fa fa-exclamation" aria-hidden="true"></i> Kriterij za prijavu:</h4>
                             <p>{{event.applyCriteria}}</p>
                         </div>
                         <ul class="single-event-options">
-                            <li><button class="rectangle-btn">Finansije</button></li>
-                            <li><button class="rectangle-btn">Prijava</button></li>
+                            <li><button class="btn btn-success">Finansije</button></li>
+                            <li><button class="btn btn-success" data-toggle="modal" data-target="#eventSignUpModal">Prijava</button></li>
                         </ul>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                                 {{event.description}}
                             </p>
                         </div>
-                        <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive embed-responsive-16by9" ng-if="event.applyCriteria">
                             <iframe class="embed-responsive-item" ng-src="{{event.trustedVideoLink}}"></iframe>
                         </div>
-                        <div>
+                        <div ng-if="event.eventLinks.length > 0">
                             <h4><i class="fa fa-external-link" aria-hidden="true"></i> Popratni Linkovi:</h4>
                             <div class="row">
                                 <div class="new-event-links" ng-repeat="link in event.eventLinks" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
@@ -75,14 +75,14 @@
                             <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.path + ')'}"></div>
                         </div>
                     </div>
-                    <div class="col-md-12"><button class="rectangle-btn rectangle-btn-outline-dark pull-right" data-toggle="modal" data-target="#singleEventUploadModal" >Upload slika</button></div>
+                    <div class="col-md-12"><button class="btn btn-primary pull-right" data-toggle="modal" data-target="#singleEventUploadModal" >Upload slika</button></div>
                 </div>
 
                 <h3>Komentari</h3>
                 <div class="form-group"><textarea class="form-control new-comment" placeholder="Napiši komentar..." ng-click="newCommentActive=true" ng-model="newComment.comment"></textarea></div>
                 <ul class="comment-options" ng-show="newCommentActive===true">
-                    <li><button class="rectangle-btn rectangle-btn-outline-dark" ng-click="newCommentActive=false">Zatvori</button></li>
-                    <li><button class="rectangle-btn" ng-click="postComment()">Potvrdi</button></li>
+                    <li><button class="btn btn-default" ng-click="newCommentActive=false">Zatvori</button></li>
+                    <li><button class="btn btn-success" ng-click="postComment()">Potvrdi</button></li>
                 </ul>
 
                 <div class="media" ng-repeat="comment in comments">
@@ -90,8 +90,18 @@
                         <img src="/img/womansilhouette.jpg" class="media-object" style="width:60px">
                     </div>
                     <div class="media-body">
+                        <div class="profile-comment-options">
+                            <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        </div>
                         <h4 class="media-heading">{{comment.userId}}</h4>
-                        <p>{{comment.comment}}</p>
+                        <div class="profile-comment-datetime">{{comment.commentDate | date:'dd MMMM yyyy, H:mm'}}</div>
+                        <div ng-hide="editCommentActive && comment.id ===editingComment.id" class="profile-comment-content">{{comment.comment}}</div>
+                        <div ng-show="editCommentActive && comment.id ===editingComment.id">
+                            <textarea class="form-control profile-comment-edit" ng-model="editingComment.comment"></textarea>
+                            <button class="btn btn-default" ng-click="cancelEditComment()">Zatvori</button>
+                            <button class="btn btn-primary" ng-click="updateUserComment()">Izmijeni</button>
+                        </div>
                     </div>
                 </div>
 
@@ -139,6 +149,51 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="uploadPhotos()">Potvrdi</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Deleting COMMENT MODAL-->
+<div id="deletingCommentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje komentara</h4>
+            </div>
+            <div class="modal-body">
+                <p>Da li ste sigurni da želite obrisati komentar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteUserComment()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeleteComment()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--EVENT SIGN UP MODAL-->
+<div id="eventSignUpModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Prijava na događaj</h4>
+            </div>
+            <div class="modal-body">
+                <p>Molimo potvrdite vašu prijavu.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="eventSignUp()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelSignupChanges()">Odustani</button>
             </div>
         </div>
 

@@ -518,7 +518,7 @@
 
         $scope.listUserComments = function () {
             $scope.statsLoading = true;
-            dataService.list("usercomments/commentsbyuser/" + currentUser.userName+"/", function (response) {
+            dataService.list("usercomments/commentsbyuser/" + $routeParams.id+"/", function (response) {
                 if (response.status === 200) {
                     $scope.userComments = response.data;
                     $scope.statsLoading = false;
@@ -529,6 +529,48 @@
                 }
             });
         };
+        $scope.setEditComment = function (comment) {
+            $scope.editingComment = null;
+            $scope.editingComment = angular.copy(comment);
+            $scope.editCommentActive = true;
+        };
+        $scope.cancelEditComment = function () {
+            $scope.editingComment = null;
+            $scope.editCommentActive = false;
+        }
+        $scope.updateUserComment = function () {
+            dataService.update("usercomments", $scope.editingComment.id, $scope.editingComment, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno izmijenjen komentar!");
+                }
+                else {
+                    toastr.error("Greška prilikom izmjene komentara");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listUserComments();
+                $scope.editingComment = null;
+                $scope.editCommentActive = false;
+            });
+        };
+        $scope.setDeleteComment = function (comment) {
+            $scope.deletingComment = angular.copy(comment);
+        };
+        $scope.cancelDeleteComment = function () {
+            $scope.deletingComment = null;
+        };
+        $scope.deleteUserComment = function () {
+            dataService.remove("usercomments", $scope.deletingComment.id, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno obrisan komentar!");
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja komentara");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listUserComments();
+                $scope.deletingComment = null;
+            });
+        }
         $scope.getActivity = function () {
             $scope.listUserComments();
         };
@@ -536,6 +578,8 @@
         $scope.getPersonalInfo();
         checkPath();
         //authenticateUser();
+
+        
 
     }]);
 }());

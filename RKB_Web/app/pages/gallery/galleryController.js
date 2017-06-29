@@ -5,6 +5,22 @@
 
     avApp.controller("galleryController", ['$scope', '$location', 'dataService', function ($scope, $location,dataService) {
 
+        $scope.listEventCategories = function () {
+            $scope.categoriesLoading = true;
+            dataService.list("eventcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.eventCategories = response.data
+                    $scope.categoriesLoading = false;
+                    console.log("EVENT CATEGORIES: ", $scope.eventCategories);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.listEventCategories();
+
         $scope.currentSlide = 0;
         $scope.nextSlide = function () {
             if ($scope.currentSlide != $scope.eventGallery.length - 1) $scope.currentSlide++;
