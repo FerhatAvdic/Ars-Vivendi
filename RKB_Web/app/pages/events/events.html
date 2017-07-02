@@ -13,16 +13,19 @@
                         </div>
                         <!--<div class="col-md-2" ng-show="userRole === 'Admin'">
                 </div>-->
-                        <div class="col-md-4" ng-hide="userRole === 'Admin'">
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" ng-if="userRole === 'Admin'">
                             <button class="btn btn-default" ng-click="activeFilter=true">Aktuelni</button>
                             <button class="btn btn-default" ng-click="activeFilter=false">Završeni</button>
                             <button class="btn btn-default" ng-click="resetFilters()">Prikaži sve</button>
                         </div>
-                        <div class="col-md-4" ng-show="userRole === 'Admin'">
+                        <div class="col-md-4" ng-if="userRole === 'Admin'">
                             <button data-toggle="modal" data-target="#newEventModal" class="btn btn-success pull-right" ng-click="getModalResources()">Novi Događaj</button>
                             <button data-toggle="modal" data-target="#newCategoryModal" class="btn btn-success pull-right" style="margin-right:5px;"  ng-click="resetNewCategory()">Nova Kategorija</button>
+                        </div>
+                        <div class="col-md-10 text-right" ng-if="userRole !== 'Admin'">
+                            <button class="btn btn-default" ng-click="activeFilter=true">Aktuelni</button>
+                            <button class="btn btn-default" ng-click="activeFilter=false">Završeni</button>
+                            <button class="btn btn-default" ng-click="resetFilters()">Prikaži sve</button>
                         </div>
                     </div>
                 </div>
@@ -69,7 +72,7 @@
                                 <div data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true" style="text-shadow:1px 1px 0 #333;"></i></div>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a href="" ng-href="#!/events/{{event.id}}">Pregled</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#signupsModal" ng-click="listSignups()">Prijave</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#signupsModal" ng-click="listSignups(event.id)">Prijave</a></li>
                                     <li><a href="" ng-href="#!/events/{{event.id}}/finances">Finansije</a></li>
                                     <li><a href="" data-toggle="modal" data-target="#editEventModal" ng-click="setEditEvent(event.id)">Izmjena</a></li>
                                     <li><a href="" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDeleteEvent(event.id)">Brisanje</a></li>
@@ -446,9 +449,9 @@
     </div>
 </div>
 
-<!--DELETE CATEGORY MODAL-->
+<!--SIGNUPS MODAL-->
 <div id="signupsModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 60%;">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -461,21 +464,25 @@
                     <table class="table profile-stats-table">
                         <thead>
                             <tr>
-                                <th>Ime i Prezime</th>
-                                <th class="text-right">Cijena</th>
+                                <th>Ime</th>
+                                <th>Prezime</th>
+                                <th>Cijena</th>
+                                <th>Bilješka</th>
                                 <th class="text-right">Status Prijave</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="profile-events-wrap" ng-repeat="signup in signupsEdit">
-                                <td><p>{{signup.userFullName}}</p></td>
-                                <td class="text-right"><input class="form-control" type="number" ng-model="signup.eventPrice"/></td>
+                                <td><p>{{signup.firstName}}</p></td>
+                                <td><p>{{signup.lastName}}</p></td>
+                                <td><input class="form-control" type="number" ng-model="signup.eventPrice"/></td>
+                                <td><textarea class="form-control" ng-model="signup.note" style="max-width:100%;"></textarea></td>
                                 <td class="text-right">
                                     <select class="form-control" ng-model="signup.applicationStatus">
                                         <option value="" disabled>---Odaberite---</option>
+                                        <option value="Prihvacena">Prihvacena</option>
                                         <option value="Cekanje">Cekanje</option>
                                         <option value="Otkazana">Otkazana</option>
-                                        <option value="Prihvacena">Prihvacena</option>
                                         <option value="Odbijena">Odbijena</option>
                                     </select>
                                 </td>

@@ -16,29 +16,25 @@
                             <table class="table members-table">
                                 <thead>
                                     <tr>
-                                        <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
+                                        <th ng-repeat="heading in headings" ng-click="sortApplicationsBy(heading)">
                                             {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
                                         </th>
                                         <th>Opcije</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--<tr ng-repeat="member in members | filter : columnFilters |
-                                        orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">-->
-                                    <tr ng-repeat="member in (filteredMembers = (members | filter : columnFilters)) |
-                                        orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">
-                                        <td>{{member.firstName}}</td>
-                                        <td>{{member.lastName}}</td>
-                                        <td>{{member.phoneNumber}}</td>
-                                        <td>{{member.email}}</td>
-                                        <td>{{member.joinStatus}}</td>
-                                        <td>{{member.eventPrice}}</td>
-                                        <td>{{member.payment}}</td>
-                                        <td>{{member.due}}</td>
+                                    <tr ng-repeat="application in eventApplications | orderBy:propertyName:reverse">
+                                        <td>{{application.firstName}}</td>
+                                        <td>{{application.lastName}}</td>
+                                        <td>{{application.phoneNumber}}</td>
+                                        <td>{{application.email}}</td>
+                                        <td>{{application.eventPrice}}</td>
+                                        <td>{{application.totalAmountPayed}}</td>
+                                        <td>{{application.totalAmountOwe}}</td>
                                         <td>
-                                            <a ng-href="#!/profile/{{member.userName}}"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                            <a ng-click="setEditMember(member.userName)" data-toggle="modal" data-target="#editMemberFinanceModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                            <a ng-click="setDeleteMember(member.userName)" data-toggle="modal" data-target="#deleteMemberModal"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                            <a ng-href="#!/profile/{{application.userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                            <a ng-click="setPayment(application)" data-toggle="modal" data-target="#addPaymentModal"><i class="fa fa-edit" aria-hidden="true"></i></a>                                        
+                                            <a ng-click="listPayments(application)" data-toggle="modal" data-target="#listPaymentsModal"><i class="fa fa-list" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -56,15 +52,15 @@
 
 
 
-<!--NEW EVENT MODAL-->
-<div id="editMemberFinanceModal" class="modal fade" role="dialog">
+<!--ADD PAYMENT MODAL-->
+<div id="addPaymentModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Finansije događaja</h4>
+                <h4 class="modal-title">Nova Uplata</h4>
             </div>
             <div class="modal-body">
                 <!--<div style="margin: 15px;">-->
@@ -72,48 +68,99 @@
                     <div class="container-fluid">
                         <ul class="row">
                             <li class="col-md-12 form-group">
-                                <p>IME i PREZIME</p>
+                                <p><strong>Ime i Prezime:</strong> {{currentApplication.firstName +" "+ currentApplication.lastName}}</p>
                             </li>
                             <li class="col-md-12 form-group">
-                                <p>Broj telefona Email adresa</p>
+                                <p><strong>Kontakt telefon:</strong> {{currentApplication.phoneNumber}}</p>
+                                <p><strong>Email:</strong> {{currentApplication.email}}</p>
                             </li>
-                            <li class="col-md-12 form-group">
+                            <!--<li class="col-md-12 form-group">
                                 <label>Status Prijave:</label>
-                                <select class="form-control" ng-model="newEvent.eventCategoryId">
+                                <select class="form-control" ng-model="currentApplication.">
                                     <option value="" disabled>---Odaberite---</option>
                                     <option value="nacekanju">Na cekanju</option>
                                     <option value="prihvaceno">Prihvaceno</option>
                                     <option value="odbijeno">Odbijeno</option>
                                     <option value="otkazano">Otkazano</option>
                                 </select>
-                            </li>
-                            <li class="col-md-12 form-group">
+                            </li>-->
+                            <li class="col-md-4 form-group">
                                 <label>Dogovorena cijena: </label>
-                                <input type='number' class="form-control" />
+                                <input type='number' class="form-control" ng-model="currentApplication.eventPrice" disabled/>
                             </li>
-                            <li class="col-md-12 form-group">
-                                <label>Zabilješka: </label>
-                                <textarea class="form-control" ></textarea>
-                            </li>
-                            <li class="col-md-6 form-group">
+                            <li class="col-md-4 form-group">
                                 <label>Isplaćeno: </label>
-                                <input type='number' class="form-control" />
+                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountPayed" disabled/>
                             </li>
-                            <li class="col-md-6 form-group">
+                            <li class="col-md-4 form-group">
                                 <label>Dug: </label>
-                                <input type='number' class="form-control" />
+                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountOwe" disabled/>
                             </li>
                             <li class="col-md-12 form-group">
-                                <label>Nova uplata: </label>
-                                <input type='number' class="form-control" />
+                                <label>Iznos uplate: </label>
+                                <input type='number' class="form-control" ng-model="newPayment.amountPayed"/>
                             </li>
+                            <!--<li class="col-md-12 form-group">
+                                <label>Bilješka: </label>
+                                <textarea class="form-control" ng-model="newPayment.note" style="max-width:100%;"></textarea>
+                            </li>-->
                         </ul>
                     </div>
                 </form>
                 <!--</div>-->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="createEvent()">Spasi</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addPayment()">Spasi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="initNewPayment()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--LIST PAYMENTS MODAL-->
+<div id="listPaymentsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Lista uplata za {{currentApplication.firstName +" "+ currentApplication.lastName}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <p><strong>Cijena: </strong> {{currentApplication.eventPrice}} | <strong>Isplaćeno: </strong> {{currentApplication.totalAmountPayed}} | <strong>Dug: </strong>{{currentApplication.totalAmountOwe}}</p>
+                        <p><strong>Kontakt telefon: </strong> {{currentApplication.phoneNumber}}</p>
+                        <p><strong>Email: </strong> {{currentApplication.email}}</p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table profile-stats-table">
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Uplata</th>
+                                <!--<th>Bilješka</th>-->
+                                <th class="text-right">Opcije</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="profile-events-wrap" ng-repeat="payment in paymentsByUser">
+                                <td>{{payment.datePayed | date:'dd MMMM yy'}}</td>
+                                <td>{{payment.amountPayed}}</td>
+                                <!--<td>{{payment.note}}</td>-->
+                                <td class="text-right">
+                                    <a href="" ng-click="deletePayment(payment.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
             </div>
         </div>

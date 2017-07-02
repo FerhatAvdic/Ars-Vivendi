@@ -367,9 +367,9 @@
             applicationStatus: null,
             eventPrice: null
         };
-        $scope.listSignups = function () {
+        $scope.listSignups = function (eventID) {
             $scope.signupsLoading = true;
-            dataService.list("userevents", function (response) {
+            dataService.list("userevents/"+eventID, function (response) {
                 if (response.status === 200) {
                     $scope.signups = response.data
                     $scope.signupsEdit = angular.copy($scope.signups);
@@ -387,7 +387,7 @@
                 if (!angular.equals(item, $scope.signups[index]))
                     dataService.update("userevents", item.id,item, function (response) {
                         if (response.status === 200) {
-                            toastr.success("Uspješno ažuriranje prijave za " +item.userFullName);
+                            toastr.success("Uspješno ažuriranje prijave za " +item.firstName +" "+ item.lastName);
                         }
                         else {
                             var updateSuccessful = false;

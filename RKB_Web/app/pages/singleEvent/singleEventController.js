@@ -47,21 +47,7 @@
             { "name": "dug", "value": "due" }
         ];
 
-        $scope.listMembers = function () {
-            $scope.membersLoading = true;
-            dataService.list("users", function (response) {
-                if (response.status === 200) {
-                    $scope.members = response.data;
-                    $scope.membersTotal = response.data.length;
-                    $scope.membersLoading = false;
-                }
-                else {
-                    console.log("ERROR: ", response);
-                    toastr.error("Greška prilikom pribavljanja korisnika");
-                }
-            });
-        };
-        $scope.listMembers();
+       
 
         $scope.initNewComment = function () {
             $scope.newComment = {
@@ -86,6 +72,7 @@
             dataService.list("usercomments/commentsbyevent/"+eventID, function (response) {
                 if (response.status === 200) {
                     $scope.comments = response.data;
+                    console.log($scope.comments);
                 }
                 else {
                     console.log("ERROR: ", response);

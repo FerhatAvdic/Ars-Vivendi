@@ -342,7 +342,7 @@
         };
 
         $scope.updatePersonalInfo = function () {
-            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.phoneNumber;
+            $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
             var dateString = $scope.userInfo.year + "/" + $scope.userInfo.month + "/" + $scope.userInfo.day;
             $scope.userInfo.dateOfBirth = new Date(dateString);
             dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {

@@ -152,7 +152,12 @@
                 <div class="col-md-9">
                     <div class="box-members-list">
                         <p class="members-table-title">Članovi</p>
-                        <a class="material-round-btn" id="add-member-btn" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                        <div class="members-table-options text-right">
+                            <button ng-hide="showCheckboxes" class="btn btn-primary" ng-click="showCheckboxes=true">Slanje emaila</button>
+                            <button ng-show="showCheckboxes" class="btn btn-default" ng-click="showCheckboxes=false">Odustani</button>
+                            <button ng-show="showCheckboxes" class="btn btn-primary">Piši email</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal">Dodaj člana</button>
+                        </div>
                         <div class="box-members-list-wrap">
                             <ul id="top-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
                         </div>
@@ -160,6 +165,7 @@
                             <table class="table members-table">
                                 <thead>
                                     <tr>
+                                        <th ng-if="showCheckboxes" style="width: 15px; padding: 20px 5px;"><input type="checkbox" /></th>
                                         <th>Profil</th>
                                         <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
                                             {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
@@ -172,6 +178,7 @@
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">-->
                                     <tr ng-repeat="member in (filteredMembers = (members | filter : columnFilters)) |
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">
+                                        <th ng-if="showCheckboxes" style="width: 15px; padding: 20px 5px;"><input type="checkbox" ng-model="member.checked" /></th>
                                         <td ng-if="member.gender === undefined"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
                                         <td ng-if="member.gender === 'Musko'"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
                                         <td ng-if="member.gender === 'Zensko'"><img class="member-profile-picture" src="/img/womansilhouette.jpg" /></td>

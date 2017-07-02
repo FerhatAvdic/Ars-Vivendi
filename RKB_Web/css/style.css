@@ -1157,6 +1157,9 @@ ul {
     padding: 20px 0;
     margin: 0;
 }
+.members-table-options{
+    margin: 10px;
+}
 .members-table{
     margin: 0;
 }
