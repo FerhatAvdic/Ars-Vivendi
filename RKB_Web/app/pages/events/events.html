@@ -6,7 +6,7 @@
                 <img src="img/spin.gif" />
             </div>
             <div ng-hide="isloading()">
-                <div class="events-settings">
+                <div class="events-settings" ng-if="userRole === 'Admin'">
                     <div class="row events-heading">
                         <div class="col-md-2">
                             <h3 style="margin:0; line-height:40px;">DOGAĐAJI</h3>
@@ -16,7 +16,7 @@
                             <button class="btn btn-default" ng-click="activeFilter=false">Završeni</button>
                             <button class="btn btn-default" ng-click="resetFilters()">Prikaži sve</button>
                         </div>-->
-                        <div class="col-md-10" ng-if="userRole === 'Admin'">
+                        <div class="col-md-10" >
                             <button data-toggle="modal" data-target="#newEventModal" class="btn btn-success pull-right" ng-click="getModalResources()">Novi Događaj</button>
                             <button data-toggle="modal" data-target="#newCategoryModal" class="btn btn-success pull-right" style="margin-right:5px;"  ng-click="resetNewCategory()">Nova Kategorija</button>
                         </div>

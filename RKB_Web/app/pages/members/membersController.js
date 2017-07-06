@@ -3,7 +3,34 @@
 
     var avApp = angular.module("avApp");
     avApp.controller("membersController", ['$rootScope','$scope','$sce', '$filter','$location', 'dataService', 'authenticationService', function ($rootScope, $scope,$sce, $filter,$location, dataService, authenticationService) {
+        $scope.dateOfBirth = dataService.dates;
+        $scope.countries = dataService.countries;
+        $scope.selected = [];
 
+        $scope.toggleSelection = function (subCategory) {
+            var idx = $scope.selected.indexOf(subCategory);
+
+            if (idx > -1) {
+                $scope.selected.splice(idx, 1);
+            }
+            else {
+                $scope.selected.push(subCategory);
+            }
+            console.log("Selected:", $scope.selected);
+        };
+        var dayError = false;
+        var validateDate = function () {
+            var day = parseInt($scope.dateOfBirth.day);
+            var month = parseInt($scope.dateOfBirth.month);
+            var year = parseInt($scope.dateOfBirth.year);
+
+            if (month === 4 || month === 6 || month === 9 || month === 11)
+                if (day > 30) dayError = true;
+            if (month === 2 && year % 4 === 0)
+                if (day > 29) dayError = true;
+            if (month === 2 && year % 4 > 0)
+                if (day > 28) dayError = true;
+        };
         $scope.filterActive = false;
         var authenticateAdmin = function (){
             if ($rootScope.userRole === "Admin") return;
@@ -14,6 +41,7 @@
         };
         $scope.selectedEventID = null;
         $scope.emailContent = "";
+        $scope.emailSubject = "";
         $scope.newMember = {
             "firstName": "",
             "lastName": "",
@@ -23,7 +51,8 @@
             "employment": "",
             "email": "",
             "phoneNumber": "",
-            "userName": ""
+            "userName": "",
+            "roleName":"applicationUser"
         };
 
         $scope.initNewUserList = function () {
@@ -85,7 +114,51 @@
             });
         };
         $scope.createMember = function () {
-            console.log($scope.newMember);
+            //begin validation
+            var exitFunction = false;
+            //date validation
+            dayError = false;
+            validateDate();
+            if (dayError) {
+                toastr.warning("Unesen je pogrešan datum");
+                exitFunction = true;
+            }
+            else {
+                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                $scope.newMember.dateOfBirth = new Date(selectedDate);
+            }
+            //phone validation
+            if (!/^[0-9]+$/.test($scope.newMember.phoneNumber)) {
+                toastr.warning("Broj telefona smije imati samo cifre");
+                exitFunction = true;
+            }
+            else {
+                $scope.newMember.phoneNumber = $scope.selectedCountry.number + $scope.newMember.phoneNumber;
+            }
+            //empty space validation
+            if ($scope.newMember.userName.trim() === "" ||
+                $scope.newMember.password.trim() === "" ||
+                $scope.newMember.confirmPassword.trim() === "" ||
+                $scope.newMember.firstName.trim() === "" ||
+                $scope.newMember.lastName.trim() === "" ||
+                $scope.newMember.email.trim() === "" ||
+                $scope.newMember.address.trim() === "" ||
+                $scope.newMember.city.trim() === "" ||
+                $scope.newMember.phoneNumber.trim() === "" ||
+                $scope.newMember.gender.trim() === "" ||
+                $scope.newMember.employment.trim() === "" ||
+                $scope.newMember.healthStatus.trim() === "") {
+                toastr.warning("Jedno ili više polja je prazno");
+                exitFunction = true;
+            }
+            //characteristics validation
+            if ($scope.selected === [] || $scope.selected.length < $scope.interestCategories.length) {
+                toastr.warning("Unesite sve karakteristike");
+                exitFunction = true;
+            }
+            if (exitFunction) return;
+            //end of validation
+            $scope.newMember.subCategoriesList = $scope.selected;
             dataService.create("users", $scope.newMember, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno napravljen novi korisnik!");
@@ -210,6 +283,9 @@
         $scope.prepareEmail = function () {
             $scope.showCheckboxes = true;
             $scope.listEvents();
+            $scope.members.forEach(function (member) {
+                member.checked = false;
+            });
         };
         $scope.cancelPrepareEmail = function () {
             $scope.initNewUserList();
@@ -236,8 +312,8 @@
                     $scope.newUserList.userIds = response.data;
                     console.log($scope.newUserList.userIds);
 
-                    $scope.members.forEach(function (interest) {
-                        interest.checked = false;
+                    $scope.members.forEach(function (member) {
+                        member.checked = false;
                     });
                     $scope.members.forEach(function (member) {
                         $scope.newUserList.userIds.forEach(function (selectedUser) {
@@ -313,6 +389,29 @@
             });
         };
         $scope.getAllInterests();
+
+
+        $scope.sendEmail = function () {
+            var email = {
+                "emailSubject": $scope.emailSubject,
+                "emailContent": $scope.emailContent,
+                "usernames": []
+            };
+            $scope.members.forEach(function (member, index, array) {
+                if (member.checked===true) email.usernames.push(member.userName);
+            });
+            console.log(email);
+
+            dataService.create("groupemail", email, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno slanje emaila!");
+                }
+                else {
+                    toastr.error("Greška prilikom slanja emaila");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
 
         //DATEPICKER
         $scope.today = function () {

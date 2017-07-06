@@ -289,5 +289,28 @@
             });
         };
 
+        $scope.sendEmail = function () {
+            var email = {
+                "emailSubject": $scope.emailSubject,
+                "emailContent": $scope.emailContent,
+                "usernames": []
+            };
+            $scope.newUserList.userIds.forEach(function (user, index, array) {
+                email.usernames.push(user.userId);
+            });
+            console.log($scope.newUserList.userIds);
+            console.log(email);
+
+            dataService.create("groupemail", email, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno slanje emaila!");
+                }
+                else {
+                    toastr.error("Greška prilikom slanja emaila");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
     }]);
 }());

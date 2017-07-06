@@ -17,7 +17,7 @@
                                 <li><a data-toggle="tab" href="#stats" target="_self" ng-click="getActivity()">Aktivnost</a></li>
                                 <li class="active"><a data-toggle="tab" href="#personal" target="_self" ng-click="getPersonalInfo()">Lični Podaci</a></li>
                                 <li><a data-toggle="tab" href="#interests" target="_self" ng-click="getInterestInfo()">Interesi</a></li>
-                                <li><a data-toggle="tab" href="#finance" target="_self" ng-click="getMembershipInfo()">Finansije</a></li>
+                                <li><a data-toggle="tab" href="#finance" target="_self" ng-click="prepareFinances()">Finansije</a></li>
                             </ul>
 
                         </div>
@@ -30,7 +30,7 @@
                                 </div>
                                 <div ng-hide="statsLoading">
                                     <div class="stats-wrap">
-                                        <div class="row">
+                                        <!--<div class="row">
                                             <div class="col-md-offset-1 col-md-10">
                                                 <div class="row">
                                                     <div class="wrap-activity-counter">
@@ -45,7 +45,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="row">
                                             <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
                                                 <h3>Historija Događaja</h3>
@@ -73,7 +73,7 @@
                                             <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
                                                 <h3>Komentari</h3>
                                                 <div class="profile-comment-wrap" ng-repeat="comment in userComments">
-                                                    <div class="profile-comment-options">
+                                                    <div class="profile-comment-options" ng-if="userRole === 'Admin'" >
                                                         <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                     </div>
@@ -282,52 +282,56 @@
             </div>
         </div>-->
                             <div id="finance" class="tab-pane fade">
-
-                                <div class="stats-wrap">
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
-                                            <div class="panel panel-default" id="finance-panel">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-7 col-xs-12">
-                                                            <h2>Ars Vivendi Članarina</h2>
-                                                            <p>Uplata na datum: {{membershipInfo.paymentDate | date: 'dd-MM-yyyy'}}</p>
-                                                            <p>Važi do: {{membershipInfo.validToDate | date: 'dd-MM-yyyy'}}</p>
-                                                        </div>
-                                                        <div class="col-md-5 col-xs-12">
-                                                            <!--<button class="rectangle-btn" id="extend-membership-btn">Produži Članstvo</button>-->
-                                                            <div style="margin-top:50px" ng-hide="membershipInfo.isMembershipActive">
-                                                                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                                                    <input type="hidden" name="cmd" value="_s-xclick">
-                                                                    <input type="hidden" name="hosted_button_id" value="LX2Z8RNSPGAJN">
-                                                                    <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                                                                    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                                                                </form>
+                                <div class="profile-interests-wrap text-center" ng-show="financesLoading">
+                                    <img src="img/spin.gif" />
+                                </div>
+                                <div ng-hide="financesLoading">
+                                    <div class="stats-wrap">
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-md-10 col-xs-offset-1 col-xs-10">
+                                                <div class="panel panel-default" id="finance-panel">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-7 col-xs-12">
+                                                                <h2>Ars Vivendi Članarina</h2>
+                                                                <p>Uplata na datum: {{membershipInfo.paymentDate | date: 'dd-MM-yyyy'}}</p>
+                                                                <p>Važi do: {{membershipInfo.validToDate | date: 'dd-MM-yyyy'}}</p>
+                                                            </div>
+                                                            <div class="col-md-5 col-xs-12">
+                                                                <!--<button class="rectangle-btn" id="extend-membership-btn">Produži Članstvo</button>-->
+                                                                <div style="margin-top:50px" ng-hide="membershipInfo.isMembershipActive">
+                                                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                                                        <input type="hidden" name="hosted_button_id" value="LX2Z8RNSPGAJN">
+                                                                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                                                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <h3>Uplate za događaje</h3>
-                                            <div class="table-responsive">
-                                                <table class="table profile-stats-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Naziv</th>
-                                                            <th class="text-right">Cijena</th>
-                                                            <th class="text-right">Plaćeni Iznos</th>
-                                                            <th class="text-right">Dug</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="profile-events-wrap" ng-repeat="event in stats.attendedEvents">
-                                                            <td><a href="">{{event.name}}</a></td>
-                                                            <td class="text-right">{{event.price}} KM</td>
-                                                            <td class="text-right">{{event.paymentStatus}} KM</td>
-                                                            <td class="text-right">{{(event.price - event.paymentStatus > 0) ? (event.price - event.paymentStatus) + "KM" : "Nema"}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <h3>Uplate za događaje</h3>
+                                                <div class="table-responsive">
+                                                    <table class="table profile-stats-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Naziv</th>
+                                                                <th class="text-right">Cijena</th>
+                                                                <th class="text-right">Plaćeni Iznos</th>
+                                                                <th class="text-right">Dug</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="profile-events-wrap" ng-repeat="item in finances">
+                                                                <td><a href="">{{item.eventName}}</a></td>
+                                                                <td class="text-right">{{item.eventPrice}}</td>
+                                                                <td class="text-right">{{item.amountPayed}}</td>
+                                                                <td class="text-right">{{item.amountOwe}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

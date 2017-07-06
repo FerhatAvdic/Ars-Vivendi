@@ -5,6 +5,7 @@
 
     avApp.controller("singleEventController", ['$scope','$sce','$routeParams','dataService','authenticationService', function ($scope,$sce, $routeParams, dataService,authenticationService) {
 
+        $scope.currentUser = authenticationService.authentication;
         var eventID = $routeParams.id;
         $scope.getEvent = function (eventID) {
             dataService.read("events", eventID, function (response) {
@@ -18,6 +19,32 @@
                 }
             });
         };
+        //$scope.checkIfApplied = function () {
+        //    $scope.userApplications.forEach(function (app, index, array) {
+        //        console.log("app.eventid:", app.eventID, "eventID", eventID);
+        //        if (app.eventID === eventID) return $scope.applied = true;;
+        //    });
+        //    return $scope.applied = false;
+        //};
+        //$scope.listApplications = function () {
+        //    $scope.statsLoading = true;
+        //    console.log("currentuser:", currentUser.userName);
+        //    dataService.list("/userevents/applicationbyuser/" + currentUser.userName + "/", function (response) {
+        //        if (response.status === 200) {
+        //            $scope.userApplications = response.data;
+        //            $scope.statsLoading = false;
+        //            console.log("userapps:",$scope.userApplications);
+        //            $scope.checkIfApplied();
+        //            console.log("applied:",$scope.applied);
+        //        }
+        //        else {
+        //            console.log("ERROR: ", response);
+        //            toastr.error("Greška prilikom pribavljanja prijava");
+        //        }
+        //    });
+        //};
+        //$scope.listApplications();
+        
 
         $scope.gallery = { eventName: "Lorem Ipsum is simply dummy text", eventImg: "/img/mansilhouette.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" };
         
@@ -176,6 +203,9 @@
             dataService.create("userevents", $scope.eventSignUpCard, function (response) {
                 if (response.status === 200) {
                     toastr.success("Prijava na događaj uspješna!");
+                }
+                else if(response.status===400){
+                    toastr.info("Već ste prijavljeni na događaj");
                 }
                 else {
                     toastr.error("Greška prilikom prijave na događaj");

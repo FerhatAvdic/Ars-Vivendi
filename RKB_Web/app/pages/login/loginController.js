@@ -161,8 +161,8 @@
                 $scope.registrationData.dateOfBirth = new Date(selectedDate);
             }
             //phone validation
-            if (/^[0-9]+$/.test($scope.registrationData.phoneNumber)) {
-               toastr.warning("Broj telefona smije imati samo cifre")
+            if (!/^[0-9]+$/.test($scope.registrationData.phoneNumber)) {
+                toastr.warning("Broj telefona smije imati samo cifre");
                exitFunction = true;
             }
             else {

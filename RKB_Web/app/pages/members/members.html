@@ -62,7 +62,7 @@
                                     <button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-o" aria-hidden="true"></i> Dodaj člana</button>
                                 </div>
                                 <div class="members-table-options text-right" ng-show="showCheckboxes">
-                                    <button class="btn btn-primary pull-right" style="margin-left: 5px;" data-toggle="modal" data-target="#emailModal" ng-disabled="!selectedEventID || !newUserList.groupId">Napiši email</button>
+                                    <button class="btn btn-primary pull-right" style="margin-left: 5px;" data-toggle="modal" data-target="#emailModal" >Napiši email</button>
 
                                     <select class="form-control pull-right" ng-model="newUserList.groupId" style="width:auto; display:inline; " ng-change="listGroupUsers(newUserList.groupId)">
                                         <option value="" disabled>---Odaberite grupu---</option>
@@ -150,45 +150,97 @@
                             <input type="text" placeholder="Ime" ng-model="newMember.firstName"/>
                             <input type="text" placeholder="Prezime" ng-model="newMember.lastName"/>
                             <input type="text" placeholder="Email" ng-model="newMember.email"/>
+
                             <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
                         </div>
                         <div id="postani-clan-2" class="tab-pane fade">
                             <div class="login-line"><p>Lični podaci</p></div>
-                            <div class="login-line">
-                                <label>Datum Rođenja: </label>
-                                <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="newMember.dateOfBirth" ng-click="open1()"
-                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            <div class="login-line" style="overflow:hidden;">
+                                <div class="row" style="padding-top: 10px;">
+                                    <div class="col-md-3"><label style="line-height:20px;">Datum Rođenja: </label></div>
+                                    <div class="col-md-3">
+                                        <select type="text" class="form-control" ng-model="dateOfBirth.day">
+                                            <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select type="text" class="form-control" ng-model="dateOfBirth.month">
+                                            <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select type="text" class="form-control" ng-model="dateOfBirth.year">
+                                            <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <input type="text" placeholder="Grad" ng-model="newMember.address"/>
-                            <input type="text" placeholder="Telefon" ng-model="newMember.phoneNumber"/>
+                            <input type="text" placeholder="Grad" ng-model="newMember.city" />
+                            <input type="text" placeholder="Adresa" ng-model="newMember.address" />
+                            <div class="login-line" style="overflow: hidden;">
+                                <div class="row">
+                                    <div class="col-md-2"><label>Telefon:</label></div>
+                                    <div class="col-md-4" style="margin-top: 15px;">
+                                        <select class="form-control" ng-model="selectedCountry">
+                                            <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6"><input type="text" placeholder="Broj" ng-model="newMember.phoneNumber" /></div>
+                                </div>
+                            </div>
                             <fieldset id="genderRadio">
                                 <ul class="login-line">
                                     <li><label>Spol: </label></li>
-                                    <li><label>Muški </label><input type="radio" value="musko" name="genderRadio" ng-model="newMember.gender"> </li>
-                                    <li><label>Ženski </label><input type="radio" value="zensko" name="genderRadio" ng-model="newMember.gender"></li>
+                                    <li><label class="radio-inline"><input type="radio" value="musko" ng-model="newMember.gender" name="genderRadio">Muško</label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="zensko" ng-model="newMember.gender" name="genderRadio">Žensko</label></li>
                                 </ul>
                             </fieldset>
                             <fieldset id="employmentRadio">
                                 <ul class="login-line">
-                                    <li><label>Zaposlen/a: </label></li>
-                                    <li><label>Da </label><input type="radio" value="Zaposlen" name="employmentRadio" ng-model="newMember.employment"></li>
-                                    <li><label>Ne </label><input type="radio" value="Nezaposlen" name="employmentRadio" ng-model="newMember.employment"></li>
+                                    <li><label>Radni status: </label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="newMember.employment" name="employmentRadio">Zaposlen/a</label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="newMember.employment" name="employmentRadio">Nezaposlen/a</label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="student" ng-model="newMember.employment" name="employmentRadio">Student</label></li>
                                 </ul>
                             </fieldset>
-                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border"  data-dismiss="modal"  target="_self"ng-click="createMember()">Dodaj Člana</button>
+                            <fieldset id="healthStatusRadio">
+                                <ul class="login-line">
+                                    <li><label>Nivo fizičke spreme: </label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="nizak" ng-model="newMember.healthStatus" name="healthStatusRadio">Nizak</label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="srednji" ng-model="newMember.healthStatus" name="healthStatusRadio">Srednji</label></li>
+                                    <li><label class="radio-inline"><input type="radio" value="visok" ng-model="newMember.healthStatus" name="healthStatusRadio">Visok</label></li>
+                                </ul>
+                            </fieldset>
+                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border"  data-toggle="tab" href="#postani-clan-3" target="_self">Dalje</button>
                         </div>
-                        <!--<div id="postani-clan-3" class="tab-pane fade">
-                            <div class="login-line"><p>Odaberi sportove koje član voli</p></div>
-                            <ul class="login-list">
-                                <li><label>Ronjenje</label><input type="checkbox" /></li>
-                                <li><label>Rafting</label><input type="checkbox" /></li>
-                                <li><label>Biciklizam</label><input type="checkbox" /></li>
-                                <li><label>Planinarenje</label><input type="checkbox" /></li>
-                                <li><label>Skijanje</label><input type="checkbox" /></li>
-                            </ul>
-                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway modal-border" data-toggle="tab" href="#postani-clan-1" target="_self" data-dismiss="modal" ng-click="createMember()">Dodaj Člana</button>
-                        </div>-->
+                        <div id="postani-clan-3" class="tab-pane fade">
+                            <div class="login-line"><p>Odaberi svoje karakteristike (najmanje po jednu)</p></div>
+                            <div class="text-center" ng-show="isloading()">
+                                <img src="img/spin.gif" />
+                            </div>
+                            <div class="custom-accordion" id="accordion" ng-hide="isloading()">
+                                <div class="panel panel-default" ng-repeat="category in interestCategories">
+                                    <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
+                                        <h4 class="panel-title">
+                                            <span>
+                                                {{category.categoryName}}
+                                            </span>
+                                        </h4>
+                                    </div>
+                                    <div id="{{'collapse' + $index}}" class="panel-collapse collapse" ng-class='{in:$first}'>
+                                        <div class="panel-body">
+                                            <ul class="login-list">
+                                                <li class="login-list-checkbox-label" ng-repeat="subCategory in subCategories" ng-click="toggleSelection(subCategory)" ng-if="subCategory.categoryId===category.id">
+                                                    <label>{{subCategory.name}}</label>
+                                                    <input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" target="_self" ng-click="createMember()">Napravi Člana</button>
+                        </div>
                     </div>
                 </div>
 
@@ -261,10 +313,12 @@
                 <div class="form-group">
                     <button class="btn btn-default" ng-click="getCurrentEvent()">Ubaci sadržaj događaja</button>
                 </div>
+                <div class="form-group"><label>Naslov emaila:</label><input class="form-control" type="text" ng-value="emailSubject" /></div>
+
                 <text-angular ng-model="emailContent"></text-angular>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Pošalji</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Pošalji</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
             </div>
         </div>

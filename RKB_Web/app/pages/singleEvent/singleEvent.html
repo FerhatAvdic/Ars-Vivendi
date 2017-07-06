@@ -12,11 +12,9 @@
                             </li>
                             <li class="form-group">
                                 <h4><i class="fa fa-tag" aria-hidden="true"></i> Kategorija:</h4>
-                                <p>Lorem Ipsum</p>
+                                <p>{{event.eventCategoryName}}</p>
                             </li>
                         </ul>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -29,13 +27,27 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za članove: </h4>
+                                    <p>{{event.membersPrice}} {{event.eventCurrency}}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za goste: </h4>
+                                    <p>{{event.nonMembersPrice}} {{event.eventCurrency}}</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group" ng-if="event.applyCriteria">
                             <h4><i class="fa fa-exclamation" aria-hidden="true"></i> Kriterij za prijavu:</h4>
                             <p>{{event.applyCriteria}}</p>
                         </div>
                         <ul class="single-event-options">
-                            <li><button class="btn btn-success">Finansije</button></li>
-                            <li><button class="btn btn-success" data-toggle="modal" data-target="#eventSignUpModal">Prijava</button></li>
+                            <li><button class="btn btn-success" data-toggle="modal" data-target="#eventSignUpModal">Prijava na događaj</button></li>
                         </ul>
                     </div>
                 </div>
@@ -47,7 +59,7 @@
                                 {{event.description}}
                             </p>
                         </div>
-                        <div class="embed-responsive embed-responsive-16by9" ng-if="event.applyCriteria">
+                        <div class="embed-responsive embed-responsive-16by9" ng-if="event.trustedVideoLink">
                             <iframe class="embed-responsive-item" ng-src="{{event.trustedVideoLink}}"></iframe>
                         </div>
                         <div ng-if="event.eventLinks.length > 0">
@@ -90,7 +102,7 @@
                         <img ng-src="{{comment.profilePicturePath}}" class="media-object" style="width:60px; max-height:60px;">
                     </div>
                     <div class="media-body">
-                        <div class="profile-comment-options">
+                        <div class="profile-comment-options" ng-if="userRole === 'Admin' || currentUser.userName.toUpperCase() === comment.userName.toUpperCase()">
                             <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </div>
@@ -194,6 +206,28 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="eventSignUp()">Potvrdi</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelSignupChanges()">Odustani</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--EVENT Cancel SIGN UP MODAL-->
+<div id="eventCancelSignUpModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Odjava sa događaja</h4>
+            </div>
+            <div class="modal-body">
+                <p>Molimo potvrdite odjavu sa događaja</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" >Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Odustani</button>
             </div>
         </div>
 

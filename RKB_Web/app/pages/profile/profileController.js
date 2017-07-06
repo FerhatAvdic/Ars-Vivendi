@@ -28,7 +28,19 @@
         };
 
 
-
+        $scope.getFinances = function () {
+            $scope.financesLoading = true;
+            dataService.read("finances", profileID +"/", function (response) {
+                if (response.status === 200) {
+                    $scope.finances = response.data;
+                    console.log($scope.finances);
+                    $scope.financesLoading = false;
+                }
+                else {
+                    toastr.error("Greska prilikom pribavljanja finansija");
+                };
+            });
+        };
         
         var addNewPayment = function (paymentData) {
             dataService.create("paypal", paymentData, function (response) {
@@ -199,16 +211,23 @@
             });
         };
 
-        $scope.getMembershipInfo = function() {
+        $scope.getMembershipInfo = function () {
+            $scope.financesLoading = true;
             dataService.read("memberships", "?username=" + profileID, function (response){
                 if (response.status === 200) {
                     $scope.membershipInfo = response.data;
                     console.log($scope.membershipInfo);
+                    $scope.financesLoading = false;
                 }
                 else {
                     toastr.error("Greska prilikom dobavljanja podataka o clanstvu.");
                 };
             });
+        };
+
+        $scope.prepareFinances = function () {
+            $scope.getMembershipInfo();
+            $scope.getFinances();
         };
 
         $scope.setEditingInterest = function (Interest) {
@@ -574,6 +593,20 @@
         $scope.getActivity = function () {
             $scope.listApplications();
             $scope.listUserComments();
+            $scope.getActivityStats();
+        };
+        $scope.getActivityStats = function () {
+            $scope.statsLoading = true;
+            dataService.read("activities", profileID + "/", function (response) {
+                if (response.status === 200) {
+                    $scope.activityStats = response.data[0].summaryList;
+                    console.log($scope.activityStats);
+                    $scope.statsLoading = false;
+                }
+                else {
+                    toastr.error("Greska prilikom pribavljanja finansija");
+                };
+            });
         };
         
         $scope.listApplications = function () {
