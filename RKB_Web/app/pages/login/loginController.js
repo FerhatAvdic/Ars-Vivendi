@@ -7,6 +7,9 @@
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService',
         function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
+            //var source = "http://localhost:57792/";
+            var source = "http://api-dive.ntg.ba/";
+
             $scope.dateOfBirth = dataService.dates;
             $scope.countries = dataService.countries;
             $scope.selectedCountry = $scope.countries[0];
@@ -215,7 +218,7 @@
         var getUserRole = function () {
             var authData = localStorageService.get('authorizationData');
             $http({
-                method: 'get', url: 'http://localhost:57792/' + 'api/userroles', headers: { 'Authorization': 'Bearer ' + authData.token }
+                method: 'get', url: source + 'api/userroles', headers: { 'Authorization': 'Bearer ' + authData.token }
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data.userRole;
                 authenticationService.authentication.userFirstName = response.data.userFirstName;
