@@ -91,6 +91,7 @@
     <Content Include="authComplete.html" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="css\colorpicker.min.css" />
+    <Content Include="css\textAngular.css" />
     <Content Include="css\toastr.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -129,6 +130,9 @@
     <Content Include="libs\bootstrap-colorpicker-module.min.js" />
     <Content Include="libs\moment.js" />
     <Content Include="libs\moment.min.js" />
+    <Content Include="libs\textAngular-rangy.min.js" />
+    <Content Include="libs\textAngular-sanitize.min.js" />
+    <Content Include="libs\textAngular.min.js" />
     <Content Include="libs\toastr-options.js" />
     <Content Include="libs\toastr.min.js" />
     <Content Include="libs\ui-bootstrap-tpls-2.5.0.min.js" />

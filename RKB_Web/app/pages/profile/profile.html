@@ -53,16 +53,16 @@
                                                     <table class="table profile-stats-table">
                                                         <thead>
                                                             <tr>
-                                                                <th>Naziv</th>
-                                                                <th class="text-right">Datum</th>
-                                                                <th class="text-right">Lokacija</th>
+                                                                <th>Naziv Događaja</th>
+                                                                <th class="text-right">Datum prijave</th>
+                                                                <th class="text-right">Status prijave</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr class="profile-events-wrap" ng-repeat="event in stats.attendedEvents">
-                                                                <td><a href="">{{event.name}}</a></td>
-                                                                <td class="text-right">13-Mart-2017</td>
-                                                                <td class="text-right">Sarajevo</td>
+                                                            <tr class="profile-events-wrap" ng-repeat="application in userApplications">
+                                                                <td><a href="#!/events/{{application.eventId}}"><b>{{application.eventName}}</b></a></td>
+                                                                <td class="text-right">{{application.applicationDate | date: 'dd MMMM yy'}}</td>
+                                                                <td class="text-right">{{application.applicationStatus}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

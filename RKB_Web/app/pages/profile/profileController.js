@@ -572,7 +572,23 @@
             });
         }
         $scope.getActivity = function () {
+            $scope.listApplications();
             $scope.listUserComments();
+        };
+        
+        $scope.listApplications = function () {
+            $scope.statsLoading = true;
+            dataService.list("/userevents/applicationbyuser/" + $routeParams.id + "/", function (response) {
+                if (response.status === 200) {
+                    $scope.userApplications = response.data;
+                    $scope.statsLoading = false;
+                    console.log($scope.userApplications);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja prijava");
+                }
+            });
         };
 
         $scope.getPersonalInfo();

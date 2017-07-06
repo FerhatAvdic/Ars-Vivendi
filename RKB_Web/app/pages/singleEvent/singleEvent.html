@@ -85,16 +85,16 @@
                     <li><button class="btn btn-success" ng-click="postComment()">Potvrdi</button></li>
                 </ul>
 
-                <div class="media" ng-repeat="comment in comments">
-                    <div class="media-left">
-                        <img src="/img/womansilhouette.jpg" class="media-object" style="width:60px">
+                <div class="media profile-comment-wrap" ng-repeat="comment in comments">
+                    <div class="media-left" style="padding-right:25px;">
+                        <img ng-src="{{comment.profilePicturePath}}" class="media-object" style="width:60px; max-height:60px;">
                     </div>
                     <div class="media-body">
                         <div class="profile-comment-options">
                             <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </div>
-                        <h4 class="media-heading">{{comment.userId}}</h4>
+                        <h5 class="media-heading">{{comment.firstName + " "+ comment.lastName}}</h5>
                         <div class="profile-comment-datetime">{{comment.commentDate | date:'dd MMMM yyyy, H:mm'}}</div>
                         <div ng-hide="editCommentActive && comment.id ===editingComment.id" class="profile-comment-content">{{comment.comment}}</div>
                         <div ng-show="editCommentActive && comment.id ===editingComment.id">

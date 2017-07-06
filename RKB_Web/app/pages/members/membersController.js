@@ -2,8 +2,9 @@
     'use strict';
 
     var avApp = angular.module("avApp");
-    avApp.controller("membersController", ['$rootScope','$scope', '$filter','$location', 'dataService', 'authenticationService', function ($rootScope, $scope, $filter,$location, dataService, authenticationService) {
+    avApp.controller("membersController", ['$rootScope','$scope','$sce', '$filter','$location', 'dataService', 'authenticationService', function ($rootScope, $scope,$sce, $filter,$location, dataService, authenticationService) {
 
+        $scope.filterActive = false;
         var authenticateAdmin = function (){
             if ($rootScope.userRole === "Admin") return;
             else {
@@ -11,7 +12,8 @@
                 $location.path('/home');
             }
         };
-        
+        $scope.selectedEventID = null;
+        $scope.emailContent = "";
         $scope.newMember = {
             "firstName": "",
             "lastName": "",
@@ -22,6 +24,17 @@
             "email": "",
             "phoneNumber": "",
             "userName": ""
+        };
+
+        $scope.initNewUserList = function () {
+            $scope.newUserList = {
+                "id": 0,
+                "userIds": null,
+                "groupId": null
+            };
+            $scope.members.forEach(function (member, index, array) {
+                member.checked = undefined;
+            });
         };
         /*SET FOR HTTP*/
         $scope.editingMember = null;
@@ -62,6 +75,8 @@
                     $scope.members = response.data;
                     $scope.membersTotal = response.data.length;
                     $scope.membersLoading = false;
+                    console.log("Members;");
+                    console.log($scope.members);
                 }
                 else {
                     console.log("ERROR: ", response);
@@ -151,14 +166,7 @@
         $scope.pageSize = $scope.pageSizeOptions[0].value;
 
         //FILTERS
-        $scope.isCollapsed = [
-        { "panel1": true },
-        { "panel2": true },
-        { "panel3": true },
-        { "panel4": true },
-        { "panel5": true },
-        { "panel6": true }
-        ];
+        $scope.isCollapsed = [];
         $scope.checkedInterests ={
             "skiing": false,
             "hiking": false,
@@ -166,9 +174,12 @@
             "diving": false,
             "rafting": false
         }
-
-        $scope.columnFilters = {
+        $scope.togglePanel=function(index){
+            if (!$scope.isCollapsed.index || $scope.isCollapsed.index === false) $scope.isCollapsed.index = true;
+            else $scope.isCollapsed.index = false;
         };
+
+        $scope.columnFilters = {};
         $scope.updateInterests = function (propertyName) {
             if ("undefined" === typeof $scope.columnFilters.interests)
                 $scope.columnFilters.interests = {};
@@ -179,6 +190,129 @@
                 if (angular.equals($scope.columnFilters.interests, {}))
                     delete $scope.columnFilters.interests;
         }
+
+        //EVENTS
+
+        $scope.listEvents = function () {
+            $scope.eventsLoading = true;
+            dataService.list("events", function (response) {
+                if (response.status === 200) {
+                    $scope.avevents = response.data
+                    $scope.eventsLoading = false;
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja događaja");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+
+        $scope.prepareEmail = function () {
+            $scope.showCheckboxes = true;
+            $scope.listEvents();
+        };
+        $scope.cancelPrepareEmail = function () {
+            $scope.initNewUserList();
+            $scope.selectedEventID = null;
+            $scope.showCheckboxes = false;
+        };
+
+        $scope.listGroups = function (eventID) {
+            dataService.read("usereventgroups", eventID, function (response) {
+                if (response.status === 200) {
+                    $scope.eventGroups = response.data;
+                    console.log($scope.eventGroups);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja grupa");
+                }
+            });
+        };
+
+        $scope.listGroupUsers = function (groupId) {
+            dataService.read("usergroups", groupId, function (response) {
+                if (response.status === 200) {
+                    $scope.newUserList.userIds = response.data;
+                    console.log($scope.newUserList.userIds);
+
+                    $scope.members.forEach(function (interest) {
+                        interest.checked = false;
+                    });
+                    $scope.members.forEach(function (member) {
+                        $scope.newUserList.userIds.forEach(function (selectedUser) {
+                            if (member.firstName === selectedUser.firstName && member.lastName === selectedUser.lastName)
+                                member.checked = true;
+                        });
+                    });
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja članova grupe");
+                }
+            });
+        };
+
+        $scope.getCurrentEvent = function () {
+            dataService.read("events", $scope.selectedEventID, function (response) {
+                if (response.status === 200) {
+                    $scope.copyEvent = response.data;
+                    $scope.copyEvent.trustedVideoLink = $sce.trustAsResourceUrl($scope.copyEvent.videoLink);
+                    console.log($scope.copyEvent);
+                    $scope.emailContent =
+                        $scope.emailContent +
+                        "<p><b>Naziv Događaja:</b> " + $scope.copyEvent.name + "</p>" +
+                        "<p><b>Lokacija:</b> " + $scope.copyEvent.location + "</p>" +
+                        "<p><b>Kategorija:</b> " + $scope.copyEvent.eventCategoryName + "</p>" +
+                        "<p><b>Registracije do:</b> " + $scope.copyEvent.registrationDeadline.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Početak:</b> " + $scope.copyEvent.startDate.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Kraj:</b> " + $scope.copyEvent.endDate.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Valuta:</b> " + $scope.copyEvent.eventCurrency + "</p>" +
+                        "<p><b>Cijena za članove:</b> " + $scope.copyEvent.membersPrice + "</p>" +
+                        "<p><b>Cijena za goste:</b> " + $scope.copyEvent.nonMembersPrice + "</p>" +
+                        "<p><b>Nivo fizičke spreme:</b> " + $scope.copyEvent.applyCriteria + "</p>" +
+                        "<p><b>Link slike:</b> " + $scope.copyEvent.imagePath + "</p>" +
+                        "<p><b>Link videa:</b> " + $scope.copyEvent.videoLink + "</p>" +
+                        "<p><b>Opis događaja:</b> " + $scope.copyEvent.description + "</p>";
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("greška prilikom pribavljanja događaja");
+                }
+            });
+        };
+
+
+        $scope.getCategories = function () {
+            $scope.categoriesLoading = true;
+            dataService.list("characteristiccategories", function (response) {
+                if (response.status === 200) {
+                    $scope.interestCategories = response.data;
+                    $scope.categoriesLoading = false;
+                    console.log("get categories");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.getCategories();
+
+        $scope.getAllInterests = function () {
+            $scope.subCategoriesLoading = true;
+            dataService.list("Characteristicsubcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.subCategories = response.data;
+                    $scope.subCategoriesLoading = false;
+                    console.log("ALL INTERESTS");
+                    console.log($scope.allInterests);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.getAllInterests();
 
         //DATEPICKER
         $scope.today = function () {

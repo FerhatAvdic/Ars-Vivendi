@@ -1,171 +1,92 @@
 ﻿<div class="gray-wrapper">
     <div class="container">
         <div class="box-members">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Filteri</div>
-                        <div class="panel-body" stlye="padding: 0;">
-                            <div class="col-md-3">
-                                <div class="panel panel-default">
-                                    <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
-                                    <div class="members-filter" uib-collapse="isCollapsed.panel1">
-                                        <ul>
-                                            <li><input type="checkbox" ng-model="checkedInterests.skiing" /><label> Skijanje</label></li>
-                                            <li><input type="checkbox" ng-model="checkedInterests.hiking" /><label> Planinarenje</label></li>
-                                            <li><input type="checkbox" ng-model="checkedInterests.cycling" /><label> Biciklizam</label></li>
-                                            <li><input type="checkbox" ng-model="checkedInterests.diving" /><label> Ronjenje</label></li>
-                                            <li><input type="checkbox" ng-model="checkedInterests.rafting" /><label> Rafting</label></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-3">
-                                <div class="panel panel-default">
-                                    <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Filteri 1</div>
-                                    <div class="members-filter" uib-collapse="isCollapsed.panel2">
-                                        <ul>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="panel panel-default">
-                                    <div class="members-filter-toggle" ng-click="isCollapsed.panel3 = !isCollapsed.panel3">Filteri 2</div>
-                                    <div class="members-filter" uib-collapse="isCollapsed.panel3">
-                                        <ul>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="panel panel-default">
-                                    <div class="members-filter-toggle" ng-click="isCollapsed.panel4 = !isCollapsed.panel4">Filteri 3</div>
-                                    <div class="members-filter" uib-collapse="isCollapsed.panel4">
-                                        <ul>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                            <li><input type="checkbox" /><label> Filter</label></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="text-center" ng-show="membersLoading">
                 <img src="img/spin.gif" />
             </div>
             <div class="row" ng-hide="membersLoading">
                 <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Filteriši po Kolonama</div>
-                        <div class="members-filter" uib-collapse="isCollapsed.panel2">
-                            <div class="form-group">
-                                <select class="form-control" ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select>
-                            </div>                            
-                            <div class="form-group">
-                                <label>Ime:</label>
-                                <input type="text" class="form-control" ng-model="columnFilters.name">
+                    <div class="member-filters" ng-class="{'member-filters-visible':filterActive}">
+                        <div class="member-filters-inner">
+                            <div class="text-center"><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="filterActive=false;">Zatvori</button></div>
+                            <div class="panel panel-default">
+                                <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Filteriši po Kolonama</div>
+                                <div class="members-filter" uib-collapse="isCollapsed.panel2">
+                                    <!--<div class="form-group">
+                    <select class="form-control" ng-model="pageSize" ng-options="pageSizeOption.value as pageSizeOption.name for pageSizeOption in pageSizeOptions"></select>
+                </div>-->
+                                    <div class="form-group">
+                                        <label>Ime:</label>
+                                        <input type="text" class="form-control" ng-model="columnFilters.firstName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Prezime:</label>
+                                        <input type="text" class="form-control" ng-model="columnFilters.lastName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input type="text" class="form-control" ng-model="columnFilters.email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Telefon:</label>
+                                        <input type="text" class="form-control" ng-model="columnFilters.phoneNumber">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adresa:</label>
+                                        <input type="text" class="form-control" ng-model="columnFilters.address">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Prezime:</label>
-                                <input type="text" class="form-control" ng-model="columnFilters.surname">
+                            <div class="panel panel-default" ng-repeat="category in interestCategories">
+                                <div class="members-filter-toggle">{{category.categoryName}}</div>
+                                <div class="members-filter">
+                                    <ul>
+                                        <li class="checkbox" ng-repeat="subCategory in subCategories" ng-if="subCategory.categoryId===category.id">
+                                            <label><input type="checkbox" value="" ng-model="subCategory.checked" ng-change="updateInterests(subCategory.name)">{{subCategory.name}}</label>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <input type="text" class="form-control" ng-model="columnFilters.email">
-                            </div>
-                            <div class="form-group">
-                                <label>Telefon:</label>
-                                <input type="text" class="form-control" ng-model="columnFilters.phone">
-                            </div>
-                            <div class="form-group">
-                                <label>Adresa:</label>
-                                <input type="text" class="form-control" ng-model="columnFilters.address">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="members-filter-toggle" ng-click="isCollapsed.panel1 = !isCollapsed.panel1">Sport</div>
-                        <div class="members-filter" uib-collapse="isCollapsed.panel1">
-                            <ul>
-                                <li class="checkbox">
-                                    <label><input type="checkbox" value="" ng-model="checkedInterests.skiing" ng-change="updateInterests('skiing')">Skijanje</label>
-                                </li>
-                                <li class="checkbox">
-                                    <label><input type="checkbox" value="" ng-model="checkedInterests.hiking" ng-change="updateInterests('hiking')">Planinarenje</label>
-                                </li>
-                                <li class="checkbox">
-                                    <label><input type="checkbox" value="" ng-model="checkedInterests.cycling" ng-change="updateInterests('cycling')">Biciklizam</label>
-                                </li>
-                                <li class="checkbox">
-                                    <label><input type="checkbox" value="" ng-model="checkedInterests.diving" ng-change="updateInterests('diving')">Ronjenje</label>
-                                </li>
-                                <li class="checkbox">
-                                    <label><input type="checkbox" value="" ng-model="checkedInterests.rafting" ng-change="updateInterests('rafting')">Rafting</label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="members-filter-toggle" ng-click="isCollapsed.panel3 = !isCollapsed.panel3">Skijaška Oprema</div>
-                        <div class="members-filter" uib-collapse="isCollapsed.panel3">
-                            <ul>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="members-filter-toggle" ng-click="isCollapsed.panel4 = !isCollapsed.panel4">Zdravstveno Stanje</div>
-                        <div class="members-filter" uib-collapse="isCollapsed.panel4">
-                            <ul>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                                <li class="checkbox"><label><input type="checkbox" value="">Filter</label></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+
+                <div class="col-md-12">
                     <div class="box-members-list">
                         <p class="members-table-title">Članovi</p>
-                        <div class="members-table-options text-right">
-                            <button ng-hide="showCheckboxes" class="btn btn-primary" ng-click="showCheckboxes=true">Slanje emaila</button>
-                            <button ng-show="showCheckboxes" class="btn btn-default" ng-click="showCheckboxes=false">Odustani</button>
-                            <button ng-show="showCheckboxes" class="btn btn-primary">Piši email</button>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal">Dodaj člana</button>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="members-table-options text-right" ng-hide="showCheckboxes">
+                                    <button class="btn btn-default" ng-click="filterActive=!filterActive;"><i class="fa fa-filter" aria-hidden="true"></i> Filteri</button>
+                                    <button class="btn btn-primary" ng-click="prepareEmail()"><i class="fa fa-envelope-o" aria-hidden="true"></i> Priprema emaila</button>
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-o" aria-hidden="true"></i> Dodaj člana</button>
+                                </div>
+                                <div class="members-table-options text-right" ng-show="showCheckboxes">
+                                    <button class="btn btn-primary pull-right" style="margin-left: 5px;" data-toggle="modal" data-target="#emailModal" ng-disabled="!selectedEventID || !newUserList.groupId">Napiši email</button>
+
+                                    <select class="form-control pull-right" ng-model="newUserList.groupId" style="width:auto; display:inline; " ng-change="listGroupUsers(newUserList.groupId)">
+                                        <option value="" disabled>---Odaberite grupu---</option>
+                                        <option ng-repeat="group in eventGroups" ng-value="group.id">{{group.groupName}}</option>
+                                    </select>
+                                    <select class="form-control pull-right" ng-model="selectedEventID" style="width:auto; display:inline;" ng-change="listGroups(selectedEventID)">
+                                        <option value="" disabled>---Odaberite događaj---</option>
+                                        <option ng-repeat="event in avevents" ng-value="event.id">{{event.eventName}}</option>
+                                    </select>
+                                    <button class="btn btn-default pull-right" ng-click="filterActive=!filterActive;"><i class="fa fa-filter" aria-hidden="true"></i> Filteri</button>
+
+                                    <button class="btn btn-default pull-left" ng-click="cancelPrepareEmail()">Odustani</button>
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="box-members-list-wrap">
+                        <!--<div class="box-members-list-wrap">
                             <ul id="top-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
-                        </div>
+                        </div>-->
                         <div class="table-responsive">
                             <table class="table members-table">
                                 <thead>
                                     <tr>
-                                        <th ng-if="showCheckboxes" style="width: 15px; padding: 20px 5px;"><input type="checkbox" /></th>
+                                        <th ng-if="showCheckboxes"><input type="checkbox" /></th>
                                         <th>Profil</th>
                                         <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
                                             {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
@@ -178,7 +99,7 @@
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">-->
                                     <tr ng-repeat="member in (filteredMembers = (members | filter : columnFilters)) |
                                         orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">
-                                        <th ng-if="showCheckboxes" style="width: 15px; padding: 20px 5px;"><input type="checkbox" ng-model="member.checked" /></th>
+                                        <td ng-if="showCheckboxes"><input type="checkbox" ng-model="member.checked" /></td>
                                         <td ng-if="member.gender === undefined"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
                                         <td ng-if="member.gender === 'Musko'"><img class="member-profile-picture" src="/img/mansilhouette.jpg" /></td>
                                         <td ng-if="member.gender === 'Zensko'"><img class="member-profile-picture" src="/img/womansilhouette.jpg" /></td>
@@ -196,9 +117,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="box-members-list-wrap">
+                        <!--<div class="box-members-list-wrap">
                             <ul id="bottom-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -322,5 +243,31 @@
                 <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelDelete()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #FF8235;" data-dismiss="modal" ng-click="deleteMember()">Izbriši Člana</button>
             </div>
         </div>
+    </div>
+</div>
+
+
+<!--Email Modal-->
+<div id="emailModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Slanje emaila</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <button class="btn btn-default" ng-click="getCurrentEvent()">Ubaci sadržaj događaja</button>
+                </div>
+                <text-angular ng-model="emailContent"></text-angular>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Pošalji</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+            </div>
+        </div>
+
     </div>
 </div>

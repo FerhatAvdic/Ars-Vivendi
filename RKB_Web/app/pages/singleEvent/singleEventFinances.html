@@ -8,6 +8,30 @@
                 <div class="col-md-12">
                     <div class="box-members-list">
                         <p class="members-table-title text-left">Finansije događaja:</p>
+                        <div class="members-table-options text-right" ng-if="!showCheckboxes">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#emailModal" ng-click="listGroups()"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email</button>
+                                    <button class="btn btn-primary" ng-click="fillGroup()"><i class="fa fa-user-o" aria-hidden="true"></i> Članovi</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#updateGroupsModal" ng-click="listGroups()"><i class="fa fa-edit" aria-hidden="true"></i> Grupe</button>
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#newGroupModal" ng-click="initNewGroup()"><i class="fa fa-plus" aria-hidden="true"></i> Nova grupa</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="members-table-options" ng-if="showCheckboxes">
+                            <div class="row">
+                                    <div class="col-md-4">
+                                        <select  class="form-control" ng-model="newUserList.groupId" style="width:auto; display:inline; "ng-change="listGroupUsers(newUserList.groupId)">
+                                            <option value="" disabled>---Odaberite grupu---</option>
+                                            <option ng-repeat="group in eventGroups" ng-value="group.id">{{group.groupName}}</option>
+                                        </select>
+                                    </div>
+                                <div class="col-md-8 text-right">
+                                    <button class="btn btn-default" ng-click="cancelFillGroup()">Odustani</button>
+                                    <button class="btn btn-primary" ng-click="updateGroup()">Ažuriraj članove</button>
+                                </div>
+                            </div>
+                        </div>
                         <!--<a class="material-round-btn" id="add-member-btn" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-plus" aria-hidden="true"></i></a>-->
                         <!--<div class="box-members-list-wrap">
                             <ul id="top-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
@@ -16,6 +40,7 @@
                             <table class="table members-table">
                                 <thead>
                                     <tr>
+                                        <th ng-if="showCheckboxes" ng-click="sortApplicationsBy(checkedProperty)"><input type="checkbox" ng-model="checkModel"/></th>
                                         <th ng-repeat="heading in headings" ng-click="sortApplicationsBy(heading)">
                                             {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
                                         </th>
@@ -24,6 +49,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="application in eventApplications | orderBy:propertyName:reverse">
+                                        <td ng-if="showCheckboxes"><input type="checkbox" ng-model="application.checked"/></td>
                                         <td>{{application.firstName}}</td>
                                         <td>{{application.lastName}}</td>
                                         <td>{{application.phoneNumber}}</td>
@@ -74,16 +100,6 @@
                                 <p><strong>Kontakt telefon:</strong> {{currentApplication.phoneNumber}}</p>
                                 <p><strong>Email:</strong> {{currentApplication.email}}</p>
                             </li>
-                            <!--<li class="col-md-12 form-group">
-                                <label>Status Prijave:</label>
-                                <select class="form-control" ng-model="currentApplication.">
-                                    <option value="" disabled>---Odaberite---</option>
-                                    <option value="nacekanju">Na cekanju</option>
-                                    <option value="prihvaceno">Prihvaceno</option>
-                                    <option value="odbijeno">Odbijeno</option>
-                                    <option value="otkazano">Otkazano</option>
-                                </select>
-                            </li>-->
                             <li class="col-md-4 form-group">
                                 <label>Dogovorena cijena: </label>
                                 <input type='number' class="form-control" ng-model="currentApplication.eventPrice" disabled/>
@@ -100,10 +116,10 @@
                                 <label>Iznos uplate: </label>
                                 <input type='number' class="form-control" ng-model="newPayment.amountPayed"/>
                             </li>
-                            <!--<li class="col-md-12 form-group">
+                            <li class="col-md-12 form-group">
                                 <label>Bilješka: </label>
                                 <textarea class="form-control" ng-model="newPayment.note" style="max-width:100%;"></textarea>
-                            </li>-->
+                            </li>
                         </ul>
                     </div>
                 </form>
@@ -143,7 +159,7 @@
                             <tr>
                                 <th>Datum</th>
                                 <th>Uplata</th>
-                                <!--<th>Bilješka</th>-->
+                                <th>Bilješka</th>
                                 <th class="text-right">Opcije</th>
                             </tr>
                         </thead>
@@ -151,7 +167,7 @@
                             <tr class="profile-events-wrap" ng-repeat="payment in paymentsByUser">
                                 <td>{{payment.datePayed | date:'dd MMMM yy'}}</td>
                                 <td>{{payment.amountPayed}}</td>
-                                <!--<td>{{payment.note}}</td>-->
+                                <td>{{payment.note}}</td>
                                 <td class="text-right">
                                     <a href="" ng-click="deletePayment(payment.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                                 </td>
@@ -167,3 +183,87 @@
 
     </div>
 </div>
+
+
+<!--New Group Modal-->
+<div id="newGroupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nova grupa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Ime grupe:</label>
+                    <input class="form-control" type="text" ng-model="newGroup.groupName" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="createGroup()">Napravi grupu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Update Groups Modal-->
+<div id="updateGroupsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ažuriranje grupa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" >
+                        <div class="form-group col-md-12" ng-repeat="group in eventGroups">
+                            <div class="row">
+                                <div class="col-md-11"><input class="form-control" type="text" ng-model="group.groupName" /></div>
+                                <div class="col-md-1"><a href="" ng-click="deleteGroup(group.id)" style="margin-top:8px; display:block;"><i class="fa fa-times" aria-hidden="true"></i></a></div>
+                            </div></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="changeGroupNames()">Izmijeni imena</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Email Modal-->
+<div id="emailModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Slanje emaila</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select class="form-control" ng-model="newUserList.groupId" style="width:auto; display:inline; " ng-change="listGroupUsers(newUserList.groupId)">
+                        <option value="" disabled>---Odaberite grupu---</option>
+                        <option ng-repeat="group in eventGroups" ng-value="group.id">{{group.groupName}}</option>
+                    </select>
+                    <button class="btn btn-default" ng-click="getCurrentEvent()">Ubaci sadržaj događaja</button>
+                </div>
+                <text-angular ng-model="emailContent"></text-angular>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Pošalji</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

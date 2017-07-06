@@ -11,22 +11,20 @@
                         <div class="col-md-2">
                             <h3 style="margin:0; line-height:40px;">DOGAĐAJI</h3>
                         </div>
-                        <!--<div class="col-md-2" ng-show="userRole === 'Admin'">
-                </div>-->
-                        <div class="col-md-6" ng-if="userRole === 'Admin'">
+                        <!--<div class="col-md-6" ng-if="userRole === 'Admin'">
                             <button class="btn btn-default" ng-click="activeFilter=true">Aktuelni</button>
                             <button class="btn btn-default" ng-click="activeFilter=false">Završeni</button>
                             <button class="btn btn-default" ng-click="resetFilters()">Prikaži sve</button>
-                        </div>
-                        <div class="col-md-4" ng-if="userRole === 'Admin'">
+                        </div>-->
+                        <div class="col-md-10" ng-if="userRole === 'Admin'">
                             <button data-toggle="modal" data-target="#newEventModal" class="btn btn-success pull-right" ng-click="getModalResources()">Novi Događaj</button>
                             <button data-toggle="modal" data-target="#newCategoryModal" class="btn btn-success pull-right" style="margin-right:5px;"  ng-click="resetNewCategory()">Nova Kategorija</button>
                         </div>
-                        <div class="col-md-10 text-right" ng-if="userRole !== 'Admin'">
+                        <!--<div class="col-md-10 text-right" ng-if="userRole !== 'Admin'">
                             <button class="btn btn-default" ng-click="activeFilter=true">Aktuelni</button>
                             <button class="btn btn-default" ng-click="activeFilter=false">Završeni</button>
                             <button class="btn btn-default" ng-click="resetFilters()">Prikaži sve</button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="events-settings">
@@ -464,6 +462,7 @@
                     <table class="table profile-stats-table">
                         <thead>
                             <tr>
+                                <th>Datum</th>
                                 <th>Ime</th>
                                 <th>Prezime</th>
                                 <th>Cijena</th>
@@ -473,11 +472,20 @@
                         </thead>
                         <tbody>
                             <tr class="profile-events-wrap" ng-repeat="signup in signupsEdit">
-                                <td><p>{{signup.firstName}}</p></td>
-                                <td><p>{{signup.lastName}}</p></td>
-                                <td><input class="form-control" type="number" ng-model="signup.eventPrice"/></td>
-                                <td><textarea class="form-control" ng-model="signup.note" style="max-width:100%;"></textarea></td>
-                                <td class="text-right">
+                                <td style="vertical-align:middle;"><p>{{signup.applicationDate | date:'dd MMMM yy'}}</p>
+                                <!--<input disabled class="form-control" type="text" ng-value="signup.applicationDate | date:'dd MMMM yy'"/>-->
+                                </td>
+                                <td style="vertical-align:middle;">
+                                <p>{{signup.firstName}}</p>
+                                <!--<input disabled class="form-control" type="text" ng-value="signup.firstName" />-->
+                                </td>
+                                <td style="vertical-align:middle;">
+                                <p>{{signup.lastName}}</p>
+                                <!--<input disabled class="form-control" type="text" ng-value="signup.lastName" />-->
+                                </td>
+                                <td style="vertical-align:middle;"><input class="form-control" type="number" ng-model="signup.eventPrice"/></td>
+                                <td style="vertical-align:middle;"><textarea class="form-control" ng-model="signup.note" style="max-width:100%;"></textarea></td>
+                                <td class="text-right" style="vertical-align:middle;">
                                     <select class="form-control" ng-model="signup.applicationStatus">
                                         <option value="" disabled>---Odaberite---</option>
                                         <option value="Prihvacena">Prihvacena</option>
