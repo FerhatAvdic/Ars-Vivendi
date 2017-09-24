@@ -12,7 +12,7 @@
                 if (response.status === 200) {
                     $scope.event = response.data;
                     $scope.event.trustedVideoLink = $sce.trustAsResourceUrl($scope.event.videoLink);
-                    console.log($scope.event);
+		    console.log($scope.event);
                 }
                 else {
                     console.log("ERROR: ", response);

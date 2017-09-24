@@ -7,8 +7,8 @@
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService',
         function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
-            //var source = "http://localhost:57792/";
-            var source = "http://api-dive.ntg.ba/";
+            var source = "http://localhost:57792/";
+            //var source = "http://api-dive.ntg.ba/";
 
             $scope.dateOfBirth = dataService.dates;
             $scope.countries = dataService.countries;
@@ -160,7 +160,7 @@
                 exitFunction = true;
             }
             else {
-                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                var selectedDate = $scope.dateOfBirth.year + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.day;
                 $scope.registrationData.dateOfBirth = new Date(selectedDate);
             }
             //phone validation
@@ -304,7 +304,7 @@
                 exitFunction = true;
             }
             else {
-                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                var selectedDate = $scope.dateOfBirth.year + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.day;
                 $scope.registerExternalData.dateOfBirth = new Date(selectedDate);
             }
             if ($scope.registerExternalData.firstName.trim() === "" ||

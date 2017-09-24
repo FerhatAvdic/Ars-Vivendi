@@ -4,7 +4,7 @@
     var avApp = angular.module("avApp");
 
     avApp.controller("profileController", ['$rootScope','$scope', '$routeParams', '$location','$timeout','dataService', 'authenticationService', function ($rootScope, $scope, $routeParams, $location,$timeout, dataService, authenticationService) {
-        
+
         $scope.dateOfBirth = dataService.dates;
         $scope.countries = dataService.countries;
         var currentUser = authenticationService.authentication;
@@ -41,7 +41,7 @@
                 };
             });
         };
-        
+
         var addNewPayment = function (paymentData) {
             dataService.create("paypal", paymentData, function (response) {
                 if (response.status === 200) {
@@ -55,13 +55,13 @@
         };
         var checkPath = function () {
             var urlPath = $location.absUrl();
-            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + profileID) {
+            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + currentUser.userName) {
                 //$location.path('profile/' + authenticationService.authentication.userName);
                 console.log('drugaciji', urlPath);
                 var array = urlPath.split('tx=');
                 paypalInfo.transactionId = array[1];
-                paypalInfo.userName = authenticationService.authentication.userName;                
-                addNewPayment(paypalInfo);               
+                paypalInfo.userName = authenticationService.authentication.userName;
+                addNewPayment(paypalInfo);
             }
             else {
                 console.log('nije drugaciji', urlPath);
@@ -69,7 +69,7 @@
         };
         //checkPath(urlPath);
         $scope.health = false;
-        
+
         $scope.stats = {
             "attendedEvents": [{
                 "id": "eventID",
@@ -228,6 +228,7 @@
         $scope.prepareFinances = function () {
             $scope.getMembershipInfo();
             $scope.getFinances();
+	    checkPath();
         };
 
         $scope.setEditingInterest = function (Interest) {
@@ -267,7 +268,7 @@
                 }
             });
         };
-        
+
         $scope.updatePassword = function () {
             dataService.create("updatepassword", $scope.changePassword, function (response) {
                 if (response.status === 200) {
@@ -276,7 +277,7 @@
                 else {
                     toastr.error(response.data.message);
                     console.log(response.data.modelState);
-                }                    
+                }
             });
         };
         $scope.summarizeStats = function () {
@@ -410,7 +411,7 @@
                     console.log("ERROR: ", response);
                 }
             });
-           
+
         };
 
 
@@ -517,7 +518,7 @@
                 toastr.success("Uspješno izmijenjene karakteristike!");
             $scope.getInterestInfo();
         };
-       
+
 
         $scope.saveProfilePicture = function () {
             profilePicture.userName = $scope.userInfo.userName;
@@ -608,7 +609,7 @@
                 };
             });
         };
-        
+
         $scope.listApplications = function () {
             $scope.statsLoading = true;
             dataService.list("/userevents/applicationbyuser/" + $routeParams.id + "/", function (response) {
@@ -625,10 +626,9 @@
         };
 
         $scope.getPersonalInfo();
-        checkPath();
-        //authenticateUser();
+        authenticateUser();
 
-        
+
 
     }]);
 }());

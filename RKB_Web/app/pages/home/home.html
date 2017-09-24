@@ -158,7 +158,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
-            <div class="gallery-item">
+            <div class="gallery-item" ng-click="goToEvent(item.id)">
                 <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
                 <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
                     <div class="gallery-item-label-content">

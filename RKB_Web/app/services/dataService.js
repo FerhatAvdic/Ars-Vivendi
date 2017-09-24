@@ -6,9 +6,9 @@
     avApp.factory("dataService", ['$http', '$rootScope', '$q', 'localStorageService', function ($http, $rootScope, $q, localStorageService) {
 
         //var source = config.source;
-        //var source = "http://localhost:57792/api/";
+        var source = "http://localhost:57792/api/";
         //var source = "http://arsvivendi.azurewebsites.net/api/";
-        var source = "http://api-dive.ntg.ba/api/"
+        //var source = "http://api-dive.ntg.ba/api/"
 
         //$http.defaults.headers.common['Token'] = currentUser.token;
         //$http.defaults.headers.common['ApiKey'] = config.apiKey;
