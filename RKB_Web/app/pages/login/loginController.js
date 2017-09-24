@@ -168,9 +168,7 @@
                 toastr.warning("Broj telefona smije imati samo cifre");
                exitFunction = true;
             }
-            else {
-                $scope.registrationData.phoneNumber = $scope.selectedCountry.number + $scope.registrationData.phoneNumber;
-            }
+                
             //empty space validation
             if ($scope.registrationData.userName.trim() === "" ||
                 $scope.registrationData.password.trim() === "" ||
@@ -195,7 +193,7 @@
             }
             if (exitFunction) return;
             //end of validation
-
+            $scope.registrationData.phoneNumber = $scope.selectedCountry.number + $scope.registrationData.phoneNumber;
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
                 toastr.success("Registracija uspješna!");
@@ -324,15 +322,12 @@
                 toastr.warning("Broj telefona smije imati samo cifre")
                 exitFunction = true;
             }
-            else {
-                $scope.registerExternalData.phoneNumber = $scope.selectedCountry.number + $scope.registerExternalData.phoneNumber;
-            }
             if ($scope.selected.length < $scope.interestCategories.length) {
                 toastr.warning("Unesite sve karakteristike");
                 exitFunction = true;
             }
             if (exitFunction) return;
-
+            $scope.registerExternalData.phoneNumber = $scope.selectedCountry.number + $scope.registerExternalData.phoneNumber;
             $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 toastr.success("Registracija uspješna!");
