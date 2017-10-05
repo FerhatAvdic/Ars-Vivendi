@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\directives\validationDirective.js" />
     <Content Include="app\pages\about\about.html" />
     <Content Include="app\pages\about\aboutController.js" />
     <Content Include="app\pages\index\indexController.js" />
@@ -91,6 +92,7 @@
     <Content Include="authComplete.html" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="css\colorpicker.min.css" />
+    <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\textAngular.css" />
     <Content Include="css\toastr.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
@@ -128,6 +130,7 @@
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />
     <Content Include="libs\bootstrap-colorpicker-module.min.js" />
+    <Content Include="libs\jquery-ui.min.js" />
     <Content Include="libs\moment.js" />
     <Content Include="libs\moment.min.js" />
     <Content Include="libs\textAngular-rangy.min.js" />

@@ -9,6 +9,48 @@
 
             var source = "http://localhost:57792/";
             //var source = "http://api-dive.ntg.ba/";
+            
+            $scope.formTabs = [
+                {'name':'reg1', 'active':false},
+                {'name':'reg2', 'active':false},
+                {'name':'reg3', 'active':false}
+            ];
+            $scope.formTabs[0].active = true;
+            $scope.phoneRegex = /^[0-9]+$/;
+
+            $scope.openForm = function (index) {
+                $scope.formTabs.forEach(function (tab) {
+                    tab.active = false;
+                });
+                $scope.formTabs[index].active = true;
+            };
+
+            $scope.switchTab = function (index, form) {
+                $scope.dateError = false;
+                $scope.passwordError = false;
+                //validate password
+                if (index === 1) {
+                    if ($scope.registrationData.password !== $scope.registrationData.confirmPassword ||
+                        $scope.registerExternalData.password !== $scope.registerExternalData.confirmPassword) {
+                        $scope.passwordError = true;
+                        return;
+                    }
+                }
+                //validate date
+                if (index === 2) {
+                    dayError = false;
+                    validateDate();
+                    if (dayError) {
+                        $scope.dateError = true;
+                        return;
+                    }
+                }
+                if (!form.$valid) return;
+                $scope.formTabs.forEach(function (tab) {
+                    tab.active = false;
+                });
+                $scope.formTabs[index].active = true;
+            };
 
             $scope.dateOfBirth = dataService.dates;
             $scope.countries = dataService.countries;
@@ -41,7 +83,7 @@
                     if (response.status === 200) {
                         $scope.interestCategories = response.data;
                         $scope.categoriesLoading = false;
-                        console.log("get categories");
+                        //console.log("get categories", $scope.interestCategories);
                     }
                     else {
                         console.log("ERROR: ", response);
@@ -55,8 +97,8 @@
                     if (response.status === 200) {
                         $scope.subCategories = response.data;
                         $scope.subCategoriesLoading = false;
-                        console.log("ALL INTERESTS");
-                        console.log($scope.allInterests);
+                        //console.log("ALL INTERESTS", $scope.subCategories);
+                        //console.log($scope.allInterests);
                     }
                     else {
                         console.log("ERROR: ", response);
@@ -64,7 +106,8 @@
                 });
             };
 
-        $scope.selected = [];
+            $scope.selected = [];
+            $scope.distinctCategories = [];
 
         $scope.toggleSelection = function (subCategory) {
             var idx = $scope.selected.indexOf(subCategory);
@@ -82,17 +125,19 @@
 
         $scope.initRegistrationData = function () {
             $scope.registrationData = {
-                userName: "",
-                password: "",
-                confirmPassword: "",
-                firstName: "",
-                lastName: "",
-                email: "",
+                userName: "aaa",
+                password: "123123",
+                confirmPassword: "123123",
+                firstName: "aaa",
+                lastName: "sss",
+                email: "aaa@email.com",
                 dateOfBirth: "",
-                address: "",
-                phoneNumber: "",
-                gender: "",
-                employment: "",
+                address: "sds",
+                city: "aasdas",
+                phoneNumber: "1233245342",
+                gender: "musko",
+                employment: "zaposlen",
+                healthStatus: "srednji",
                 subCategoriesList: $scope.selected
             };
         };
@@ -150,13 +195,15 @@
             }, 2000);
         };
         $scope.signUp = function () {
+            $scope.categoryError = false;
             //begin validation
             var exitFunction = false;
             //date validation
             dayError = false;
             validateDate();
             if (dayError) {
-                toastr.warning("Unesen je pogrešan datum");
+                $scope.dateError = true;
+                //toastr.warning("Unesen je pogrešan datum");
                 exitFunction = true;
             }
             else {
@@ -164,13 +211,14 @@
                 $scope.registrationData.dateOfBirth = new Date(selectedDate);
             }
             //phone validation
+            /*
             if (!/^[0-9]+$/.test($scope.registrationData.phoneNumber)) {
                 toastr.warning("Broj telefona smije imati samo cifre");
                exitFunction = true;
-            }
+            }*/
                 
             //empty space validation
-            if ($scope.registrationData.userName.trim() === "" ||
+            /*if ($scope.registrationData.userName.trim() === "" ||
                 $scope.registrationData.password.trim() === "" ||
                 $scope.registrationData.confirmPassword.trim() === "" ||
                 $scope.registrationData.firstName.trim() ==="" ||
@@ -185,10 +233,15 @@
             {
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
-            }
+            }*/
             //characteristics validation
-            if ($scope.selected === [] || $scope.selected.length < $scope.interestCategories.length) {
-                toastr.warning("Unesite sve karakteristike");
+            $scope.distinct = []; //count from selected, how many items are from distinct categories
+            $scope.selected.forEach(function (item) {
+                if ($scope.distinct.indexOf(item.categoryId) < 0)
+                    $scope.distinct.push(item.categoryId);
+            });
+            if ($scope.selected === [] || $scope.distinct.length < $scope.interestCategories.length) {
+                $scope.categoryError = true;
                 exitFunction = true;
             }
             if (exitFunction) return;
@@ -244,6 +297,7 @@
         };
 
         $scope.authExternalProvider = function (provider) {
+            $scope.formTabs[0].active = true;//set visible first tab
             console.log("external auth provider");
             var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 

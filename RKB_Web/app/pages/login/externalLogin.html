@@ -30,134 +30,218 @@
                     </div>
                 </a>
             </div>-->
-            <div id="postani-clan" class="tab-pane in active">
-                <div class="login-line"><p>Odaberi način registracije</p></div>
-                <button class="rectangle-btn login-btn-full" data-toggle="tab" href="#postani-clan-1" target="_self">Registriraj se</button>
-                <div class="login-line"><p>ili</p></div>
-                <a href="#" class="connect facebook">
+            <div id="postani-clan" class="tab-pane active in">
+                <div class="av-form-line"><p>Odaberi način registracije</p></div>
+                <!--Manual-->
+                <button class="rectangle-btn login-btn-full" data-toggle="tab" href="#postani-clan-1" target="_self" ng-click="openForm(0)">Registriraj se</button>
+                <div class="av-form-line"><p>ili</p></div>
+                <!--Facebook-->
+                <a href="" class="connect facebook">
                     <div class="connect-icon">
                         <i class="fa fa-facebook"></i>
                     </div>
-                    <div class="connect-context">
+                    <div class="connect-context" ng-click="authExternalProvider('Facebook')">
                         <span>Postani član putem<strong> Facebook-a</strong></span>
                     </div>
                 </a>
-                <a href="#" class="connect gplus">
+                <!--Gplus-->
+                <a href="" class="connect gplus">
                     <div class="connect-icon">
                         <i class="fa fa-google-plus"></i>
                     </div>
-                    <div class="connect-context">
+                    <div class="connect-context" ng-click="authExternalProvider('Google')">
                         <span>Postani član putem<strong> Google Plus-a</strong></span>
                     </div>
                 </a>
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
-                <div class="login-line"><p>Korisnički podaci</p></div>
-                <input type="text" placeholder="Korisničko Ime" ng-model="registerExternalData.userName" disabled />
-                <input type="text" placeholder="Ime" ng-model="registerExternalData.firstName"/>
-                <input type="text" placeholder="Prezime" ng-model="registerExternalData.lastName" />
-                <input type="email" placeholder="Email" ng-model="registerExternalData.email"/>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" ng-click="resetRegistration()" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
 
-            </div>
-            <div id="postani-clan-2" class="tab-pane fade">
-                <div class="login-line"><p>Lični podaci</p></div>
-                <!--<div class="login-line">
-                    <label>Datum Rođenja: </label>
-                    <input id="birthdate" type="text" uib-datepicker-popup="{{format}}" ng-model="registerExternalData.dateOfBirth" ng-click="open1()"
-                           is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                </div>-->
-                <div class="login-line" style="overflow:hidden;">
-                    <div class="row" style="padding-top: 10px;">
-                        <div class="col-md-3"><label style="line-height:20px;">Datum Rođenja: </label></div>
-                        <div class="col-md-3">
-                            <select type="text" class="form-control" ng-model="dateOfBirth.day">
-                                <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
-                            </select>
+                <div class="av-form-line" ng-if="formTabs[0].active"><p>Korisnički podaci (sva polja su obavezna)</p></div>
+                <form name="reg1" novalidate ng-if="formTabs[0].active">
+                    <div class="av-form-group">
+                        <label>Korisničko Ime: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.username.$touched">
+                            <span ng-show="reg1.username.$error.required">Obavezno polje</span>
                         </div>
-                        <div class="col-md-3">
-                            <select type="text" class="form-control" ng-model="dateOfBirth.month">
-                                <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select type="text" class="form-control" ng-model="dateOfBirth.year">
-                                <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
-                            </select>
-                        </div>
+                        <input type="text" name="username" class="av-form" ng-model="registerExternalData.userName" required="">
                     </div>
-                </div>
-                <input type="text" placeholder="Grad" ng-model="registerExternalData.city" />
-                <input type="text" placeholder="Adresa" ng-model="registerExternalData.address"/>
-                <div class="login-line" style="overflow: hidden;">
-                    <div class="row">
-                        <div class="col-md-2"><label>Telefon:</label></div>
-                        <div class="col-md-4" style="margin-top: 15px;">
-                            <select class="form-control" ng-model="selectedCountry">
-                                <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
-                            </select>
+                    <div class="av-form-group">
+                        <label>Šifra: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.password.$touched">
+                            <span ng-show="reg1.password.$error.required">Obavezno polje</span>
                         </div>
-                        <div class="col-md-6"><input type="text" placeholder="Broj" ng-model="registerExternalData.phoneNumber" /></div>
+                        <input type="password" name="password" class="av-form" ng-model="registerExternalData.password" required="">
                     </div>
-                </div>
-                <fieldset id="genderRadio">
-                    <ul class="login-line">
-                        <li><label>Spol: </label></li>
-                        <li><label class="radio-inline"><input type="radio" value="musko" ng-model="registerExternalData.gender" name="genderRadio">Muško</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="zensko" ng-model="registerExternalData.gender" name="genderRadio">Žensko</label></li>
-                    </ul>
-                </fieldset>
-                <fieldset id="employmentRadio">
-                    <ul class="login-line">
-                        <li><label>Zaposlenost: </label></li>
-                        <li><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registerExternalData.employment" name="employmentRadio">Zaposlen/a</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registerExternalData.employment" name="employmentRadio">Nezaposlen/a</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="student" ng-model="registerExternalData.employment" name="employmentRadio">Student</label></li>
-                    </ul>
-                </fieldset>
-                <fieldset id="employmentRadio">
-                    <ul class="login-line">
-                        <li><label>Nivo fizičke spreme: </label></li>
-                        <li><label class="radio-inline"><input type="radio" value="nizak" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Nizak</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="srednji" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Srednji</label></li>
-                        <li><label class="radio-inline"><input type="radio" value="visok" ng-model="registerExternalData.healthStatus" name="healthStatusRadio">Visok</label></li>
-                    </ul>
-                </fieldset>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-1" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-3" target="_self" ng-click="loadSubCategories()">Dalje</button>
-            </div>
-            <div id="postani-clan-3" class="tab-pane fade">
-                <div class="login-line"><p>Odaberi svoje karakteristike (najmanje po jednu)</p></div>
-                <div class="text-center" ng-show="isloading()">
-                    <img src="img/spin.gif" />
-                </div>
-                <div class="custom-accordion" id="accordion" ng-hide="isloading()">
-                    <div class="panel panel-default" ng-repeat="category in interestCategories">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
-                            <h4 class="panel-title">
-                                <span>
-                                    {{category.categoryName}}
-                                </span>
-                            </h4>
+                    <div class="av-form-group">
+                        <label>Ponovi šifru: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.confirmPassword.$touched">
+                            <span ng-show="reg1.confirmPassword.$error.required">Obavezno polje</span>
+                            <span ng-show="passwordError">Šifre nisu jednake</span>
                         </div>
-                        <div id="{{'collapse' + $index}}" class="panel-collapse collapse" ng-class='{in:$first}'>
-                            <div class="panel-body">
-                                <ul class="login-list">
-                                    <li class="login-list-checkbox-label" ng-repeat="subCategory in subCategories" ng-click="toggleSelection(subCategory)" ng-show="subCategory.categoryId===category.id">
-                                        <label>{{subCategory.name}}</label>
-                                        <input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" />
-                                    </li>
-                                </ul>
+                        <input type="password" name="confirmPassword" class="av-form" ng-model="registerExternalData.confirmPassword" required="" compare-to="registerExternalData.password">
+                    </div>
+                    <div class="av-form-group">
+                        <label>Ime: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.firstName.$touched">
+                            <span ng-show="reg1.firstName.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="text" name="firstName" class="av-form" ng-model="registerExternalData.firstName" required="">
+                    </div>
+                    <div class="av-form-group">
+                        <label>Prezime: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.lastName.$touched">
+                            <span ng-show="reg1.lastName.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="text" name="lastName" class="av-form" ng-model="registerExternalData.lastName" required="">
+                    </div>
+                    <div class="av-form-group av-form-last">
+                        <label>Email: </label>
+                        <div class="av-form-error" ng-show="reg1.$submitted || reg1.email.$touched">
+                            <span ng-show="reg1.email.$error.required">Obavezno polje</span>
+                            <span ng-show="reg1.email.$error.email">Nepravilan email</span>
+                        </div>
+                        <input type="email" name="email" class="av-form" ng-model="registerExternalData.email" required="">
+                    </div>
+                    <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button class="rectangle-btn login-btn-halfway" ng-click="switchTab(1, reg1)">Dalje</button>
+                </form>
+
+
+
+                <div class="av-form-line" ng-if="formTabs[1].active"><p>Lični podaci (sva polja su obavezna)</p></div>
+                <form name="reg2" ng-if="formTabs[1].active" novalidate>
+                    <div class="av-form-group">
+                        <label>Datum Rođenja: </label>
+                        <div class="av-form-error" ng-show="dateError">
+                            <span ng-show="dateError">Nepravilan datum</span>
+                        </div>
+                        <div class="av-form">
+                            <div class="row">
+                                <div class="col-md-4 col-xs-4">
+                                    <select type="text" class="form-control" ng-model="dateOfBirth.day" style="padding: 6px">
+                                        <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <select type="text" class="form-control" ng-model="dateOfBirth.month" style="padding: 6px">
+                                        <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <select type="text" class="form-control" ng-model="dateOfBirth.year" style="padding: 6px 0">
+                                        <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="av-form-group">
+                        <label>Grad: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted || reg2.city.$touched">
+                            <span ng-show="reg2.city.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="text" name="city" class="av-form" ng-model="registerExternalData.city" required="">
+                    </div>
+                    <div class="av-form-group">
+                        <label>Adresa: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted || reg2.address.$touched">
+                            <span ng-show="reg2.address.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="text" name="address" class="av-form" ng-model="registerExternalData.address" required="">
+                    </div>
+                    <div class="av-form-group">
+                        <label>Telefon: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted || reg2.phoneNumber.$touched">
+                            <span ng-show="reg2.phoneNumber.$error.required">Obavezno polje</span>
+                            <span ng-show="reg2.phoneNumber.$error.pattern">Broj telefona može imati samo cifre</span>
+                        </div>
+                        <div class="av-form">
+                            <div class="row">
+                                <div class="col-md-4 col-xs-5">
+                                    <select class="form-control" ng-model="selectedCountry" style="padding: 6px 0">
+                                        <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 col-xs-7"><input type="text" name="phoneNumber" class="av-form" style="border-bottom: 0px; padding: 5px;" ng-model="registerExternalData.phoneNumber" required="" ng-pattern="phoneRegex"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="av-form-group" id="genderRadio">
+                        <label>Spol: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted">
+                            <span ng-show="reg2.genderRadio.$error.required">Odaberite spol</span>
+                        </div>
+                        <div class="av-form">
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="musko" ng-model="registerExternalData.gender" name="genderRadio" required>Muško</label></div>
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="zensko" ng-model="registerExternalData.gender" name="genderRadio" required>Žensko</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="av-form-group" id="employmentRadio">
+                        <label>Radni status: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted">
+                            <span ng-show="reg2.employmentRadio.$error.required">Odaberite radni status</span>
+                        </div>
+                        <div class="av-form">
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="zaposlen" ng-model="registerExternalData.employment" name="employmentRadio" required>Zaposlen/a</label></div>
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="nezaposlen" ng-model="registerExternalData.employment" name="employmentRadio" required>Nezaposlen/a</label></div>
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="student" ng-model="registerExternalData.employment" name="employmentRadio" required>Student</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="av-form-group av-form-last" id="healthStatusRadio">
+                        <label>Nivo fizičke spreme: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted">
+                            <span ng-show="reg2.healthStatusRadio.$error.required">Odaberite nivo fizičke spreme</span>
+                        </div>
+                        <div class="av-form">
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="nizak" ng-model="registerExternalData.healthStatus" name="healthStatusRadio" required>Nizak</label></div>
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="srednji" ng-model="registerExternalData.healthStatus" name="healthStatusRadio" required>Srednji</label></div>
+                                <div class="col-sm-4 col-xs-6"><label class="radio-inline"><input type="radio" value="visok" ng-model="registerExternalData.healthStatus" name="healthStatusRadio" required>Visok</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="rectangle-btn login-btn-halfway no-bg-btn" ng-click="openForm(0)">Nazad</button><button type="submit" class="rectangle-btn login-btn-halfway" ng-click="switchTab(2, reg2)">Dalje</button>
+                </form>
+
+                <div ng-if="formTabs[2].active">
+                    <div class="av-form-line"><p>Odaberi svoje karakteristike (najmanje po jednu)</p></div>
+                    <div class="text-center" ng-show="isloading()">
+                        <img src="img/spin.gif" />
+                    </div>
+                    <div class="av-form-error text-center" ng-show="categoryError">
+                        <span ng-show="categoryError">Odaberite bar po jednu iz svake kategorije</span>
+                    </div>
+                    <div class="custom-accordion" id="accordion" ng-hide="isloading()">
+                        <div class="panel panel-default" ng-repeat="category in interestCategories">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
+                                <h4 class="panel-title">
+                                    <span>
+                                        {{category.categoryName}}
+                                    </span>
+                                </h4>
+                            </div>
+                            <div id="{{'collapse' + $index}}" class="panel-collapse collapse" ng-class='{in:$first}'>
+                                <div class="panel-body">
+                                    <ul class="login-list">
+                                        <li ng-repeat="subCategory in subCategories" ng-click="toggleSelection(subCategory)" ng-show="subCategory.categoryId===category.id" style="cursor:pointer;">
+                                            <div class="av-form av-form-last av-form-checkboxes">
+                                                <div class="row">
+                                                    <div class="col-xs-8"><label>{{subCategory.name}}</label></div>
+                                                    <div class="col-xs-offset-2 col-xs-1"><input type="checkbox" ng-checked="selected.indexOf(subCategory) > -1" /></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="rectangle-btn login-btn-halfway no-bg-btn" ng-click="openForm(1)">Nazad</button><button type="submit" class="rectangle-btn login-btn-halfway" target="_self" ng-click="signUp()">Postani Član</button>
                 </div>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-2" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-4" target="_self" ng-click="registerExternal()">Postani Član</button>
             </div>
-            <!--<div id="postani-clan-4" class="tab-pane fade">
-                <div class="login-line"><p>Uplata za članstvo</p></div>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" href="#postani-clan-3" target="_self">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" target="_self" data-ng-click="registerExternal()">Postani Član</button>
-            </div>-->
         </div>
     </div>
 </div>

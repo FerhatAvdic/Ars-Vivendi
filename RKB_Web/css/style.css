@@ -35,11 +35,19 @@ body{
     font-family: NunitoSans-Regular;
     overflow-x: hidden;
 }
+
 @media (max-width: 991px) {
     body{
     padding-top: 95px;
     }
 }
+input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+  }
+bg-red{
+    background-color: #FA787E;
+}
+
 div {
   box-sizing: border-box;
 }
@@ -911,7 +919,7 @@ overflow: hidden;
     max-width: 500px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
-.login-line{
+/*.login-line{
     position: relative;
     display: block;
     height: 70px;
@@ -920,13 +928,70 @@ overflow: hidden;
     padding: 0 30px;
     list-style-type: none;
     margin: 0;
+    margin-bottom: 5px;
 }
 .login-line p{
     text-align: center;
     color: gray;
     font-family: NunitoSans-Light;
     font-size: 16px;
+}*/
+.av-form-line{
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #E5E5E5;
+    list-style-type: none;
+    margin: 0;
 }
+.av-form-line p{
+    text-align: center;
+    color: gray;
+    font-family: NunitoSans-Light;
+    font-size: 16px;
+    padding: 25px 30px;
+    margin: 0px;
+
+}
+.av-form-group{
+    margin-bottom: 5px;
+}
+.av-form-group>label{
+    margin: 5px 0 5px 30px;
+}
+.av-form-group label{
+    font-family: NunitoSans-Regular;
+    font-weight: 100;
+    color: gray;
+}
+
+.av-form{
+    width: 100%;
+    border:0px;
+    border-bottom:1px solid #E5E5E5;
+    padding: 5px 30px;
+}
+.av-form-error{
+    margin: 5px 30px;
+    font-family: NunitoSans-Regular;
+    font-weight: 100;
+    color: red;
+}
+.av-form-last{
+    margin-bottom:0;
+}
+.av-form-group li{
+    display:inline-block;
+}
+.av-form-group li input[type="radio"]{
+
+}
+.av-form-checkboxes{
+    border-bottom:0px;
+}
+.av-form-checkboxes:hover{
+    background:#eee;
+}
+/*
 .login-line label{
     font-family: NunitoSans-Regular;
     font-weight: 100;
@@ -995,6 +1060,7 @@ overflow: hidden;
     padding-right: 30px;
     border-bottom: 1px solid #E5E5E5;
 }
+*/
 .login-tabs li{
     width: 50%;
     text-align: center;
