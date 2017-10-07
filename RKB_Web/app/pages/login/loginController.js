@@ -17,6 +17,10 @@
             ];
             $scope.formTabs[0].active = true;
             $scope.phoneRegex = /^[0-9]+$/;
+            $scope.dateOfBirth = dataService.dates;
+            $scope.countries = dataService.countries;
+            $scope.selectedCountry = $scope.countries[0];
+            var dayError = false;
 
             $scope.openForm = function (index) {
                 $scope.formTabs.forEach(function (tab) {
@@ -39,6 +43,7 @@
                 //validate date
                 if (index === 2) {
                     dayError = false;
+                    $scope.dateError = false;
                     validateDate();
                     if (dayError) {
                         $scope.dateError = true;
@@ -52,10 +57,7 @@
                 $scope.formTabs[index].active = true;
             };
 
-            $scope.dateOfBirth = dataService.dates;
-            $scope.countries = dataService.countries;
-            $scope.selectedCountry = $scope.countries[0];
-            var dayError = false;
+            
             var validateDate = function () {
                 var day = parseInt($scope.dateOfBirth.day);
                 var month = parseInt($scope.dateOfBirth.month);
@@ -125,20 +127,34 @@
 
         $scope.initRegistrationData = function () {
             $scope.registrationData = {
-                userName: "aaa",
-                password: "123123",
-                confirmPassword: "123123",
-                firstName: "aaa",
-                lastName: "sss",
-                email: "aaa@email.com",
+                userName: null,
+                password: null,
+                confirmPassword: null,
+                firstName: null,
+                lastName: null,
+                email: null,
                 dateOfBirth: "",
-                address: "sds",
-                city: "aasdas",
-                phoneNumber: "1233245342",
-                gender: "musko",
-                employment: "zaposlen",
-                healthStatus: "srednji",
+                address: null,
+                city: null,
+                phoneNumber: "",
+                gender: null,
+                employment: null,
+                healthStatus: null,
                 subCategoriesList: $scope.selected
+                //userName: "aaa",
+                //password: "123123",
+                //confirmPassword: "123123",
+                //firstName: "aaa",
+                //lastName: "sss",
+                //email: "aaa@email.com",
+                //dateOfBirth: "",
+                //address: "sds",
+                //city: "aasdas",
+                //phoneNumber: "1233245342",
+                //gender: "musko",
+                //employment: "zaposlen",
+                //healthStatus: "srednji",
+                //subCategoriesList: $scope.selected
             };
         };
         $scope.initRegistrationData();
@@ -273,7 +289,14 @@
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data.userRole;
                 authenticationService.authentication.userFirstName = response.data.userFirstName;
-                localStorageService.set('authorizationData', { token: authData.token, userName: authData.userName, refreshToken: authData.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
+                localStorageService.set('authorizationData', {
+                    token: authData.token,
+                    userName: authData.userName,
+                    refreshToken: authData.refresh_token,
+                    useRefreshToken: true,
+                    localRole: $rootScope.userRole,
+                    localName: authenticationService.authentication.userFirstName
+                });
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {

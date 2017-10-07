@@ -10,9 +10,9 @@
             <button class="rectangle-btn" id="register-btn">Pregled</button>
         </div>
     </div>
-    <!--<button class="transparent-round-btn" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-    <button class="transparent-round-btn" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>-->
-    <div class="slide-labels">
+    <button class="transparent-round-btn small-only" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="transparent-round-btn small-only" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <div class="slide-labels big-only">
         <div class="slide-label" ng-repeat="label in slides" ng-class="{'slide-label-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.labelColor}">
             <span>{{label.title}}</span>
         </div>
@@ -55,75 +55,77 @@
 </div>
 <div id="pre-upcoming"></div>
 <div class="av-section-wrap" id="upcoming">
-    <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-show="$index==currentSlideUpcoming">
-        <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
+    <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-if="$index==currentSlideUpcoming">
+        <!--<div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
         <div class="upcoming-slide-dark-overlay"></div>
-        <div class="upcoming-slide-light-overlay" ng-class="lightOverlayColor"></div>
+        <div class="upcoming-slide-light-overlay" ng-style="{'background-color': event.categoryColor}"></div>-->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6 col-sm-12">
+                
+                <div class="col-md-5 col-sm-12 col-xs-12 upcoming-content-wrap"  ng-style="{'background-color': event.categoryColor}">
                     <div class="upcoming-slide-content">
-                        <div class="upcoming-slide-title">{{event.eventName}}</div>
-                        <div class="upcoming-slide-description">
-                                {{event.description}}
+                        <div class="row">
+                            <div class="col-md-12"><div class="upcoming-slide-title">{{event.eventName}}</div></div>
+                            <div class="col-md-12 upcoming-slide-description">{{event.description}}</div>
                         </div>
-                        <button class="rectangle-btn" ng-click="goToEvent(event.id)">Prijava</button><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button>
                     </div>
+                    <div class="upcoming-slide-btns">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" ng-click="goToEvent(event.id)">Prijava</button></div>
+                            <div class="col-md-3 col-md-offset-1 col-sm-5 col-sm-offset-2 col-xs-12"><button class="rectangle-btn material-shadow" id="view-upcoming-btn" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">Pregled</button></div>
+                        </div>
+                    </div> 
                 </div>
-                <div class="col-md-6">
-                    <div class="upcoming-countdown-wrap">
-                        <div class="upcoming-countdown-instance">
+                <div class="col-md-5 col-sm-12 col-xs-12 upcoming-content-wrap big-only">
+                    <div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
+                    <!--<div class="upcoming-countdown-wrap">
+                        <div class="upcoming-countdown-instance" ng-style="{'border-color': event.categoryColor}">
                             <div class="upcoming-countdown-instance-number">{{event.timeRemaining.days}}</div>
                             <div class="upcoming-countdown-instance-label">Dana</div>
                         </div>
-                        <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance" ng-style="{'border-color': event.categoryColor}">
                             <div class="upcoming-countdown-instance-number">{{event.timeRemaining.hours}}</div>
                             <div class="upcoming-countdown-instance-label">Sati</div>
                         </div>
-                        <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance" ng-style="{'border-color': event.categoryColor}">
                             <div class="upcoming-countdown-instance-number">{{event.timeRemaining.minutes}}</div>
                             <div class="upcoming-countdown-instance-label">Minuta</div>
                         </div>
-                        <div class="upcoming-countdown-instance">
+                        <div class="upcoming-countdown-instance" ng-style="{'border-color': event.categoryColor}">
                             <div class="upcoming-countdown-instance-number">{{event.timeRemaining.seconds}}</div>
                             <div class="upcoming-countdown-instance-label">Sekundi</div>
                         </div>
-                    </div>
+                    </div>-->
+                </div>
+                <div class="col-md-2 big-only" style="padding: 0px;">
+                    <ul class="upcoming-labels row">
+                        <li class="col-md-12 col-sm-4 col-xs-12" ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+                            <div class="upcoming-label-big">{{event.eventName}}</div>
+                            <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}}</div>
+                            <div class="upcoming-label-small">{{event.location}}</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
-        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+        <!--<button class="transparent-round-btn" id="slide-left" ng-click="previousSlideUpcoming()"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+        <button class="transparent-round-btn" id="slide-right" ng-click="nextSlideUpcomingBreakInterval()"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>-->
     </div>
-    <ul class="upcoming-labels">
-        <li ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+    <!--<ul class="upcoming-labels row">
+        <li class="col-md-2 col-sm-4 col-xs-12" ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
             <div class="upcoming-label-big">{{event.eventName}}</div>
             <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}}</div>
             <div class="upcoming-label-small">{{event.location}}</div>
         </li>
-    </ul>
+    </ul>-->
 </div>
 
 
 
-
-<div class="container-fluid">
-    <div class="av-section-wrap" id="discount-section">
-        <div class="row">
-            <div class="col-md-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
-                <div class="discount" ng-repeat="discount in columns" 
-                     ng-show="checkCurrentSlides($parent.$index, $index)" 
-                     ng-click="nextSlideDiscounts($parent.$index)" 
-                     ng-style="{'background-image': 'url('+ discount.image +')'}">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="become-member">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-xs-12 text-center">
+            <div class="col-md-8 col-sm-12 col-xs-12 text-center">
                 <div class="become-member-statement" id="become-member-1">
                     Ostvari mogućnost <strong>boniteta</strong> i uštedi svoj novac
                 </div>
@@ -131,18 +133,32 @@
                     Postani član i budi dio velikog društva
                 </div>-->
             </div>
-            <div class="col-md-2 col-xs-12 text-center">
-                <button class="rectangle-btn rectangle-btn-outline-dark" id="become-member-btn">Pridruži se!</button>
+            <div class="col-md-2 col-sm-12 col-xs-12 text-center">
+                    <a style="display: block;" class="rectangle-btn rectangle-btn-outline-dark" id="become-member-btn" href="#!/login/postani-clan">Pridruži se!</a>
             </div>
         </div>
     </div>
 </div>
 <div class="container-fluid">
+    <div class="row" id="discount-section">
+        <div class="av-section-wrap" >
+            <div class="col-md-4 col-sm-4 col-xs-12" ng-repeat="columns in chunkedDiscounts" style="padding: 0;">
+                <div class="discount" ng-repeat="discount in columns"
+                     ng-show="checkCurrentSlides($parent.$index, $index)"
+                     ng-click="nextSlideDiscounts($parent.$index)"
+                     ng-style="{'background-image': 'url('+ discount.image +')'}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
     <div class="partners-wrap" id="partners">
-        <div class="av-heading">Partneri</div>
+        <!--<div class="av-heading">Partneri</div>-->
         <div class="row row-centered">
-            <div class="col-md-1"></div>
-            <div class="col-md-2" ng-repeat="partner in partners">
+            <div class="col-md-1 col-sm-1 col-xs-2"></div>
+            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="partner in partners">
                 <div class="partner-logo-wrap">
                     <img class="partner-logo" ng-src="{{partner}}" />
                 </div>
@@ -155,15 +171,17 @@
 <!--<div class="av-heading">
     Kuda smo išli
 </div>-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-sm-6" ng-repeat="item in gallery" style="padding: 0;">
-            <div class="gallery-item" ng-click="goToEvent(item.id)">
-                <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
-                <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
-                    <div class="gallery-item-label-content">
-                        <div class="gallery-item-title">{{item.eventName}}</div>
-                        <div class="gallery-item-description">{{item.startDate | date: 'dd/MM/yyyy'}} {{item.location}}</div>
+<div class="gallery-wrap" id="home-gallery">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-sm-6" ng-repeat="item in gallery">
+                <div class="gallery-item material-shadow" ng-click="goToEvent(item.id)">
+                    <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
+                    <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
+                        <div class="gallery-item-label-content">
+                            <div class="gallery-item-title">{{item.eventName}}</div>
+                            <div class="gallery-item-description">{{item.startDate | date: 'dd/MM/yyyy'}} {{item.location}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,10 +191,10 @@
 <!--</div>-->
 <div class="container-fluid">
     <div class="partners-wrap" id="partners">
-        <div class="av-heading">Sponzori</div>
+        <!--<div class="av-heading">Sponzori</div>-->
         <div class="row row-centered">
-            <div class="col-md-1"></div>
-            <div class="col-md-2" ng-repeat="partner in partners">
+            <div class="col-md-1 col-sm-1 col-xs-2"></div>
+            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="partner in partners">
                 <div class="partner-logo-wrap">
                     <img class="partner-logo" ng-src="{{partner}}" />
                 </div>
@@ -187,15 +205,15 @@
 </div>
 <div class="comments-wrap">
     <div class="container">
-        <ul class="upcoming-labels" id="comments">
-            <li ng-repeat="comment in recentComments" ng-class="{'recent-post-selected': recentCommentSelected($index)}">
-                <div class="comment-event">{{comment.eventName}}</div>
-                <div class="comment-profile-picture" ng-style="{'background-image': 'url(' + comment.profilePicture + ')'}"></div>
-                <div class="comment-author">{{comment.author}}</div>
-                <span class="comment-date-time">{{comment.dateTime}}</span>
-                <span class="comment-total"><i class="fa fa-comment-o" aria-hidden="true"></i> {{comment.eventCommentsNumber}}</span>
-            </li>
-        </ul>
+            <ul class="row" id="comments">
+                <li class="col-md-4 col-sm-4 col-xs-12" ng-repeat="comment in recentComments" ng-class="{'recent-post-selected': recentCommentSelected($index)}">
+                    <div class="comment-event">{{comment.eventName}}</div>
+                    <div class="comment-profile-picture" ng-style="{'background-image': 'url(' + comment.profilePicture + ')'}"></div>
+                    <div class="comment-author">{{comment.author}}</div>
+                    <span class="comment-date-time">{{comment.dateTime}}</span>
+                    <span class="comment-total"><i class="fa fa-comment-o" aria-hidden="true"></i> {{comment.eventCommentsNumber}}</span>
+                </li>
+            </ul>
     </div>
 </div>
 <div class="av-section-wrap contact-wrap">

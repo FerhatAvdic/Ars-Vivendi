@@ -25,7 +25,7 @@
         ];
 
         //UPCOMING EVENTS SLIDER
-        $scope.upcoming = [
+        /*$scope.upcoming = [
             { image: "/img/bik_slide.jpg", title: "Slide Title 1", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" },
             { image: "/img/hik_slide.jpg", title: "Slide Title 2", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" },
             { image: "/img/ski_slide.jpg", title: "Slide Title 3", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" },
@@ -36,7 +36,7 @@
             { image: "/img/ski_slide.jpg", title: "Slide Title 3", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" },
             { image: "/img/div_slide.jpg", title: "Slide Title 4", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" },
             { image: "/img/div_slide.jpg", title: "Slide Title 4", date: "24-08-2017", location: "Sarajevo", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.", link: "" }
-        ];
+        ];*/
 
         //PARTNERS
         $scope.partners = [
@@ -57,7 +57,7 @@
         ];
 
         //PAST EVENTS GALLERY
-        $scope.gallery = [
+        /*$scope.gallery = [
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", labelColor: "#2BD0AB" },
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/bik_slide.jpg", date: "05-Mart-2017", labelColor: "#02CB9E" },
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", labelColor: "#00A37F" },
@@ -66,7 +66,8 @@
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/hik_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#00A37F" },
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" }
-        ];
+        ];*/
+        $scope.gallery = [];
 
         //DISCOUNT SLIDES
         $scope.discounts = [
@@ -113,7 +114,9 @@
                 if (response.status === 200) {
                     $scope.upcoming = response.data
                     $scope.upcoming.forEach(getTimeRemaining);
-                    console.log("Upcoming:",$scope.upcoming);
+                    console.log("Upcoming:", $scope.upcoming);
+                    //$scope.startIntervalSlideUpcoming(6000);
+                    //$scope.intervalOfUpcomingDeadline(1000);
                 }
                 else {
                     toastr.error("Greška prilikom pribavljanja budućih događaja");
@@ -312,7 +315,6 @@
         $scope.intervalOfDiscountSlide(2, 8500);
         //$scope.intervalOfSlideUpcoming(6000);
         $scope.intervalOfSlide(5000);
-        $scope.intervalOfUpcomingDeadline(1000);
 
         var startSlideUpcoming;
         $scope.startIntervalSlideUpcoming = function (interval) {
@@ -330,7 +332,7 @@
                 startSlideUpcoming = undefined;
             }
         };
-        $scope.startIntervalSlideUpcoming(6000);
+        
 
     }]);
 }());

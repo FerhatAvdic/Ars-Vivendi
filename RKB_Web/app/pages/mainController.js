@@ -3,9 +3,13 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("mainController", ['$rootScope', 'authenticationService', function ($rootScope, authenticationService) {
+    avApp.controller("mainController", ['$rootScope', '$scope','authenticationService', function ($rootScope, $scope, authenticationService) {
 
-                buildMenu();
+        buildMenu();
+
+        $scope.greenMenu = {};
+        $scope.greenMenu.login = 'prijava';
+        $scope.greenMenu.register = 'postani-clan';
 
                 function buildMenu() {
                     $rootScope.menuItems = [
