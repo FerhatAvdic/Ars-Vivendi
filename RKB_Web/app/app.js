@@ -2,6 +2,11 @@
     
     var avApp = angular.module('avApp', ['dataGrid','pagination','ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module', 'textAngular']);
 
+
+    var serviceBase = 'http://localhost:57792/';
+    //var serviceBase = 'http://api-dive.ntg.ba/';
+    //var serviceBase = 'http://arsvivendi.azurewebsites.net/';
+
     currentUser = {
         id: 0,
         name: " ",
@@ -20,6 +25,7 @@
         .when('/blog', { templateUrl: 'app/pages/blog/blog.html', controller: 'blogController' })
         .when('/events', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
         .when('/members', { templateUrl: 'app/pages/members/members.html', controller: 'membersController' })
+        //.when('/events/:filter', { templateUrl: 'app/pages/events/events.html', controller: 'eventsController' })
         .when('/events/:id', { templateUrl: 'app/pages/singleEvent/singleEvent.html', controller: 'singleEventController' })
         .when('/events/:id/finances', { templateUrl: 'app/pages/singleEvent/singleEventFinances.html', controller: 'singleEventFinancesController' })
         .when('/profile/:id', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
@@ -32,9 +38,6 @@
 
     });
 
-    var serviceBase = 'http://localhost:57792/';
-    //var serviceBase = 'http://api-dive.ntg.ba/';
-    //var serviceBase = 'http://arsvivendi.azurewebsites.net/';
     avApp.constant('arsVivAuthSettings', {
         apiServiceBase: serviceBase,
         clientId: 'arsvAuthApp'

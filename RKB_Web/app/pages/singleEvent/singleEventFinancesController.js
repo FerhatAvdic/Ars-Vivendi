@@ -7,6 +7,7 @@
 
     avApp.controller("singleEventFinancesController", ['$scope', '$sce', '$routeParams', 'dataService', function ($scope, $sce,$routeParams, dataService) {
         $scope.emailContent = "";
+        $scope.emailSubject="";
         var eventID = $routeParams.id;
         $scope.initNewPayment = function () {
             $scope.newPayment = {
@@ -71,7 +72,7 @@
             dataService.list("userevents/acceptedapplications/" + $routeParams.id, function (response) {
                 if (response.status === 200) {
                     $scope.eventApplications = response.data;
-                    console.log($scope.eventApplications);
+                    console.log("eventapps",$scope.eventApplications);
                 }
                 else {
                     console.log("ERROR: ", response);
@@ -80,7 +81,7 @@
             });
         };
         $scope.listEventApplications();
-        
+
         $scope.setPayment = function (application) {
             $scope.newPayment.userEventId = application.id;
             $scope.currentApplication = angular.copy(application);
@@ -155,7 +156,7 @@
             if ($scope.newUserList.groupId === null) {
                 toastr.error("Odaberite grupu");
                 return;
-            } 
+            }
             var exists = false;
             for (var i = 0; i < $scope.eventApplications.length; i++) {
                 exists = false;
@@ -180,6 +181,8 @@
                 toastr.error("Greška prilikom brisanja člana");
             if (!$scope.errorAddingMember || !$scope.errorRemovingMember)
                 toastr.success("Uspješno ažurirani članovi!");
+            $scope.showCheckboxes = false;
+            $scope.toggleAllModel = false;
         };
         $scope.listGroupUsers = function (groupId) {
             dataService.read("usergroups", groupId, function (response) {
@@ -187,8 +190,8 @@
                     $scope.newUserList.userIds = response.data;
                     console.log($scope.newUserList.userIds);
 
-                    $scope.eventApplications.forEach(function (interest) {
-                        interest.checked = false;
+                    $scope.eventApplications.forEach(function (application) {
+                        application.checked = false;
                     });
                     $scope.eventApplications.forEach(function (application) {
                         $scope.newUserList.userIds.forEach(function (selectedUser) {
@@ -289,16 +292,38 @@
             });
         };
 
+        $scope.toggleAllModel = false;
+        $scope.toggleAll = function () {
+            if ($scope.toggleAllModel === false)
+            {
+                $scope.eventApplications.forEach(function (application) {
+                    application.checked = true;
+                });
+                $scope.toggleAllModel = true;
+            }
+            else
+            {
+                $scope.eventApplications.forEach(function (application) {
+                    application.checked = false;
+                });
+                $scope.toggleAllModel = false;
+            }
+                
+        };
         $scope.sendEmail = function () {
             var email = {
                 "emailSubject": $scope.emailSubject,
                 "emailContent": $scope.emailContent,
                 "usernames": []
             };
-            $scope.newUserList.userIds.forEach(function (user, index, array) {
+            /*$scope.newUserList.userIds.forEach(function (user, index, array) {
                 email.usernames.push(user.userId);
+            });*/
+            $scope.eventApplications.forEach(function (app, index, array) {
+                if (app.checked===true) email.usernames.push(app.userId);
+                console.log(app.userId);
             });
-            console.log($scope.newUserList.userIds);
+
             console.log(email);
 
             dataService.create("groupemail", email, function (response) {

@@ -8,12 +8,55 @@
         function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
             var source = "http://localhost:57792/";
-            //var source = "http://api-dive.ntg.ba/";
-
+            //var source = "http://api-dive.ntg.ba/";            
+            $scope.formTabs = [
+                {'name':'reg1', 'active':false},
+                {'name':'reg2', 'active':false},
+                {'name':'reg3', 'active':false}
+            ];
+            $scope.formTabs[0].active = true;
+            $scope.phoneRegex = /^[0-9]+$/;
             $scope.dateOfBirth = dataService.dates;
             $scope.countries = dataService.countries;
             $scope.selectedCountry = $scope.countries[0];
             var dayError = false;
+
+            $scope.openForm = function (index) {
+                $scope.formTabs.forEach(function (tab) {
+                    tab.active = false;
+                });
+                $scope.formTabs[index].active = true;
+            };
+
+            $scope.switchTab = function (index, form) {
+                $scope.dateError = false;
+                $scope.passwordError = false;
+                //validate password
+                if (index === 1) {
+                    if ($scope.registrationData.password !== $scope.registrationData.confirmPassword ||
+                        $scope.registerExternalData.password !== $scope.registerExternalData.confirmPassword) {
+                        $scope.passwordError = true;
+                        return;
+                    }
+                }
+                //validate date
+                if (index === 2) {
+                    dayError = false;
+                    $scope.dateError = false;
+                    validateDate();
+                    if (dayError) {
+                        $scope.dateError = true;
+                        return;
+                    }
+                }
+                if (!form.$valid) return;
+                $scope.formTabs.forEach(function (tab) {
+                    tab.active = false;
+                });
+                $scope.formTabs[index].active = true;
+            };
+
+            
             var validateDate = function () {
                 var day = parseInt($scope.dateOfBirth.day);
                 var month = parseInt($scope.dateOfBirth.month);
@@ -41,7 +84,7 @@
                     if (response.status === 200) {
                         $scope.interestCategories = response.data;
                         $scope.categoriesLoading = false;
-                        console.log("get categories");
+                        //console.log("get categories", $scope.interestCategories);
                     }
                     else {
                         console.log("ERROR: ", response);
@@ -55,8 +98,8 @@
                     if (response.status === 200) {
                         $scope.subCategories = response.data;
                         $scope.subCategoriesLoading = false;
-                        console.log("ALL INTERESTS");
-                        console.log($scope.allInterests);
+                        //console.log("ALL INTERESTS", $scope.subCategories);
+                        //console.log($scope.allInterests);
                     }
                     else {
                         console.log("ERROR: ", response);
@@ -64,7 +107,8 @@
                 });
             };
 
-        $scope.selected = [];
+            $scope.selected = [];
+            $scope.distinctCategories = [];
 
         $scope.toggleSelection = function (subCategory) {
             var idx = $scope.selected.indexOf(subCategory);
@@ -82,18 +126,34 @@
 
         $scope.initRegistrationData = function () {
             $scope.registrationData = {
-                userName: "",
-                password: "",
-                confirmPassword: "",
-                firstName: "",
-                lastName: "",
-                email: "",
+                userName: null,
+                password: null,
+                confirmPassword: null,
+                firstName: null,
+                lastName: null,
+                email: null,
                 dateOfBirth: "",
-                address: "",
+                address: null,
+                city: null,
                 phoneNumber: "",
-                gender: "",
-                employment: "",
+                gender: null,
+                employment: null,
+                healthStatus: null,
                 subCategoriesList: $scope.selected
+                //userName: "aaa",
+                //password: "123123",
+                //confirmPassword: "123123",
+                //firstName: "aaa",
+                //lastName: "sss",
+                //email: "aaa@email.com",
+                //dateOfBirth: "",
+                //address: "sds",
+                //city: "aasdas",
+                //phoneNumber: "1233245342",
+                //gender: "musko",
+                //employment: "zaposlen",
+                //healthStatus: "srednji",
+                //subCategoriesList: $scope.selected
             };
         };
         $scope.initRegistrationData();
@@ -156,29 +216,30 @@
             }, 2000);
         };
         $scope.signUp = function () {
+            $scope.categoryError = false;
             //begin validation
             var exitFunction = false;
             //date validation
             dayError = false;
             validateDate();
             if (dayError) {
-                toastr.warning("Unesen je pogrešan datum");
+                $scope.dateError = true;
+                //toastr.warning("Unesen je pogrešan datum");
                 exitFunction = true;
             }
             else {
-                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                var selectedDate = $scope.dateOfBirth.year + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.day;
                 $scope.registrationData.dateOfBirth = new Date(selectedDate);
             }
             //phone validation
+            /*
             if (!/^[0-9]+$/.test($scope.registrationData.phoneNumber)) {
                 toastr.warning("Broj telefona smije imati samo cifre");
                exitFunction = true;
-            }
-            else {
-                $scope.registrationData.phoneNumber = $scope.selectedCountry.number + $scope.registrationData.phoneNumber;
-            }
+            }*/
+                
             //empty space validation
-            if ($scope.registrationData.userName.trim() === "" ||
+            /*if ($scope.registrationData.userName.trim() === "" ||
                 $scope.registrationData.password.trim() === "" ||
                 $scope.registrationData.confirmPassword.trim() === "" ||
                 $scope.registrationData.firstName.trim() ==="" ||
@@ -193,15 +254,20 @@
             {
                 toastr.warning("Jedno ili više polja je prazno");
                 exitFunction = true;
-            }
+            }*/
             //characteristics validation
-            if ($scope.selected === [] || $scope.selected.length < $scope.interestCategories.length) {
-                toastr.warning("Unesite sve karakteristike");
+            $scope.distinct = []; //count from selected, how many items are from distinct categories
+            $scope.selected.forEach(function (item) {
+                if ($scope.distinct.indexOf(item.categoryId) < 0)
+                    $scope.distinct.push(item.categoryId);
+            });
+            if ($scope.selected === [] || $scope.distinct.length < $scope.interestCategories.length) {
+                $scope.categoryError = true;
                 exitFunction = true;
             }
             if (exitFunction) return;
             //end of validation
-
+            $scope.registrationData.phoneNumber = $scope.selectedCountry.number + $scope.registrationData.phoneNumber;
             $scope.registrationData.subCategoriesList = $scope.selected;
             authenticationService.saveRegistration($scope.registrationData).then(function (response) {
                 toastr.success("Registracija uspješna!");
@@ -228,7 +294,14 @@
             }).then(function successCallback(response) {
                 $rootScope.userRole = response.data.userRole;
                 authenticationService.authentication.userFirstName = response.data.userFirstName;
-                localStorageService.set('authorizationData', { token: authData.token, userName: authData.userName, refreshToken: authData.refresh_token, useRefreshToken: true, localRole: $rootScope.userRole, localName: authenticationService.authentication.userFirstName });
+                localStorageService.set('authorizationData', {
+                    token: authData.token,
+                    userName: authData.userName,
+                    refreshToken: authData.refresh_token,
+                    useRefreshToken: true,
+                    localRole: $rootScope.userRole,
+                    localName: authenticationService.authentication.userFirstName
+                });
                 toastr.success("Prijava uspješna!");
                 $rootScope.changeMenu();
             }, function errorCallback(response) {
@@ -252,6 +325,7 @@
         };
 
         $scope.authExternalProvider = function (provider) {
+            $scope.formTabs[0].active = true;//set visible first tab
             console.log("external auth provider");
             var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 
@@ -310,7 +384,7 @@
                 exitFunction = true;
             }
             else {
-                var selectedDate = $scope.dateOfBirth.day + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.year;
+                var selectedDate = $scope.dateOfBirth.year + "-" + $scope.dateOfBirth.month + "-" + $scope.dateOfBirth.day;
                 $scope.registerExternalData.dateOfBirth = new Date(selectedDate);
             }
             if ($scope.registerExternalData.firstName.trim() === "" ||
@@ -330,15 +404,12 @@
                 toastr.warning("Broj telefona smije imati samo cifre")
                 exitFunction = true;
             }
-            else {
-                $scope.registerExternalData.phoneNumber = $scope.selectedCountry.number + $scope.registerExternalData.phoneNumber;
-            }
             if ($scope.selected.length < $scope.interestCategories.length) {
                 toastr.warning("Unesite sve karakteristike");
                 exitFunction = true;
             }
             if (exitFunction) return;
-
+            $scope.registerExternalData.phoneNumber = $scope.selectedCountry.number + $scope.registerExternalData.phoneNumber;
             $scope.registerExternalData.subCategoriesList = $scope.selected;
             authenticationService.registerExternal($scope.registerExternalData).then(function (response) {
                 toastr.success("Registracija uspješna!");

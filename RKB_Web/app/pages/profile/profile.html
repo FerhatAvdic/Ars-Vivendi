@@ -100,92 +100,129 @@
                                     <div class="row">
                                         <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
                                             <div class="profile-personal-wrap">
-                                                <div class="form-group">
-                                                    <label>Korisničko Ime:</label>
-                                                    <input type="text" class="form-control" placeholder="Korisničko Ime" ng-model="userInfo.userName" disabled="disabled">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Email:</label>
-                                                    <input type="text" class="form-control" placeholder="Email" ng-model="userInfo.email">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Ime:</label>
-                                                    <input type="text" class="form-control" placeholder="Ime" ng-model="userInfo.firstName">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Prezime:</label>
-                                                    <input type="text" class="form-control" placeholder="Prezime" ng-model="userInfo.lastName">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Datum Rođenja: </label>
-                                                    <div class="row" style="padding-top: 10px;">
-                                                        <div class="col-md-4">
-                                                            <select type="text" class="form-control" ng-model="userInfo.day">
-                                                                <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select type="text" class="form-control" ng-model="userInfo.month">
-                                                                <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select type="text" class="form-control" ng-model="userInfo.year">
-                                                                <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Grad:</label>
-                                                    <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.city">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Adresa:</label>
-                                                    <input type="text" class="form-control" placeholder="Grad" ng-model="userInfo.address">
-                                                </div>
-                                                
-                                                    <!--<div class="form-group">
-                                                        <label>Telefon:</label>
-                                                        <input type="text" class="form-control" placeholder="Telefon" ng-model="userInfo.phoneNumber">
-                                                    </div>-->
-                                                <div class="form-group">
-                                                    <label>Telefon:</label>
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <select class="form-control" ng-model="selectedCountry">
-                                                                <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-7"><input class="form-control" type="text" placeholder="Broj" ng-model="userInfo.partPhoneNumber" /></div>
-                                                    </div>
-                                                </div>
-                                                    <label>Spol: </label>
+                                                <form name="profileForm" novalidate>
                                                     <div class="form-group">
-                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Musko">Muški</label>
-                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Zensko">Ženski</label>
+                                                        <label>Korisničko Ime:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.userName.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.userName.$error.required">Obavezno polje</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Korisničko Ime" name="userName"ng-model="userInfo.userName" disabled="disabled" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.email.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.email.$error.required">Obavezno polje</div>
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.email.$error.email">Nepravilan email</div>
+                                                        </div>
+                                                        <input type="email" class="form-control" placeholder="Email" name="email" ng-model="userInfo.email" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Ime:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.firstName.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.firstName.$error.required">Obavezno polje</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="firstName" placeholder="Ime" ng-model="userInfo.firstName" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Prezime:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.lastName.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.lastName.$error.required">Obavezno polje</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Prezime" name="lastName" ng-model="userInfo.lastName" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Datum Rođenja: </label>
+                                                        <div ng-show="profileForm.$submitted">
+                                                            <div class="alert alert-danger" role="alert" ng-show="dateError">Nepravilan datum</div>
+                                                        </div>
+                                                        <div class="row" style="padding-top: 10px;">
+                                                            <div class="col-md-4">
+                                                                <select type="text" class="form-control" ng-model="userInfo.day">
+                                                                    <option ng-repeat="day in dateOfBirth.days" ng-value="day">{{day}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select type="text" class="form-control" ng-model="userInfo.month">
+                                                                    <option ng-repeat="month in dateOfBirth.months" ng-value="month">{{month}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select type="text" class="form-control" ng-model="userInfo.year">
+                                                                    <option ng-repeat="year in dateOfBirth.years" ng-value="year">{{year}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Grad:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.city.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.city.$error.required">Obavezno polje</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Grad" name="city" ng-model="userInfo.city" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Adresa:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.address.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.address.$error.required">Obavezno polje</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Adresa" name="address" ng-model="userInfo.address" required="">
+                                                    </div>
+
+                                                    <!--<div class="form-group">
+            <label>Telefon:</label>
+            <input type="text" class="form-control" placeholder="Telefon" ng-model="userInfo.phoneNumber">
+        </div>-->
+                                                    <div class="form-group">
+                                                        <label>Telefon:</label>
+                                                        <div ng-show="profileForm.$submitted || profileForm.phoneNumber.$touched">
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.phoneNumber.$error.required">Obavezno polje</div>
+                                                            <div class="alert alert-danger" role="alert" ng-show="profileForm.phoneNumber.$error.pattern">Broj telefona može imati samo cifre</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <select class="form-control" ng-model="selectedCountry">
+                                                                    <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-7"><input class="form-control" type="text" placeholder="Broj" name="phoneNumber" ng-model="userInfo.partPhoneNumber" required="" ng-pattern="phoneRegex"/></div>
+                                                        </div>
+                                                    </div>
+                                                    <label>Spol: </label>
+                                                    <div ng-show="profileForm.$submitted">
+                                                        <div class="alert alert-danger" role="alert" ng-show="profileForm.genderRadio.$error.required">Odaberite spol</div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Musko" required>Muški</label>
+                                                        <label class="radio-inline"><input type="radio" name="genderRadio" ng-model="userInfo.gender" value="Zensko" required>Ženski</label>
                                                     </div>
                                                     <label>Radni status: </label>
+                                                    <div ng-show="profileForm.$submitted">
+                                                        <div class="alert alert-danger" role="alert" ng-show="profileForm.employmentRadio.$error.required">Odaberite radni status</div>
+                                                    </div>
                                                     <div class="form-group">
-                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Zaposlen">Zaposlen/a</label>
-                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Nezaposlen">Nezaposlen/a</label>
-                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Student">Student</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Zaposlen" required>Zaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Nezaposlen" required>Nezaposlen/a</label>
+                                                        <label class="radio-inline"><input type="radio" name="employmentRadio" ng-model="userInfo.employment" value="Student" required>Student</label>
 
                                                     </div>
                                                     <label>Nivo fizičke spreme: </label>
+                                                    <div ng-show="profileForm.$submitted">
+                                                        <div class="alert alert-danger" role="alert" ng-show="profileForm.healthRadio.$error.required">Odaberite radni status</div>
+                                                    </div>
                                                     <div class="form-group">
-                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Nizak">Nizak</label>
-                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Srednji">Srednji</label>
-                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Visok">Visok</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Nizak" required>Nizak</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Srednji" required>Srednji</label>
+                                                        <label class="radio-inline"><input type="radio" name="healthRadio" ng-model="userInfo.healthStatus" value="Visok" required>Visok</label>
                                                     </div>
                                                     <!--<div class="form-group" ng-show="health === 'other'">
-            <label>Objašnjenje:</label>
-            <textarea class="form-control" rows="2"></textarea>
-        </div>-->
-                                                <div class="text-right">
-                                                    <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
-                                                    <button class="btn btn-primary" ng-click="updatePersonalInfo()">Spasi</button>
-                                                </div>
+                <label>Objašnjenje:</label>
+                <textarea class="form-control" rows="2"></textarea>
+            </div>-->
+                                                    <div class="text-right">
+                                                        <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary">Promijeni Sifru</button>
+                                                        <button type="submit" class="btn btn-primary" ng-click="updatePersonalInfo(profileForm)">Spasi</button>
+                                                    </div>
+                                                </form>
                                                 </div>
                                         </div>
                                     </div>
@@ -360,13 +397,16 @@
             <div class="modal-body">
                 <div class="form-group">
                     <form>
-                        <input type="file" accept="image/*" ng-model="userInfo.image" base-sixty-four-input>
+                        <input class="base64-upload" type="file" accept="image/*" ng-model="userInfo.image" base-sixty-four-input ng-change="resetImageError()"><span> {{userInfo.image.filename}}</span>
                     </form>
                 </div>
+                    <div class="alert alert-danger" role="alert" ng-show="imageError.noImage">Nema nove slike</div>
+                    <div class="alert alert-danger" role="alert" ng-show="imageError.size">Dozvoljena veličina slike je do 2 MB (veličina trenutne slike: {{userInfo.image.filesize/1000000 | number : 2}} MB)</div>
+                    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveProfilePicture()">Potvrdi</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-primary" ng-click="saveProfilePicture()">Potvrdi</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetProfilePicture()">Zatvori</button>
             </div>
         </div>
 
@@ -385,17 +425,34 @@
             <!--<div class="modal-body">-->
 
 
-            <div class="add-member-form">
-                <div class="tab-content">
-                    <div id="postani-clan-1" class="tab-pane fade in active">
-                        <div class="login-line"><p>Popunite polja</p></div>
-                        <input type="password" placeholder="Trenutna sifra" required ng-model="changePassword.currentPassword" />
-                        <input type="password" placeholder="Nova sifra" required ng-model="changePassword.newPassword" />
-                        <input type="password" placeholder="Potvrdi novu sifru" ng-model="changePassword.confirmNewPassword" />
-                        <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" data-dismiss="modal" data-toggle="tab" target="_self" ng-click="updatePassword()">Potvrdi</button>
+                <form name="passwordForm" novalidate>
+                    <!--<input type="password" placeholder="Trenutna sifra" required ng-model="changePassword.currentPassword" />
+                    <input type="password" placeholder="Nova sifra" required ng-model="changePassword.newPassword" />
+                    <input type="password" placeholder="Potvrdi novu sifru" ng-model="changePassword.confirmNewPassword" />-->
+                    <div class="av-form-group">
+                        <label>Trenutna Šifra: </label>
+                        <div class="av-form-error" ng-show="passwordForm.$submitted || passwordForm.currentPassword.$touched">
+                            <span ng-show="passwordForm.currentPassword.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="password" name="currentPassword" class="av-form" ng-model="changePassword.currentPassword" required="">
                     </div>
-                </div>
-            </div>
+                    <div class="av-form-group">
+                        <label>Nova šifra: </label>
+                        <div class="av-form-error" ng-show="passwordForm.$submitted || passwordForm.newPassword.$touched">
+                            <span ng-show="passwordForm.newPassword.$error.required">Obavezno polje</span>
+                        </div>
+                        <input type="password" name="newPassword" class="av-form" ng-model="changePassword.newPassword" required="">
+                    </div>
+                    <div class="av-form-group av-form-last">
+                        <label>Ponovi novu šifru: </label>
+                        <div class="av-form-error" ng-show="passwordForm.$submitted || passwordForm.confirmNewPassword.$touched">
+                            <span ng-show="passwordForm.confirmNewPassword.$error.required">Obavezno polje</span>
+                            <span ng-show="passwordError">Šifre nisu jednake</span>
+                        </div>
+                        <input type="password" name="confirmNewPassword" class="av-form " ng-model="changePassword.confirmNewPassword" required="">
+                    </div>
+                    <button type="button" class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="formReset(passwordForm)">Izađi</button><button type="submit" class="rectangle-btn login-btn-halfway modal-border" target="_self" ng-click="updatePassword(passwordForm)">Potvrdi</button>
+                </form>
         </div>
     </div>
 </div>

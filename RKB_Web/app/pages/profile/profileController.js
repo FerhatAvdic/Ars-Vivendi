@@ -4,10 +4,24 @@
     var avApp = angular.module("avApp");
 
     avApp.controller("profileController", ['$rootScope','$scope', '$routeParams', '$location','$timeout','dataService', 'authenticationService', function ($rootScope, $scope, $routeParams, $location,$timeout, dataService, authenticationService) {
-        
+
         $scope.dateOfBirth = dataService.dates;
         $scope.countries = dataService.countries;
         var currentUser = authenticationService.authentication;
+        $scope.phoneRegex = /^[0-9]+$/;
+        var dayError = false;
+        var validateDate = function () {
+            var day = parseInt($scope.userInfo.day);
+            var month = parseInt($scope.userInfo.month);
+            var year = parseInt($scope.userInfo.year);
+
+            if (month === 4 || month === 6 || month === 9 || month === 11)
+                if (day > 30) dayError = true;
+            if (month === 2 && year % 4 === 0)
+                if (day > 29) dayError = true;
+            if (month === 2 && year % 4 > 0)
+                if (day > 28) dayError = true;
+        };
 
         var authenticateUser = function () {
             if ($rootScope.userRole === "Admin" || currentUser.userName === $routeParams.id) return;
@@ -41,7 +55,7 @@
                 };
             });
         };
-        
+
         var addNewPayment = function (paymentData) {
             if (paymentData.transactionId == null) return;
             dataService.create("paypal", paymentData, function (response) {
@@ -57,13 +71,15 @@
         var chechkPath =  function () {
             console.log("payment");
             var urlPath = $location.absUrl();
-            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + profileID) {
+            if (urlPath != 'http://localhost:49753/index.html#!/profile/' + currentUser.userName) {
                 //$location.path('profile/' + authenticationService.authentication.userName);
                 console.log('drugaciji', urlPath);
                 var array = urlPath.split('tx=');
+                //console.log('array', array, 'array1', array[1], 'array0', array[0]);
                 paypalInfo.transactionId = array[1];
-                paypalInfo.userName = authenticationService.authentication.userName;                
-                addNewPayment(paypalInfo);               
+                //console.log("authenticationService.authentication.userName", authenticationService.authentication.userName);
+                paypalInfo.userName = authenticationService.authentication.userName;
+                addNewPayment(paypalInfo);
             }
             else {
                 console.log('nije drugaciji', urlPath);
@@ -71,7 +87,7 @@
         };
         //checkPath(urlPath);
         $scope.health = false;
-        
+
         $scope.stats = {
             "attendedEvents": [{
                 "id": "eventID",
@@ -218,7 +234,7 @@
             dataService.read("memberships", "?username=" + profileID, function (response){
                 if (response.status === 200) {
                     $scope.membershipInfo = response.data;
-                    console.log($scope.membershipInfo);
+                    console.log('membershipInfo:',$scope.membershipInfo);
                     $scope.financesLoading = false;
                 }
                 else {
@@ -230,6 +246,7 @@
         $scope.prepareFinances = function () {
             $scope.getMembershipInfo();
             $scope.getFinances();
+	        //checkPath();
         };
 
         $scope.setEditingInterest = function (Interest) {
@@ -269,17 +286,35 @@
                 }
             });
         };
-        
-        $scope.updatePassword = function () {
+
+        $scope.updatePassword = function (passwordForm) {
+            if (!passwordForm.$valid) {
+                toastr.error("Popunite sva polja");
+                return;
+            }
+            if ($scope.changePassword.confirmNewPassword !== $scope.changePassword.newPassword) {
+                $scope.passwordError = true;
+                toastr.error("Nejednake šifre");
+                return;
+            }
             dataService.create("updatepassword", $scope.changePassword, function (response) {
                 if (response.status === 200) {
-                    toastr.success(response.data);
+                    toastr.success("Uspješno izmijenjena šifra!");
+                    $scope.formReset(passwordForm);
+                    $('#changePasswordModal').modal('hide');
                 }
                 else {
                     toastr.error(response.data.message);
                     console.log(response.data.modelState);
-                }                    
+                }
             });
+        };
+        $scope.formReset = function (form) {
+            if (form) {
+                form.$setPristine();
+                form.$setUntouched();
+                $scope.changePassword = {};
+            }
         };
         $scope.summarizeStats = function () {
             angular.forEach($scope.stats.attendedEvents, function (event) {
@@ -362,7 +397,19 @@
             });
         };
 
-        $scope.updatePersonalInfo = function () {
+        $scope.updatePersonalInfo = function (form) {
+            if (!form.$valid) {
+                toastr.error("Greška prilikom izmjene profila");
+                return;
+            }
+            //validate Date
+            dayError = false;
+            $scope.dateError = false;
+            validateDate();
+            if (dayError) {
+                $scope.dateError = true;
+                return;
+            }
             $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
             var dateString = $scope.userInfo.year + "/" + $scope.userInfo.month + "/" + $scope.userInfo.day;
             $scope.userInfo.dateOfBirth = new Date(dateString);
@@ -412,7 +459,7 @@
                     console.log("ERROR: ", response);
                 }
             });
-           
+
         };
 
 
@@ -519,12 +566,32 @@
                 toastr.success("Uspješno izmijenjene karakteristike!");
             $scope.getInterestInfo();
         };
-       
-
+        $scope.resetImageError = function () {
+            $scope.imageError = { 'noImage': false, 'size': false };
+            if ($scope.userInfo.image.filesize > 2000000) {
+                $scope.imageError.size = true;
+            }
+        };
+        $scope.resetProfilePicture = function () {
+            $scope.userInfo.image = null;
+            $scope.imageError = { 'noImage': false, 'size': false };
+        };
         $scope.saveProfilePicture = function () {
+            $scope.imageError = { 'noImage': false, 'size': false };
+            if (!$scope.userInfo.image) {
+                toastr.error("Nema nove slike");
+                $scope.imageError.noImage = true;
+                return;
+            }
+            if ($scope.userInfo.image.filesize > 2000000) {
+                $scope.imageError.size = true;
+                toastr.error("Neodgovarajuća veličina slike");
+                return;
+            } 
             profilePicture.userName = $scope.userInfo.userName;
-            console.log($scope.userInfo.image);
+            //console.log($scope.userInfo.image);
             profilePicture.baseImage = $scope.userInfo.image.base64;
+            
             dataService.create("uploadprofileimage", profilePicture, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno postavljena slika profila!");
@@ -534,6 +601,7 @@
                     console.log("ERROR: ", response);
                 }
                 $scope.getPersonalInfo();
+                $('#changePasswordModal').modal('hide');
             });
         };
 
@@ -601,7 +669,11 @@
             $scope.statsLoading = true;
             dataService.read("activities", profileID + "/", function (response) {
                 if (response.status === 200) {
-                    $scope.activityStats = response.data[0].summaryList;
+                    console.log('summary',response.data);
+                    if (response.data.length > 0)
+                        $scope.activityStats = response.data[0].summaryList;
+                    else
+                        $scope.activityStats = null;
                     console.log($scope.activityStats);
                     $scope.statsLoading = false;
                 }
@@ -610,7 +682,7 @@
                 };
             });
         };
-        
+
         $scope.listApplications = function () {
             $scope.statsLoading = true;
             dataService.list("/userevents/applicationbyuser/" + $routeParams.id + "/", function (response) {
@@ -627,10 +699,9 @@
         };
 
         $scope.getPersonalInfo();
-        checkPath();
-        //authenticateUser();
+        authenticateUser();
 
-        
+
 
     }]);
 }());
