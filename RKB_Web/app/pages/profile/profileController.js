@@ -43,6 +43,7 @@
         };
         
         var addNewPayment = function (paymentData) {
+            if (paymentData.transactionId == null) return;
             dataService.create("paypal", paymentData, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izvrsena uplata!");
@@ -53,7 +54,8 @@
                 }
             });
         };
-        var checkPath = function () {
+        var chechkPath =  function () {
+            console.log("payment");
             var urlPath = $location.absUrl();
             if (urlPath != 'http://localhost:49753/index.html#!/profile/' + profileID) {
                 //$location.path('profile/' + authenticationService.authentication.userName);

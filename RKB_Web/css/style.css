@@ -1900,3 +1900,10 @@ iframe, object, embed {
 .comment-options li{
     display: inline;
 }
+.custom-form-error {
+    border-color: red;
+    background-color:blue;
+}
+.no-magrig {
+    margin-bottom: 0px;
+}

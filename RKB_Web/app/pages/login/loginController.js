@@ -7,8 +7,8 @@
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService',
         function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
-            //var source = "http://localhost:57792/";
-            var source = "http://api-dive.ntg.ba/";
+            var source = "http://localhost:57792/";
+            //var source = "http://api-dive.ntg.ba/";
 
             $scope.dateOfBirth = dataService.dates;
             $scope.countries = dataService.countries;
@@ -109,7 +109,7 @@
         //    $location.path('/home');
         //    currentUser.id = 1;
         //}
-
+       
         $scope.initRegistrationExternalData = function () {
             $scope.registerExternalData = {
                 userName: authenticationService.externalAuthData.email,
@@ -135,6 +135,12 @@
             else
                 $location.path('/login/postani-clan')
         };
+        $scope.userFormValidate = function (data) {
+            if (!data) {
+                toastr.warning("please fill all fields");
+            }
+            
+        }
         $scope.resetExternalRegistration = function () {
             $scope.initRegistrationExternalData();
             if ($location.path() === '/externalLogin/postani-clan')

@@ -26,7 +26,8 @@
                         { link: "#!/about", text: "O Nama" },
                         { link: "#!/events", text: "Događaji" },
                         { link: "#!/gallery", text: "Galerija", id: null },
-                        { link: "#!/members", text: "Članovi" }
+                        { link: "#!/members", text: "Članovi" },
+                        { link: "#!/adminPanel", text: "Admin Panel" }
                     ];
                     $rootScope.userItems = [
                         { link: "#!/about", text: "O Nama" },

@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +69,8 @@
   <ItemGroup>
     <Content Include="app\pages\about\about.html" />
     <Content Include="app\pages\about\aboutController.js" />
+    <Content Include="app\pages\adminPanel\adminPanel.html" />
+    <Content Include="app\pages\adminPanel\adminPanelController.js" />
     <Content Include="app\pages\index\indexController.js" />
     <Content Include="app\pages\gallery\gallery.html" />
     <Content Include="app\pages\gallery\galleryController.js" />
@@ -89,8 +92,10 @@
     <Content Include="app\services\authenticationService.js" />
     <Content Include="app\services\dataService.js" />
     <Content Include="authComplete.html" />
+    <Content Include="css\angular-data-grid.bootstrap.css" />
     <Content Include="css\angular-material.min.css" />
     <Content Include="css\colorpicker.min.css" />
+    <Content Include="css\fixed-header.css" />
     <Content Include="css\textAngular.css" />
     <Content Include="css\toastr.min.css" />
     <Content Include="fonts\font-awesome\fontawesome-webfont.svg" />
@@ -128,8 +133,11 @@
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />
     <Content Include="libs\bootstrap-colorpicker-module.min.js" />
+    <Content Include="libs\dataGrid.min.js" />
+    <Content Include="libs\dataGridUtils.js" />
     <Content Include="libs\moment.js" />
     <Content Include="libs\moment.min.js" />
+    <Content Include="libs\pagination.min.js" />
     <Content Include="libs\textAngular-rangy.min.js" />
     <Content Include="libs\textAngular-sanitize.min.js" />
     <Content Include="libs\textAngular.min.js" />

@@ -53,14 +53,24 @@
             </div>
             <div id="postani-clan-1" class="tab-pane fade">
                 <div class="login-line"><p>Korisnički podaci</p></div>
-                <input type="text" placeholder="Korisničko Ime" ng-model="registrationData.userName" required />
-                <input type="password" placeholder="Šifra" ng-model="registrationData.password" required />
-                <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
-                <input type="text" placeholder="Ime" ng-model="registrationData.firstName"/>
-                <input type="text" placeholder="Prezime" ng-model="registrationData.lastName" />
-                <input type="email" placeholder="Email" ng-model="registrationData.email"/>
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self">Dalje</button>
+                <form name="testForm" novalidate>
+                    <div class="form-group no-magrig" ng-class="{'custom-label-error':testForm.username.$invalid}">
+                        <input type="text"
+                               class="form-control"
+                               name="username"
+                               placeholder="Korisničko Ime"
+                               ng-model="registrationData.userName"
+                               required />
+                    </div>
+                    <input type="password" placeholder="Šifra" ng-model="registrationData.password" required />
+                    <input type="password" placeholder="Potvrdi Šifru" ng-model="registrationData.confirmPassword" />
+                    <input type="text" placeholder="Ime" ng-model="registrationData.firstName" />
+                    <input type="text" placeholder="Prezime" ng-model="registrationData.lastName" />
+                    <input type="email" placeholder="Email" ng-model="registrationData.email" />
 
+
+                    <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button  class="rectangle-btn login-btn-halfway" data-toggle="tab" href="#postani-clan-2" target="_self" ng-click="userFormValidate(testForm.$valid)">Dalje</button>
+                </form>
             </div>
             <div id="postani-clan-2" class="tab-pane fade">
                 <div class="login-line"><p>Lični podaci</p></div>
