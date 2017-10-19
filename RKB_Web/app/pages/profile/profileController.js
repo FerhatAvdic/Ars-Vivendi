@@ -79,7 +79,9 @@
                 paypalInfo.transactionId = array[1];
                 //console.log("authenticationService.authentication.userName", authenticationService.authentication.userName);
                 paypalInfo.userName = authenticationService.authentication.userName;
-                addNewPayment(paypalInfo);
+                if (paypalInfo.transactionId != undefined) {
+                    addNewPayment(paypalInfo);
+                }                
             }
             else {
                 console.log('nije drugaciji', urlPath);

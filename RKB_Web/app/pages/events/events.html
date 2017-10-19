@@ -385,6 +385,10 @@
                         <label>Reprezentativna boja:</label>
                         <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" />
                     </li>
+                    <li class="form-group">
+                        <label>Odaberite sliku:</label>
+                        <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
+                    </li>
                 </ul>
             </div>
             <div class="modal-footer">
@@ -419,6 +423,10 @@
                     <li class="form-group">
                         <label>Reprezentativna boja:</label>
                         <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="editingCategory.categoryColor" />
+                    </li>
+                    <li class="form-group">
+                        <label>Odaberite sliku:</label>
+                        <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
                     </li>
                 </ul>
             </div>
