@@ -1,137 +1,139 @@
-﻿<div class="event-background" ng-style="{'background-image': 'url(' + event.imagePath + '),url(/img/whitestonebg.png)'}">
+﻿<div class="event-background" ng-style="{'background-image': 'url(/img/whitestonebg.png)'}">
     <div class="container event-relative">
         <div class="event-info-wrapper">
-            <div class="single-event-title">{{event.name}}</div>
             <div class="event-info">
-                <div class="row">
-                    <div class="col-md-12" style="margin-bottom:25px;"><a ng-href="#!/events" class="btn btn-default pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Povratak na događaje</a></div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <p><i class="fa fa-info-circle" aria-hidden="true"></i> Opis:</p>
-                                    <p>
-                                        {{event.description}}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <ul style="margin-bottom:0;">
-                                            <li class="col-xs-6">
-                                                <p><i class="fa fa-map-marker" aria-hidden="true"></i> Lokacija:</p>
-                                                <p><b>{{event.location}}</b></p>
-                                            </li>
-                                            <li class="col-xs-6">
-                                                <p><i class="fa fa-tag" aria-hidden="true"></i> Kategorija:</p>
-                                                <p><b>{{event.eventCategoryName}}</b></p>
-                                            </li>
-                                        </ul>
-                                        <div class="col-xs-6">
-                                            <p><i class="fa fa-calendar-o" aria-hidden="true"></i> Datum polaska: </p>
-                                            <p><b>{{event.startDate| date: 'dd MMMM yyyy'}}</b></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <p><i class="fa fa-calendar-o" aria-hidden="true"></i> Datum dolaska: </p>
-                                            <p><b>{{event.endDate| date: 'dd MMMM yyyy'}}</b></p>
-                                        </div>
-                                        
-                                        <div class="col-xs-6">
-                                            <p><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za članove: </p>
-                                            <p><b>{{event.membersPrice}} {{event.eventCurrency}}</b></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <p><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za goste: </p>
-                                            <p><b>{{event.nonMembersPrice}} {{event.eventCurrency}}</b></p>
-                                        </div>
-                                        <div class="col-xs-6" ng-if="event.applyCriteria">
-                                            <p><i class="fa fa-exclamation" aria-hidden="true"></i> Kriterij za prijavu:</p>
-                                            <p><b>{{event.applyCriteria}}</b></p>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <ul class="single-event-options">
-                                                <li ng-if="currentUser.userName"><button class="btn btn-success" data-toggle="modal" data-target="#eventSignUpModal">Prijava na događaj</button></li>
-                                                <li ng-if="!currentUser.userName"><p style="color:red;">Samo prijavljeni mogu aplicirati za događaj</p></li>
-                                                <li ng-if="!currentUser.userName"><a ng-href="#!/login/prijava" class="btn btn-default">Idi na prijavu</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="event-image-bg" ng-style="{'background-image': 'url(' + event.imagePath + ')'}"></div>
+                <div class="event-info-padding">
+                    <div class='row'>
+                        <div class="col-md-12"><div class="single-event-title">{{event.name}}</div></div>
                     </div>
-                   
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="embed-responsive embed-responsive-16by9" ng-if="event.trustedVideoLink">
-                            <iframe class="embed-responsive-item" ng-src="{{event.trustedVideoLink}}"></iframe>
-                        </div>
-                        <div ng-if="event.eventLinks.length > 0">
-                            <h4><i class="fa fa-external-link" aria-hidden="true"></i> Popratni Linkovi:</h4>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom:25px;"><a ng-href="#!/events" class="btn btn-default pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Povratak na događaje</a></div>
+                        <div class="col-md-12">
                             <div class="row">
-                                <div class="new-event-links" ng-repeat="link in event.eventLinks" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
-                                    <div class="form-group col-md-6">
-                                        <label>Stranica: </label>
-                                        <p>{{link.name}}</p>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <p><i class="fa fa-info-circle" aria-hidden="true"></i> Opis:</p>
+                                        <p>
+                                            {{event.description}}
+                                        </p>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Link: </label>
-                                        <p>{{link.link}}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <ul style="margin-bottom:0;">
+                                                <li class="col-xs-6">
+                                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i> Lokacija:</p>
+                                                    <p><b>{{event.location}}</b></p>
+                                                </li>
+                                                <li class="col-xs-6">
+                                                    <p><i class="fa fa-tag" aria-hidden="true"></i> Kategorija:</p>
+                                                    <p><b>{{event.eventCategoryName}}</b></p>
+                                                </li>
+                                            </ul>
+                                            <div class="col-xs-6">
+                                                <p><i class="fa fa-calendar-o" aria-hidden="true"></i> Datum polaska: </p>
+                                                <p><b>{{event.startDate| date: 'dd MMMM yyyy'}}</b></p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <p><i class="fa fa-calendar-o" aria-hidden="true"></i> Datum dolaska: </p>
+                                                <p><b>{{event.endDate| date: 'dd MMMM yyyy'}}</b></p>
+                                            </div>
+
+                                            <div class="col-xs-6">
+                                                <p><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za članove: </p>
+                                                <p><b>{{event.membersPrice}} {{event.eventCurrency}}</b></p>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <p><i class="fa fa-dollar" aria-hidden="true"></i> Cijena za goste: </p>
+                                                <p><b>{{event.nonMembersPrice}} {{event.eventCurrency}}</b></p>
+                                            </div>
+                                            <div class="col-xs-6" ng-if="event.applyCriteria">
+                                                <p><i class="fa fa-exclamation" aria-hidden="true"></i> Kriterij za prijavu:</p>
+                                                <p><b>{{event.applyCriteria}}</b></p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <ul class="single-event-options">
+                                                    <li ng-if="currentUser.userName"><button class="btn btn-success" data-toggle="modal" data-target="#eventSignUpModal">Prijava na događaj</button></li>
+                                                    <li ng-if="!currentUser.userName"><p style="color:red;">Samo prijavljeni mogu aplicirati za događaj</p></li>
+                                                    <li ng-if="!currentUser.userName"><a ng-href="#!/login/prijava" class="btn btn-default">Idi na prijavu</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <h3>Galerija</h3>
-                <div class="row">
-                    <div class="col-md-4 col-sm-6" ng-repeat="item in eventPhotos" data-toggle="modal" data-target="#eventGalleryModal" ng-click="goToSlide($index)">
-                        <div class="item-in-gallery material-shadow">
-                            <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.path + ')'}"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="embed-responsive embed-responsive-16by9" ng-if="event.trustedVideoLink">
+                                <iframe class="embed-responsive-item" ng-src="{{event.trustedVideoLink}}"></iframe>
+                            </div>
+                            <div ng-if="event.eventLinks.length > 0">
+                                <h4><i class="fa fa-external-link" aria-hidden="true"></i> Popratni Linkovi:</h4>
+                                <div class="row">
+                                    <div class="new-event-links" ng-repeat="link in event.eventLinks" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
+                                        <div class="form-group col-md-6">
+                                            <label>Stranica: </label>
+                                            <p>{{link.name}}</p>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Link: </label>
+                                            <p>{{link.link}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div ng-if="currentUser.userName" class="col-md-12"><button class="btn btn-primary pull-right" data-toggle="modal" data-target="#singleEventUploadModal" >Upload slika</button></div>
-                </div>
 
-                <div ng-if="currentUser.userName" style="margin-bottom:50px;">
-                    <h3>Komentari</h3>
-                    <div class="form-group"><textarea class="form-control new-comment" placeholder="Napiši komentar..." ng-click="newCommentActive=true" ng-model="newComment.comment" rows="3"></textarea></div>
-                    <ul class="comment-options" ng-show="newCommentActive===true">
-                        <li><button class="btn btn-default" ng-click="newCommentActive=false">Zatvori</button></li>
-                        <li><button class="btn btn-success" ng-click="postComment()">Potvrdi</button></li>
-                    </ul>
-                </div>
-                <div ng-if="!currentUser.userName">
-                    <h3>Komentari</h3>
-                    <h4 >Prijavite se da biste ostavili komentar</h4>
-                </div>
-
-                <div class="media profile-comment-wrap" ng-repeat="comment in comments">
-                    <div class="media-left" style="padding-right:25px;">
-                        <img ng-src="{{comment.profilePicturePath}}" class="media-object" style="width:60px; max-height:60px; object-fit:cover; border-radius:50%;">
-                    </div>
-                    <div class="media-body">
-                        <div class="profile-comment-options" ng-if="userRole === 'Admin' || currentUser.userName.toUpperCase() === comment.userName.toUpperCase()">
-                            <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h3>Galerija</h3>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6" ng-repeat="item in eventPhotos" data-toggle="modal" data-target="#eventGalleryModal" ng-click="goToSlide($index)">
+                            <div class="item-in-gallery material-shadow">
+                                <div class="item-in-gallery-bg" ng-style="{'background-image': 'url(' + item.path + ')'}"></div>
+                            </div>
                         </div>
-                        <h5 class="media-heading">{{comment.firstName + " "+ comment.lastName}}</h5>
-                        <div class="profile-comment-datetime">{{comment.commentDate | date:'dd MMMM yyyy, H:mm'}}</div>
-                        <div ng-hide="editCommentActive && comment.id ===editingComment.id" class="profile-comment-content">{{comment.comment}}</div>
-                        <div ng-show="editCommentActive && comment.id ===editingComment.id">
-                            <textarea class="form-control profile-comment-edit" ng-model="editingComment.comment"></textarea>
-                            <div class="pull-right">
-                                <button class="btn btn-default" ng-click="cancelEditComment()">Zatvori</button>
-                                <button class="btn btn-primary" ng-click="updateUserComment()">Izmijeni</button>
+                        <div ng-if="currentUser.userName" class="col-md-12"><button class="btn btn-primary pull-right" data-toggle="modal" data-target="#singleEventUploadModal">Upload slika</button></div>
+                    </div>
+
+                    <div ng-if="currentUser.userName" style="margin-bottom:50px;">
+                        <h3>Komentari</h3>
+                        <div class="form-group"><textarea class="form-control new-comment" placeholder="Napiši komentar..." ng-click="newCommentActive=true" ng-model="newComment.comment" rows="3"></textarea></div>
+                        <ul class="comment-options" ng-show="newCommentActive===true">
+                            <li><button class="btn btn-default" ng-click="newCommentActive=false">Zatvori</button></li>
+                            <li><button class="btn btn-success" ng-click="postComment()">Potvrdi</button></li>
+                        </ul>
+                    </div>
+                    <div ng-if="!currentUser.userName">
+                        <h3>Komentari</h3>
+                        <h4>Prijavite se da biste ostavili komentar</h4>
+                    </div>
+
+                    <div class="media profile-comment-wrap" ng-repeat="comment in comments">
+                        <div class="media-left" style="padding-right:25px;">
+                            <img ng-src="{{comment.profilePicturePath}}" class="media-object" style="width:60px; max-height:60px; object-fit:cover; border-radius:50%;">
+                        </div>
+                        <div class="media-body">
+                            <div class="profile-comment-options" ng-if="userRole === 'Admin' || currentUser.userName.toUpperCase() === comment.userName.toUpperCase()">
+                                <a href="" ng-click="setEditComment(comment)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a href="" data-toggle="modal" data-target="#deletingCommentModal" ng-click="setDeleteComment(comment)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            </div>
+                            <h5 class="media-heading">{{comment.firstName + " "+ comment.lastName}}</h5>
+                            <div class="profile-comment-datetime">{{comment.commentDate | date:'dd MMMM yyyy, H:mm'}}</div>
+                            <div ng-hide="editCommentActive && comment.id ===editingComment.id" class="profile-comment-content">{{comment.comment}}</div>
+                            <div ng-show="editCommentActive && comment.id ===editingComment.id">
+                                <textarea class="form-control profile-comment-edit" ng-model="editingComment.comment"></textarea>
+                                <div class="pull-right">
+                                    <button class="btn btn-default" ng-click="cancelEditComment()">Zatvori</button>
+                                    <button class="btn btn-primary" ng-click="updateUserComment()">Izmijeni</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

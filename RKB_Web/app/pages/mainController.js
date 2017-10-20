@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("mainController", ['$rootScope', '$scope','authenticationService', function ($rootScope, $scope, authenticationService) {
+    avApp.controller("mainController", ['$rootScope', '$scope','authenticationService','$location', function ($rootScope, $scope, authenticationService, $location) {
 
         buildMenu();
 
@@ -58,5 +58,26 @@
                         $rootScope.menuItems = $rootScope.noUserItems;
                 };
 
+
+                if (authenticationService.authentication)
+                    $rootScope.authentication = authenticationService.authentication;
+
+                $scope.logOut = function () {
+                    authenticationService.logout();
+                    toastr.info("Odjavljeni ste");
+                    $rootScope.changeMenu();
+                    $location.path('/home');
+                };
+
+                //window.onunload = function () {
+                //    authenticationService.logout();
+                //    toastr.info("Odjavljeni ste");
+                //}
+
+                window.onload = function () {
+                    $rootScope.changeMenu();
+                };
+
+                console.log('authentication.mainctrl:', $rootScope.authentication);
     }]);
 }());

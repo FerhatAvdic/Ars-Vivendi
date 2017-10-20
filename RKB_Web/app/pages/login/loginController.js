@@ -37,6 +37,7 @@
                     if ($scope.registrationData.password !== $scope.registrationData.confirmPassword ||
                         $scope.registerExternalData.password !== $scope.registerExternalData.confirmPassword) {
                         $scope.passwordError = true;
+                        toastr.error('Šifre nisu jednake');
                         return;
                     }
                 }
@@ -47,10 +48,11 @@
                     validateDate();
                     if (dayError) {
                         $scope.dateError = true;
+                        toastr.error('Nepravilan datum');
                         return;
                     }
                 }
-                if (!form.$valid) return;
+                if (!form.$valid) { toastr.error('Imate grešku u unosu ili ste ostavili prazno polje'); return; }
                 $scope.formTabs.forEach(function (tab) {
                     tab.active = false;
                 });
@@ -305,16 +307,19 @@
             });
         };
 
-        $scope.login = function () {
-
+        $scope.login = function (form) {
+            if (form.$invalid) { toastr.error("Polja nisu popunjena");  return; }
+            $scope.formSubmitted = true;
             authenticationService.login($scope.loginData).then(function (response) {
                 console.log("login ctrl data", response);
                 if (response.status == 200) {
                     getUserRole();
                     $location.path('/home');
+                    $scope.formSubmitted = false;
                 }
                 else {
-                     toastr.error(response.data.error_description);
+                    toastr.error(response.data.error_description);
+                    $scope.formSubmitted = false;
                }
             });
         };

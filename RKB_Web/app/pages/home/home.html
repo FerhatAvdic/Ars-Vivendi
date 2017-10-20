@@ -1,19 +1,22 @@
 ﻿<div class="welcome-screen">
-    <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide">
-        <div class="slide-background">
-            <div class="slide-overlay"></div>
-            <img class="slide-image" ng-src="{{slide.image}}" />
-        </div>
+    <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide" ng-style="{'background-image': 'url('+slide.image+')'}">
+        <div class="slide-overlay"></div>
         <div class="slide-content">
-            <div class="slide-title">{{slide.title}}</div>
-            <div class="slide-description">{{slide.description}}</div>
-            <button class="rectangle-btn" id="register-btn">Pregled</button>
+            <span class="slide-title" >{{slide.title}}</span>
+            <span class="slide-description">{{slide.description}}</span>
+            <a ng-href="#!/events/category/{{slide.title}}" class="rectangle-btn" id="register-btn"  ng-style="{'background-color': slide.labelColor}">Pregled</a><!--ng-style="{'background-color': slide.labelColor}"-->
         </div>
+        
     </div>
     <button class="transparent-round-btn small-only" id="slide-right" ng-click="nextSlide()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     <button class="transparent-round-btn small-only" id="slide-left" ng-click="previousSlide()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-    <div class="slide-labels big-only">
+    <!--<div class="slide-labels big-only">
         <div class="slide-label" ng-repeat="label in slides" ng-class="{'slide-label-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.labelColor}">
+            <span>{{label.title}}</span>
+        </div>
+    </div>-->
+    <div class="slide-labels-top big-only">
+        <div class="slide-label-top" ng-repeat="label in slides" ng-class="{'slide-label-top-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.labelColor, 'width': 100 / slides.length + '%'}">
             <span>{{label.title}}</span>
         </div>
     </div>
@@ -26,8 +29,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 inside-mission">
-                <i class="fa fa-comment-o" aria-hidden="true" id="mission-icon"></i>
-                <div class="mission-title">Naša Misija</div>
+                <!--<i class="fa fa-comment-o" aria-hidden="true" id="mission-icon"></i>-->
+                <div class="mission-title">Zašto Ars Vivendi</div>
                 <div class="mission-description">
                     There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
                 </div>
@@ -36,9 +39,9 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="av-section-wrap" id="activity-showcase">
-        <div class="av-heading">Pođi s nama</div>
+<div class="av-section-wrap" id="activity-showcase">
+    <div class="container">
+        <!--<div class="av-heading">Pođi s nama</div>-->
         <div class="row row-centered">
             <div class="col-md-4 col-sm-4 activity-box" ng-repeat="activity in activityShowcase">
                 <div class="activity-icon">
@@ -71,8 +74,9 @@
                     </div>
                     <div class="upcoming-slide-btns">
                         <div class="row">
-                            <div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" ng-click="goToEvent(event.id)">Prijava</button></div>
-                            <div class="col-md-3 col-md-offset-1 col-sm-5 col-sm-offset-2 col-xs-12"><button class="rectangle-btn material-shadow" id="view-upcoming-btn" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">Pregled</button></div>
+                            <div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button></div>
+                            <!--<div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" ng-click="goToEvent(event.id)">Prijava</button></div>-->
+                            <!--<div class="col-md-3 col-md-offset-1 col-sm-5 col-sm-offset-2 col-xs-12"><button class="rectangle-btn material-shadow" id="view-upcoming-btn" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">Pregled</button></div>-->
                         </div>
                     </div> 
                 </div>
@@ -119,10 +123,11 @@
         </li>
     </ul>-->
 </div>
+<div id="pre-upcoming" ng-if="authentication.isAuth"></div>
 
 
 
-<div class="become-member">
+<div class="become-member" ng-if="!authentication.isAuth">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-xs-12 text-center">
@@ -133,8 +138,8 @@
                     Postani član i budi dio velikog društva
                 </div>-->
             </div>
-            <div class="col-md-2 col-sm-12 col-xs-12 text-center">
-                    <a style="display: block;" class="rectangle-btn rectangle-btn-outline-dark" id="become-member-btn" href="#!/login/postani-clan">Pridruži se!</a>
+            <div class="col-md-2 col-sm-12 col-xs-12">
+                <div class="text-center"><a class="rectangle-btn rectangle-btn-outline-light" id="become-member-btn" href="#!/login/postani-clan">Pridruži se!</a></div>
             </div>
         </div>
     </div>
@@ -152,9 +157,10 @@
         </div>
     </div>
 </div>
+<div id="pre-upcoming"></div>
 
-<div class="container-fluid">
-    <div class="partners-wrap" id="partners">
+<div class="partners-wrap" id="partners">
+    <div class="container-fluid">
         <!--<div class="av-heading">Partneri</div>-->
         <div class="row row-centered">
             <div class="col-md-1 col-sm-1 col-xs-2"></div>
@@ -174,7 +180,7 @@
 <div class="gallery-wrap" id="home-gallery">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-sm-6" ng-repeat="item in gallery">
+            <div class="col-md-3 col-sm-4" ng-repeat="item in gallery">
                 <div class="gallery-item material-shadow" ng-click="goToEvent(item.id)">
                     <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
                     <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
@@ -189,8 +195,8 @@
     </div>
 </div>
 <!--</div>-->
-<div class="container-fluid">
-    <div class="partners-wrap" id="partners">
+<div class="partners-wrap" id="partners">
+    <div class="container-fluid">
         <!--<div class="av-heading">Sponzori</div>-->
         <div class="row row-centered">
             <div class="col-md-1 col-sm-1 col-xs-2"></div>
@@ -216,10 +222,10 @@
             </ul>
     </div>
 </div>
-<div class="av-section-wrap contact-wrap">
-    <div class="av-heading" id="contact">
+<div class="av-section-wrap contact-wrap" id="contact">
+    <!--<div class="av-heading" id="contact">
         Kontakt
-    </div>
+    </div>-->
     <div class="contact-wrap-overlay"></div>
     <div class="container">
         <div class="row equal contact-form-style">
@@ -240,13 +246,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Poruka</label>
-                    <textarea class="form-control" id="contact-msg"></textarea>
+                    <textarea class="form-control" id="contact-msg" placeholder="Sadržaj poruke"></textarea>
                 </div>
             </div>
         </div>
         <div class="row row-centered">
-            <div class="col-md-12 text-right">
-                <button class="rectangle-btn" id="contact-submit-btn">Pošalji</button>
+            <div class="col-md-12 text-center">
+                <button class="rectangle-btn" id="contact-submit-btn" style="background: #4DC0A6;">Pošalji upit</button>
             </div>
         </div>
     </div>

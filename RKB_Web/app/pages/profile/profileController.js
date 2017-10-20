@@ -397,7 +397,15 @@
 
         $scope.updatePersonalInfo = function (form) {
             if (!form.$valid) {
-                toastr.error("Greška prilikom izmjene profila");
+                toastr.error("Niste unijeli sve potrebne informacije");
+                //validate Date
+                dayError = false;
+                $scope.dateError = false;
+                validateDate();
+                if (dayError) {
+                    $scope.dateError = true;
+                    return;
+                }
                 return;
             }
             //validate Date
@@ -599,7 +607,7 @@
                     console.log("ERROR: ", response);
                 }
                 $scope.getPersonalInfo();
-                $('#changePasswordModal').modal('hide');
+                $('#profilePictureUploadModal').modal('hide');
             });
         };
 

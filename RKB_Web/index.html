@@ -56,11 +56,12 @@
     <!--Directives-->
     <script src="libs/angular-base64-upload.min.js"></script>
     <script src="app/directives/validationDirective.js"></script>
+    <script src="app/directives/inputFocusDirective.js"></script>
 </head>
 <body>
 
     
-    <div class="welcome-header big-only" ng-controller="indexController">
+    <!--<div class="welcome-header big-only" ng-controller="indexController">
         <div class="container">
             <div class="welcome-header-wrap">
                 <ul class="welcome-header-social">
@@ -77,7 +78,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <nav class="navbar navbar-default navbar-custom" id="main-navbar">
         <div class="container">
@@ -94,8 +95,9 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
                     <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
-                    <li class="hide-item"  data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
-                    <li class="hide-item" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>
+                    <!--class="hide-item"--> <li  ng-hide="authentication.isAuth" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
+                    <!--class="hide-item"--> <li  ng-hide="authentication.isAuth" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>
+                    <li ng-hide="!authentication.isAuth"><a href="" ng-click="logOut()">Odjava</a></li>
                 </ul>
             </div>
         </div>

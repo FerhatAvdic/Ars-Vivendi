@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\directives\inputFocusDirective.js" />
     <Content Include="app\directives\validationDirective.js" />
     <Content Include="app\pages\about\about.html" />
     <Content Include="app\pages\about\aboutController.js" />

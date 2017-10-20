@@ -9,21 +9,21 @@
             <div id="prijava" class="tab-pane fade">
                 <div class="av-form-line"><p>Unesi podatke za prijavu</p></div>
                 <form name="loginForm" novalidate ng-submit="login(loginForm)">
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="loginForm-username">
                         <label>Korisničko Ime: </label>
                         <div class="av-form-error" ng-show="loginForm.$submitted || loginForm.username.$touched">
                             <span ng-show="loginForm.username.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="username" class="av-form" ng-model="loginData.userName" required="" >
+                        <input type="text" name="username" class="av-form" ng-model="loginData.userName" required="" id="loginForm-username">
                     </div>
-                    <div class="av-form-group av-form-last">
+                    <div class="av-form-group av-form-last" focus-by-id="loginForm-password">
                         <label>Password: </label>
                         <div class="av-form-error" ng-show="loginForm.$submitted || loginForm.password.$touched">
                             <span ng-show="loginForm.password.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="password" name="password" class="av-form" ng-model="loginData.password" required="" >
+                        <input type="password" name="password" class="av-form" ng-model="loginData.password" required="" id="loginForm-password">
                     </div>
-                    <button type="submit" class="rectangle-btn login-btn-full">Prijava</button>
+                    <button type="submit" class="rectangle-btn login-btn-full" ng-class="{'active': formSubmitted}">Prijava<span class="text-center" ng-show="formSubmitted"><img src="img/spin.gif" /></span></button>
                 </form>
                 
                 <!--<input type="text" placeholder="Korisnicko Ime" data-ng-model="loginData.userName" required />
@@ -76,49 +76,49 @@
 
                 <div class="av-form-line" ng-if="formTabs[0].active"><p>Korisnički podaci (sva polja su obavezna)</p></div>
                 <form name="reg1" novalidate ng-if="formTabs[0].active">
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-userName">
                         <label>Korisničko Ime: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.userName.$touched">
                             <span ng-show="reg1.userName.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="userName" class="av-form" ng-model="registrationData.userName" required="">
+                        <input type="text" name="userName" class="av-form" ng-model="registrationData.userName" required="" id="regForm-userName">
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-password">
                         <label>Šifra: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.password.$touched">
                             <span ng-show="reg1.password.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="password" name="password" class="av-form" ng-model="registrationData.password" required="">
+                        <input type="password" name="password" class="av-form" ng-model="registrationData.password" required="" id="regForm-password">
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-confirmPassword">
                         <label>Ponovi šifru: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.confirmPassword.$touched">
                             <span ng-show="reg1.confirmPassword.$error.required">Obavezno polje</span>
                             <span ng-show="passwordError">Šifre nisu jednake</span>
                         </div>
-                        <input type="password" name="confirmPassword" class="av-form" ng-model="registrationData.confirmPassword" required="" compare-to="registrationData.password">
+                        <input type="password" name="confirmPassword" class="av-form" ng-model="registrationData.confirmPassword" required="" id="regForm-confirmPassword">
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-firstName">
                         <label>Ime: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.firstName.$touched">
                             <span ng-show="reg1.firstName.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="firstName" class="av-form" ng-model="registrationData.firstName" required="">
+                        <input type="text" name="firstName" class="av-form" ng-model="registrationData.firstName" required="" id="regForm-firstName">
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-lastName">
                         <label>Prezime: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.lastName.$touched">
                             <span ng-show="reg1.lastName.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="lastName" class="av-form" ng-model="registrationData.lastName" required="">
+                        <input type="text" name="lastName" class="av-form" ng-model="registrationData.lastName" required="" id="regForm-lastName">
                     </div>
-                    <div class="av-form-group av-form-last">
+                    <div class="av-form-group av-form-last" focus-by-id="regForm-email">
                         <label>Email: </label>
                         <div class="av-form-error" ng-show="reg1.$submitted || reg1.email.$touched">
                             <span ng-show="reg1.email.$error.required">Obavezno polje</span>
                             <span ng-show="reg1.email.$error.email">Nepravilan email</span>
                         </div>
-                        <input type="email" name="email" class="av-form" ng-model="registrationData.email" required="">
+                        <input type="email" name="email" class="av-form" ng-model="registrationData.email" required="" id="regForm-email">
                     </div>
                     <button class="rectangle-btn login-btn-halfway no-bg-btn" data-toggle="tab" target="_self" ng-click="resetRegistration()">Nazad</button><button class="rectangle-btn login-btn-halfway" ng-click="switchTab(1, reg1)">Dalje</button>
                 </form>
@@ -152,23 +152,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-city">
                         <label>Grad: </label>
                         <div class="av-form-error" ng-show="reg2.$submitted || reg2.city.$touched">
                             <span ng-show="reg2.city.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="city" class="av-form" ng-model="registrationData.city" required="">
+                        <input type="text" name="city" class="av-form" ng-model="registrationData.city" required="" id="regForm-city">
                     </div>
-                    <div class="av-form-group">
+                    <div class="av-form-group" focus-by-id="regForm-address">
                         <label>Adresa: </label>
                         <div class="av-form-error" ng-show="reg2.$submitted || reg2.address.$touched">
                             <span ng-show="reg2.address.$error.required">Obavezno polje</span>
                         </div>
-                        <input type="text" name="address" class="av-form" ng-model="registrationData.address" required="">
+                        <input type="text" name="address" class="av-form" ng-model="registrationData.address" required="" id="regForm-address">
                     </div>
                     <div class="av-form-group">
-                        <label>Telefon: </label>
-                        <div class="av-form-error" ng-show="reg2.$submitted || reg2.phoneNumber.$touched">
+                        <label focus-by-id="regForm-phoneNumber">Telefon: </label>
+                        <div class="av-form-error" ng-show="reg2.$submitted || reg2.phoneNumber.$touched" focus-by-id="regForm-phoneNumber">
                             <span ng-show="reg2.phoneNumber.$error.required">Obavezno polje</span>
                             <span ng-show="reg2.phoneNumber.$error.pattern">Broj telefona može imati samo cifre</span>
                         </div>
@@ -179,7 +179,7 @@
                                         <option ng-repeat="country in countries" ng-value="country">{{country.name}} {{country.number}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-8 col-xs-7"><input type="text" name="phoneNumber" class="av-form" style="border-bottom: 0px; padding: 5px;" ng-model="registrationData.phoneNumber" required="" ng-pattern="phoneRegex"></div>
+                                <div class="col-md-8 col-xs-7"><input type="text" name="phoneNumber" class="av-form" style="border-bottom: 0px; padding: 5px;" ng-model="registrationData.phoneNumber" required="" ng-pattern="phoneRegex" id="regForm-phoneNumber"></div>
                             </div>
                         </div>
                     </div>

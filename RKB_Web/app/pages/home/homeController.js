@@ -6,12 +6,20 @@
     avApp.controller("homeController", ['$scope','$interval','$location','dataService', function ($scope, $interval,$location, dataService) {
         
         //COVER 
+        //$scope.slides = [
+        //    { image: "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", title: "Rafting", description: "Slide down the rivers with us", labelColor: "#54D9BB" },
+        //    { image: "/img/hik_slide.jpg", title: "Planinarenje", description: "Exploring the forests and fields of mountains", labelColor: "#2BD0AB" },
+        //    { image: "/img/ski_slide.jpg", title: "Skijanje", description: "Speeding down the lanes", labelColor: "#02CB9E" },
+        //    { image: "/img/div_slide.jpg", title: "Ronjenje", description: "Go down into the depths of the seas", labelColor: "#00A37F" },
+        //    { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: "#007E62" }
+        //];
+
         $scope.slides = [
-            { image: "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", title: "Rafting", description: "Slide down the rivers with us", labelColor: "#54D9BB" },
-            { image: "/img/hik_slide.jpg", title: "Planinarenje", description: "Exploring the forests and fields of mountains", labelColor: "#2BD0AB" },
-            { image: "/img/ski_slide.jpg", title: "Skijanje", description: "Speeding down the lanes", labelColor: "#02CB9E" },
-            { image: "/img/div_slide.jpg", title: "Ronjenje", description: "Go down into the depths of the seas", labelColor: "#00A37F" },
-            { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: "#007E62" }
+           { image: "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", title: "Rafting", description: "Slide down the rivers with us", labelColor: "rgb(152, 74, 198)", categoryId: 4 },
+           { image: "/img/hik_slide.jpg", title: "Planinarenje", description: "Exploring the forests and fields of mountains", labelColor: "rgb(227, 147, 86)", categoryId: 2 },
+           { image: "/img/ski_slide.jpg", title: "Skijanje", description: "Speeding down the lanes", labelColor: "rgb(95, 197, 217)", categoryId: 3 },
+           { image: "/img/div_slide.jpg", title: "Ronjenje", description: "Go down into the depths of the seas", labelColor: "rgb(100, 117, 208)", categoryId: 1 },
+           { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: 'rgb(198, 199, 84)', categoryId: 5 }
         ];
 
         //WHY ARS VIVENDI
