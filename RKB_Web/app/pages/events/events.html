@@ -578,6 +578,10 @@
                             </div>
                             <input name="categoryColor" colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" ng-pattern="hexColorRegex" required />
                         </li>
+                        <li class="form-group">
+                            <label>Odaberite sliku:</label>
+                            <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
+                        </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -624,6 +628,11 @@
                                 <div class="alert alert-danger" role="alert" ng-show="editCategoryForm.categoryColor.$error.pattern">Boja mora biti u heksadecimalnom obliku (npr. #FFF123)</div>
                             </div>
                             <input name="categoryColor" colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="editingCategory.categoryColor" ng-pattern="hexColorRegex" required />
+                        </li>
+
+                        <li class="form-group">
+                            <label>Odaberite sliku:</label>
+                            <input type="file" accept="image/*" ng-model="editingCategory.ImageUrl.image" base-sixty-four-input>
                         </li>
                     </ul>
                 </div>

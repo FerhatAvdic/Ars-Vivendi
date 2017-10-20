@@ -14,7 +14,8 @@
             "Id":0,
             "Name":null,
             "Description":null,
-            "CategoryColor":null
+            "CategoryColor": null,
+            "ImageUrl":Image
         };
         $scope.newEvent = {
                 "id": 0,
@@ -116,7 +117,8 @@
                 "Id": 0,
                 "Name": null,
                 "Description": null,
-                "CategoryColor": null
+                "CategoryColor": null,
+                "ImageUrl":Image
             };
         };
         $scope.resetForm = function (form) {
@@ -133,11 +135,16 @@
             $scope.resetForm(form);
         };
         //UPDATE CATEGORY
+<<<<<<< HEAD
         $scope.updateCategory = function (form) {
             if (form.$invalid) {
                 toastr.error('Greška pri unosu');
                 return;
             }
+=======
+        $scope.updateCategory = function () {
+            console.log("what", $scope.editingCategory);
+>>>>>>> a66e69d74a5cae1280acd096698bf6d511574bbd
             dataService.update("eventcategories", $scope.editingCategory.id, $scope.editingCategory, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjena kategorija!");

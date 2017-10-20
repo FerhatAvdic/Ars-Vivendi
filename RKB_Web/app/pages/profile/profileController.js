@@ -57,6 +57,7 @@
         };
 
         var addNewPayment = function (paymentData) {
+            if (paymentData.transactionId == null) return;
             dataService.create("paypal", paymentData, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izvrsena uplata!");
@@ -67,7 +68,8 @@
                 }
             });
         };
-        var checkPath = function () {
+        var chechkPath =  function () {
+            console.log("payment");
             var urlPath = $location.absUrl();
             if (urlPath != 'http://localhost:49753/index.html#!/profile/' + currentUser.userName) {
                 //$location.path('profile/' + authenticationService.authentication.userName);
@@ -77,7 +79,9 @@
                 paypalInfo.transactionId = array[1];
                 //console.log("authenticationService.authentication.userName", authenticationService.authentication.userName);
                 paypalInfo.userName = authenticationService.authentication.userName;
-                addNewPayment(paypalInfo);
+                if (paypalInfo.transactionId != undefined) {
+                    addNewPayment(paypalInfo);
+                }                
             }
             else {
                 console.log('nije drugaciji', urlPath);

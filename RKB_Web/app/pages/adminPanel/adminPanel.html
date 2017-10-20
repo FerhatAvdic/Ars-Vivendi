@@ -1,0 +1,57 @@
+﻿<div class="gray-wrapper">
+    <div class="container">
+        <div class="box-members">
+            <div class="text-center" ng-show="dataLoading">
+                <img src="img/spin.gif" />
+            </div>
+            <div class="row" ng-hide="dataLoading">
+                <div grid-data grid-options="gridOptions" grid-actions="gridActions">
+                    <!-- sample table layout goes below, but remember that you can you any mark-up here. -->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th sortable="firstName" class="sortable">
+                                First Name #
+                            </th>
+                            <th sortable="lastName" class="sortable">
+                                Last Name
+                            </th>
+                                
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr grid-item>
+                            <td ng-bind="item.firstName"></td>
+                            <td ng-bind="item.lastName"></td>                              
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form class="form-inline pull-right margin-bottom-basic">
+                        <div class="form-group">
+                            <grid-pagination max-size="5"
+                                             boundary-links="true"
+                                             class="pagination-sm"
+                                             total-items="paginationOptions.totalItems"
+                                             ng-model="paginationOptions.currentPage"
+                                             ng-change="reloadGrid()"
+                                             items-per-page="paginationOptions.itemsPerPage"></grid-pagination>
+                        </div>
+                        <div class="form-group items-per-page">
+                            <label for="itemsOnPageSelect2">Items per page:</label>
+                            <select id="itemsOnPageSelect2" class="form-control input-sm"
+                                    ng-init="paginationOptions.itemsPerPage = '10'"
+                                    ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>75</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+              
+            </div>
+        </div>
+    </div>
+</div>

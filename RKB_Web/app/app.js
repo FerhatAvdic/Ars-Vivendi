@@ -1,6 +1,6 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module', 'textAngular']);
+    var avApp = angular.module('avApp', ['dataGrid','pagination','ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module', 'textAngular']);
 
 
     var serviceBase = 'http://localhost:57792/';
@@ -30,7 +30,9 @@
         .when('/profile/:id', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/profile', { templateUrl: 'app/pages/profile/profile.html', controller: 'profileController' })
         .when('/about', { templateUrl: 'app/pages/about/about.html', controller: 'aboutController' })
-        .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
+            .when('/gallery', { templateUrl: 'app/pages/gallery/gallery.html', controller: 'galleryController' })
+            .when('/adminPanel', { templateUrl: 'app/pages/adminPanel/adminPanel.html', controller: 'adminPanelController' })
+
         .otherwise({ redirectTo: "/" });
 
     });
