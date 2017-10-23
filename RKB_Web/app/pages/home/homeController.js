@@ -333,6 +333,28 @@
             }
         };
         
+        //Ferha je meni kralj 
+
+        $scope.contactEmail = {
+            Name: "",
+            Email: "",
+            Phone: "",
+            Body: ""
+        };
+        $scope.sendContactEmail = function () {
+            console.log("in mail");
+            dataService.create("contactemail", $scope.contactEmail, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno slanje emaila!");
+                    $scope.contactEmail = {};
+                }
+                else {
+                    toastr.error("Greška prilikom slanja emaila");
+                    console.log("ERROR: ", response);
+                }
+            });
+        }
+        
 
     }]);
 }());
