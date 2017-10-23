@@ -60,17 +60,17 @@
                             <div class="radio event-type-filter" ng-style="{'background-color': eventCategory.categoryColor}" ng-click="$parent.typeFilter=eventCategory.name">
                                 <label style="padding: 0 15px;"><input type="radio" ng-model="$parent.typeFilter" ng-value="eventCategory.name" name="eventTypeRadio">{{(!eventCategory.name)?"Sve Kategorije":eventCategory.name}}</label>
                             </div>
-                            <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
+                            <a href="" ng-if="userRole === 'Admin' && eventCategory.name">
                                 <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingCategoryModal" ng-click="setEditCategory(eventCategory)"></i>
                             </a>
-                            <a href="" ng-show="userRole === 'Admin' && eventCategory.name">
+                            <a href="" ng-if="userRole === 'Admin' && eventCategory.name">
                                 <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deleteCategoryModal" ng-click="setDeleteCategory(eventCategory)"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="event in avevents | orderBy:'-date' |filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
+                    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="event in avevents | orderBy:'-date' | filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
                         <div class="event-card material-shadow">
                             <div class="dropdown event-card-options" ng-show="userRole === 'Admin'">
                                 <div data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true" style="text-shadow:1px 1px 0 #333;"></i></div>
@@ -128,104 +128,146 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Novi događaj</h4>
             </div>
-            <div class="modal-body">
-                <!--<div style="margin: 15px;">-->
-                    <form id="new-event-form">
-                        <div class="container-fluid">
-                            <ul class="row">
-                                <li class="col-md-12 form-group">
-                                    <label>Kategorija:</label>
-                                    <select class="form-control" ng-model="newEvent.eventCategoryId">
-                                        <option value="" disabled>---Odaberite---</option>
-                                        <option ng-repeat="category in eventCategories track by category.id" ng-value="category.id">{{category.name}}</option>
-                                    </select>
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Ime:</label>
-                                    <input type="text" class="form-control" placeholder="" ng-model="newEvent.name">
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Lokacija:</label>
-                                    <input type="text" class="form-control" placeholder="" ng-model="newEvent.location">
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Opis:</label>
-                                    <textarea class="form-control" ng-model="newEvent.description"></textarea>
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Slika: </label>
-                                    <input type="file" accept="image/*" ng-model="newEvent.image" base-sixty-four-input>
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Video link (embed):</label>
-                                    <input type="text" class="form-control" ng-model="newEvent.videoLink">
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Prijave do: </label>
-                                    <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.registrationDeadline" ng-click="open3()"
-                                           is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Početak: </label>
-                                    <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.startDate" ng-click="open1()"
-                                           is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Kraj: </label>
-                                    <input class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.endDate" ng-click="open2()"
-                                           is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
-                                           current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Valuta:</label>
-                                    <select class="form-control" ng-model="newEvent.eventCurrencyId">
-                                        <option value="" disabled>---Odaberite---</option>
-                                        <option ng-repeat="currency in currencies" ng-value="currency.id">{{currency.currencyValue}}</option>
-                                    </select>
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Cijena za članove: </label>
-                                    <input type='number' class="form-control" ng-model="newEvent.membersPrice" />
-                                </li>
-                                <li class="col-md-4 form-group">
-                                    <label>Cijena za goste: </label>
-                                    <input type='number' class="form-control" ng-model="newEvent.nonMembersPrice" />
-                                </li>
-                                <li class="col-md-12 form-group">
-                                    <label>Kriterij za prijavu:</label>
-                                    <input type="text" class="form-control" placeholder="" ng-model="newEvent.applyCriteria">
-                                </li>
-                            </ul>
-                            <h4>Popratni Linkovi:</h4>
-                            <div class="row">
-                                <div class="col-md-12" ng-repeat="link in newEvent.eventLinks track by link.index">
-                                    <div class="row">
-                                        <div class="col-md-1 new-event-link-icons" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
-                                            <span class="new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                                            <span class="new-event-link" ng-if="linkHovered===$index"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="removeLink($index)"></i></span>
-                                        </div>
-                                        <div class="form-group col-md-5">
-                                            <label>Stranica: </label>
-                                            <input type="text" class="form-control" ng-model="link.name" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Link: </label>
-                                            <input type="text" class="form-control" ng-model="link.link" />
-                                        </div>
+            <form name="newEventForm" novalidate>
+                <div class="modal-body">
+                    <!--<div style="margin: 15px;">-->
+                    <div class="container-fluid">
+                        <ul class="row">
+                            <li class="col-md-12 form-group">
+                                <label>Kategorija:</label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.category.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.category.$error.required">Odaberite kategoriju</div>
+                                </div>
+                                <select name="category" class="form-control" ng-model="newEvent.eventCategoryId" required>
+                                    <option value="" disabled>---Odaberite---</option>
+                                    <option ng-repeat="category in eventCategories track by category.id" ng-value="category.id">{{category.name}}</option>
+                                </select>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Ime:</label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.name.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.name.$error.required">Obavezno polje</div>
+                                </div>
+                                <input type="text" name="name" class="form-control" placeholder="" ng-model="newEvent.name" required>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Lokacija:</label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.location.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.location.$error.required">Obavezno polje</div>
+                                </div>
+                                <input type="text" name="location" class="form-control" placeholder="" ng-model="newEvent.location" required>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Opis:</label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.description.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.description.$error.required">Obavezno polje</div>
+                                </div>
+                                <textarea name="description" class="form-control" ng-model="newEvent.description" required></textarea>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Slika: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.image.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.image.$error.required">Događaj mora imati sliku</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{newEvent.image.filesize/1000000 | number : 2}} MB)</div>
+                                </div>
+                                <input name="image" type="file" accept="image/*" ng-model="newEvent.image" maxsize="2000" required base-sixty-four-input>
+                                <div ng-if="newEvent.image.filename">{{newEvent.image.filename}}</div>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Video link (embed):</label>
+                                <input name="videoLink" type="text" class="form-control" ng-model="newEvent.videoLink">
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-4 form-group">
+                                <label>Prijave do: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.registrationDeadline.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.registrationDeadline.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="registrationDeadline" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.registrationDeadline" ng-click="open3()"
+                                       is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Početak: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.startDate.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.startDate.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="startDate" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.startDate" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Kraj: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.endDate.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.endDate.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="endDate" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="newEvent.endDate" ng-click="open2()"
+                                       is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-4 form-group">
+                                <label>Valuta:</label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.currency.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.currency.$error.required">Odaberite valutu</div>
+                                </div>
+                                <select name="currency" class="form-control" ng-model="newEvent.eventCurrencyId" required>
+                                    <option value="" disabled>---Odaberite---</option>
+                                    <option ng-repeat="currency in currencies" ng-value="currency.id">{{currency.currencyValue}}</option>
+                                </select>
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Cijena za članove: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.membersPrice.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.membersPrice.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="membersPrice" type='number' class="form-control" ng-model="newEvent.membersPrice" required>
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Cijena za goste: </label>
+                                <div ng-show="newEventForm.$submitted || newEventForm.nonMembersPrice.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.nonMembersPrice.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="nonMembersPrice" type='number' class="form-control" ng-model="newEvent.nonMembersPrice" required>
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-12 form-group">
+                                <label>Kriterij za prijavu:</label>
+                                <input name="applyCriteria" type="text" class="form-control" placeholder="" ng-model="newEvent.applyCriteria">
+                            </li>
+                        </ul>
+                        <h4>Popratni Linkovi:</h4>
+                        <div class="row">
+                            <div class="col-md-12" ng-repeat="link in newEvent.eventLinks track by link.index">
+                                <div class="row">
+                                    <div class="col-md-1 new-event-link-icons" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
+                                        <span class="new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                        <span class="new-event-link" ng-if="linkHovered===$index"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="removeLink($index)"></i></span>
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>Stranica: </label>
+                                        <input type="text" class="form-control" ng-model="link.name" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Link: </label>
+                                        <input type="text" class="form-control" ng-model="link.link" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                <!--</div>-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left" ng-click="addLinkNewEvent()">Dodaj link</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="createEvent()">Napravi događaj</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-            </div>
+                    </div>
+
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="addLinkNewEvent()">Dodaj link</button>
+                    <button type="submit" class="btn btn-success" ng-click="createEvent(newEventForm)">Napravi događaj</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -242,7 +284,147 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Izmjena događaja</h4>
             </div>
-            <div class="modal-body">
+            <form name="editEventForm" novalidate>
+                <div class="modal-body">
+                    <!--<div style="margin: 15px;">-->
+                    <div class="container-fluid">
+                        <ul class="row">
+                            <li class="col-md-12 form-group">
+                                <label>Kategorija:</label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.category.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.category.$error.required">Odaberite kategoriju</div>
+                                </div>
+                                <select name="category" class="form-control" ng-model="editingEvent.eventCategoryId" required>
+                                    <option value="" disabled>---Odaberite---</option>
+                                    <option ng-repeat="category in eventCategories track by category.id" ng-value="category.id">{{category.name}}</option>
+                                </select>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Ime:</label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.name.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.name.$error.required">Obavezno polje</div>
+                                </div>
+                                <input type="text" name="name" class="form-control" placeholder="" ng-model="editingEvent.name" required>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Lokacija:</label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.location.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.location.$error.required">Obavezno polje</div>
+                                </div>
+                                <input type="text" name="location" class="form-control" placeholder="" ng-model="editingEvent.location" required>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Opis:</label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.description.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.description.$error.required">Obavezno polje</div>
+                                </div>
+                                <textarea name="description" class="form-control" ng-model="editingEvent.description" required></textarea>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Slika: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.image.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.image.$error.required">Događaj mora imati sliku</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{editingEvent.image.filesize/1000000 | number : 2}} MB)</div>
+                                </div>
+                                <input name="image" type="file" accept="image/*" ng-model="editingEvent.image" maxsize="2000" required base-sixty-four-input>
+                                <div ng-if="editingEvent.image.filename">{{editingEvent.image.filename}}</div>
+                            </li>
+                            <li class="col-md-12 form-group">
+                                <label>Video link (embed):</label>
+                                <input name="videoLink" type="text" class="form-control" ng-model="editingEvent.videoLink">
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-4 form-group">
+                                <label>Prijave do: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.registrationDeadline.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.registrationDeadline.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="registrationDeadline" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.registrationDeadline" ng-click="open3()"
+                                       is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Početak: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.startDate.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.startDate.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="startDate" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.startDate" ng-click="open1()"
+                                       is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Kraj: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.endDate.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.endDate.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="endDate" required class="form-control" type="text" uib-datepicker-popup="{{format}}" ng-model="editingEvent.endDate" ng-click="open2()"
+                                       is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" alt-input-formats="altInputFormats"
+                                       current-text="Današnji datum" clear-text="Obriši" close-text="Zatvori" />
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-4 form-group">
+                                <label>Valuta:</label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.currency.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.currency.$error.required">Odaberite valutu</div>
+                                </div>
+                                <select name="currency" class="form-control" ng-model="editingEvent.eventCurrencyId" required>
+                                    <option value="" disabled>---Odaberite---</option>
+                                    <option ng-repeat="currency in currencies" ng-value="currency.id">{{currency.currencyValue}}</option>
+                                </select>
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Cijena za članove: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.membersPrice.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.membersPrice.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="membersPrice" type='number' class="form-control" ng-model="editingEvent.membersPrice" required>
+                            </li>
+                            <li class="col-md-4 form-group">
+                                <label>Cijena za goste: </label>
+                                <div ng-show="editEventForm.$submitted || editEventForm.nonMembersPrice.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.nonMembersPrice.$error.required">Obavezno polje</div>
+                                </div>
+                                <input name="nonMembersPrice" type='number' class="form-control" ng-model="editingEvent.nonMembersPrice" required>
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-12 form-group">
+                                <label>Kriterij za prijavu:</label>
+                                <input name="applyCriteria" type="text" class="form-control" placeholder="" ng-model="editingEvent.applyCriteria">
+                            </li>
+                        </ul>
+                        <h4>Popratni Linkovi:</h4>
+                        <div class="row">
+                            <div class="col-md-12" ng-repeat="link in editingEvent.eventLinks track by link.index">
+                                <div class="row">
+                                    <div class="col-md-1 new-event-link-icons" ng-mouseenter="linkHovered=$index" ng-mouseleave="linkHovered=undefined">
+                                        <span class="new-event-link" ng-if="linkHovered!==$index"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                        <span class="new-event-link" ng-if="linkHovered===$index"><i class="fa fa-times" aria-hidden="true" style="color:red; cursor: pointer;" ng-click="removeLink($index)"></i></span>
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>Stranica: </label>
+                                        <input type="text" class="form-control" ng-model="link.name" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Link: </label>
+                                        <input type="text" class="form-control" ng-model="link.link" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="addLinkEditingEvent()">Dodaj link</button>
+                    <button type="submit" class="btn btn-success" ng-click="updateEvent(editEventForm)">Izmijeni događaj</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelUpdate()">Zatvori</button>
+                </div>
+            </form>
+            <!--<div class="modal-body">
                     <form id="new-event-form">
                         <div class="container-fluid">
                             <ul class="row">
@@ -250,7 +432,7 @@
                                     <label>Kategorija:</label>
                                     <select class="form-control" ng-model="editingEvent.eventCategoryId">
                                         <option ng-repeat="category in eventCategories track by category.id" ng-value="category.id">{{category.name}}</option>
-                                    </select><!--ng-options="category.id as category.name for category in eventCategories track by category.id"-->
+                                    </select>
                                 </li>
                                 <li class="col-md-12 form-group">
                                     <label>Ime:</label>
@@ -334,9 +516,9 @@
                 <button type="button" class="btn btn-primary pull-left" ng-click="addLinkEditingEvent()">Dodaj link</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateEvent()">Izmijeni događaj</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelUpdate()">Zatvori</button>
-            </div>
+            </div>-->
         </div>
-
+        
     </div>
 </div>
 <!--DELETE EVENT MODAL-->
@@ -371,30 +553,42 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Nova Kategorija</h4>
             </div>
-            <div class="modal-body">
-                <ul>
-                    <li class="form-group">
-                        <label>Naziv kategorije:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="newCategory.Name">
-                    </li>
-                    <li class="form-group">
-                        <label>Opis:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="newCategory.Description">
-                    </li>
-                    <li class="form-group">
-                        <label>Reprezentativna boja:</label>
-                        <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" />
-                    </li>
-                    <li class="form-group">
-                        <label>Odaberite sliku:</label>
-                        <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="createNewCategory()">Napravi</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetNewCategory()">Zatvori</button>
-            </div>
+            <form name="newCategoryForm" novalidate>
+                <div class="modal-body">
+                    <ul>
+                        <li class="form-group">
+                            <label>Naziv kategorije:</label>
+                            <div ng-show="newCategoryForm.$submitted || newCategoryForm.name.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.name.$error.required">Obavezno polje</div>
+                            </div>
+                            <input name="name" type="text" class="form-control" placeholder="" ng-model="newCategory.Name" required>
+                        </li>
+                        <li class="form-group">
+                            <label>Opis:</label>
+                            <div ng-show="newCategoryForm.$submitted || newCategoryForm.description.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.description.$error.required">Obavezno polje</div>
+                            </div>
+                            <input name="description" type="text" class="form-control" placeholder="" ng-model="newCategory.Description" required>
+                        </li>
+                        <li class="form-group">
+                            <label>Reprezentativna boja:</label>
+                            <div ng-show="newCategoryForm.$submitted || newCategoryForm.categoryColor.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.categoryColor.$error.required">Obavezno polje</div>
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.categoryColor.$error.pattern">Boja mora biti u heksadecimalnom obliku (npr. #FFF123)</div>
+                            </div>
+                            <input name="categoryColor" colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" ng-pattern="hexColorRegex" required />
+                        </li>
+                        <li class="form-group">
+                            <label>Odaberite sliku:</label>
+                            <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" ng-click="createNewCategory(newCategoryForm)">Napravi</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelNewCategory(newCategoryForm)">Zatvori</button>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -410,30 +604,43 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Izmjena Kategorije</h4>
             </div>
-            <div class="modal-body">
-                <ul>
-                    <li class="form-group">
-                        <label>Ime:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="editingCategory.name">
-                    </li>
-                    <li class="form-group">
-                        <label>Opis:</label>
-                        <input type="text" class="form-control" placeholder="" ng-model="editingCategory.description">
-                    </li>
-                    <li class="form-group">
-                        <label>Reprezentativna boja:</label>
-                        <input colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="editingCategory.categoryColor" />
-                    </li>
-                    <li class="form-group">
-                        <label>Odaberite sliku:</label>
-                        <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateCategory()">Izmijeni</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditCategory()">Zatvori</button>
-            </div>
+            <form name="editCategoryForm" novalidate>
+                <div class="modal-body">
+                    <ul>
+                        <li class="form-group">
+                            <label>Naziv kategorije:</label>
+                            <div ng-show="editCategoryForm.$submitted || editCategoryForm.name.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="editCategoryForm.name.$error.required">Obavezno polje</div>
+                            </div>
+                            <input name="name" type="text" class="form-control" placeholder="" ng-model="editingCategory.name" required>
+                        </li>
+                        <li class="form-group">
+                            <label>Opis:</label>
+                            <div ng-show="editCategoryForm.$submitted || editCategoryForm.description.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="editCategoryForm.description.$error.required">Obavezno polje</div>
+                            </div>
+                            <input name="description" type="text" class="form-control" placeholder="" ng-model="editingCategory.description" required>
+                        </li>
+                        <li class="form-group">
+                            <label>Reprezentativna boja:</label>
+                            <div ng-show="editCategoryForm.$submitted || editCategoryForm.categoryColor.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="editCategoryForm.categoryColor.$error.required">Obavezno polje</div>
+                                <div class="alert alert-danger" role="alert" ng-show="editCategoryForm.categoryColor.$error.pattern">Boja mora biti u heksadecimalnom obliku (npr. #FFF123)</div>
+                            </div>
+                            <input name="categoryColor" colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="editingCategory.categoryColor" ng-pattern="hexColorRegex" required />
+                        </li>
+
+                        <li class="form-group">
+                            <label>Odaberite sliku:</label>
+                            <input type="file" accept="image/*" ng-model="editingCategory.ImageUrl.image" base-sixty-four-input>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ng-click="updateCategory(editCategoryForm)">Izmijeni</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditCategory(editCategoryForm)">Zatvori</button>
+                </div>
+            </form>
         </div>
 
     </div>

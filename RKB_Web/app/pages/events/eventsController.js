@@ -3,10 +3,11 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("eventsController", ['$rootScope', '$scope', '$location', 'dataService', function ($rootScope, $scope, $location, dataService) {
+    avApp.controller("eventsController", ['$rootScope', '$scope', '$location', 'dataService','$routeParams', function ($rootScope, $scope, $location, dataService,$routeParams) {
 
         
         //MODELS
+        $scope.hexColorRegex = /^#[0-9A-Fa-f]{6}\b/;
         var linkModel = { "Id": 0, "Name": "", "Link": "", "index": 0 };
         var linkIndex = 0;
         $scope.newCategory = {
@@ -23,8 +24,8 @@
                 "startDate": new Date(),
                 "endDate": new Date(),
                 "registrationDeadline": new Date(),
-                "membersPrice": 0,
-                "nonMembersPrice": 0,
+                "membersPrice": null,
+                "nonMembersPrice": null,
                 "eventCategoryId": null,
                 "imageBaseString": null,
                 "applyCriteria": null,
@@ -86,7 +87,11 @@
             });
         };
         //CREATE CATEGORY
-        $scope.createNewCategory = function () {
+        $scope.createNewCategory = function (form) {
+            if (form.$invalid) {
+                toastr.error('Greška pri unosu');
+                return;
+            }
             dataService.create("eventcategories", $scope.newCategory, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno napravljena kategorija");
@@ -98,7 +103,14 @@
                     toastr.error("Greška prilikom pravljenja kategorije");
                     console.log("ERROR: ", response);
                 }
+                form.$setPristine();
+                form.$setUntouched();
+                $('#newCategoryModal').modal('hide');
             });
+        };
+        $scope.cancelNewCategory = function (form) {
+            $scope.resetNewCategory();
+            $scope.resetForm(form);
         };
         $scope.resetNewCategory = function () {
             $scope.newCategory = {
@@ -109,17 +121,30 @@
                 "ImageUrl":Image
             };
         };
+        $scope.resetForm = function (form) {
+            form.$setPristine();
+            form.$setUntouched();
+        };
         //EDIT CATEGORY
         $scope.editingCategory;
         $scope.setEditCategory = function (category) {
             $scope.editingCategory = angular.copy(category);
         };
-        $scope.cancelEditCategory = function () {
+        $scope.cancelEditCategory = function (form) {
             $scope.editingCategory = null;
+            $scope.resetForm(form);
         };
         //UPDATE CATEGORY
+<<<<<<< HEAD
+        $scope.updateCategory = function (form) {
+            if (form.$invalid) {
+                toastr.error('Greška pri unosu');
+                return;
+            }
+=======
         $scope.updateCategory = function () {
             console.log("what", $scope.editingCategory);
+>>>>>>> a66e69d74a5cae1280acd096698bf6d511574bbd
             dataService.update("eventcategories", $scope.editingCategory.id, $scope.editingCategory, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjena kategorija!");
@@ -131,6 +156,8 @@
                     toastr.error("Greška prilikom izmejne kategorije");
                     console.log("ERROR: ", response);
                 }
+                $scope.resetForm(form);
+                $('#editingCategoryModal').modal('hide');
             });
         };
         //DELETE CATEGORY
@@ -175,7 +202,12 @@
             });
         };
         //CREATE EVENT
-        $scope.createEvent = function () {
+        $scope.createEvent = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             $scope.newEvent.eventLinks.forEach(removeEmptyLinks);
             $scope.newEvent.imageBaseString = $scope.newEvent.image.base64;
             dataService.create("events", $scope.newEvent, function (response) {
@@ -188,6 +220,8 @@
                     console.log("ERROR: ", response);
                 }
                 $scope.listEvents();
+                $scope.listEventCategories();
+                $('#newEventModal').modal('hide');
             });
         };
         function removeEmptyLinks(link, index, array) {
@@ -217,7 +251,12 @@
             $scope.editingEvent = null;
         };
         //UPDATE EVENT
-        $scope.updateEvent = function () {
+        $scope.updateEvent = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             //ADD NEW LINKS
             for (var i = 0; i < $scope.editingEvent.eventLinks.length; i++) {
                 if ($scope.editingEvent.eventLinks[i].hasOwnProperty('index')) {
@@ -248,6 +287,8 @@
                     console.log("ERROR: ", response);
                 }
                 $scope.listEvents();
+                $scope.listEventCategories();
+                $('#editEventModal').modal('hide');
             });
         };
 
@@ -322,6 +363,7 @@
                     console.log("ERROR: ", response);
                 }
                 $scope.listEvents();
+                $scope.listEventCategories();
             });
         };
         
@@ -329,6 +371,7 @@
 
         $scope.activeFilter;
         $scope.typeFilter;
+        if ($routeParams.filter) $scope.typeFilter = $routeParams.filter;
         $scope.titleFilterInput;
         $scope.titleFilter;
         $scope.locationFilterInput;

@@ -2,7 +2,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.directive('comparePassword', function () {
+    avApp.directive('compareTo', function () {
         return {
             require: "ngModel",
             scope: {

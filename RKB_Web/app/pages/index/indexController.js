@@ -18,10 +18,10 @@
             $location.path('/home');
         };
 
-        //window.onunload = function () {
-        //    authenticationService.logout();
-        //    toastr.info("Odjavljeni ste");
-        //}
+        window.onunload = function () {
+            authenticationService.logout();
+            toastr.info("Odjavljeni ste");
+        }
 
         window.onload = function () {
             $rootScope.changeMenu();
