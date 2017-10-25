@@ -4,6 +4,7 @@
 # User-specific files
 *.userosscache
 *.suo
+.suo
 *.user
 *.sln.docstates
 .sonarqube/
@@ -13,6 +14,7 @@ obj/
 packages/
 DataSeed/
 gulpfile.js
+*.config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
