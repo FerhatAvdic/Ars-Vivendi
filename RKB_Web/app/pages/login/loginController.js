@@ -405,10 +405,10 @@
                 exitFunction = true;
             }
             //phone validation
-            if (/^[0-9]+$/.test($scope.registerExternalData.phoneNumber)) {
-                toastr.warning("Broj telefona smije imati samo cifre")
-                exitFunction = true;
-            }
+            //if (/^[0-9]+$/.test($scope.registerExternalData.phoneNumber)) {
+            //    toastr.warning("Broj telefona smije imati samo cifre")
+            //    exitFunction = true;
+            //}
             if ($scope.selected.length < $scope.interestCategories.length) {
                 toastr.warning("Unesite sve karakteristike");
                 exitFunction = true;
