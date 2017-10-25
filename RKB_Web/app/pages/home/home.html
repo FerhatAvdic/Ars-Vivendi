@@ -232,27 +232,29 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Ime:</label>
-                    <input type="text" class="form-control" placeholder="Ime">
+                    <input ng-model="contactEmail.Name" type="text" class="form-control" placeholder="Ime">
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input ng-model="contactEmail.Email" type="email" class="form-control" placeholder="Email">
                 </div>
                 <div class="form-group">
                     <label>Telefon:</label>
-                    <input type="text" class="form-control" placeholder="Telefon">
+                    <input ng-model="contactEmail.Phone" type="text" class="form-control" placeholder="Telefon">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Poruka</label>
-                    <textarea class="form-control" id="contact-msg" placeholder="Sadržaj poruke"></textarea>
+                    <textarea ng-model="contactEmail.Body" class="form-control" id="contact-msg" placeholder="Sadržaj poruke"></textarea>
                 </div>
             </div>
         </div>
         <div class="row row-centered">
-            <div class="col-md-12 text-center">
-                <button class="rectangle-btn" id="contact-submit-btn" style="background: #4DC0A6;">Pošalji upit</button>
+
+            <div class="col-md-12 text-right">
+                <button class="rectangle-btn" id="contact-submit-btn" >Pošalji</button>
+
             </div>
         </div>
     </div>
