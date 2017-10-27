@@ -1,0 +1,169 @@
+﻿<div class="gray-wrapper">
+    <div class="container">
+        <div class="box-members">
+            <div class="text-center" ng-show="itemListLoading">
+                <img src="img/spin.gif" />
+            </div>
+            <div class="row" ng-hide="itemListLoading">
+                <div class="col-md-12">
+                    <div class="box-members-list">
+                        <p class="members-table-title">Boniteti</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="members-table-options text-right">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#newDiscountModal" ng-click="crud.startNew()">+ Bonitet</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="box-members-list-wrap">
+                            <ul id="top-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
+                        </div>-->
+                        <div class="table-responsive">
+                            <table class="table members-table">
+                                <thead>
+                                    <tr>
+                                        <th ng-if="showCheckboxes"><input type="checkbox" /></th>
+                                        <th ng-repeat="heading in headings" ng-click="sortItemsBy(heading)">
+                                            {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
+                                        </th>
+                                        <th>Opcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--<tr ng-repeat="member in members | filter : columnFilters |
+                                        orderBy:propertyName:reverse | start: (currentPage-1) * pageSize | limitTo: pageSize">-->
+                                    <tr ng-repeat="item in list | orderBy:propertyName:reverse">
+                                        <td>{{item.title}}</td>
+                                        <td>{{item.link}}</td>
+                                        <td>{{item.imageUrl}}</td>
+                                        <td>
+                                            <a ng-click="crud.startEdit(item)" data-toggle="modal" data-target="#editDiscountModal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a ng-click="crud.startDelete(item)" data-toggle="modal" data-target="#deleteDiscountModal"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--<div class="box-members-list-wrap">
+                            <ul id="bottom-members-pagination" uib-pagination total-items="filteredMembers.length - 1" items-per-page="pageSize" ng-model="currentPage" max-size="paginationSize" class="pagination-sm" boundary-link-numbers="true" previous-text="<<" next-text=">>"></ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--New Discount Modal-->
+<div id="newDiscountModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dodavanje boniteta</h4>
+            </div>
+            <form name="newItemForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Naziv:</label>
+                        <div ng-show="newItemForm.$submitted || newItemForm.title.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="newItemForm.title.$error.required">Obavezno polje</div>
+                        </div>
+                        <input type="text" class="form-control" name="title" placeholder="Naziv" ng-model="newItem.title" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Link:</label>
+                        <div ng-show="newItemForm.$submitted || newItemForm.link.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="newItemForm.link.$error.required">Obavezno polje</div>
+                        </div>
+                        <input type="text" class="form-control" name="link" placeholder="Link" ng-model="newItem.link" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Slika: </label>
+                        <div ng-show="newItemForm.$submitted || newItemForm.image.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="newItemForm.image.$error.required">Bonitet mora imati sliku</div>
+                            <div class="alert alert-danger" role="alert" ng-show="newItemForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{newItem.image.filesize/1000000 | number : 2}} MB)</div>
+                        </div>
+                        <input name="image" type="file" accept="image/*" ng-model="newItem.image" maxsize="2000" required base-sixty-four-input>
+                        <div ng-if="newItem.image.filename">{{newItem.image.filename}}</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" ng-click="crud.createItem(newItemForm)">Dodaj</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!--Edit Discount Modal-->
+<div id="editDiscountModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Izmjena boniteta</h4>
+            </div>
+            <form name="editItemForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Naziv:</label>
+                        <div ng-show="editItemForm.$submitted || editItemForm.title.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="editItemForm.title.$error.required">Obavezno polje</div>
+                        </div>
+                        <input type="text" class="form-control" name="title" placeholder="Naziv" ng-model="editingItem.title" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Link:</label>
+                        <div ng-show="editItemForm.$submitted || editItemForm.link.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="editItemForm.link.$error.required">Obavezno polje</div>
+                        </div>
+                        <input type="text" class="form-control" name="link" placeholder="Link" ng-model="editingItem.link" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Slika: </label>
+                        <div ng-show="editItemForm.$submitted || editItemForm.image.$touched">
+                            <div class="alert alert-danger" role="alert" ng-show="editItemForm.image.$error.required">Bonitet mora imati sliku</div>
+                            <div class="alert alert-danger" role="alert" ng-show="editItemForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{editingItem.image.filesize/1000000 | number : 2}} MB)</div>
+                        </div>
+                        <input name="image" type="file" accept="image/*" ng-model="editingItem.image" maxsize="2000" base-sixty-four-input>
+                        <div ng-if="editingItem.image.filename">{{editingItem.image.filename}}</div>
+                        <img ng-if="editingItem.imageUrl && !editingItem.image" ng-src="{{editingItem.imageUrl}}" style="max-width:50%"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ng-click="crud.updateItem(editItemForm)">Izmijeni</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!--DELETE MEMBER MODAL-->
+<div id="deleteDiscountModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-width-adjust">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje boniteta</h4>
+            </div>
+                <div class="modal-body">
+                    <p>Da li zaista želite obrisati bonitet?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" ng-click="crud.deleteItem(deletingItem.id)">Obriši</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDelete()">Odustani</button>
+                </div>
+        </div>
+    </div>
+</div>

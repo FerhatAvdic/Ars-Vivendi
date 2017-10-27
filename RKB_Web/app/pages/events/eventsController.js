@@ -92,6 +92,7 @@
                 toastr.error('Greška pri unosu');
                 return;
             }
+            $scope.newCategory.imageUrl = $scope.newCategory.image.base64;
             dataService.create("eventcategories", $scope.newCategory, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno napravljena kategorija");
@@ -140,6 +141,7 @@
                 toastr.error('Greška pri unosu');
                 return;
             }
+            $scope.editingCategory.imageUrl = $scope.editingCategory.image.base64;
             dataService.update("eventcategories", $scope.editingCategory.id, $scope.editingCategory, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjena kategorija!");

@@ -222,6 +222,7 @@
                                 <label>Cijena za članove: </label>
                                 <div ng-show="newEventForm.$submitted || newEventForm.membersPrice.$touched">
                                     <div class="alert alert-danger" role="alert" ng-show="newEventForm.membersPrice.$error.required">Obavezno polje</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.membersPrice.$error.number">Unesite broj</div>
                                 </div>
                                 <input name="membersPrice" type='number' class="form-control" ng-model="newEvent.membersPrice" required>
                             </li>
@@ -229,6 +230,7 @@
                                 <label>Cijena za goste: </label>
                                 <div ng-show="newEventForm.$submitted || newEventForm.nonMembersPrice.$touched">
                                     <div class="alert alert-danger" role="alert" ng-show="newEventForm.nonMembersPrice.$error.required">Obavezno polje</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="newEventForm.nonMembersPrice.$error.number">Unesite broj</div>
                                 </div>
                                 <input name="nonMembersPrice" type='number' class="form-control" ng-model="newEvent.nonMembersPrice" required>
                             </li>
@@ -378,6 +380,7 @@
                                 <label>Cijena za članove: </label>
                                 <div ng-show="editEventForm.$submitted || editEventForm.membersPrice.$touched">
                                     <div class="alert alert-danger" role="alert" ng-show="editEventForm.membersPrice.$error.required">Obavezno polje</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.membersPrice.$error.number">Unesite broj</div>
                                 </div>
                                 <input name="membersPrice" type='number' class="form-control" ng-model="editingEvent.membersPrice" required>
                             </li>
@@ -385,6 +388,7 @@
                                 <label>Cijena za goste: </label>
                                 <div ng-show="editEventForm.$submitted || editEventForm.nonMembersPrice.$touched">
                                     <div class="alert alert-danger" role="alert" ng-show="editEventForm.nonMembersPrice.$error.required">Obavezno polje</div>
+                                    <div class="alert alert-danger" role="alert" ng-show="editEventForm.nonMembersPrice.$error.number">Unesite broj</div>
                                 </div>
                                 <input name="nonMembersPrice" type='number' class="form-control" ng-model="editingEvent.nonMembersPrice" required>
                             </li>
@@ -579,8 +583,13 @@
                             <input name="categoryColor" colorpicker colorpicker-size="250" type="text" class="form-control" ng-model="newCategory.CategoryColor" ng-pattern="hexColorRegex" required />
                         </li>
                         <li class="form-group">
-                            <label>Odaberite sliku:</label>
-                            <input type="file" accept="image/*" ng-model="newCategory.ImageUrl.image" base-sixty-four-input>
+                            <label>Slika:</label>
+                            <div ng-show="newCategoryForm.$submitted || newCategoryForm.image.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.image.$error.required">Kategorija mora imati sliku</div>
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{newCategory.image.filesize/1000000 | number : 2}} MB)</div>
+                            </div>
+                            <input name="image" type="file" accept="image/*" ng-model="newCategory.image" maxsize="2000" required base-sixty-four-input>
+                            <div ng-if="newCategory.image.filename">{{newCategory.image.filename}}</div>
                         </li>
                     </ul>
                 </div>
@@ -631,8 +640,14 @@
                         </li>
 
                         <li class="form-group">
-                            <label>Odaberite sliku:</label>
-                            <input type="file" accept="image/*" ng-model="editingCategory.ImageUrl.image" base-sixty-four-input>
+                            <label>Slika:</label>
+                            <div ng-show="newCategoryForm.$submitted || newCategoryForm.image.$touched">
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.image.$error.required">Kategorija mora imati sliku</div>
+                                <div class="alert alert-danger" role="alert" ng-show="newCategoryForm.image.$error.maxsize">Slika ne smije biti veća od 2 MB (Trenutna veličina: {{editingCategory.image.filesize/1000000 | number : 2}} MB)</div>
+                            </div>
+                            <input name="image" type="file" accept="image/*" ng-model="editingCategory.image" maxsize="2000" base-sixty-four-input>
+                            <div ng-if="editingCategory.image.filename">{{editingCategory.image.filename}}</div>
+                            <img ng-if="editingCategory.imageUrl && !editingItem.image" ng-src="{{editingCategory.imageUrl}}" style="max-width:50%" />
                         </li>
                     </ul>
                 </div>

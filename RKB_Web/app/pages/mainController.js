@@ -29,9 +29,9 @@
                     $rootScope.adminItems = [
                         { link: "#!/about", text: "O Nama" },
                         { link: "#!/events", text: "Događaji" },
-                        { link: "#!/gallery", text: "Galerija", id: null },
-                        { link: "#!/members", text: "Članovi" },
-                        { link: "#!/adminPanel", text: "Admin Panel" }
+                        { link: "#!/gallery", text: "Galerija", id: null }
+                        //{ link: "#!/members", text: "Članovi" }
+                        //{ link: "#!/adminPanel", text: "Admin Panel" }
                     ];
                     $rootScope.userItems = [
                         { link: "#!/about", text: "O Nama" },
@@ -39,6 +39,15 @@
                         { link: "#!/events", text: "Događaji" },
                         { link: "#!/gallery", text: "Galerija", id: null },
                         { link: "", text: "Kontakt", id: "contact-link" }
+                    ];
+                    $rootScope.adminSpecific = [
+                        { link: "#!/interests", text: "Interesi" },
+                        { link: "#!/members", text: "Članovi" },
+                        { link: "#!/sponsors", text: "Sponzori" },
+                        { link: "#!/partners", text: "Partneri" },
+                        { link: "#!/services", text: "Usluge" },
+                        { link: "#!/discounts", text: "Boniteti" },
+                        { link: "#!/static", text: "Statično" }
                     ];
                 };
 
@@ -53,7 +62,7 @@
                     else if ($rootScope.userRole === "Admin")
                     {
                         $rootScope.menuItems = $rootScope.adminItems;
-                        $rootScope.menuItems.push({ link: "#!/profile/"+authenticationService.authentication.userName, text: "Profil" });
+                        //$rootScope.menuItems.push({ link: "#!/profile/"+authenticationService.authentication.userName, text: "Profil" });
                     }
                     else
                         $rootScope.menuItems = $rootScope.noUserItems;

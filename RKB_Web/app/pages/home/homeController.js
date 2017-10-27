@@ -3,7 +3,7 @@
 
     var avApp = angular.module("avApp");
 
-    avApp.controller("homeController", ['$scope','$interval','$location','dataService', function ($scope, $interval,$location, dataService) {
+    avApp.controller("homeController", ['$scope','$interval','$location','dataService','$sce', function ($scope, $interval,$location, dataService, $sce) {
         
         //COVER 
         //$scope.slides = [
@@ -14,23 +14,68 @@
         //    { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: "#007E62" }
         //];
 
-        $scope.slides = [
-           { image: "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", title: "Rafting", description: "Slide down the rivers with us", labelColor: "rgb(152, 74, 198)", categoryId: 4 },
-           { image: "/img/hik_slide.jpg", title: "Planinarenje", description: "Exploring the forests and fields of mountains", labelColor: "rgb(227, 147, 86)", categoryId: 2 },
-           { image: "/img/ski_slide.jpg", title: "Skijanje", description: "Speeding down the lanes", labelColor: "rgb(95, 197, 217)", categoryId: 3 },
-           { image: "/img/div_slide.jpg", title: "Ronjenje", description: "Go down into the depths of the seas", labelColor: "rgb(100, 117, 208)", categoryId: 1 },
-           { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: 'rgb(198, 199, 84)', categoryId: 5 }
-        ];
+        //$scope.slides = [
+        //   { image: "http://www.3glav.com/wp-content/uploads/2016/01/soca-rafting-slovenia-bovec.jpg", title: "Rafting", description: "Slide down the rivers with us", labelColor: "rgb(152, 74, 198)", categoryId: 4 },
+        //   { image: "/img/hik_slide.jpg", title: "Planinarenje", description: "Exploring the forests and fields of mountains", labelColor: "rgb(227, 147, 86)", categoryId: 2 },
+        //   { image: "/img/ski_slide.jpg", title: "Skijanje", description: "Speeding down the lanes", labelColor: "rgb(95, 197, 217)", categoryId: 3 },
+        //   { image: "/img/div_slide.jpg", title: "Ronjenje", description: "Go down into the depths of the seas", labelColor: "rgb(100, 117, 208)", categoryId: 1 },
+        //   { image: "/img/bik_slide.jpg", title: "Biciklizam", description: "Driving over the hills up to the mountains", labelColor: 'rgb(198, 199, 84)', categoryId: 5 }
+        //];
+        var slideObj = {
+            "id": null,
+            "categoryColor":null,
+            "name": null,
+            "description": null,
+            "imageUrl": null
+        };
+        //LIST EVENT CATEGORIES
+        $scope.listEventCategories = function () {
+            $scope.categoriesLoading = true;
+            dataService.list("eventcategories", function (response) {
+                if (response.status === 200) {
+                    $scope.slides = response.data
+                    $scope.intervalOfSlide(5000);
+                    $scope.categoriesLoading = false;
+                    console.log("EVENT CATEGORIES: ", $scope.slides);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja kategorija");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.listEventCategories();
 
         //WHY ARS VIVENDI
-        $scope.activityShowcase = [
-            { icon: "fa-tint", backgroundColor: "EEEEEE", title: "Ronjenje", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " },
-            { icon: "fa-bicycle", backgroundColor: "EEEEEE", title: "Biciklizam", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " },
-            { icon: "fa-life-ring", backgroundColor: "EEEEEE", title: "Rafting", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " }
+        //$scope.activityShowcase = [
+        //    { icon: "fa-tint", backgroundColor: "EEEEEE", title: "Ronjenje", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " },
+        //    { icon: "fa-bicycle", backgroundColor: "EEEEEE", title: "Biciklizam", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " },
+        //    { icon: "fa-life-ring", backgroundColor: "EEEEEE", title: "Rafting", description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. " }
         //, {icon: "fa-snowflake-o",backgroundColor: "3A7AD2",title: "Skijanje",description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "},
         //  {icon: "fa-tree",backgroundColor: "007E62",title: "Planinarenje",description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "},
         //  {icon: "fa-star",backgroundColor: "00A37F",title: "Rekreacija",description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. "}
-        ];
+        //];
+        var serviceObj = {
+            "id": null,
+            "title": null,
+            "body": null,
+            "imageUrl": null
+        }
+        $scope.listServices = function () {
+            $scope.servicesLoading = true;
+            dataService.list("services", function (res) {
+                if (res.status === 200) {
+                    $scope.services = res.data
+                    $scope.servicesLoading = false;
+                    console.log("services: ", res.data);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja partnera");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        $scope.listServices();
 
         //UPCOMING EVENTS SLIDER
         /*$scope.upcoming = [
@@ -47,22 +92,64 @@
         ];*/
 
         //PARTNERS
-        $scope.partners = [
-            '/img/partners/cocacola.png',
-            '/img/partners/crown.png',
-            '/img/partners/ebay.png',
-            '/img/partners/google.png',
-            '/img/partners/mastercard.png'
-        ];
+        //$scope.partners = [
+        //    '/img/partners/cocacola.png',
+        //    '/img/partners/crown.png',
+        //    '/img/partners/ebay.png',
+        //    '/img/partners/google.png',
+        //    '/img/partners/mastercard.png'
+        //];
+        var partnerObj = {
+            "id": null,
+            "title": null,
+            "body": null,
+            "imageUrl": null
+        }
+        $scope.listPartners = function () {
+            $scope.partnersLoading = true;
+            dataService.list("partners", function (res) {
+                if (res.status === 200) {
+                    $scope.partners = res.data
+                    $scope.partnersLoading = false;
+                    console.log("partners: ", res.data);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja boniteta");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        $scope.listPartners();
 
         //SPONSORS
-        $scope.sponsors = [
-             '/img/partners/cocacola.png',
-            '/img/partners/crown.png',
-            '/img/partners/ebay.png',
-            '/img/partners/google.png',
-            '/img/partners/mastercard.png'
-        ];
+        //$scope.sponsors = [
+        //     '/img/partners/cocacola.png',
+        //    '/img/partners/crown.png',
+        //    '/img/partners/ebay.png',
+        //    '/img/partners/google.png',
+        //    '/img/partners/mastercard.png'
+        //];
+        var sponsorObj = {
+            "id": null,
+            "title": null,
+            "body": null,
+            "imageUrl":null
+        }
+        $scope.listSponsors = function () {
+            $scope.sponsorsLoading = true;
+            dataService.list("sponsors", function (res) {
+                if (res.status === 200) {
+                    $scope.sponsors = res.data
+                    $scope.sponsorsLoading = false;
+                    console.log("sponsors: ", res.data);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja sponzora");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        $scope.listSponsors();
 
         //PAST EVENTS GALLERY
         /*$scope.gallery = [
@@ -78,16 +165,41 @@
         $scope.gallery = [];
 
         //DISCOUNT SLIDES
-        $scope.discounts = [
-            { "image": "/img/discounts/discount1.jpg" },
-            { "image": "/img/discounts/discount2.jpg" },
-            { "image": "/img/discounts/discount3.jpg" },
-            { "image": "/img/discounts/discount4.png" },
-            { "image": "/img/discounts/discount5.jpg" },
-            { "image": "/img/discounts/discount6.jpg" },
-            { "image": "/img/discounts/discount7.png" },
-            { "image": "/img/discounts/discount8.jpg" },
-        ];
+        //$scope.discounts = [
+        //    { "image": "/img/discounts/discount1.jpg" },
+        //    { "image": "/img/discounts/discount2.jpg" },
+        //    { "image": "/img/discounts/discount3.jpg" },
+        //    { "image": "/img/discounts/discount4.png" },
+        //    { "image": "/img/discounts/discount5.jpg" },
+        //    { "image": "/img/discounts/discount6.jpg" },
+        //    { "image": "/img/discounts/discount7.png" },
+        //    { "image": "/img/discounts/discount8.jpg" },
+        //];
+        var discountObj = {
+            "id": null,
+            "title": null,
+            "link": null,
+            "imageUrl": null
+        }
+        $scope.listDiscounts = function () {
+            $scope.discountsLoading = true;
+            dataService.list("discounts", function (res) {
+                if (res.status === 200) {
+                    $scope.discounts = res.data
+                    $scope.chunkedDiscounts = chunk($scope.discounts, 3);
+                    $scope.intervalOfDiscountSlide(0, 8000);
+                    $scope.intervalOfDiscountSlide(1, 7500);
+                    $scope.intervalOfDiscountSlide(2, 8500);
+                    $scope.discountsLoading = false;
+                    console.log("discounts: ", res.data);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja partnera");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        $scope.listDiscounts();
 
         // COMMENT SECTION
         $scope.recentComments = [
@@ -97,6 +209,25 @@
             {"eventName": "Event Name With Location","eventLink": "link","eventCommentsNumber": 1,"author": "author","profilePicture": "/img/womansilhouette.jpg","dateTime": "date time"},
             {"eventName": "Event Name With Location", "eventLink": "link", "eventCommentsNumber": 1, "author": "author", "profilePicture": "/img/mansilhouette.jpg", "dateTime": "date time" }
         ];
+
+        $scope.listComments = function () {
+            $scope.commentsLoading = true;
+            dataService.list("usercomments/commentsbyevent/recent", function (res) {
+                if (res.status === 200) {
+                    $scope.recentComments = res.data
+                    $scope.commentsLoading = false;
+                    console.log("recentComments: ", res.data);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja komentara");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        //$scope.listComments();
+
+        /////////////
+
         function getTimeRemaining(event, index, array) {
 
             var date1 = event.startDate;
@@ -123,7 +254,7 @@
                     $scope.upcoming = response.data
                     $scope.upcoming.forEach(getTimeRemaining);
                     console.log("Upcoming:", $scope.upcoming);
-                    //$scope.startIntervalSlideUpcoming(6000);
+                    $scope.startIntervalSlideUpcoming(6000);
                     //$scope.intervalOfUpcomingDeadline(1000);
                 }
                 else {
@@ -226,7 +357,7 @@
             }
             return newArr;
         }
-        $scope.chunkedDiscounts = chunk($scope.discounts, 3);
+        
         //DISCOUNT SLIDE OPTIONS
         $scope.currentSlideDiscounts = [0,0,0];
         $scope.nextSlideDiscounts = function (index) {
@@ -318,11 +449,11 @@
         });
 
         //START INTERVALS
-        $scope.intervalOfDiscountSlide(0, 8000);
-        $scope.intervalOfDiscountSlide(1, 7500);
-        $scope.intervalOfDiscountSlide(2, 8500);
+        //$scope.intervalOfDiscountSlide(0, 8000);
+        //$scope.intervalOfDiscountSlide(1, 7500);
+        //$scope.intervalOfDiscountSlide(2, 8500);
         //$scope.intervalOfSlideUpcoming(6000);
-        $scope.intervalOfSlide(5000);
+        //$scope.intervalOfSlide(5000);
 
         var startSlideUpcoming;
         $scope.startIntervalSlideUpcoming = function (interval) {
@@ -342,15 +473,19 @@
         };
         
         //Ferha je meni kralj 
+        // <3
 
         $scope.contactEmail = {
-            Name: "",
-            Email: "",
-            Phone: "",
-            Body: ""
+            Name: null,
+            Email: null,
+            Phone: null,
+            Body: null
         };
-        $scope.sendContactEmail = function () {
-            console.log("in mail");
+        $scope.sendContactEmail = function (form) {
+            if (form.$invalid) {
+                toastr.error('Greška pri unosu');
+                return;
+            }
             dataService.create("contactemail", $scope.contactEmail, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno slanje emaila!");
@@ -360,9 +495,43 @@
                     toastr.error("Greška prilikom slanja emaila");
                     console.log("ERROR: ", response);
                 }
+                form.$setPristine();
+                form.$setUntouched();
             });
         }
         
+
+        $scope.listStatic = function () {
+            $scope.staticLoading = true;
+            dataService.list("missions", function (res) {
+                if (res.status === 200) {
+                    $scope.staticInfo = res.data;
+                    $scope.staticInfo.forEach(function (el, index, array) {
+                        if (el.title === "Zašto Ars Vivendi") {
+                            $scope.mission = el;
+                            $scope.mission.body = $sce.trustAsHtml($scope.mission.body);
+                        }
+                        if (el.title === "Ars Vivendi") {
+                            $scope.pageTitle = el;
+                        }
+                        if (el.title === "O Nama") {
+                            $scope.aboutUs = el;
+                            $scope.aboutUs.body = $sce.trustAsHtml($scope.aboutUs.body);
+                        }
+                        if (el.title === "Kontakt Info") {
+                            $scope.contactInfo = el;
+                            $scope.contactInfo.body = $sce.trustAsHtml($scope.contactInfo.body);
+                        }
+                    });
+                    $scope.staticLoading = false;
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja statičnih informacija");
+                    console.log("ERROR: ", res);
+                }
+            });
+        };
+        $scope.listStatic();
 
     }]);
 }());

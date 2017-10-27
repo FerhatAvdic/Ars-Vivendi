@@ -267,21 +267,21 @@ ul {
 #main-navbar > .container-fluid .navbar-brand{
     margin-left: 0;
 }
-#main-navbar .navbar-brand, #main-navbar .navbar-brand:hover, #main-navbar .navbar-nav li a {
+#main-navbar .navbar-brand, #main-navbar .navbar-brand:hover, #main-navbar .navbar-nav>li>a {
     /*color: black;*/
     color: white;
 }
-#main-navbar .navbar-nav li a:hover{
+#main-navbar .navbar-nav>li>a:hover{
     color: gray;
 }
 .navbar-brand-custom{
     font-family: Raleway;
     letter-spacing: 2px;
 }
-#over-navbar .navbar-brand, #over-navbar .navbar-brand:hover, #over-navbar .navbar-nav li a {
+#over-navbar .navbar-brand, #over-navbar .navbar-brand:hover, #over-navbar .navbar-nav>li>a {
     color: white;
 }
-#over-navbar .navbar-nav li a:hover{
+#over-navbar .navbar-nav>li>a:hover{
     color: white;
 }
 .over-nav-custom{
@@ -290,14 +290,14 @@ ul {
     text-transform: uppercase;
     transition: all 0.3s;
 }
-.navbar-nav-custom li a {
+.navbar-nav-custom>li>a {
     font-size: 14px;
     font-family: NunitoSans-Bold;
     text-transform: uppercase;
     transition: all 0.3s;
 }
 @media  (min-width: 991px){
-    .navbar-nav-custom li a {
+    .navbar-nav-custom>li>a {
         padding: 30px 20px;
     }
     .navbar-brand-custom{
@@ -306,9 +306,27 @@ ul {
 }
 }
 
-.navbar-nav-custom li a:hover{
+.navbar-nav-custom>li>a:hover{
     background-color: white;
     color: gray;
+}
+.navbar-dropdown>li>a{
+    font-size: 14px;
+    font-family: NunitoSans-Bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    color: #424242;
+    padding: 5px 20px;
+}
+.navbar-dropdown>li>a:hover{
+    color:white;
+    background-color:#424242;
+}
+.navbar-dropdown>li:hover{
+    background-color:#424242;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+    background-color:#5a5a5a;
 }
 .header-social{
     float: left;
@@ -627,6 +645,13 @@ ul {
     font-size: 32px;
     color: #424242;
     line-height: 85px;
+    overflow:hidden;
+}
+.activity-icon-img{
+    max-width: 120px;
+    max-height: 120px;
+    object-position:50% 50%;
+    object-fit: cover;
 }
 .activity-title{
     padding: 15px 0;
@@ -1034,6 +1059,12 @@ ul {
 }
 #contact-msg{
     height: 182px;
+}
+#contact-submit-btn{
+    background-color: #05A9B0
+}
+#contact-submit-btn:hover{
+    background-color: #05A9B0
 }
 
 /*7 SECTION FOOTER*/

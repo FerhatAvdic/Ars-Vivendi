@@ -19,6 +19,10 @@
                 }
             });
         };
+        $scope.resetForm = function (form) {
+            form.$setPristine();
+            form.$setUntouched();
+        };
         //$scope.checkIfApplied = function () {
         //    $scope.userApplications.forEach(function (app, index, array) {
         //        console.log("app.eventid:", app.eventID, "eventID", eventID);
@@ -107,17 +111,33 @@
                 }
             });
         };
-        $scope.postComment = function () {
+        $scope.startNewComment = function () {
+            $scope.newCommentActive = true;
+        };
+        $scope.newCommentActive = false;
+        $scope.cancelNewComment = function (form) {
+            $scope.newCommentActive = false;
+            $scope.newComment.comment = null;
+            $scope.resetForm(form);
+            console.log($scope.newCommentActive);
+        };
+        $scope.postComment = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             dataService.create("usercomments", $scope.newComment, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno postavljen komentar!");
-                    $scope.initNewComment();
                     $scope.newCommentActive = false;
                 }
                 else {
                     toastr.error("Greška prilikom postavljanja komentara");
                     console.log("ERROR: ", response);
                 }
+                $scope.initNewComment();
+                $scope.resetForm(form);
                 $scope.listComments();
             });
         };
@@ -126,11 +146,17 @@
             $scope.editingComment = angular.copy(comment);
             $scope.editCommentActive = true;
         };
-        $scope.cancelEditComment = function () {
+        $scope.cancelEditComment = function (form) {
             $scope.editingComment = null;
             $scope.editCommentActive = false;
+            $scope.resetForm(form);
         }
-        $scope.updateUserComment = function () {
+        $scope.updateUserComment = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             dataService.update("usercomments", $scope.editingComment.id, $scope.editingComment, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjen komentar!");
@@ -142,6 +168,7 @@
                 $scope.listComments();
                 $scope.editingComment = null;
                 $scope.editCommentActive = false;
+                $scope.resetForm(form);
             });
         };
         $scope.setDeleteComment = function (comment) {
@@ -176,7 +203,12 @@
                 }
             });
         };
-        $scope.uploadPhotos = function () {
+        $scope.uploadPhotos = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             console.log($scope.photos.images);
             $scope.photos.images.forEach(function (item) {
                 $scope.photos.imageBaseStrings.push(item.base64);
@@ -190,8 +222,10 @@
                     toastr.error("Greška prilikom uploada");
                     console.log("ERROR: ", response);
                 }
+                $scope.resetForm(form);
                 $scope.listPhotos();
                 $scope.initPhotos();
+                $('#singleEventUploadModal').modal('hide');
             });
         };
 

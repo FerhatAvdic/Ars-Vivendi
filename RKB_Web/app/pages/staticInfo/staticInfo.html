@@ -1,0 +1,35 @@
+﻿<div class="gray-wrapper">
+    <div class="container">
+        <div class="box-members">
+            <div class="text-center" ng-show="itemListLoading">
+                <img src="img/spin.gif" />
+            </div>
+            <div class="row" ng-hide="itemListLoading">
+                <div class="col-md-12">
+                    <div class="box-members-list">
+                        <p class="members-table-title">Statično</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="members-table-options text-right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 25px;">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="form-group" ng-repeat="item in list">
+                                    <form name="staticInfoForm">
+                                        <label>{{item.title}}</label>
+                                        <div class="row">
+                                            <div class="col-md-11"><textarea class="form-control" name="staticInfo" ng-model="item.body" required></textarea></div>
+                                            <div class="col-md-1"><button type="submit" class="btn btn-primary pull-right" ng-click="updateItem(item, staticInfoForm)">Spasi</button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

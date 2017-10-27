@@ -57,6 +57,12 @@
     <script src="app/pages/about/aboutController.js"></script>
     <script src="app/pages/gallery/galleryController.js"></script>
     <script src="app/pages/adminPanel/adminPanelController.js"></script>
+    <script src="app/pages/discounts/discountsController.js"></script>
+    <script src="app/pages/partners/partnersController.js"></script>
+    <script src="app/pages/sponsors/sponsorsController.js"></script>
+    <script src="app/pages/services/servicesController.js"></script>
+    <script src="app/pages/interests/interestsController.js"></script>
+    <script src="app/pages/staticInfo/staticInfoController.js"></script>
     <!--Directives-->
     <script src="libs/angular-base64-upload.min.js"></script>
     <script src="app/directives/validationDirective.js"></script>
@@ -99,6 +105,12 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
                     <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
+                    <li ng-if="userRole === 'Admin'" class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Panel <span class="caret"></span></a>
+                        <ul class="dropdown-menu navbar-dropdown">
+                            <li ng-repeat="item in adminSpecific" data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
+                        </ul>
+                    </li>
                     <!--class="hide-item"--> <li  ng-hide="authentication.isAuth" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.login}}">Prijava</a></li>
                     <!--class="hide-item"--> <li  ng-hide="authentication.isAuth" data-toggle="collapse" data-target=".navbar-collapse.in"><a ng-href="#!/login/{{greenMenu.register}}">Postani Član</a></li>
                     <li ng-hide="!authentication.isAuth"><a href="" ng-click="logOut()">Odjava</a></li>

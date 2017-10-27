@@ -1,10 +1,10 @@
 ﻿<div class="welcome-screen">
-    <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide" ng-style="{'background-image': 'url('+slide.image+')'}">
+    <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide" ng-style="{'background-image': 'url('+slide.imageUrl+')'}">
         <div class="slide-overlay"></div>
         <div class="slide-content">
-            <span class="slide-title" >{{slide.title}}</span>
+            <span class="slide-title" >{{slide.name}}</span>
             <span class="slide-description">{{slide.description}}</span>
-            <a ng-href="#!/events/category/{{slide.title}}" class="rectangle-btn" id="register-btn"  ng-style="{'background-color': slide.labelColor}">Pregled</a><!--ng-style="{'background-color': slide.labelColor}"-->
+            <a ng-href="#!/events/category/{{slide.name}}" class="rectangle-btn" id="register-btn"  ng-style="{'background-color': slide.categoryColor}">Pregled</a><!--ng-style="{'background-color': slide.labelColor}"-->
         </div>
         
     </div>
@@ -16,8 +16,8 @@
         </div>
     </div>-->
     <div class="slide-labels-top big-only">
-        <div class="slide-label-top" ng-repeat="label in slides" ng-class="{'slide-label-top-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.labelColor, 'width': 100 / slides.length + '%'}">
-            <span>{{label.title}}</span>
+        <div class="slide-label-top" ng-repeat="label in slides" ng-class="{'slide-label-top-selected': dotSelected($index)}" ng-click="goToSlide($index)" ng-style="{'background-color': label.categoryColor, 'width': 100 / slides.length + '%'}">
+            <span>{{label.name}}</span>
         </div>
     </div>
     <!--<div class="slide-dots">
@@ -30,10 +30,8 @@
         <div class="row">
             <div class="col-md-12 inside-mission">
                 <!--<i class="fa fa-comment-o" aria-hidden="true" id="mission-icon"></i>-->
-                <div class="mission-title">Zašto Ars Vivendi</div>
-                <div class="mission-description">
-                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
-                </div>
+                <div class="mission-title">{{mission.title}}</div>
+                <div class="mission-description" ng-bind-html="mission.body"></div>
             </div>
         </div>
     </div>
@@ -43,14 +41,13 @@
     <div class="container">
         <!--<div class="av-heading">Pođi s nama</div>-->
         <div class="row row-centered">
-            <div class="col-md-4 col-sm-4 activity-box" ng-repeat="activity in activityShowcase">
+            <div class="col-md-4 col-sm-4 activity-box" ng-repeat="service in services">
                 <div class="activity-icon">
-                    <!-- ng-style="{'background-color': '#' + activity.backgroundColor}" -->
-                    <i class="fa" ng-class="activity.icon" aria-hidden="true"></i>
+                    <img class="activity-icon-img"ng-src="{{service.imageUrl}}" />
                 </div>
-                <div class="activity-title">{{activity.title}}</div>
+                <div class="activity-title">{{service.title}}</div>
                 <div class="activity-description">
-                    {{activity.description}}
+                    {{service.body}}
                 </div>
             </div>
         </div>
@@ -151,7 +148,7 @@
                 <div class="discount" ng-repeat="discount in columns"
                      ng-show="checkCurrentSlides($parent.$index, $index)"
                      ng-click="nextSlideDiscounts($parent.$index)"
-                     ng-style="{'background-image': 'url('+ discount.image +')'}">
+                     ng-style="{'background-image': 'url('+ discount.imageUrl +')'}">
                 </div>
             </div>
         </div>
@@ -166,9 +163,9 @@
             <div class="col-md-1 col-sm-1 col-xs-2"></div>
             <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="partner in partners">
                 <div class="partner-logo-wrap">
-                    <img class="partner-logo" ng-src="{{partner}}" />
+                    <a ng-href="{{partner.body}}"><img class="partner-logo" ng-src="{{partner.imageUrl}}" /></a>
                 </div>
-                <div class="name-logo">Naziv</div>
+                <div class="name-logo">{{partner.title}}</div>
             </div>
         </div>
     </div>
@@ -195,16 +192,16 @@
     </div>
 </div>
 <!--</div>-->
-<div class="partners-wrap" id="partners">
+<div class="partners-wrap" id="sponsors">
     <div class="container-fluid">
         <!--<div class="av-heading">Sponzori</div>-->
         <div class="row row-centered">
             <div class="col-md-1 col-sm-1 col-xs-2"></div>
-            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="partner in partners">
+            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="sponsor in sponsors">
                 <div class="partner-logo-wrap">
-                    <img class="partner-logo" ng-src="{{partner}}" />
+                    <a ng-href="{{sponsor.body}}"><img class="partner-logo" ng-src="{{sponsor.imageUrl}}" /></a>
                 </div>
-                <div class="name-logo">Naziv</div>
+                <div class="name-logo">{{sponsor.title}}</div>
             </div>
         </div>
     </div>
@@ -228,33 +225,43 @@
     </div>-->
     <div class="contact-wrap-overlay"></div>
     <div class="container">
-        <div class="row equal contact-form-style">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Ime:</label>
-                    <input ng-model="contactEmail.Name" type="text" class="form-control" placeholder="Ime">
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input ng-model="contactEmail.Email" type="email" class="form-control" placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <label>Telefon:</label>
-                    <input ng-model="contactEmail.Phone" type="text" class="form-control" placeholder="Telefon">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Poruka</label>
-                    <textarea ng-model="contactEmail.Body" class="form-control" id="contact-msg" placeholder="Sadržaj poruke"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row row-centered">
-
-            <div class="col-md-12 text-right">
-                <button class="rectangle-btn" id="contact-submit-btn" >Pošalji</button>
-
+        <div class="row">
+            <div class="col-md-12">
+                <form name="contactForm" novalidate>
+                    <div class="row">
+                        <div class="col-md-12" ng-show="contactForm.$submitted">
+                            <div class="alert alert-danger" role="alert" ng-show="contactForm.name.$error.required || contactForm.email.$error.required || contactForm.phone.$error.required || contactForm.body.$error.required">Popunite sva polja</div>
+                        </div>
+                    </div>
+                    <div class="row equal contact-form-style">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Ime:</label>
+                                
+                                <input ng-model="contactEmail.Name" name="name" type="text" class="form-control" placeholder="Ime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input ng-model="contactEmail.Email" name="email" type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefon:</label>
+                                <input ng-model="contactEmail.Phone" name="phone" type="text" class="form-control" placeholder="Telefon" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Poruka</label>
+                                <textarea ng-model="contactEmail.Body" name="body" class="form-control" id="contact-msg" placeholder="Sadržaj poruke" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-centered">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="rectangle-btn" id="contact-submit-btn" ng-click="sendContactEmail(contactForm)">Pošalji</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -265,8 +272,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>Ars Vivendi</h3>
-                <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</span>
+                <h3>{{aboutUs.title}}</h3>
+                <span ng-bind-html="aboutUs.body"></span>
             </div>
             <div class="col-md-2">
                 <h3>Pratite Nas</h3>
@@ -288,11 +295,8 @@
                 </ul>
             </div>
             <div class="col-md-4">
-                <h3>Kontakt Info</h3>
-                <div>Lorem Ipsum is simply dummy text</div>
-                <div>Lorem Ipsum is simply dummy text</div>
-                <div>Lorem Ipsum is simply dummy text</div>
-                <div>Lorem Ipsum is simply dummy text</div>
+                <h3>{{contactInfo.title}}</h3>
+                <div ng-bind-html="contactInfo.body"></div>
             </div>
         </div>
     </div>
