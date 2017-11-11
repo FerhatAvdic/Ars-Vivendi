@@ -186,6 +186,7 @@
             dataService.list("discounts", function (res) {
                 if (res.status === 200) {
                     $scope.discounts = res.data
+                    if ($scope.discounts.length===0) return;
                     $scope.chunkedDiscounts = chunk($scope.discounts, 3);
                     $scope.intervalOfDiscountSlide(0, 8000);
                     $scope.intervalOfDiscountSlide(1, 7500);
@@ -224,7 +225,7 @@
                 }
             });
         };
-        //$scope.listComments();
+        $scope.listComments();
 
         /////////////
 
@@ -253,6 +254,14 @@
                 if (response.status === 200) {
                     $scope.upcoming = response.data
                     $scope.upcoming.forEach(getTimeRemaining);
+                    //Function used to sort in controller, orderby in ng repeat doesnt work as expected
+                    $scope.upcoming.sort(function (a, b) {
+                        var aDate = a.startDate.substring(3, 5) + "/" + a.startDate.substring(0, 2) + "/" + a.startDate.substring(6);
+                        var bDate = b.startDate.substring(3, 5) + "/" + b.startDate.substring(0, 2) + "/" + b.startDate.substring(6);
+                        a.date = new Date(aDate);
+                        b.date = new Date(bDate);
+                        return a.date > b.date ? 1 : a.date < b.date ? -1 : 0;
+                    });
                     console.log("Upcoming:", $scope.upcoming);
                     $scope.startIntervalSlideUpcoming(6000);
                     //$scope.intervalOfUpcomingDeadline(1000);

@@ -41,7 +41,7 @@
     <div class="container">
         <!--<div class="av-heading">Pođi s nama</div>-->
         <div class="row row-centered">
-            <div class="col-md-4 col-sm-4 activity-box" ng-repeat="service in services">
+            <div class="col-md-4 col-sm-4 activity-box col-centered" ng-repeat="service in services">
                 <div class="activity-icon">
                     <img class="activity-icon-img"ng-src="{{service.imageUrl}}" />
                 </div>
@@ -72,6 +72,7 @@
                     <div class="upcoming-slide-btns">
                         <div class="row">
                             <div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" id="view-upcoming-btn" ng-click="goToEvent(event.id)">Pregled</button></div>
+                            <div class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-5 col-xs-12"><a ng-href="#!/events/category/{{event.eventCategory}}" class="rectangle-btn rectangle-btn-outline-light a-btn" id="view-upcoming-btn">Slični Događaji</a></div>
                             <!--<div class="col-md-3 col-sm-5 col-xs-12"><button class="rectangle-btn rectangle-btn-outline-light" ng-click="goToEvent(event.id)">Prijava</button></div>-->
                             <!--<div class="col-md-3 col-md-offset-1 col-sm-5 col-sm-offset-2 col-xs-12"><button class="rectangle-btn material-shadow" id="view-upcoming-btn" ng-style="{'background-color': event.categoryColor}" ng-click="goToEvent(event.id)">Pregled</button></div>-->
                         </div>
@@ -160,8 +161,7 @@
     <div class="container-fluid">
         <!--<div class="av-heading">Partneri</div>-->
         <div class="row row-centered">
-            <div class="col-md-1 col-sm-1 col-xs-2"></div>
-            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="partner in partners">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-centered" ng-repeat="partner in partners">
                 <div class="partner-logo-wrap">
                     <a ng-href="{{partner.body}}"><img class="partner-logo" ng-src="{{partner.imageUrl}}" /></a>
                 </div>
@@ -177,7 +177,7 @@
 <div class="gallery-wrap" id="home-gallery">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-sm-4" ng-repeat="item in gallery">
+            <div class="col-md-3 col-sm-4" ng-repeat="item in gallery | orderBy: '-startDate'">
                 <div class="gallery-item material-shadow" ng-click="goToEvent(item.id)">
                     <div class="gallery-item-bg" ng-style="{'background-image': 'url(' + item.imagePath + ')'}"></div>
                     <div class="gallery-item-label" ng-style="{'background-color': item.categoryColor}">
@@ -189,6 +189,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a ng-href="#!/events" class="rectangle-btn rectangle-btn-outline-light a-btn" style="margin-top:15px;">Više</a>
+            </div>
+        </div>
     </div>
 </div>
 <!--</div>-->
@@ -196,8 +201,8 @@
     <div class="container-fluid">
         <!--<div class="av-heading">Sponzori</div>-->
         <div class="row row-centered">
-            <div class="col-md-1 col-sm-1 col-xs-2"></div>
-            <div class="col-md-2 col-sm-2 col-xs-4" ng-repeat="sponsor in sponsors">
+            <!--<div class="col-md-1 col-sm-1 col-xs-2"></div>-->
+            <div class="col-md-2 col-sm-2 col-xs-4 col-centered" ng-repeat="sponsor in sponsors">
                 <div class="partner-logo-wrap">
                     <a ng-href="{{sponsor.body}}"><img class="partner-logo" ng-src="{{sponsor.imageUrl}}" /></a>
                 </div>

@@ -6,6 +6,15 @@
         $scope.dateOfBirth = dataService.dates;
         $scope.countries = dataService.countries;
         $scope.selected = [];
+        $scope.filterModel = {
+            "properties": [],
+            "firstName": null,
+            "lastName": null,
+            "address": null,
+            "email": null,
+            "phone": null,
+            "byDebt":null
+        };
 
         $scope.toggleSelection = function (subCategory) {
             var idx = $scope.selected.indexOf(subCategory);
@@ -252,6 +261,46 @@
             else $scope.isCollapsed.index = false;
         };
 
+        $scope.filterByUpcomingEvent = {
+            "name": "event",
+            "value": null
+        };
+        $scope.filterByPastEvent = {
+            "name": "event",
+            "value": null
+        };
+        $scope.logme = function () {
+            console.log("filterByupcomingEvent", $scope.filterByUpcomingEvent);
+            $scope.filterByPastEvent = {
+                "name": "event",
+                "value": null
+            };
+        };
+        $scope.logme2 = function () {
+            $scope.filterByUpcomingEvent = {
+                "name": "event",
+                "value": null
+            };
+            console.log("filterBypastEvent", $scope.filterByPastEvent);
+        };
+        $scope.getUpcoming = function () {
+            dataService.list("events/future", function (response) {
+                if (response.status === 200) {
+                    $scope.upcoming = response.data
+                    //Function used to sort in controller, orderby in ng repeat doesnt work as expected
+                    $scope.upcoming.sort(function (a, b) {
+                        return a.startDate > b.startDate ? 1 : a.startDate < b.startDate ? -1 : 0;
+                    });
+                    console.log("Upcoming:", $scope.upcoming);
+                }
+                else {
+                    toastr.error("Greška prilikom pribavljanja budućih događaja");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        $scope.getUpcoming();
+
         $scope.columnFilters = {};
         $scope.updateInterests = function (propertyName) {
             if ("undefined" === typeof $scope.columnFilters.interests)
@@ -263,6 +312,38 @@
                 if (angular.equals($scope.columnFilters.interests, {}))
                     delete $scope.columnFilters.interests;
         }
+
+        $scope.selectedChars = [];
+        $scope.toggleCharacteristic = function (c) {
+            var index = $scope.filterModel.properties.findIndex(function (item) { return item.value === c; });
+            //console.log("c", c, "i", index);
+            if (index<0) {
+                $scope.filterModel.properties.push({ "name": "characteristic", "value": c });
+            }
+            else {
+                $scope.filterModel.properties.splice(index, 1);
+            }
+            console.log("selChars", $scope.filterModel.properties);
+        };
+
+        $scope.applyFilters = function () {
+            $scope.filteringMembers = true;
+            if ($scope.filterByUpcomingEvent.value !== null) $scope.filterModel.properties.push($scope.filterByUpcomingEvent);
+            if ($scope.filterByPastEvent.value !== null) $scope.filterModel.properties.push($scope.filterByPastEvent);
+            dataService.create("users/filter", $scope.filterModel, function (response) {
+                if (response.status === 200) {
+                    $scope.filteringMembers = false;
+                    $scope.members = response.data;
+                    $scope.membersTotal = response.data.length;
+                    console.log("Members;");
+                    console.log($scope.members);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom filtriranja korisnika");
+                }
+            });
+        };
 
         //EVENTS
 
@@ -279,6 +360,7 @@
                 }
             });
         };
+        $scope.listEvents();
 
         $scope.prepareEmail = function () {
             $scope.showCheckboxes = true;
@@ -381,7 +463,7 @@
                     $scope.subCategories = response.data;
                     $scope.subCategoriesLoading = false;
                     console.log("ALL INTERESTS");
-                    console.log($scope.allInterests);
+                    
                 }
                 else {
                     console.log("ERROR: ", response);

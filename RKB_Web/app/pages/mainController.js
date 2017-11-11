@@ -62,7 +62,7 @@
                     else if ($rootScope.userRole === "Admin")
                     {
                         $rootScope.menuItems = $rootScope.adminItems;
-                        //$rootScope.menuItems.push({ link: "#!/profile/"+authenticationService.authentication.userName, text: "Profil" });
+                        $rootScope.menuItems.push({ link: "#!/profile/"+authenticationService.authentication.userName, text: "Profil" });
                     }
                     else
                         $rootScope.menuItems = $rootScope.noUserItems;

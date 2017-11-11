@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="event in avevents | orderBy:'-date' | filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
+                    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="event in avevents | orderBy:'-startDate' | filter:{eventCategory:typeFilter, eventName:titleFilter, location:locationFilter, active:activeFilter}">
                         <div class="event-card material-shadow">
                             <div class="dropdown event-card-options" ng-show="userRole === 'Admin'">
                                 <div data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true" style="text-shadow:1px 1px 0 #333;"></i></div>

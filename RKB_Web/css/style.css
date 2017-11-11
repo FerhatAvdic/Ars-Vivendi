@@ -513,6 +513,10 @@ ul {
     background:#424242;
     color: white;
 }
+.a-btn{
+    display: inline-block;
+    line-height: 47px;
+}
 
 #slide-left{
     position: absolute;
@@ -644,14 +648,13 @@ ul {
     margin: 0 auto;
     font-size: 32px;
     color: #424242;
-    line-height: 85px;
+    /*line-height: 85px;*/
     overflow:hidden;
 }
 .activity-icon-img{
-    max-width: 120px;
-    max-height: 120px;
-    object-position:50% 50%;
-    object-fit: cover;
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
 }
 .activity-title{
     padding: 15px 0;
@@ -1388,11 +1391,11 @@ ul {
 
 /*MEMBERs*/
 .member-filters{
-  height:calc(100% - 125px);
+  height: 100%;
   width:0;
   position:fixed;
-  z-index:1;
-  top:125px;
+  z-index:1000;
+  top:0;
   left:0;
   background: white;
   overflow-x:hidden;
