@@ -7,7 +7,7 @@
         $scope.countries = dataService.countries;
         $scope.selected = [];
         $scope.filterModel = {
-            "properties": [],
+            "properties": [{ name: "group", value: null }, {name:"event",value:null}],
             "firstName": null,
             "lastName": null,
             "address": null,
@@ -41,6 +41,9 @@
                 if (day > 28) dayError = true;
         };
         $scope.filterActive = false;
+        $scope.toggleFilterBar = function () {
+            $scope.filterActive = !$scope.filterActive;
+        };
         var authenticateAdmin = function (){
             if ($rootScope.userRole === "Admin") return;
             else {
@@ -67,13 +70,265 @@
         $scope.initNewUserList = function () {
             $scope.newUserList = {
                 "id": 0,
-                "userIds": null,
+                "userIds": [],
                 "groupId": null
             };
             $scope.members.forEach(function (member, index, array) {
                 member.checked = undefined;
             });
         };
+
+        $scope.initNewGroup = function () {
+            $scope.newGroup = {
+                "id": 0,
+                "groupName": null,
+                "eventId": null
+            };
+        };
+        $scope.startNewGroup = function () {
+            $scope.initNewGroup();
+            $scope.newGroupActive = true;
+            $scope.showCheckboxes = true;
+            $scope.initNewUserList();
+        };
+        $scope.cancelNewGroup = function () {
+            $scope.initNewGroup();
+            $scope.newGroupActive = false;
+            $scope.showCheckboxes = false;
+            $scope.selectedUsers = [];
+        };
+        $scope.selectedUsers = [];
+        $scope.updateSelected = function (user) {
+            if (user.checked) {
+                $scope.selectedUsers.push(user);
+            } else {
+                if ($scope.newGroupActive) {
+                    var toDel = $scope.selectedUsers.indexOf(user);
+                }
+                if ($scope.groupManagementActive) {
+                    var toDel = $scope.selectedUsers.findIndex(function (member) { return (member.firstName === user.firstName && member.lastName === user.lastName) });
+                }
+                $scope.selectedUsers.splice(toDel, 1);
+            }
+            console.log("list of selected", $scope.selectedUsers);
+        };
+        $scope.removeFromSelectedUsers = function (user) {
+            var toDel = $scope.selectedUsers.indexOf(user);
+            $scope.selectedUsers.splice(toDel, 1);
+            if($scope.newGroupActive)
+                var toUncheck = $scope.members.findIndex(function (member) { return member.id === user.id });
+            if ($scope.groupManagementActive)
+                var toUncheck = $scope.members.findIndex(function (member) { return (member.firstName === user.firstName && member.lastName === user.lastName) });
+            if(toUncheck!==-1)
+                $scope.members[toUncheck].checked = false;
+        };
+
+        $scope.createGroup = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
+            dataService.create("usereventgroups", $scope.newGroup, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Grupa napravljena!");
+                    var newGroupName = $scope.newGroup.groupName;
+                    //Backend doesnt return group id so we need to get it from list
+                    dataService.list("usereventgroups", function (response) {
+                        if (response.status === 200) {
+                            $scope.allGroups = response.data;
+                            console.log("kreirana grupa unutar allgroups", newGroupName);
+                            var newlyCreatedGroup = $scope.allGroups.find(function (group) {return group.groupName === newGroupName });
+                            $scope.newUserList.groupId = newlyCreatedGroup.id;
+                            $scope.updateGroup();
+                        }
+                        else {
+                            console.log("ERROR: ", response);
+                            toastr.error("Greška prilikom pribavljanja grupa");
+                        }
+                    });
+                    //toastr.success("Grupa napravljena!");
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pravljenja grupe");
+                }
+                form.$setPristine();
+                form.$setUntouched();
+                $scope.cancelNewGroup();
+            });
+        };
+        
+
+        var removeMember = function (userID) {
+            dataService.remove("usergroups", userID, function (response) {
+                if (response.status === 200) {
+                    console.log("Deleted");
+                }
+                else {
+                    $scope.errorRemovingMember = true;
+                    toastr.error("Greška prilikom brisanja člana");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
+        var addMember = function (userID) {
+            var model = {
+                "id": 0,
+                "userIds": [userID],
+                "groupId": $scope.newUserList.groupId
+            };
+            dataService.create("usergroups", model, function (response) {
+                if (response.status === 200) {
+                    console.log("Created");
+                }
+                else {
+                    $scope.errorAddingMember = true;
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom dodavanja člana");
+                }
+            });
+        };
+
+        $scope.updateGroup = function () {
+            if ($scope.newUserList.groupId === null) {
+                toastr.error("Odaberite grupu");
+                return;
+            }
+            var exists = false;
+            for (var i = 0; i < $scope.selectedUsers.length; i++) {
+                exists = false;
+                for (var j = 0; j < $scope.newUserList.userIds.length; j++) {
+                    if ($scope.selectedUsers[i].id === $scope.newUserList.userIds[j].userId) {
+                        if ($scope.selectedUsers[i].checked === false) {
+                            removeMember($scope.newUserList.userIds[j].id);
+                            break;
+                        } else {
+                            exists = true;
+                            break;
+                        }
+                    }
+                }
+                if ($scope.selectedUsers[i].checked === true && exists === false) {
+                    addMember($scope.selectedUsers[i].userName);
+                }
+            }
+            if ($scope.errorAddingMember)
+                toastr.error("Greška prilikom dodavanja člana");
+            if ($scope.errorRemovingMember)
+                toastr.error("Greška prilikom brisanja člana");
+            if (!$scope.errorAddingMember || !$scope.errorRemovingMember) {
+                toastr.success("Uspješno ažurirani članovi!");
+            }
+            $scope.toggleAllModel = false;
+        };
+
+        $scope.updateEditingGroup = function (form) {
+            //if (form.$invalid) {
+            //    console.log('forma', form);
+            //    toastr.error("Imate grešku pri unosu");
+            //    return;
+            //}
+            if ($scope.newUserList.groupId === null) {
+                toastr.error("Odaberite grupu");
+                return;
+            }
+            //Remove all users from group that are not in selectedUsers list
+            $scope.newUserList.userIds.forEach(function (groupUser) {
+                var index = $scope.selectedUsers.findIndex(function (selectedUser) {
+                    return selectedUser.firstName === groupUser.firstName &&
+                            selectedUser.lastName === groupUser.lastName
+                });
+                if (index === -1) removeMember(groupUser.id);
+            });
+            //Add all users to group that are newely selected
+            $scope.selectedUsers.forEach(function (selectedUser) {
+                var index = $scope.newUserList.userIds.findIndex(function (groupUser) {
+                    return selectedUser.firstName === groupUser.firstName &&
+                            selectedUser.lastName === groupUser.lastName
+                });
+                if (index === -1) addMember(selectedUser.userName);
+            });
+            if ($scope.errorAddingMember)
+                toastr.error("Greška prilikom dodavanja člana");
+            if ($scope.errorRemovingMember)
+                toastr.error("Greška prilikom brisanja člana");
+            if (!$scope.errorAddingMember || !$scope.errorRemovingMember) {
+                toastr.success("Uspješno ažurirani članovi!");
+            }
+            $scope.initNewUserList();
+        };
+
+        $scope.listGroups = function () {
+            dataService.list("usereventgroups", function (response) {
+                if (response.status === 200) {
+                    $scope.allGroups = response.data;
+                    console.log("grupe", $scope.allGroups);
+                }
+                else {
+                    console.log("ERROR: ", response);
+                    toastr.error("Greška prilikom pribavljanja grupa");
+                }
+            });
+        };
+        $scope.listGroups();
+
+        $scope.listGroupUsers = function (groupId) {
+            if (groupId)
+                dataService.read("usergroups", groupId, function (response) {
+                    if (response.status === 200) {
+                        $scope.newUserList.userIds = response.data;
+                        console.log("Group users", $scope.newUserList);
+
+                        $scope.members.forEach(function (member) {
+                            member.checked = false;
+                        });
+                        $scope.members.forEach(function (member) {
+                            $scope.newUserList.userIds.forEach(function (selectedUser) {
+                                if (member.firstName === selectedUser.firstName && member.lastName === selectedUser.lastName)
+                                    member.checked = true;
+                            });
+                        });
+                        $scope.selectedUsers = [];
+                        $scope.newUserList.userIds.forEach(function (user) {
+                            $scope.selectedUsers.push(user);
+                        });
+                    }
+                    else {
+                        console.log("ERROR: ", response);
+                        toastr.error("Greška prilikom pribavljanja članova grupe");
+                    }
+                });
+            else
+                $scope.initNewUserList();
+        };
+
+        $scope.groupManagementActive = false;
+        $scope.startGroupManagement = function () {
+            $scope.groupManagementActive = true;
+            $scope.showCheckboxes = true;
+            $scope.initNewUserList();
+        };
+        $scope.cancelGroupManagement = function () {
+            $scope.groupManagementActive = false;
+            $scope.showCheckboxes = false;
+            $scope.initNewUserList();
+        };
+
+        $scope.deleteGroup = function () {
+            dataService.remove("usereventgroups", $scope.newUserList.groupId, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno obrisana grupa!");
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja grupe");
+                    console.log("ERROR: ", response);
+                }
+                $scope.listGroups();
+                $scope.initNewUserList();
+            });
+        };
+
         /*SET FOR HTTP*/
         $scope.editingMember = null;
         $scope.setEditMember = function (userName) {
@@ -260,7 +515,10 @@
             if (!$scope.isCollapsed.index || $scope.isCollapsed.index === false) $scope.isCollapsed.index = true;
             else $scope.isCollapsed.index = false;
         };
-
+        $scope.filterByGroup = {
+            "name": "group",
+            "value": null
+        };
         $scope.filterByUpcomingEvent = {
             "name": "event",
             "value": null
@@ -328,13 +586,36 @@
 
         $scope.applyFilters = function () {
             $scope.filteringMembers = true;
-            if ($scope.filterByUpcomingEvent.value !== null) $scope.filterModel.properties.push($scope.filterByUpcomingEvent);
-            if ($scope.filterByPastEvent.value !== null) $scope.filterModel.properties.push($scope.filterByPastEvent);
+            var filteredByEvent = false;
+            if ($scope.filterByGroup.value)
+                $scope.filterModel.properties[0].value = $scope.filterByGroup.value;
+
+            if ($scope.filterByUpcomingEvent.value) $scope.filterModel.properties[1].value = $scope.filterByUpcomingEvent.value;
+            if ($scope.filterByPastEvent.value) $scope.filterModel.properties[1].value = $scope.filterByPastEvent.value;
+            if (!$scope.filterByUpcomingEvent.value && !$scope.filterByPastEvent.value)
+                $scope.filterModel.properties[1].value = null;
+            //Apply filters
+            console.log("applied filter:", $scope.filterModel);
             dataService.create("users/filter", $scope.filterModel, function (response) {
                 if (response.status === 200) {
                     $scope.filteringMembers = false;
                     $scope.members = response.data;
                     $scope.membersTotal = response.data.length;
+                    if ($scope.newGroupActive || $scope.groupManagementActive) {
+                        $scope.members.forEach(function (member) {
+                            member.checked = false;
+                        });
+                        $scope.members.forEach(function (member) {
+                            $scope.selectedUsers.forEach(function (selectedUser) {
+                                if($scope.newGroupActive)
+                                    if (member.id === selectedUser.id)
+                                        member.checked = true;
+                                if($scope.groupManagementActive)
+                                    if (member.firstName === selectedUser.firstName && member.lastName === selectedUser.lastName)
+                                        member.checked = true;
+                            });
+                        });
+                    }
                     console.log("Members;");
                     console.log($scope.members);
                 }
@@ -362,54 +643,32 @@
         };
         $scope.listEvents();
 
+        $scope.prepareEmailActive = false;
         $scope.prepareEmail = function () {
             $scope.showCheckboxes = true;
-            $scope.listEvents();
-            $scope.members.forEach(function (member) {
-                member.checked = false;
-            });
+            $scope.prepareEmailActive = true;
+            $scope.listGroups();
         };
         $scope.cancelPrepareEmail = function () {
             $scope.initNewUserList();
-            $scope.selectedEventID = null;
             $scope.showCheckboxes = false;
+            $scope.prepareEmailActive = false;
         };
 
-        $scope.listGroups = function (eventID) {
-            dataService.read("usereventgroups", eventID, function (response) {
-                if (response.status === 200) {
-                    $scope.eventGroups = response.data;
-                    console.log($scope.eventGroups);
-                }
-                else {
-                    console.log("ERROR: ", response);
-                    toastr.error("Greška prilikom pribavljanja grupa");
-                }
-            });
-        };
+        //$scope.listGroups = function (eventID) {
+        //    dataService.read("usereventgroups", eventID, function (response) {
+        //        if (response.status === 200) {
+        //            $scope.eventGroups = response.data;
+        //            console.log($scope.eventGroups);
+        //        }
+        //        else {
+        //            console.log("ERROR: ", response);
+        //            toastr.error("Greška prilikom pribavljanja grupa");
+        //        }
+        //    });
+        //};
 
-        $scope.listGroupUsers = function (groupId) {
-            dataService.read("usergroups", groupId, function (response) {
-                if (response.status === 200) {
-                    $scope.newUserList.userIds = response.data;
-                    console.log($scope.newUserList.userIds);
-
-                    $scope.members.forEach(function (member) {
-                        member.checked = false;
-                    });
-                    $scope.members.forEach(function (member) {
-                        $scope.newUserList.userIds.forEach(function (selectedUser) {
-                            if (member.firstName === selectedUser.firstName && member.lastName === selectedUser.lastName)
-                                member.checked = true;
-                        });
-                    });
-                }
-                else {
-                    console.log("ERROR: ", response);
-                    toastr.error("Greška prilikom pribavljanja članova grupe");
-                }
-            });
-        };
+        
 
         $scope.getCurrentEvent = function () {
             dataService.read("events", $scope.selectedEventID, function (response) {
@@ -479,7 +738,7 @@
                 "emailContent": $scope.emailContent,
                 "usernames": []
             };
-            $scope.members.forEach(function (member, index, array) {
+            $scope.selectedUsers.forEach(function (member, index, array) {
                 if (member.checked===true) email.usernames.push(member.userName);
             });
             console.log(email);
