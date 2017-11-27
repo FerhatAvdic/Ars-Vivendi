@@ -16,15 +16,35 @@
                         </div>
                         <div class="row" style="margin: 25px;">
                             <div class="col-md-10 col-md-offset-1">
+                                <form name="pageTitleForm">
+                                    <div class="form-group">
+                                        <label>{{pageTitle.title}}</label>
+                                        <div class="row">
+                                            <div class="col-md-11"><input type="text" class="form-control" name="pageTitleBody" ng-model="pageTitle.body" required></div>
+                                            <div class="col-md-1"><button type="submit" class="btn btn-primary pull-right" ng-click="updateItem(pageTitle, pageTitleForm)">Spasi</button></div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form name="pageAboutForm">
+                                    <div class="form-group">
+                                        <label>{{pageAbout.title}}</label>
+                                        <div class="row">
+                                            <div class="col-md-11"><text-angular ng-model="pageAbout.body" name="pageAboutBody" required></text-angular></div>
+                                            <div class="col-md-1"><button type="submit" class="btn btn-primary pull-right" ng-click="updateItem(pageAbout, pageAboutForm)">Spasi</button></div>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="form-group" ng-repeat="item in list">
                                     <form name="staticInfoForm">
                                         <label>{{item.title}}</label>
                                         <div class="row">
-                                            <div class="col-md-11"><textarea class="form-control" name="staticInfo" ng-model="item.body" required></textarea></div>
+                                            <div class="col-md-11"><textarea class="form-control" name="staticInfo" ng-model="item.body" required rows="5"></textarea></div>
                                             <div class="col-md-1"><button type="submit" class="btn btn-primary pull-right" ng-click="updateItem(item, staticInfoForm)">Spasi</button></div>
                                         </div>
                                     </form>
                                 </div>
+                                
+                                
                             </div>
                         </div>
                     </div>

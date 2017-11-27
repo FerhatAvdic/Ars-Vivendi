@@ -6,6 +6,7 @@
         $scope.dateOfBirth = dataService.dates;
         $scope.countries = dataService.countries;
         $scope.selected = [];
+        $scope.phoneRegex = /\+(385|386|387|381)\d{8,}/;
         $scope.filterModel = {
             "properties": [{ name: "group", value: null }, {name:"event",value:null}],
             "firstName": null,
@@ -14,6 +15,31 @@
             "email": null,
             "phone": null,
             "byDebt":null
+        };
+
+        $scope.resetFilters = function () {
+            $scope.filterModel.properties = [];
+            $scope.selected = [];
+            $scope.filterByUpcomingEvent = {
+                "name": "event",
+                "value": null
+            };
+            $scope.filterByPastEvent = {
+                "name": "event",
+                "value": null
+            };
+            $scope.subCategories.forEach(function (c) {
+                c.checked = false;
+            });
+            $scope.filterModel = {
+                "properties": [{ name: "group", value: null }, { name: "event", value: null }],
+                "firstName": null,
+                "lastName": null,
+                "address": null,
+                "email": null,
+                "phone": null,
+                "byDebt": null
+            };
         };
 
         $scope.toggleSelection = function (subCategory) {
@@ -90,13 +116,17 @@
             $scope.newGroupActive = true;
             $scope.showCheckboxes = true;
             $scope.initNewUserList();
+            $scope.selectedUsers = [];
+            $scope.toggleListCheckboxes.checked = false;
         };
         $scope.cancelNewGroup = function () {
             $scope.initNewGroup();
             $scope.newGroupActive = false;
             $scope.showCheckboxes = false;
             $scope.selectedUsers = [];
+            $scope.toggleListCheckboxes.checked = false;
         };
+        
         $scope.selectedUsers = [];
         $scope.updateSelected = function (user) {
             if (user.checked) {
@@ -122,6 +152,38 @@
             if(toUncheck!==-1)
                 $scope.members[toUncheck].checked = false;
         };
+        $scope.toggleListCheckboxes = { checked: false };
+        $scope.toggleAllFromList = function (c) {
+            console.log(c.checked);
+            if (c.checked) {
+                $scope.members.forEach(function (m) {
+                    if ($scope.newGroupActive)
+                        var toAdd = $scope.selectedUsers.findIndex(function (u) { return m.id === u.id });
+                    if ($scope.groupManagementActive)
+                        var toAdd = $scope.selectedUsers.findIndex(function (u) { return (m.firstName === u.firstName && m.lastName === u.lastName) });
+                    if (toAdd === -1)
+                    {
+                        $scope.selectedUsers.push(m);
+                        m.checked = true;
+                    }
+                        
+                });
+            } else {
+                $scope.members.forEach(function (m) {
+                    if ($scope.newGroupActive)
+                        var toRemove = $scope.selectedUsers.findIndex(function (u) { return m.id === u.id });
+                    if ($scope.groupManagementActive)
+                        var toRemove = $scope.selectedUsers.findIndex(function (u) { return (m.firstName === u.firstName && m.lastName === u.lastName) });
+                    if (toRemove !== -1)
+                    {
+                        $scope.selectedUsers.splice(toRemove, 1);
+                        m.checked = false;
+                    }
+                        
+                });
+            }
+        };
+
 
         $scope.createGroup = function (form) {
             if (form.$invalid) {
@@ -132,6 +194,7 @@
             dataService.create("usereventgroups", $scope.newGroup, function (response) {
                 if (response.status === 200) {
                     toastr.success("Grupa napravljena!");
+                    var selectedUsers = $scope.selectedUsers;
                     var newGroupName = $scope.newGroup.groupName;
                     //Backend doesnt return group id so we need to get it from list
                     dataService.list("usereventgroups", function (response) {
@@ -140,7 +203,14 @@
                             console.log("kreirana grupa unutar allgroups", newGroupName);
                             var newlyCreatedGroup = $scope.allGroups.find(function (group) {return group.groupName === newGroupName });
                             $scope.newUserList.groupId = newlyCreatedGroup.id;
-                            $scope.updateGroup();
+                            selectedUsers.forEach(function (selected) {
+                                addMember(selected.userName);
+                            });
+                            if ($scope.errorAddingMember)
+                                toastr.error("Greška prilikom dodavanja člana");
+                            if (!$scope.errorAddingMember || !$scope.errorRemovingMember) {
+                                toastr.success("Uspješno ažurirani članovi!");
+                            }
                         }
                         else {
                             console.log("ERROR: ", response);
@@ -190,37 +260,19 @@
             });
         };
 
-        $scope.updateGroup = function () {
+        $scope.fillCreatedGroup = function () {
             if ($scope.newUserList.groupId === null) {
                 toastr.error("Odaberite grupu");
                 return;
             }
-            var exists = false;
-            for (var i = 0; i < $scope.selectedUsers.length; i++) {
-                exists = false;
-                for (var j = 0; j < $scope.newUserList.userIds.length; j++) {
-                    if ($scope.selectedUsers[i].id === $scope.newUserList.userIds[j].userId) {
-                        if ($scope.selectedUsers[i].checked === false) {
-                            removeMember($scope.newUserList.userIds[j].id);
-                            break;
-                        } else {
-                            exists = true;
-                            break;
-                        }
-                    }
-                }
-                if ($scope.selectedUsers[i].checked === true && exists === false) {
-                    addMember($scope.selectedUsers[i].userName);
-                }
-            }
+            $scope.selectedUsers.forEach(function (selected) {
+                addMember(selected.userName);
+            });
             if ($scope.errorAddingMember)
                 toastr.error("Greška prilikom dodavanja člana");
-            if ($scope.errorRemovingMember)
-                toastr.error("Greška prilikom brisanja člana");
             if (!$scope.errorAddingMember || !$scope.errorRemovingMember) {
                 toastr.success("Uspješno ažurirani članovi!");
             }
-            $scope.toggleAllModel = false;
         };
 
         $scope.updateEditingGroup = function (form) {
@@ -257,6 +309,7 @@
                 toastr.success("Uspješno ažurirani članovi!");
             }
             $scope.initNewUserList();
+            $scope.toggleListCheckboxes.checked = false;
         };
 
         $scope.listGroups = function () {
@@ -300,7 +353,11 @@
                     }
                 });
             else
+            {
+                $scope.selectedUsers = [];
                 $scope.initNewUserList();
+                $scope.toggleListCheckboxes.checked = false;
+            }
         };
 
         $scope.groupManagementActive = false;
@@ -308,15 +365,26 @@
             $scope.groupManagementActive = true;
             $scope.showCheckboxes = true;
             $scope.initNewUserList();
+            $scope.selectedUsers = [];
+            $scope.toggleListCheckboxes.checked = false;
         };
         $scope.cancelGroupManagement = function () {
             $scope.groupManagementActive = false;
             $scope.showCheckboxes = false;
             $scope.initNewUserList();
+            $scope.selectedUsers = [];
+            $scope.toggleListCheckboxes.checked = false;
+        };
+
+        $scope.setDeletingGroup = function (groupId) {
+            $scope.deletingGroupId = groupId;
+        }
+        $scope.cancelDeleteGroup = function () {
+            $scope.deletingGroupId = null;
         };
 
         $scope.deleteGroup = function () {
-            dataService.remove("usereventgroups", $scope.newUserList.groupId, function (response) {
+            dataService.remove("usereventgroups", $scope.deletingGroupId, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno obrisana grupa!");
                 }
@@ -327,13 +395,15 @@
                 $scope.listGroups();
                 $scope.initNewUserList();
             });
+            $scope.toggleListCheckboxes.checked = false;
         };
 
         /*SET FOR HTTP*/
         $scope.editingMember = null;
         $scope.setEditMember = function (userName) {
             console.log(userName);
-            dataService.read("users", "?username=" + userName, function (response) {
+            //dataService.read("users", "?username=" + userName, function (response) {
+            dataService.read("users",  userName, function (response) {
                 if (response.status === 200) {
                     $scope.editingMember = response.data;
                 }
@@ -342,8 +412,10 @@
                 }
             });
         };
-        $scope.cancelEdit = function () {
+        $scope.cancelEdit = function (form) {
             $scope.editingMember = null;
+            form.$setPristine();
+            form.$setUntouched();
         };
         $scope.deletingMember = null;
         $scope.setDeleteMember = function (userName) {
@@ -435,18 +507,27 @@
                 $scope.listMembers();
             });
         };
-        $scope.updateMember = function () {
-            dataService.update("users", "?username=" + $scope.editingMember.userName, $scope.editingMember, function (response) {
+        $scope.updateMember = function (form) {
+            if (form.$invalid) {
+                toastr.error('Greška pri unosu');
+                return;
+            }
+            //dataService.update("users", "?username=" + $scope.editingMember.userName, $scope.editingMember, function (response) {
+            dataService.update("users", $scope.editingMember.userName, $scope.editingMember, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uspješno izmijenjen korisnik!");
-                    //console.log("UPDATED");
+                    //console.log("UPDATED"); 
+                    $scope.listMembers();
                 }
                 else {
                     toastr.error("Greška prilikom izmjene korisnika");
                     console.log("ERROR: ", response);
+                    $scope.listMembers();
                 }
-                $scope.listMembers();
             });
+            
+            $scope.cancelEdit(form);
+            $('#editMemberModal').modal('hide');
         };
         $scope.deleteMember = function () {
             dataService.remove("users", "?username=" + $scope.deletingMember.userName, function (response) {
@@ -501,6 +582,37 @@
             { "value": 100, "name": "100 Članova" }
         ];
         $scope.pageSize = $scope.pageSizeOptions[0].value;
+
+        //SEND EMAIL
+        $scope.applyEventDetails = function () {
+            dataService.read("events", $scope.eventEmail.id, function (response) {
+                if (response.status === 200) {
+                    $scope.currentEvent = response.data;
+                    $scope.currentEvent.trustedVideoLink = $sce.trustAsResourceUrl($scope.currentEvent.videoLink);
+                    console.log($scope.currentEvent);
+                    $scope.emailContent =
+                        $scope.emailContent +
+                        "<p><b>Naziv Događaja:</b> " + $scope.currentEvent.name + "</p>" +
+                        "<p><b>Lokacija:</b> " + $scope.currentEvent.location + "</p>" +
+                        "<p><b>Kategorija:</b> " + $scope.currentEvent.eventCategoryName + "</p>" +
+                        "<p><b>Registracije do:</b> " + $scope.currentEvent.registrationDeadline.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Početak:</b> " + $scope.currentEvent.startDate.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Kraj:</b> " + $scope.currentEvent.endDate.toString().substring(0, 10) + "</p>" +
+                        "<p><b>Valuta:</b> " + $scope.currentEvent.eventCurrency + "</p>" +
+                        "<p><b>Cijena za članove:</b> " + $scope.currentEvent.membersPrice + "</p>" +
+                        "<p><b>Cijena za goste:</b> " + $scope.currentEvent.nonMembersPrice + "</p>" +
+                        "<p><b>Nivo fizičke spreme:</b> " + $scope.currentEvent.applyCriteria + "</p>" +
+                        "<p><b>Link slike:</b> " + $scope.currentEvent.imagePath + "</p>" +
+                        "<p><b>Link videa:</b> " + $scope.currentEvent.videoLink + "</p>" +
+                        "<p><b>Opis događaja:</b> " + $scope.currentEvent.description + "</p>";
+                }
+                else {
+                    toastr.error("greška prilikom pribavljanja događaja");
+
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
 
         //FILTERS
         $scope.isCollapsed = [];
@@ -620,9 +732,11 @@
                     console.log($scope.members);
                 }
                 else {
+                    $scope.filteringMembers = false;
                     console.log("ERROR: ", response);
                     toastr.error("Greška prilikom filtriranja korisnika");
                 }
+                $scope.toggleListCheckboxes.checked = false;
             });
         };
 
@@ -648,11 +762,14 @@
             $scope.showCheckboxes = true;
             $scope.prepareEmailActive = true;
             $scope.listGroups();
+            $scope.toggleListCheckboxes.checked = false;
         };
         $scope.cancelPrepareEmail = function () {
             $scope.initNewUserList();
+            $scope.selectedUsers = [];
             $scope.showCheckboxes = false;
             $scope.prepareEmailActive = false;
+            $scope.toggleListCheckboxes.checked = false;
         };
 
         //$scope.listGroups = function (eventID) {

@@ -22,6 +22,19 @@
             dataService.list("missions", function (res) {
                 if (res.status === 200) {
                     $scope.list = res.data
+                    
+                    $scope.list.find(function (item) {
+                        if (item.title === 'Naziv Stranice') {
+                            $scope.pageTitle = item;
+                        }
+                        if (item.title === 'Stranica O Nama') {
+                            $scope.pageAbout = item;
+                        }
+                    });
+                    var pageTitleIndex = $scope.list.findIndex(function (item) { return item.title === 'Naziv Stranice' });
+                    $scope.list.splice(pageTitleIndex, 1);
+                    var pageAboutIndex = $scope.list.findIndex(function (item) { return item.title === 'Stranica O Nama' });
+                    $scope.list.splice(pageAboutIndex,1);
                     $scope.itemListLoading = false;
                 }
                 else {

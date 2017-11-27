@@ -144,6 +144,7 @@
     <Content Include="libs\angular-animate.min.js" />
     <Content Include="libs\angular-base64-upload.js" />
     <Content Include="libs\angular-base64-upload.min.js" />
+    <Content Include="libs\angular-jwt.min.js" />
     <Content Include="libs\angular-local-storage.min.js" />
     <Content Include="libs\angular-locale_bs-latn-ba.js" />
     <Content Include="libs\authComplete.js" />

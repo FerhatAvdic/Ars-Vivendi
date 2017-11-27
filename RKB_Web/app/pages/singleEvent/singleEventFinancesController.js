@@ -86,7 +86,12 @@
             $scope.newPayment.userEventId = application.id;
             $scope.currentApplication = angular.copy(application);
         };
-        $scope.addPayment = function () {
+        $scope.addPayment = function (form) {
+            if (form.$invalid) {
+                console.log('forma', form);
+                toastr.error("Imate grešku pri unosu");
+                return;
+            }
             dataService.create("usereventpayments", $scope.newPayment, function (response) {
                 if (response.status === 200) {
                     toastr.success("Uplata izvršena!");
@@ -95,9 +100,18 @@
                     console.log("ERROR: ", response);
                     toastr.error("Greška prilikom pribavljanja prijava");
                 }
+
                 $scope.initNewPayment();
+                form.$setPristine();
+                form.$setUntouched();
                 $scope.listEventApplications();
+                $('#addPaymentModal').modal('hide');
             });
+        };
+        $scope.cancelNewPayment = function (form) {
+            $scope.initNewPayment();
+            form.$setPristine();
+            form.$setUntouched();
         };
 
         $scope.listPayments = function (application) {

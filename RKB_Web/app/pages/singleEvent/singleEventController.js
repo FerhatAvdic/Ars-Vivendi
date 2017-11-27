@@ -228,6 +228,25 @@
                 $('#singleEventUploadModal').modal('hide');
             });
         };
+        $scope.deletingPhotoId = null;
+        $scope.setDeletePhoto = function (id) {
+            $scope.deletingPhotoId = id;
+        };
+        $scope.cancelDeletePhoto = function () {
+            $scope.deletingPhotoId = null;
+        };
+        $scope.deletePhoto = function () {
+            dataService.remove("usereventphotos", $scope.deletingPhotoId, function (response) {
+                if (response.status === 200) {
+                    toastr.success("Uspješno obrisana slika!");
+                    $scope.listPhotos();
+                }
+                else {
+                    toastr.error("Greška prilikom brisanja slike");
+                    console.log("ERROR: ", response);
+                }
+            });
+        };
 
         $scope.eventSignUpCard = {
             "id": 0,

@@ -88,9 +88,10 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Nova Uplata</h4>
             </div>
-            <div class="modal-body">
-                <!--<div style="margin: 15px;">-->
-                <form id="new-event-form">
+            <form id="new-event-form" name="newPaymentForm" novalidate>
+                <div class="modal-body">
+                    <!--<div style="margin: 15px;">-->
+
                     <div class="container-fluid">
                         <ul class="row">
                             <li class="col-md-12 form-group">
@@ -102,19 +103,23 @@
                             </li>
                             <li class="col-md-4 form-group">
                                 <label>Dogovorena cijena: </label>
-                                <input type='number' class="form-control" ng-model="currentApplication.eventPrice" disabled/>
+                                <input type='number' class="form-control" ng-model="currentApplication.eventPrice" disabled />
                             </li>
                             <li class="col-md-4 form-group">
                                 <label>Isplaćeno: </label>
-                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountPayed" disabled/>
+                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountPayed" disabled />
                             </li>
                             <li class="col-md-4 form-group">
                                 <label>Dug: </label>
-                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountOwe" disabled/>
+                                <input type='number' class="form-control" ng-model="currentApplication.totalAmountOwe" disabled />
                             </li>
                             <li class="col-md-12 form-group">
                                 <label>Iznos uplate: </label>
-                                <input type='number' class="form-control" ng-model="newPayment.amountPayed"/>
+                                <div ng-show="newPaymentForm.$submitted || newPaymentForm.amountPayed.$touched">
+                                    <div class="alert alert-danger" role="alert" ng-show="newPaymentForm.amountPayed.$error.required">Obavezno polje</div>
+                                    <!--<div class="alert alert-danger" role="alert" ng-show="newPaymentForm.amountPayed.$error.number">U polju su dozvoljene samo cifre</div>-->
+                                </div>
+                                <input type="number" class="form-control" name="amountPayed" ng-model="newPayment.amountPayed" required="">
                             </li>
                             <li class="col-md-12 form-group">
                                 <label>Bilješka: </label>
@@ -122,13 +127,13 @@
                             </li>
                         </ul>
                     </div>
-                </form>
-                <!--</div>-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addPayment()">Spasi</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="initNewPayment()">Zatvori</button>
-            </div>
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" ng-click="addPayment(newPaymentForm)">Spasi</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelNewPayment(newPaymentForm)">Zatvori</button>
+                </div>
+            </form>
         </div>
 
     </div>

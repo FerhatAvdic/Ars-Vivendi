@@ -10,7 +10,7 @@
                         <div class="member-filters-inner">
                             <div class="text-center">
                             <div ng-show="filteringMembers"><img src="img/spin.gif"/></div>
-                            <button class="btn btn-primary" style="margin-bottom: 20px;" ng-click="applyFilters()">Filteriši</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="filterActive=false;">Zatvori</button></div>
+                            <button class="btn btn-primary" style="margin-bottom: 20px;" ng-click="applyFilters()">Filteriši</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="resetFilters()">Resetuj filtere</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="filterActive=false;">Zatvori</button></div>
                             <div class="panel panel-default">
                                 <div class="members-filter-toggle" ng-click="isCollapsed.panel2 = !isCollapsed.panel2">Filteri po Kolonama</div>
                                 <div class="members-filter" uib-collapse="isCollapsed.panel2">
@@ -39,17 +39,25 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!--<div class="panel panel-default">
+                                <div class="members-filter-toggle">Filtriranje po dugu</div>
+                                <div class="members-filter">
+                                    <label class="radio-inline"><input type="radio" name="debtradio" ng-model="filterModel.byDebt" value="true">Dužni</label>
+                                    <label class="radio-inline"><input type="radio" name="debtradio" ng-model="filterModel.byDebt" value="false">Bez duga</label>
+                                </div>
+                            </div>-->
                             
                             <div class="panel panel-default">
                                 <div class="members-filter-toggle">Filteri po grupama i događajima</div>
                                 <div class="members-filter">
-                                        <div class="form-group">
+                                        <!--<div class="form-group">
                                             <label>Grupe:</label>
                                             <select class="form-control" ng-model="filterByGroup.value" ng-change="">
                                                 <option value="">---Bez filtera---</option>
                                                 <option ng-repeat="group in allGroups" ng-value="group.groupName">{{group.groupName}}</option>
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group">
                                             <label>Aktuelni događaji:</label>
                                             <select class="form-control" ng-model="filterByUpcomingEvent.value" ng-change="logme()">
@@ -58,7 +66,7 @@
                                             </select>
                                         </div>
                                     <div class="form-group">
-                                        <label>Prošli događaji:</label>
+                                        <label>Svi događaji:</label>
                                             <select class="form-control" ng-model="filterByPastEvent.value" ng-change="logme2()">
                                                 <option value="">---Bez filtera---</option>
                                                 <option ng-repeat="event in avevents" ng-value="event.eventName">{{event.eventName}} | {{event.startDate | date: 'dd-MMM-yyyy'}}</option>
@@ -79,14 +87,14 @@
                             </div>
                             <div class="text-center">
                                 <div ng-show="filteringMembers"><img src="img/spin.gif" /></div>
-                            <button class="btn btn-primary" style="margin-bottom: 20px;" ng-click="applyFilters()">Filteriši</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="filterActive=false;">Zatvori</button></div>
+                            <button class="btn btn-primary" style="margin-bottom: 20px;" ng-click="applyFilters()">Filteriši</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="resetFilters()">Resetuj filtere</button><button class="btn btn-default" style="margin-bottom: 20px;" ng-click="filterActive=false;">Zatvori</button></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-12">
                     <div class="box-members-list">
-                        <p class="members-table-title">Članovi</p>
+                        <p class="members-table-title">Korisnici</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="members-table-options text-right" ng-hide="showCheckboxes || newGroupActive || groupManagementActive">
@@ -94,7 +102,7 @@
                                     <button class="btn btn-primary" ng-click="prepareEmail()"><i class="fa fa-envelope-o" aria-hidden="true"></i> Priprema emaila</button>
                                     <button class="btn btn-primary" ng-click="startGroupManagement()"><i class="fa fa-users" aria-hidden="true"></i> Ažuriranje Grupa</button>
                                     <button class="btn btn-success" ng-click="startNewGroup()"><i class="fa fa-plus" aria-hidden="true"></i> Nova grupa</button>
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-o" aria-hidden="true"></i> Dodaj korisnika</button>
+                                    <!--<button class="btn btn-success" data-toggle="modal" data-target="#newMemberModal"><i class="fa fa-user-o" aria-hidden="true"></i> Dodaj korisnika</button>-->
                                 </div>
                                 <div class="members-table-options" ng-if="newGroupActive">
                                     <div class="row">
@@ -145,7 +153,7 @@
                                                     <div class="col-md-10 text-right">
                                                         <button type="button" class="btn btn-default" ng-click="cancelGroupManagement()">Odustani</button>
                                                         <button type="button" class="btn btn-default" ng-click="toggleFilterBar()"><i class="fa fa-filter" aria-hidden="true"></i> Filteri</button>
-                                                        <button type="button" ng-if="newUserList.groupId" class="btn btn-danger" ng-click="deleteGroup()">Obriši grupu</button>
+                                                        <button type="button" ng-if="newUserList.groupId" class="btn btn-danger" data-toggle="modal" data-target="#deleteGroupModal" ng-click="setDeletingGroup(newUserList.groupId)">Obriši grupu</button>
                                                         <button type="button" ng-if="newUserList.groupId" class="btn btn-primary" data-toggle="modal" data-target="#groupMembersModal" ng-click=""><i class="fa fa-user" aria-hidden="true"></i> Pregled</button>
                                                         <button type="submit" ng-if="newUserList.groupId" class="btn btn-primary" ng-click="updateEditingGroup(editGroupForm)">Spasi</button>
                                                     </div>
@@ -163,7 +171,7 @@
                                                 <option value="">---Odaberite grupu---</option>
                                                 <option ng-repeat="group in allGroups" ng-value="group.id">{{group.groupName}}</option>
                                             </select>
-                                            <button type="button" ng-if="newUserList.groupId" class="btn btn-primary" data-toggle="modal" data-target="#groupMembersModal" ng-click="" style="margin-bottom:3px"><i class="fa fa-user" aria-hidden="true"></i> Pregled</button>
+                                            <button type="button" ng-if="selectedUsers" class="btn btn-primary" data-toggle="modal" data-target="#groupMembersModal" ng-click="" style="margin-bottom:3px"><i class="fa fa-user" aria-hidden="true"></i> Pregled</button>
                                             <button class="btn btn-primary" style="margin-bottom:3px" data-toggle="modal" data-target="#emailModal">Napiši email</button>
                                         </div>
                                     </div>
@@ -178,7 +186,7 @@
                             <table class="table members-table">
                                 <thead>
                                     <tr>
-                                        <th ng-if="showCheckboxes"><input type="checkbox" /></th>
+                                        <th ng-if="showCheckboxes"><input type="checkbox" ng-model="toggleListCheckboxes.checked" ng-change="toggleAllFromList(toggleListCheckboxes)"/></th>
                                         <th>Profil</th>
                                         <th ng-repeat="heading in headings" ng-click="sortMembersBy(heading)">
                                             {{heading.name}} <i class="fa fa-sort" aria-hidden="true"></i>
@@ -354,15 +362,47 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title modal-title-padding">Izmijeni podatke člana: {{editingMember.userName}}</h4>
             </div>
-            <div class="add-member-form">
-                <div class="login-line"><p>Lični Podaci</p></div>
-                <input type="text" placeholder="Ime" ng-model="editingMember.firstName" />
-                <input type="text" placeholder="Prezime" ng-model="editingMember.lastName" />
-                <input type="text" placeholder="Email" ng-model="editingMember.email" />
-                <input type="text" placeholder="Telefon" ng-model="editingMember.phoneNumber" />
-                <input type="text" placeholder="Grad" ng-model="editingMember.address" />
-                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelEdit()">Izađi</button><button class="rectangle-btn login-btn-halfway modal-border" style="background: #3A7AD2;" data-dismiss="modal" ng-click="updateMember()">Potvrdi izmjene</button>
-            </div>
+            <form name="editMemberForm" novalidate>
+                <div class="av-form-line"><p>Lični Podaci</p></div>
+                <div class="av-form-group" focus-by-id="editMemberForm-firstName">
+                    <label>Ime: </label>
+                    <div class="av-form-error" ng-show="editMemberForm.$submitted || editMemberForm.firstName.$touched">
+                        <span ng-show="editMemberForm.firstName.$error.required">Obavezno polje</span>
+                    </div>
+                    <input type="text" name="firstName" class="av-form" ng-model="editingMember.firstName" required="" id="editMemberForm-firstName">
+                </div>
+                <div class="av-form-group" focus-by-id="editMemberForm-lastName">
+                    <label>Prezime: </label>
+                    <div class="av-form-error" ng-show="editMemberForm.$submitted || editMemberForm.lastName.$touched">
+                        <span ng-show="editMemberForm.lastName.$error.required">Obavezno polje</span>
+                    </div>
+                    <input type="text" name="lastName" class="av-form" ng-model="editingMember.lastName" required="" id="editMemberForm-lastName">
+                </div>
+                <div class="av-form-group" focus-by-id="editMemberForm-email">
+                    <label>Email: </label>
+                    <div class="av-form-error" ng-show="editMemberForm.$submitted || editMemberForm.email.$touched">
+                        <span ng-show="editMemberForm.email.$error.required">Obavezno polje</span>
+                        <span ng-show="editMemberForm.email.$error.email">Nepravilan email</span>
+                    </div>
+                    <input type="email" name="email" class="av-form" ng-model="editingMember.email" required="" id="editMemberForm-email">
+                </div>
+                <div class="av-form-group" focus-by-id="editMemberForm-phoneNumber">
+                    <label>Telefon: </label>
+                    <div class="av-form-error" ng-show="editMemberForm.$submitted || editMemberForm.phoneNumber.$touched">
+                        <span ng-show="editMemberForm.phoneNumber.$error.required">Obavezno polje</span>
+                        <span ng-show="editMemberForm.phoneNumber.$error.pattern">Mora početi sa +381,+385,+386 ili +387, ostatak minimalno 8 cifara</span>
+                    </div>
+                    <input type="text" name="phoneNumber" class="av-form" ng-model="editingMember.phoneNumber" required="" id="editMemberForm-phoneNumber" ng-pattern="phoneRegex">
+                </div>
+                <div class="av-form-group av-form-last" focus-by-id="editMemberForm-city">
+                    <label>Grad: </label>
+                    <div class="av-form-error" ng-show="editMemberForm.$submitted || editMemberForm.city.$touched">
+                        <span ng-show="editMemberForm.city.$error.required">Obavezno polje</span>
+                    </div>
+                    <input type="text" name="city" class="av-form" ng-model="editingMember.city" required="" id="editMemberForm-city">
+                </div>
+                <button class="rectangle-btn login-btn-halfway no-bg-btn" data-dismiss="modal" ng-click="cancelEdit(editMemberForm)">Izađi</button><button type="submit" class="rectangle-btn login-btn-halfway modal-border" style="background: #3A7AD2;" ng-click="updateMember(editMemberForm)">Potvrdi izmjene</button>
+            </form>
         </div>
     </div>
 </div>
@@ -391,6 +431,29 @@
 </div>
 
 
+<!--DELETE GROUP MODAL-->
+<div id="deleteGroupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Brisanje događaja</h4>
+            </div>
+            <div class="modal-body">
+                <p>Jeste li sigurni da želite obrisati grupu?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteGroup()">Izbriši događaj</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelDeleteGroup()">Zatvori</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <!--Email Modal-->
 <div id="emailModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
@@ -402,10 +465,27 @@
                 <h4 class="modal-title">Slanje emaila</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <button class="btn btn-default" ng-click="getCurrentEvent()">Ubaci sadržaj događaja</button>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Svi događaji:</label>
+                            <select class="form-control" ng-model="eventEmail.id" ng-change="logme2()">
+                                <option value="">---Bez filtera---</option>
+                                <option ng-repeat="event in avevents" ng-value="event.id">{{event.eventName}} | {{event.startDate | date: 'dd-MMM-yyyy'}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button class="btn btn-default pull-right" ng-click="applyEventDetails()" style="margin-top:25px">Ubaci sadržaj događaja</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group"><label>Naslov emaila:</label><input class="form-control" type="text" ng-model="emailSubject" /></div>
+                
+                
+                <div class="row">
+                    <div class="col-md-12"><div class="form-group"><label>Naslov emaila:</label><input class="form-control" type="text" ng-model="emailSubject" /></div></div>
+                </div>
 
                 <text-angular ng-model="emailContent"></text-angular>
             </div>

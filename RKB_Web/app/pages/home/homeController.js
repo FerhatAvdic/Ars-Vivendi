@@ -44,7 +44,7 @@
                 }
             });
         };
-        $scope.listEventCategories();
+        
 
         //WHY ARS VIVENDI
         //$scope.activityShowcase = [
@@ -75,7 +75,8 @@
                 }
             });
         };
-        $scope.listServices();
+        
+        
 
         //UPCOMING EVENTS SLIDER
         /*$scope.upcoming = [
@@ -119,7 +120,7 @@
                 }
             });
         };
-        $scope.listPartners();
+       
 
         //SPONSORS
         //$scope.sponsors = [
@@ -149,7 +150,7 @@
                 }
             });
         };
-        $scope.listSponsors();
+       
 
         //PAST EVENTS GALLERY
         /*$scope.gallery = [
@@ -162,7 +163,7 @@
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/div_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#02CB9E" },
             { eventName: "Lorem Ipsum is simply dummy text", eventImg: "./img/ski_slide.jpg", date: "05-Mart-2017", location: "location", labelColor: "#2BD0AB" }
         ];*/
-        $scope.gallery = [];
+        //$scope.gallery = [];
 
         //DISCOUNT SLIDES
         //$scope.discounts = [
@@ -200,7 +201,7 @@
                 }
             });
         };
-        $scope.listDiscounts();
+        
 
         // COMMENT SECTION
         $scope.recentComments = [
@@ -225,7 +226,7 @@
                 }
             });
         };
-        $scope.listComments();
+        
 
         /////////////
 
@@ -272,7 +273,14 @@
                 }
             });
         };
-        $scope.getUpcoming();
+        
+        $scope.calcUpcomingStyle = function (event) {
+            var style = {
+                "height": "calc(600px / " + $scope.upcoming.length + ")",
+                "background-color": event.categoryColor
+            }
+            return style;
+        };
 
         $scope.getPast = function () {
             dataService.list("events/past", function (response) {
@@ -286,7 +294,7 @@
                 }
             });
         };
-        $scope.getPast();
+        
 
         $scope.goToEvent = function (eventID) {
             $location.path('/events/' + eventID);
@@ -506,6 +514,12 @@
                 }
                 form.$setPristine();
                 form.$setUntouched();
+                $scope.contactEmail = {
+                    Name: null,
+                    Email: null,
+                    Phone: null,
+                    Body: null
+                };
             });
         }
         
@@ -540,6 +554,16 @@
                 }
             });
         };
+
+        // GET PAGE CONTENT
+        $scope.listEventCategories();
+        $scope.listServices();
+        $scope.listPartners();
+        $scope.listSponsors();
+        $scope.listDiscounts();
+        //$scope.listComments();
+        $scope.getUpcoming();
+        $scope.getPast();
         $scope.listStatic();
 
     }]);

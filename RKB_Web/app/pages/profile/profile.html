@@ -236,11 +236,10 @@
                                     <div class="row">
                                         <!--<div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">-->
                                             <div class="profile-interests-wrap">
-                                                <div class="profile-interest-options text-right">
-                                                    <!--ng-show="userRole === 'Admin'">-->
+                                                <!--<div class="profile-interest-options text-right">
                                                     <button ng-if="userRole === 'Admin'" data-toggle="modal" data-target="#newInterestCategoryModal" class="btn btn-primary">Nova kategorija</button>
                                                     <button ng-if="userRole === 'Admin'" data-toggle="modal" data-target="#newInterestModal" class="btn btn-primary">Nova karakteristika</button>
-                                                </div>
+                                                </div>-->
                                                 <div class="panel-group" id="accordion">
                                                     <div class="panel panel-default" ng-repeat="category in interestCategories">
                                                         <div class="panel-heading">
@@ -248,7 +247,7 @@
                                                                 <a data-toggle="collapse" data-parent="#accordion" ng-href="{{'#collapse' + $index}}" href="" target="_self">
                                                                     {{category.categoryName}}
                                                                 </a>
-                                                                <div class="pull-right" ng-if="userRole === 'Admin'">
+                                                                <!--<div class="pull-right" ng-if="userRole === 'Admin'">
                                                                     <a href="">
                                                                         <i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#newInterestModal" ng-click="initCategory(category)"></i>
                                                                     </a>
@@ -258,7 +257,7 @@
                                                                     <a href="">
                                                                         <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestCategoryModal" ng-click="setDeletingCategory(category)"></i>
                                                                     </a>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </div>
                                                         <div id="{{'collapse' + $index}}" class="panel-collapse collapse">
@@ -268,12 +267,12 @@
                                                                     <li ng-repeat="interest in allInterests">
                                                                         <div class="checkbox" ng-class="{'check-hover': userRole === 'Admin'}" ng-if="interest.categoryId===category.id" ng-mouseenter="enterInterest=true;" ng-mouseleave="enterInterest=false;">
                                                                             <label><input type="checkbox" ng-model="interest.checked">{{interest.name}}</label>
-                                                                            <a href="" class="pull-right" ng-show="enterInterest" ng-if="userRole === 'Admin'">
+                                                                            <!--<a href="" class="pull-right" ng-show="enterInterest" ng-if="userRole === 'Admin'">
                                                                                 <i class="fa fa-times" aria-hidden="true" data-toggle="modal" data-target="#deletingInterestModal" ng-click="setDeletingInterest(interest)"> </i>
                                                                             </a>
                                                                             <a href="" class="pull-right" style="margin-right: 5px;" ng-show="enterInterest" ng-if="userRole === 'Admin'">
                                                                                 <i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editingInterestModal" ng-click="setEditingInterest(interest)"> </i>
-                                                                            </a>
+                                                                            </a>-->
                                                                         </div>
                                                                     </li>
                                                                     <!--<li class="col-md-6 col-sm-6 category-list-item" ng-repeat="interest in interests">

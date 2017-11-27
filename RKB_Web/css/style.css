@@ -714,7 +714,7 @@ ul {
     background-size: cover;
 }
 .upcoming-content-wrap{
-    height: 607px;
+    height: 600px;
 }
 /*.upcoming-wrap.ng-hide-add, .upcoming-wrap.ng-hide-remove {
     display: block!important;
@@ -829,7 +829,11 @@ ul {
     /*display: inline-block;
     width: 20%;
     min-width: 200px;*/
-    padding: 22px;
+    /*height:60px;
+    padding: 10px 15px;*/
+    display:flex;
+    justify-content: center;
+    flex-direction:column;
     text-align: left;
     cursor: pointer;
     color: white;
@@ -853,10 +857,10 @@ ul {
 }
 .upcoming-label-selected:after{
     position:absolute;
-    top: calc(50% - 15px);
-    left: -15px;
-    width: 30px;
-    height: 30px;
+    top: calc(50% - 7px);
+    left: -7px;
+    width: 15px;
+    height: 15px;
     transform: rotate(45deg);
     background-color:inherit;
     content: "";

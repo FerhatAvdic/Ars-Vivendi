@@ -218,12 +218,35 @@
                 }
                 $scope.listEvents();
                 $scope.listEventCategories();
+                $scope.resetForm(form);
+                $scope.initNewEvent();
                 $('#newEventModal').modal('hide');
             });
         };
         function removeEmptyLinks(link, index, array) {
             if (link.name === "" || link.link === "")
                 array.splice(index, 1);
+        };
+        $scope.initNewEvent = function () {
+            $scope.newEvent = {
+                "id": 0,
+                "name": "",
+                "description": "",
+                "startDate": new Date(),
+                "endDate": new Date(),
+                "registrationDeadline": new Date(),
+                "membersPrice": null,
+                "nonMembersPrice": null,
+                "eventCategoryId": null,
+                "imageBaseString": null,
+                "applyCriteria": null,
+                "eventLinks": [{ "Id": 0, "name": "", "link": "", "index": linkIndex }]
+            };
+        };
+        $scope.cancelNewEvent = function (form) {
+            $scope.initNewEvent();
+            $scope.resetForm(form);
+            $scope.listEventCategories();
         };
         //EDIT EVENT
         $scope.editingEvent;
@@ -246,6 +269,7 @@
         };
         $scope.cancelUpdate = function () {
             $scope.editingEvent = null;
+            $scope.listEventCategories();
         };
         //UPDATE EVENT
         $scope.updateEvent = function (form) {
@@ -444,6 +468,8 @@
             $scope.signupsEdit = null;
             $scope.signups = null;
         };
+
+
 
         /*CALENDAR*/
         {

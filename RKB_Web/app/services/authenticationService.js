@@ -68,7 +68,7 @@
 
         var fillAuthData = function () {
             var authData = localStorageService.get('authorizationData');
-            console.log(localStorageService.get('authorizationData'));
+            //console.log(localStorageService.get('authorizationData'));
             if (authData) {
                 authentication.isAuth = true;
                 authentication.userName = authData.userName;
@@ -78,23 +78,25 @@
                 authentication.userFirstName = authData.localName;
             }
         };
+        var getAuthData = function () {
+            return localStorageService.get('authorizationData');
+        };
 
         var refreshToken = function () {
             var deferred = $q.defer();
 
             var authData = localStorageService.get('authorizationData');
-
             if (authData) {
                 var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + arsVivAuthSettings.clientId;
 
                 localStorageService.remove('authorizationData');
-
+                console.log('data for token', data);
                 $http.post(apiSource + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
 
                     localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
 
                     deferred.resolve(response);
-
+                    console.log('token refresh');
                 });
             }
             return deferred.promise;
@@ -149,6 +151,7 @@
         authenticationServiceFactory.obtainAccessToken = obtainAccessToken;
         authenticationServiceFactory.externalAuthData = externalAuthData;
         authenticationServiceFactory.registerExternal = registerExternal;
+        authenticationServiceFactory.getAuthData = getAuthData;
 
         return authenticationServiceFactory;
 

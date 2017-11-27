@@ -7,8 +7,8 @@
                  '$rootScope', '$scope', '$location', '$timeout', 'authenticationService', 'arsVivAuthSettings', 'dataService', '$http', '$routeParams', '$route', 'localStorageService',
         function ($rootScope, $scope, $location, $timeout, authenticationService, arsVivAuthSettings, dataService, $http, $routeParams, $route, localStorageService) {
 
-            var source = "http://localhost:57792/";
-            //var source = "http://api-dive.ntg.ba/";            
+            //var source = "http://localhost:57792/";
+            var source = "http://api-dive.ntg.ba/";            
             $scope.formTabs = [
                 {'name':'reg1', 'active':false},
                 {'name':'reg2', 'active':false},

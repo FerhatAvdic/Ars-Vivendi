@@ -380,7 +380,9 @@
 
         $scope.getPersonalInfo = function () {
             $scope.personalInfoLoading = true;
-            dataService.read("users", "?username=" + profileID, function (response) {
+            //dataService.read("users", "?username=" + profileID, function (response) {
+            dataService.read("users", profileID, function (response) {
+
                 if (response.status === 200) {
                     $scope.personalInfoLoading = false;
                     $scope.userInfo = response.data;
@@ -423,7 +425,8 @@
             $scope.userInfo.phoneNumber = $scope.selectedCountry.number + $scope.userInfo.partPhoneNumber;
             var dateString = $scope.userInfo.year + "/" + $scope.userInfo.month + "/" + $scope.userInfo.day;
             $scope.userInfo.dateOfBirth = new Date(dateString);
-            dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {
+            //dataService.update("users", "?username=" + $scope.userInfo.userName, $scope.userInfo, function (response) {
+            dataService.update("users", $scope.userInfo.userName, $scope.userInfo, function (response) {
                 if (response.status === 200) {
                     toastr.success("Profil uspješno izmijenjen");
                     //console.log("UPDATED");

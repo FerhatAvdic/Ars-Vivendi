@@ -35,6 +35,7 @@
     <script src="libs/textAngular.min.js"></script>
     <script src="libs/pagination.min.js"></script>
     <script src="libs/dataGrid.min.js"></script>
+    <script src="libs/angular-jwt.min.js"></script>
 
     <!--Angular App-->
     <script src="libs/angular-local-storage.min.js"></script>
@@ -90,7 +91,7 @@
         </div>
     </div>-->
 
-    <nav class="navbar navbar-default navbar-custom" id="main-navbar">
+    <nav class="navbar navbar-default navbar-custom" id="main-navbar" ng-controller="mainController">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -100,10 +101,10 @@
                         <span class="icon-bar"></span>
                     </div>
                 </button>
-                <a class="navbar-brand navbar-brand-custom" href="#">Ars Vivendi</a>
+                <a class="navbar-brand navbar-brand-custom" href="#">{{pageTitle.body}}</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right navbar-nav-custom" ng-controller="mainController">
+                <ul class="nav navbar-nav navbar-right navbar-nav-custom" >
                     <li  ng-repeat="item in menuItems"  data-toggle="collapse" data-target=".navbar-collapse.in"><a href="{{ item.link }}" id="{{ item.id }}">{{ item.text }}</a></li>
                     <li ng-if="userRole === 'Admin'" class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Panel <span class="caret"></span></a>
@@ -125,7 +126,7 @@
             </ul>
     </div>-->
 
-    <div class="templates" ng-view></div>
+    <div class="templates" ng-view autoscroll="true"></div>
 
 </body>
 </html>

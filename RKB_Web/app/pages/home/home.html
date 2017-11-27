@@ -1,4 +1,4 @@
-﻿<div class="welcome-screen">
+﻿<div class="welcome-screen" ng-if="slides">
     <div class="slide slide-animate" ng-repeat="slide in slides" ng-show="$index==currentSlide" ng-style="{'background-image': 'url('+slide.imageUrl+')'}">
         <div class="slide-overlay"></div>
         <div class="slide-content">
@@ -25,7 +25,7 @@
         </div>
     </div>-->
 </div>
-<div class="av-section-wrap" id="mission">
+<div class="av-section-wrap" id="mission"  ng-if="mission">
     <div class="container">
         <div class="row">
             <div class="col-md-12 inside-mission">
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<div class="av-section-wrap" id="activity-showcase">
+<div class="av-section-wrap" id="activity-showcase" ng-if="services">
     <div class="container">
         <!--<div class="av-heading">Pođi s nama</div>-->
         <div class="row row-centered">
@@ -54,7 +54,7 @@
     </div>
 </div>
 <div id="pre-upcoming"></div>
-<div class="av-section-wrap" id="upcoming">
+<div class="av-section-wrap" id="upcoming" ng-if="upcoming">
     <div class="upcoming-wrap" ng-repeat="event in upcoming" ng-if="$index==currentSlideUpcoming">
         <!--<div class="upcoming-background" ng-style="{'background-image': 'url('+ event.imagePath +')'}"></div>
         <div class="upcoming-slide-dark-overlay"></div>
@@ -101,10 +101,10 @@
                 </div>
                 <div class="col-md-2 big-only" style="padding: 0px;">
                     <ul class="upcoming-labels row">
-                        <li class="col-md-12 col-sm-4 col-xs-12" ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="{'background-color': event.categoryColor}">
+                        <li class="col-md-12 col-sm-4 col-xs-12" ng-repeat="event in upcoming" ng-class="{'upcoming-label-selected': upcomingLabelSelected($index)}" ng-click="goToSlideUpcoming($index)" ng-style="calcUpcomingStyle(event)">
                             <div class="upcoming-label-big">{{event.eventName}}</div>
-                            <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}}</div>
-                            <div class="upcoming-label-small">{{event.location}}</div>
+                            <div class="upcoming-label-small">{{event.startDate | date: 'dd-MMM-yyyy'}} {{event.location}}</div>
+                            <!--<div class="upcoming-label-small">{{event.location}}</div>-->
                         </li>
                     </ul>
                 </div>
@@ -157,7 +157,7 @@
 </div>
 <div id="pre-upcoming"></div>
 
-<div class="partners-wrap" id="partners">
+<div class="partners-wrap" id="partners" ng-if="partners">
     <div class="container-fluid">
         <!--<div class="av-heading">Partneri</div>-->
         <div class="row row-centered">
@@ -174,7 +174,7 @@
 <!--<div class="av-heading">
     Kuda smo išli
 </div>-->
-<div class="gallery-wrap" id="home-gallery">
+<div class="gallery-wrap" id="home-gallery" ng-if="gallery">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-sm-4" ng-repeat="item in gallery | orderBy: '-startDate'">
@@ -197,7 +197,7 @@
     </div>
 </div>
 <!--</div>-->
-<div class="partners-wrap" id="sponsors">
+<div class="partners-wrap" id="sponsors" ng-if="sponsors">
     <div class="container-fluid">
         <!--<div class="av-heading">Sponzori</div>-->
         <div class="row row-centered">
@@ -211,7 +211,9 @@
         </div>
     </div>
 </div>
-<div class="comments-wrap">
+<div id="pre-upcoming"></div>
+
+<!--<div class="comments-wrap">
     <div class="container">
             <ul class="row" id="comments">
                 <li class="col-md-4 col-sm-4 col-xs-12" ng-repeat="comment in recentComments" ng-class="{'recent-post-selected': recentCommentSelected($index)}">
@@ -223,7 +225,7 @@
                 </li>
             </ul>
     </div>
-</div>
+</div>-->
 <div class="av-section-wrap contact-wrap" id="contact">
     <!--<div class="av-heading" id="contact">
         Kontakt

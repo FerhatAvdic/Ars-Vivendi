@@ -1,10 +1,10 @@
 ﻿(function () {
     
-    var avApp = angular.module('avApp', ['dataGrid','pagination','ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module', 'textAngular']);
+    var avApp = angular.module('avApp', ['dataGrid', 'pagination', 'ngRoute', 'ngAnimate', 'ngResource', 'LocalStorageModule', 'ui.bootstrap', 'naif.base64', 'colorpicker.module', 'textAngular', 'angular-jwt']);
 
 
-    var serviceBase = 'http://localhost:57792/';
-    //var serviceBase = 'http://api-dive.ntg.ba/';
+    //var serviceBase = 'http://localhost:57792/';
+    var serviceBase = 'http://api-dive.ntg.ba/';
     //var serviceBase = 'http://arsvivendi.azurewebsites.net/';
 
     currentUser = {
